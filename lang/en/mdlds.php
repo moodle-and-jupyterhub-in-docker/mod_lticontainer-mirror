@@ -29,7 +29,7 @@ $string['pluginname'] = 'MDLDockerSpawner';
 $string['modulename'] = 'Moodle DockerSpawner';
 $string['mdldsname']  = 'Name ';
 $string['mdldsfieldset'] = 'Field set';
-$string['mdldssettings'] = 'Settings';
+//$string['mdldssettings'] = 'Settings';
 
 
 $string['overview'] = 'Overview';
