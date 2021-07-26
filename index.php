@@ -39,12 +39,19 @@ $event = \mod_mdlds\event\course_module_instance_list_viewed::create(array(
 $event->add_record_snapshot('course', $course);
 $event->trigger();
 
+//
+$PAGE->set_pagelayout('incourse');
 $PAGE->set_url('/mod/mdlds/index.php', array('id' => $id));
 $PAGE->set_title(format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($coursecontext);
 
 echo $OUTPUT->header();
+
+echo '<style type="text/css">';
+include('./html/html.css');
+echo '</style>';
+
 
 $modulenameplural = get_string('modulenameplural', 'mod_mdlds');
 echo $OUTPUT->heading($modulenameplural);
@@ -71,6 +78,7 @@ else {
     $table->align = array('left', 'left', 'left');
 }
 
+//
 foreach ($mdldss as $mdlds) {
     if (!$mdlds->visible) {
         $link = html_writer::link(
