@@ -57,10 +57,10 @@ if (has_capability('mod/mdlds:view_volumes', $context)) {
 }
 
 // View Custom Parameters
-if (has_capability('mod/mdlds:view_customs', $context)) {
+if (has_capability('mod/mdlds:view_connections', $context)) {
     $url_params = array('id'=>$used_id, 'do'=>'view');
-    $url        = new moodle_url('/mod/mdlds/actions/view_customs.php', $url_params);
-    $row[]      = new tabobject('view_customs', $url->out(), get_string('view_customs', 'mdlds'));
+    $url        = new moodle_url('/mod/mdlds/actions/view_connections.php', $url_params);
+    $row[]      = new tabobject('view_connections', $url->out(), get_string('view_connections', 'mdlds'));
 }
 
 

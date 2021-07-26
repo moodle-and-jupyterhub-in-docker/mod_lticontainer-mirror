@@ -30,3 +30,9 @@ $string['modulename'] = 'Moodle DockerSpawner';
 $string['mdldsname']  = 'Name ';
 $string['mdldsfieldset'] = 'Field set';
 $string['mdldssettings'] = 'Settings';
+
+
+$string['overview'] = 'Overview';
+$string['view_volumes'] = 'Docker Volumes';
+$string['view_connections'] = 'LTI Connections';
+$string['returnto_course'] = 'Return to Course';

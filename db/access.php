@@ -36,7 +36,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:view_customs' => [
+    'mod/mdlds:view_connections' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
@@ -55,7 +55,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:edit_custom' => [
+    'mod/mdlds:edit_connection' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
