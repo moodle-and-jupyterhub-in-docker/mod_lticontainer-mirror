@@ -23,43 +23,42 @@
  */
 
 require(__DIR__.'/../../config.php');
-
 require_once(__DIR__.'/lib.php');
 
-$id = required_param('id', PARAM_INT);
-
-$course = $DB->get_record('course', array('id' => $id), '*', MUST_EXIST);
+$cmid   = required_param('id', PARAM_INT);
+$course = $DB->get_record('course', array('id' => $cmid), '*', MUST_EXIST);
 require_course_login($course);
 
-$coursecontext = context_course::instance($course->id);
+$mcontext = context_module::instance($cmid);
+$ccontext = context_course::instance($course->id);
 
 $event = \mod_mdlds\event\course_module_instance_list_viewed::create(array(
-    'context' => $modulecontext
+    'context' => $mcontext
 ));
 $event->add_record_snapshot('course', $course);
 $event->trigger();
 
 //
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_url('/mod/mdlds/index.php', array('id' => $id));
+$PAGE->set_url('/mod/mdlds/index.php', array('id' => $cmid));
 $PAGE->set_title(format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($coursecontext);
+$PAGE->set_context($ccontext);
 
 echo $OUTPUT->header();
 
 echo '<style type="text/css">';
-include('./html/html.css');
+include(__DIR__.'/html/styles.css');
 echo '</style>';
 
 
-$modulenameplural = get_string('modulenameplural', 'mod_mdlds');
+$modulenameplural = get_string('modulenameplural', 'mdlds');
 echo $OUTPUT->heading($modulenameplural);
 
 $mdldss = get_all_instances_in_course('mdlds', $course);
 
 if (empty($mdldss)) {
-    notice(get_string('no$mdldsinstances', 'mod_mdlds'), new moodle_url('/course/view.php', array('id' => $course->id)));
+    notice(get_string('no$mdldsinstances', 'mdlds'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();
@@ -102,3 +101,4 @@ foreach ($mdldss as $mdlds) {
 
 echo html_writer::table($table);
 echo $OUTPUT->footer();
+

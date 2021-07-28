@@ -33,6 +33,7 @@ $string['mdldsfieldset'] = 'Field set';
 
 
 $string['overview'] = 'Overview';
+$string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
 $string['view_connections'] = 'LTI Connections';
 $string['returnto_course'] = 'Return to Course';

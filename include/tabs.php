@@ -45,33 +45,37 @@ if (!isset($current_tab)) {
     $current_tab = '';
 }
 
-// View Abstract
-$viewurl = new moodle_url('/mod/mdlds/view.php', array('id'=>$used_id, 'do'=>'view'));
-$row[]   = new tabobject('view', $viewurl->out(), get_string('overview', 'mdlds'));
+// Overview
+$viewurl = new moodle_url('/mod/mdlds/view.php', array('id'=>$used_id, 'do'=>'overview'));
+$row[]   = new tabobject('overview', $viewurl->out(), get_string('overview', 'mdlds'));
+
+// for Demo
+$demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_id, 'do'=>'show_demo'));
+$row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
 
 // View Volumes
 if (has_capability('mod/mdlds:view_volumes', $context)) {
-    $url_params = array('id'=>$used_id, 'do'=>'view', 'sort'=>'time_modified', 'order'=>'DESC');
-    $url        = new moodle_url('/mod/mdlds/actions/view_volumes.php', $url_params);
-    $row[]      = new tabobject('view_volumes', $url->out(), get_string('view_volumes', 'mdlds'));
+    $url_params = array('id'=>$used_id, 'do'=>'view_volumes', 'sort'=>'time_modified', 'order'=>'DESC');
+    $volume_url = new moodle_url('/mod/mdlds/actions/view_volumes.php', $url_params);
+    $row[]      = new tabobject('view_volumes', $volume_url->out(), get_string('view_volumes', 'mdlds'));
 }
 
-// View Custom Parameters
+// View LTI Connections
 if (has_capability('mod/mdlds:view_connections', $context)) {
-    $url_params = array('id'=>$used_id, 'do'=>'view');
-    $url        = new moodle_url('/mod/mdlds/actions/view_connections.php', $url_params);
-    $row[]      = new tabobject('view_connections', $url->out(), get_string('view_connections', 'mdlds'));
+    $url_params = array('id'=>$used_id, 'do'=>'view_connections');
+    $cnnect_url = new moodle_url('/mod/mdlds/actions/view_connections.php', $url_params);
+    $row[]      = new tabobject('view_connections', $cnnect_url->out(), get_string('view_connections', 'mdlds'));
 }
 
-
+// Return Course
 $row[] = new tabobject('', $CFG->wwwroot.'/course/view.php?id='.$courseid, get_string('returnto_course', 'mdlds'));
 
+//
 if (count($row) > 1) {
     $tabs[] = $row;
-    //
     echo '<table align="center" style="margin-bottom:0.0em;"><tr><td>';
     echo '<style type="text/css">';
-    include('./html/html.css');
+    include(__DIR__.'/../html/styles.css');
     echo '</style>';
     print_tabs($tabs, $current_tab, $inactive, $activated);
     echo '</td></tr></table>';

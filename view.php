@@ -26,31 +26,28 @@ require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 
 // Course module id.
-$cmid       = optional_param('id', 0, PARAM_INT);           // Module ID
-$instanceid = optional_param('m',  0, PARAM_INT);           // This Instance ID
-$courseid   = optional_param('courseid', false, PARAM_INT);
+$cmid       = optional_param('id', 0, PARAM_INT);           // コースモジュール ID
+$instanceid = optional_param('m',  0, PARAM_INT);           // インスタンス ID
+$courseid   = optional_param('course', false, PARAM_INT);
 
-
-
-$current_tab = 'view';
-$this_action = 'view';
+$current_tab = 'overview';
 
 
 ////////////////////////////////////////////////////////
 //get the objects
 if ($cmid) {
-    $cm = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                         // コースモジュール
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);           // コースデータ from DB
-    $moduleinstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);  // モジュールインスタンス
+    $cm = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                  // コースモジュール
+    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);      // コースデータ from DB
+    $minstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);  // モジュールインスタンス
 } 
 else {
-    $moduleinstance = $DB->get_record('mdlds', array('id' => $instanceid), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('mdlds', $moduleinstance->id, $course->id, false, MUST_EXIST);
+    $minstance = $DB->get_record('mdlds', array('id' => $instanceid), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $minstance->course), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('mdlds', $minstance->id, $course->id, false, MUST_EXIST);
 }
 
-$modulecontext = context_module::instance($cm->id);
-$coursecontext = context_course::instance($course->id); 
+$mcontext = context_module::instance($cm->id);
+$ccontext = context_course::instance($course->id);
 if (!$courseid) $courseid = $course->id;
 
 
@@ -58,26 +55,22 @@ if (!$courseid) $courseid = $course->id;
 // Check
 require_login($course, true, $cm);
 
-
-
-////////////////////////////////////////////////////////
-// Check
 #$event = \mod_mdlds\event\course_module_viewed::create(array(
-#    'objectid' => $moduleinstance->id,
-#    'context' => $modulecontext
+#    'objectid' => $minstance->id,
+#    'context' => $mcontext
 #));
 #$event->add_record_snapshot('course', $course);
-#$event->add_record_snapshot('mdlds', $moduleinstance);
+#$event->add_record_snapshot('mdlds', $minstance);
 #$event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-//$PAGE->navbar->add(get_string('apply:view', 'apply'));
+$PAGE->navbar->add(get_string('mdlds:overview', 'mdlds'));
 $PAGE->set_url('/mod/mdlds/view.php', array('id' => $cm->id, 'm' => $instanceid));
-$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
-$PAGE->set_context($modulecontext);
+$PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 
 
@@ -85,16 +78,9 @@ echo $OUTPUT->header();
 require('include/tabs.php');
 
 echo '<div align="center">';
-echo $OUTPUT->heading(format_text($moduleinstance->name), 3);
+echo $OUTPUT->heading(format_text($minstance->name), 3);
 echo '</div>';
 //
-
-
-
-
-
-
-
 
 ///////////////////////////////////////////////////////////////////////////
 /// Finish the page
