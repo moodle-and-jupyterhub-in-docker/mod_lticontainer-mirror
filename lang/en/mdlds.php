@@ -27,13 +27,18 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'MDLDockerSpawner';
 $string['modulename'] = 'Moodle DockerSpawner';
+$string['modulenameplural'] = 'MDLDockerSpawners';
+
 $string['mdldsname']  = 'Name ';
-$string['mdldsfieldset'] = 'Field set';
+//$string['mdldsfieldset'] = 'Field set';
 //$string['mdldssettings'] = 'Settings';
 
-
-$string['overview'] = 'Overview';
+$string['over_view'] = 'Overview';
 $string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
-$string['view_connections'] = 'LTI Connections';
 $string['returnto_course'] = 'Return to Course';
+
+$string['mdlds:lti_connect'] = 'LTI Connections';   // パンくずメニュー
+$string['lti_connect'] = 'LTI Connections';
+$string['lti_name'] = 'LTI Name';
+

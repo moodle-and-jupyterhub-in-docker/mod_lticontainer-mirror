@@ -3,6 +3,7 @@
 class  ShowDemo
 {
     var $courseid     = 0;
+    var $course;
 
     var $isGuest      = true;
     var $db_data      = array();
@@ -10,17 +11,20 @@ class  ShowDemo
     var $action_url   = '';
     var $url_params   = array();
 
+    var $items;
+
     // SQL
     var $sql_order    = '';
     var $sql_limit    = '';
 
 
-    function  __construct($courseid)
+    function  __construct($cmid, $courseid)
     {
-        global $CFG, $USER;
+        global $CFG, $DB, $USER;
 
         $this->courseid   = $courseid;
-        $this->url_params = array('course' => $courseid);
+        $this->course     = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+        $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/show_demo.php', $this->url_params);
 
         // for Guest
@@ -49,7 +53,19 @@ class  ShowDemo
 
     function  execute()
     {
-        global $CFG, $USER;
+        global $CFG, $DB, $USER;
+
+        // Check
+/*
+        if (data_submitted()) {
+            if (!confirm_sesskey()) {
+            }
+        }
+*/
+
+        $sort   = '';
+        $fields = 'id, name, instructorcustomparameters';
+        $this->items = $DB->get_records('lti', array('course' => $this->courseid), $sort, $fields);
 
         return true;
     }
@@ -57,8 +73,9 @@ class  ShowDemo
 
     function  print_page() 
     {
-        global $CFG, $USER;
+        global $CFG, $DB, $OUTPUT;
 
-        include(__DIR__.'/../html/show_demo.php');
+        include(__DIR__.'/../html/show_demo.html');
+        //include(__DIR__.'/../html/show_demo2.html');
     }
 }

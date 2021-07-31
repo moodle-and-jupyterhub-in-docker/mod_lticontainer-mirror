@@ -1,15 +1,8 @@
 <?php
 //
-// by Fumi.Iseki 2012/04/12
-//               2014/05/14
-//               2014/06/09
-//               2014/11/28
-//               2014/12/04
-//               2014/12/26
-//               2015/11/26
-//               2016/04/18
-//               2016/05/30
-//               2018/09/19
+// by Fumi.Iseki since 2012/04/12
+//                     ..........
+//                     2021/07/31
 //
 
 //
@@ -23,14 +16,13 @@ defined('MOODLE_INTERNAL') || die();
 //$jbxl_moodle_tools_ver = 2016041800;
 //$jbxl_moodle_tools_ver = 2016053000;
 //$jbxl_moodle_tools_ver = 2018091900;
-$jbxl_moodle_tools_ver   = 2019082000;
+//$jbxl_moodle_tools_ver = 2019082000;
+$jbxl_moodle_tools_ver   = 2021070310;
 
 //
-if (defined('JBXL_MOODLE_TOOLS_VER') or defined('_JBXL_MOODLE_TOOLS')) {
-    if (defined('JBXL_MOODLE_TOOLS_VER')) {
-        if (JBXL_MOODLE_TOOLS_VER < $jbxl_moodle_tools_ver) {
-            debugging('JBXL_MOODLE_TOOLS: old version is used. '.JBXL_MOODLE_TOOLS_VER.' < '.$jbxl_moodle_tools_ver, DEBUG_DEVELOPER);
-        }
+if (defined('JBXL_MOODLE_TOOLS_VER')) {
+    if (JBXL_MOODLE_TOOLS_VER < $jbxl_moodle_tools_ver) {
+        debugging('JBXL_MOODLE_TOOLS: old version is used. '.JBXL_MOODLE_TOOLS_VER.' < '.$jbxl_moodle_tools_ver, DEBUG_DEVELOPER);
     }
 }
 else {
@@ -544,7 +536,11 @@ function  jbxl_get_moodle_version()
 {
     global $CFG;
 
-    if      ($CFG->version>=2019052000) return 3.7;
+    if      ($CFG->version>=2021051700) return 3.11;
+    else if ($CFG->version>=2020110900) return 3.10;
+    else if ($CFG->version>=2020061500) return 3.9;
+    else if ($CFG->version>=2019111800) return 3.8;
+    else if ($CFG->version>=2019052000) return 3.7;
     else if ($CFG->version>=2018123000) return 3.6;
     else if ($CFG->version>=2018051700) return 3.5;
     else if ($CFG->version>=2017111300) return 3.4;

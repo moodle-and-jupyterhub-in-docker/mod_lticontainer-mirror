@@ -59,7 +59,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/show_demo.class.php');
 
-$show_demo = new ShowDemo($courseid);
+$show_demo = new ShowDemo($cmid, $courseid);
 
 $show_demo->set_condition();
 $show_demo->execute();

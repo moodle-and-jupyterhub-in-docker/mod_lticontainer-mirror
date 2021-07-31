@@ -24,13 +24,16 @@
 
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
+require_once(__DIR__.'/locallib.php');
+require_once(__DIR__.'/classes/event/over_view.php');
 
 // Course module id.
 $cmid       = optional_param('id', 0, PARAM_INT);           // コースモジュール ID
 $instanceid = optional_param('m',  0, PARAM_INT);           // インスタンス ID
 $courseid   = optional_param('course', false, PARAM_INT);
 
-$current_tab = 'overview';
+$current_tab = 'over_view';
+$this_action = 'over_view';
 
 
 ////////////////////////////////////////////////////////
@@ -49,24 +52,23 @@ else {
 $mcontext = context_module::instance($cm->id);
 $ccontext = context_course::instance($course->id);
 if (!$courseid) $courseid = $course->id;
+if (!$cmid)     $cmid = $cm->id;
 
 
 ////////////////////////////////////////////////////////
 // Check
 require_login($course, true, $cm);
 
-#$event = \mod_mdlds\event\course_module_viewed::create(array(
-#    'objectid' => $minstance->id,
-#    'context' => $mcontext
-#));
-#$event->add_record_snapshot('course', $course);
-#$event->add_record_snapshot('mdlds', $minstance);
-#$event->trigger();
+//
+$event = mdlds_get_event($cmid, $instanceid, $this_action);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('mdlds',  $minstance);
+$event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:overview', 'mdlds'));
+$PAGE->navbar->add(get_string('mdlds:over_view', 'mdlds'));
 $PAGE->set_url('/mod/mdlds/view.php', array('id' => $cm->id, 'm' => $instanceid));
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));

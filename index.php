@@ -25,20 +25,12 @@
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 
-$cmid   = required_param('id', PARAM_INT);
-$course = $DB->get_record('course', array('id' => $cmid), '*', MUST_EXIST);
+$courseid = required_param('id', PARAM_INT);
+$course   = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
 require_course_login($course);
 
-$mcontext = context_module::instance($cmid);
 $ccontext = context_course::instance($course->id);
 
-$event = \mod_mdlds\event\course_module_instance_list_viewed::create(array(
-    'context' => $mcontext
-));
-$event->add_record_snapshot('course', $course);
-$event->trigger();
-
-//
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_url('/mod/mdlds/index.php', array('id' => $cmid));
 $PAGE->set_title(format_string($course->fullname));

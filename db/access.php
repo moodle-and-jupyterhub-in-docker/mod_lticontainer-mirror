@@ -36,15 +36,6 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:view_connections' => [
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-            'editingteacher' => CAP_ALLOW,
-        ],
-    ],
-
     'mod/mdlds:edit_volume' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
@@ -55,7 +46,16 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:edit_connection' => [
+    'mod/mdlds:lti_connect' => [
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+        ],
+    ],
+
+    'mod/mdlds:lti_edit' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,

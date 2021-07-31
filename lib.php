@@ -24,6 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+
 /**
  * Return if the plugin supports $feature.
  *
@@ -39,6 +40,7 @@ function mdlds_supports($feature)
         default: return null;
     }
 }
+
 
 /**
  * Saves a new instance of the mod_mdlds into the database.
@@ -62,6 +64,7 @@ function mdlds_add_instance($moduleinstance, $mform = null)
     return $id;
 }
 
+
 /**
  * Updates an instance of the mod_mdlds in the database.
  *
@@ -81,6 +84,7 @@ function mdlds_update_instance($moduleinstance, $mform = null)
 
     return $DB->update_record('mdlds', $moduleinstance);
 }
+
 
 /**
  * Removes an instance of the mod_mdlds from the database.
