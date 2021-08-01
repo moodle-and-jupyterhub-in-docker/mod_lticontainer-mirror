@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-    'mod/mdlds:view_volumes' => [
+    'mod/mdlds:volume_view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
@@ -36,7 +36,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:edit_volume' => [
+    'mod/mdlds:volume_edit' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,

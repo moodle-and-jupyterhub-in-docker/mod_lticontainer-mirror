@@ -1,0 +1,30 @@
+<?php require_once(__DIR__.'/../html/volume_view_table.php'); ?>
+
+<style type="text/css">
+  <?php include(__DIR__."../html/styles.css"); ?>
+</style>
+
+<table align="center" class="generalbox">
+  <tr>
+    <td align="center">
+      <table border="0" style="margin: 0px 0px 0px 0px;">
+        <tr><td>
+          <?php echo $OUTPUT->heading($this->course->fullname.' :: '.get_string('volume_view','mdlds')); ?>
+        </td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="generalboxcontent" align="center">
+
+      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
+        <table border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <?php show_volume_view_table($this->items, $this->edit_url); ?>
+          </tr>
+        </table>
+      </form>
+
+    </td>
+  </tr>
+</table>

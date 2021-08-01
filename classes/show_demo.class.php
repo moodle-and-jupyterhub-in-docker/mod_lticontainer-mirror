@@ -30,7 +30,7 @@ class  ShowDemo
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('mdlds_access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mdlds', $this->action_url);
         }
     }
 
@@ -44,7 +44,7 @@ class  ShowDemo
         // Post Check
         if (data_submitted()) {
             if (!confirm_sesskey()) {
-                print_error('sesskey_error', 'mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mdlds', $this->action_url);
             }
         }
         return true;

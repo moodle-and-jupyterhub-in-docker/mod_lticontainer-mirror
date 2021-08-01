@@ -54,10 +54,10 @@ $demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_
 $row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
 
 // View Volumes
-if (has_capability('mod/mdlds:view_volumes', $context)) {
-    $url_params = array('id'=>$used_id, 'do'=>'view_volumes', 'sort'=>'time_modified', 'order'=>'DESC');
-    $volume_url = new moodle_url('/mod/mdlds/actions/view_volumes.php', $url_params);
-    $row[]      = new tabobject('view_volumes', $volume_url->out(), get_string('view_volumes', 'mdlds'));
+if (has_capability('mod/mdlds:volume_view', $context)) {
+    $url_params = array('id'=>$used_id, 'do'=>'volume_view', 'sort'=>'time_modified', 'order'=>'DESC');
+    $volume_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $url_params);
+    $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mdlds'));
 }
 
 // View LTI Connections
