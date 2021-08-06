@@ -67,6 +67,13 @@ if (has_capability('mod/mdlds:lti_connect', $context)) {
     $row[]      = new tabobject('lti_connect', $cnnect_url->out(), get_string('lti_connect', 'mdlds'));
 }
 
+// View LTI Edit
+if ($current_tab=='lti_edit' and has_capability('mod/mdlds:lti_edit', $context)) {
+    $url_params = array('id'=>$used_id, 'do'=>'lti_edit');
+    $cnnect_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $url_params);
+    $row[]      = new tabobject('lti_edit', $cnnect_url->out(), get_string('lti_edit', 'mdlds'));
+}
+
 // Return Course
 $row[] = new tabobject('', $CFG->wwwroot.'/course/view.php?id='.$courseid, get_string('returnto_course', 'mdlds'));
 

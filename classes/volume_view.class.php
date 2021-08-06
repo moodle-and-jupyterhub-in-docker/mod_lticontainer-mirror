@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__.'/../locallib.php');
+
 class  VolumeView
 {
     var $cmid;
@@ -12,7 +14,7 @@ class  VolumeView
     var $edit_url   = '';
     var $url_params = array();
 
-    var $items;
+    var $items      = array();
 
     function  __construct($cmid, $courseid)
     {
@@ -46,10 +48,38 @@ class  VolumeView
     {
         global $DB;
 
-        $rslt = array();
-        exec('docker -H unix:///var/run/mdlds.sock volume ls', $rslt);
+        $rslts = array();
+        exec('docker -H unix:///var/run/mdlds_172.22.1.75.sock volume ls', $rslts);
 
-        $this->items = $rslt;
+        $check_course = '_'.$this->courseid;
+        $len_check = strlen($check_course);
+
+        $i = 0;
+        foreach ($rslts as $rslt) {
+            $rslt = preg_replace("/\s+/", ' ', trim($rslt));
+            $vol  = explode(' ', $rslt);
+            if (isset($vol[1])) {
+                $cmd = '';
+                if      (!strncmp(MDLDS_LTI_VOLUME_CMD, $vol[1], strlen(MDLDS_LTI_VOLUME_CMD))) {
+                    $cmd = 'VOL';
+                    $len_cmd = strlen(MDLDS_LTI_VOLUME_CMD);
+                }
+                else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $vol[1], strlen(MDLDS_LTI_SUBMIT_CMD))) {
+                    $cmd = 'SUB';
+                    $len_cmd = strlen(MDLDS_LTI_SUBMIT_CMD);
+                }
+
+                if ($cmd!='' and substr($vol[1], -$len_check)==$check_course) { 
+                    $this->items[$i] = new stdClass();
+                    $this->items[$i]->driver   = $vol[0];
+                    $this->items[$i]->fullname = $vol[1]; 
+                    $this->items[$i]->volname  = substr($vol[1], 0, strlen($vol[1])-$len_check); 
+                    $this->items[$i]->shtname  = substr($vol[1], $len_cmd, strlen($vol[1])-$len_check-$len_cmd); 
+                    $this->items[$i]->command  = $cmd; 
+                    $i++;
+                }
+            }
+        }
         
         return true;
     }

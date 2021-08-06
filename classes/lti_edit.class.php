@@ -21,7 +21,7 @@ class  LTIEdit
 
     var $items;
 
-    var $custom_coms;
+    var $custom_cmds;
 
     // SQL
     var $sql_order  = '';
@@ -76,7 +76,7 @@ class  LTIEdit
                 print_error('no_dataf_ound', 'mdlds', $this->action_url);
             }
 
-            $this->custom_coms = mdlds_explode_custom_params($this->ltirec->instructorcustomparameters);
+            $this->custom_cmds = mdlds_explode_custom_params($this->ltirec->instructorcustomparameters);
         }
 
         return true;

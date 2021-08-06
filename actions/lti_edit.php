@@ -33,7 +33,7 @@ if (has_capability('mod/mdlds:lti_edit', $mcontext)) {
 $urlparams = array();
 $urlparams['id'] = $cmid;
 
-$current_tab = 'lti_connect';
+$current_tab = 'lti_edit';
 $this_action = 'lti_edit';
 
 ///////////////////////////////////////////////////////////////////////////

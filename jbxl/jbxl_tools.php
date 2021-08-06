@@ -1,19 +1,20 @@
 <?php
 //
 // by Fumi.Iseki  2007/03/24
-//                2012/04/12
-//                2013/04/20
-//                2013/09/21
-//                2014/11/28
-//                2016/05/26
-//                2019/08/21
+//                ..........
+//                2021/08/02
 //
 
-$jbxl_tools_ver = 2019082100;
+$jbxl_tools_ver = 2021080200;
 
 
 //
-if (!defined('JBXL_TOOLS_VER') and !defined('_JBXL_TOOLS')) {
+if (defined('JBXL_TOOLS_VER')) {
+    if (JBXL_TOOLS_VER < $jbxl_tools_ver) {
+        debugging('JBXL_TOOLS: old version is used. '.JBXL_TOOLS_VER.' < '.$jbxl_tools_ver, DEBUG_DEVELOPER);
+    }
+}
+else {
 
 define('JBXL_TOOLS_VER', $jbxl_tools_ver);
 
@@ -21,6 +22,16 @@ define('JBXL_TOOLS_VER', $jbxl_tools_ver);
 
 /****************************************************************************************
 //
+// function  jbxl_isNumeric($str, $nullok=false)
+// function  jbxl_isAlphabetNumeric($str, $nullok=false)
+// function  jbxl_isAlphabetNumericSpecial($str, $nullok=false)
+// function  jbxl_isGUID($uuid, $nullok=false)
+//
+// function  jbxl_make_random_hash()
+// function  jbxl_make_random_guid()
+// 
+// function  jbxl_pack_space($str)
+ 
 // function  jbxl_to_subnetformats($strips)
 // function  jbxl_match_ipaddr($ip, $ipaddr_subnets)
 // function  jbxl_randstr($len=8, $lowcase=false)
@@ -34,6 +45,76 @@ define('JBXL_TOOLS_VER', $jbxl_tools_ver);
 *****************************************************************************************/
 
 
+function  jbxl_isNumeric($str, $nullok=false)
+{
+    if ($str!='0' and $str==null) return $nullok;
+    if (!preg_match('/^[0-9\.]+$/', $str)) return false;
+
+    return true;
+}
+
+
+function  jbxl_isAlphabetNumeric($str, $nullok=false)
+{
+    if ($str!='0' and $str==null) return $nullok;
+    if (!preg_match('/^\w+$/', $str)) return false;
+    return true;
+}
+
+
+function  jbxl_isAlphabetNumericSpecial($str, $nullok=false)
+{
+    if ($str!='0' and $str==null) return $nullok;
+    //if (!preg_match('/^[_a-zA-Z0-9 &@%#\-\.]+$/', $str)) return false;
+    if (!preg_match('/^[_a-zA-Z0-9 !&@%#\-\.\$]+$/', $str)) return false;
+    return true;
+}
+
+
+function  jbxl_isGUID($uuid, $nullok=false)
+{
+    if ($uuid==null) return $nullok;
+    if (!preg_match('/^[0-9A-Fa-f]{8,8}-[0-9A-Fa-f]{4,4}-[0-9A-Fa-f]{4,4}-[0-9A-Fa-f]{4,4}-[0-9A-Fa-f]{12,12}$/', $uuid)) return false;
+    return true;
+}
+
+
+function  jbxl_make_random_hash()
+{
+     $ret = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),
+                                                       mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff),mt_rand(0,0xffff));
+    return $ret;
+}
+
+
+function  jbxl_make_random_guid()
+{
+    $uuid = sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+                      mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+                      mt_rand( 0, 0x0fff ) | 0x4000,
+                      mt_rand( 0, 0x3fff ) | 0x8000,   
+                      mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ) );
+    return $uuid;
+}
+ 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// String Tools
+//
+
+
+//
+function  jbxl_pack_space($str)
+{
+    $str = str_replace(array('　', '\t'), ' ', $str);
+    $str = preg_replace("/\s+/", ' ', trim($str));
+
+    return $str;
+}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 //
 // IPアドレスを "," または半角空白で区切って記述した文字列から，有効なIPアドレス
 // とサブネットを8bitずつ取り出す．CIDER対応
@@ -307,3 +388,4 @@ function  jbxl_make_url($serverURI, $portnum=0)
 
 
 }         // !defined('JBXL_TOOLS_VER')
+

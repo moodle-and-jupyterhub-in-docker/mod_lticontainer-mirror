@@ -38,8 +38,8 @@ $string['access_forbidden'] = 'Access forbidden';
 $string['invalid_sesskey'] = 'Invalid Session Key';
 $string['no_dataf_ound'] = 'No Data found!';
 
-$string['over_view'] = 'Overview';
-$string['over_view'] = 'Overview';
+// tab
+$string['over_view'] = 'Over View';
 $string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
 $string['returnto_course'] = 'Return to Course';
@@ -52,4 +52,5 @@ $string['lti_connect'] = 'LTI Connections';
 $string['lti_edit'] = 'LTI Edit';
 
 $string['volume_view'] = 'Volume View';
+$string['volume_name'] = 'Volume Name';
 

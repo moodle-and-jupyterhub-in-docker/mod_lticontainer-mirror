@@ -22,7 +22,7 @@ $user_id  = $USER->id;
 require_login($courseid);
 //
 $mdlds_volume_view_cap = false;
-if (has_capability('mod/mdlds:view_vol', $mcontext)) {
+if (has_capability('mod/mdlds:volume_view', $mcontext)) {
     $mdlds_volume_view = true;
 }
 

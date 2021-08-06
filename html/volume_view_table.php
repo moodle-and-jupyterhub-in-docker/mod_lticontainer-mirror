@@ -7,21 +7,31 @@ function show_volume_view_table($items, $base_url)
     //
     $table->head [] = '#';
     $table->align[] = 'center';
-    $table->size [] = '20px';
+    $table->size [] = '10px';
+    $table->wrap [] = 'nowrap';
+
+    $table->head [] = get_string('driver_name','mdlds');
+    $table->align[] = 'center';
+    $table->size [] = '30px';
     $table->wrap [] = 'nowrap';
 
     $table->head [] = get_string('volume_name','mdlds');
     $table->align[] = 'center';
-    $table->size [] = '60px';
+    $table->size [] = '200px';
+    $table->wrap [] = 'nowrap';
+
+    $table->head [] = get_string('volume_name','mdlds');
+    $table->align[] = 'center';
+    $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
     //
     $i = 0;
     foreach($items as $item) { 
-        if ($i>0) {
-            $table->data[$i][] = $i;
-            $table->data[$i][] = $item;
-        }
+        $table->data[$i][] = $i;
+        $table->data[$i][] = $item->driver;
+        $table->data[$i][] = $item->volname;
+        $table->data[$i][] = $item->command;
         $i++;
     }
 

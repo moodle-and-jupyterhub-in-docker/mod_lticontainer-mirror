@@ -2,13 +2,27 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-define('MDLDS_LTI_PREFIX_COM',  'mdl_');
-define('MDLDS_LTI_USER_COM',    'mdl_user');
-define('MDLDS_LTI_TEACHER_COM', 'mdl_teacher');
-define('MDLDS_LTI_GRPNAME_COM', 'mdl_grpname');
-define('MDLDS_LTI_VOLUME_COM',  'mdl_vol_');
-define('MDLDS_LTI_SUBMIT_COM',  'mdl_sub_');
+define('MDLDS_LTI_PREFIX_CMD',  'mdl_');
+define('MDLDS_LTI_USER_CMD',    'mdl_user');
+define('MDLDS_LTI_TEACHER_CMD', 'mdl_teacher');
+define('MDLDS_LTI_TGRPNAME_CMD','mdl_grpname');
+define('MDLDS_LTI_IMAGE_CMD',   'mdl_image');
+define('MDLDS_LTI_VOLUME_CMD',  'mdl_vol_');
+define('MDLDS_LTI_SUBMIT_CMD',  'mdl_sub_');
 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+
+function  pack_space($str)
+{
+    $str = str_replace(array('　', '\t'), ' ', $str);
+    $str = preg_replace("/\s+/", ' ', trim($str));
+
+    return $str;
+}
 
 
 
@@ -49,16 +63,14 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
 
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////
-
+//
 
 function mdlds_explode_custom_params($custom_params)
 {
     $comms = new stdClass();
-    $comms->custom_com = array();
-    $comms->other_com  = array();
+    $comms->custom_cmd = array();
+    $comms->other_cmd  = array();
     $comms->mount_vol  = array();
     $comms->mount_sub  = array();
     $comms->vol_user   = array();
@@ -72,8 +84,8 @@ function mdlds_explode_custom_params($custom_params)
             $com = explode('=', $custom);
             if (!isset($com[1])) $com[1] = '';
 
-            if (!strncmp(MDLDS_LTI_PREFIX_COM, $com[0], strlen(MDLDS_LTI_PREFIX_COM))) {
-                if (!strncmp(MDLDS_LTI_VOLUME_COM, $com[0], strlen(MDLDS_LTI_VOLUME_COM))) {
+            if (!strncmp(MDLDS_LTI_PREFIX_CMD, $com[0], strlen(MDLDS_LTI_PREFIX_CMD))) {
+                if (!strncmp(MDLDS_LTI_VOLUME_CMD, $com[0], strlen(MDLDS_LTI_VOLUME_CMD))) {
                     if ($com[1]=='') $com[1] = '.';
                     $vol = explode('_', $com[0]);
                     if (isset($vol[2])) {
@@ -82,7 +94,7 @@ function mdlds_explode_custom_params($custom_params)
                         if (isset($actl[1])) $comms->vol_user[$vol[2]] = $actl[1];
                     }
                 }
-                else if (!strncmp(MDLDS_LTI_SUBMIT_COM, $com[0], strlen(MDLDS_LTI_SUBMIT_COM))) {
+                else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $com[0], strlen(MDLDS_LTI_SUBMIT_CMD))) {
                     if ($com[1]=='') $com[1] = '.';
                     $sub = explode('_', $com[0]);
                     if (isset($sub[2])) {
@@ -92,11 +104,11 @@ function mdlds_explode_custom_params($custom_params)
                     }
                 }
                 else {
-                    $comms->custom_com[$com[0]] = $com[1];
+                    $comms->custom_cmd[$com[0]] = $com[1];
                 }
             }
             else {
-                $comms->other_com[$com[0]] = $com[1];
+                $comms->other_cmd[$com[0]] = $com[1];
             }
         }
     }
