@@ -20,13 +20,8 @@ class  LTIEdit
     var $action_url = '';
     var $url_params = array();
 
-    var $items;
-
-    var $custom_cmds;
-
-    // SQL
-    var $sql_order  = '';
-    var $sql_limit  = '';
+    var $custom_ary = array();
+    var $custom_txt = '';
 
 
     function  __construct($cmid, $courseid)
@@ -52,48 +47,46 @@ class  LTIEdit
 
     function  set_condition() 
     {
-        //global $CFG, $USER, $DB;
-
         return true;
     }
 
 
     function  execute()
     {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB;
+
+        $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), 'id,course,name,instructorcustomparameters,timemodified');
+        if (!$this->ltirec) {
+            print_error('no_dataf_ound', 'mdlds', $this->action_url);
+        }
 
         if ($formdata = data_submitted()) {
             if (!confirm_sesskey()) {
                 print_error('invalid_sesskey', 'mdlds', $this->action_url);
             }
             $this->submitted  = true;
-            //print_r(unserialize($formdata->others));
-print("I'm here!");
-die();
+            $this->custom_txt = mdlds_join_custom_params($formdata);
+            $this->ltirec->instructorcustomparameters = $this->custom_txt;
+            $this->ltirec->timemodified = time();
+            $DB->update_record('lti', $this->ltirec);
         }
+
         //
-        else {
-            $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), '*');
-            if (!$this->ltirec) {
-                print_error('no_dataf_ound', 'mdlds', $this->action_url);
+        $rslts = array();
+        exec('/usr/bin/docker -H unix:///var/run/mdlds_172.22.1.75.sock images', $rslts);
+
+        $i = 0;
+        foreach ($rslts as $rslt) {
+            if ($i==0) $this->images[$i] = '';
+            else {
+                $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
+                $image = explode(' ', $rslt);
+                $this->images[$i] = $image[0];
             }
-
-            $rslts = array();
-            exec('/usr/bin/docker -H unix:///var/run/mdlds_172.22.1.75.sock images', $rslts);
-
-            $i = 0;
-            foreach ($rslts as $rslt) {
-                if ($i==0) $this->images[$i] = '';
-                else {
-                    $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
-                    $image = explode(' ', $rslt);
-                    $this->images[$i] = $image[0];
-                }
-                $i++;
-            }
-
-            $this->custom_cmds = mdlds_explode_custom_params($this->ltirec->instructorcustomparameters);
+            $i++;
         }
+        $this->custom_txt = $this->ltirec->instructorcustomparameters;
+        $this->custom_ary = mdlds_explode_custom_params($this->custom_txt);
 
         return true;
     }

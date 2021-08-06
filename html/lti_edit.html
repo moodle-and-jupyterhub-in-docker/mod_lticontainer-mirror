@@ -15,23 +15,24 @@
     </td>
   </tr>
   <tr>
-    <td class='generalboxcontent' align='center'>
+    <td>
 
       <form name='gsess' method='post' action='<?php echo $this->action_url;?>'>
         <table border='0' align='center' cellpadding='0' cellspacing='0'>
           <tr>
-            <?php show_lti_edit_table($this->custom_cmds, $this->images); ?>
+            <?php show_lti_edit_table($this->custom_ary, $this->images); ?>
           </tr>
           <tr>
             <td align='center'>
               <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
               <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
               <input type='hidden' name='ltiid'   value='<?php echo $this->ltirec->id;?>' />
-              <input type='hidden' name='others'  value='<?php echo serialize($this->custom_cmds->other_cmd);?>' />
+              <input type='hidden' name='others'  value='<?php echo serialize($this->custom_ary->other_cmd);?>' />
               <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
               <input type='submit' name='submit_lti_update'  value='<?php echo get_string("update");?>' />
               &nbsp;&nbsp;
               <input type='reset' name='reset'  value='<?php echo get_string("reset");?>' />
+              <br /><br />
             </td>
           </tr>
           <tr>
@@ -39,7 +40,20 @@
           </tr>
         </table>
       </form>
-
     </td>
   </tr>
+  <tr><td><hr /></td></tr>
+  <?php if ($this->custom_txt!='') { ?>
+  <tr>
+    <td class='generalboxcontent' align='center'>
+      <table align='center' class='generalbox' cellpadding='4' cellspacing='1' border='1'>
+        <tr>
+          <td>
+            <?php echo nl2br($this->custom_txt); ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <?php } ?>
 </table>

@@ -118,4 +118,47 @@ function mdlds_explode_custom_params($custom_params)
 
 
 
+function mdlds_join_custom_params($formdata)
+{
+    $custom_params = '';
+    if (!isset($formdata->mdl_user))    $formdata->mdl_user    = '';
+    if (!isset($formdata->mdl_teacher)) $formdata->mdl_teacher = '';
+    if (!isset($formdata->mdl_image))   $formdata->mdl_image   = '';
 
+    $param = MDLDS_LTI_USER_CMD.'='.$formdata->mdl_user;
+    $custom_params .= $param."\r\n";
+    $param = MDLDS_LTI_TEACHER_CMD.'='.$formdata->mdl_teacher;
+    $custom_params .= $param."\r\n";
+    $param = MDLDS_LTI_IMAGE_CMD.'='.$formdata->mdl_image;
+    $custom_params .= $param."\r\n";
+
+    $i = 0;
+    foreach ($formdata->mdl_vol_ as $vol) {
+        if ($formdata->mdl_vol_name[$i]!='') {
+            if ($vol==MDLDS_LTI_VOLUME_CMD) {
+                $user = '';
+                if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
+                $param = MDLDS_LTI_VOLUME_CMD.$formdata->mdl_vol_name[$i].'='.$formdata->mdl_vol_disp[$i].$user;
+                $custom_params .= $param."\r\n";
+            }
+            else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
+                $user = '';
+                if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
+                $param = MDLDS_LTI_SUBMIT_CMD.$formdata->mdl_vol_name[$i].'='.$formdata->mdl_vol_disp[$i].$user;
+                $custom_params .= $param."\r\n";
+            }
+        }
+        $i++;
+    }
+
+    if (isset($formdata->others)) {
+        $other_cmds = unserialize($formdata->others);
+        foreach ($other_cmds as $cmd=>$value) {
+            $param = $cmd.'='.$value;
+            $custom_params .= $param."\r\n";
+        }
+    }
+    
+    $custom_params = trim($custom_params);
+    return $custom_params;
+}
