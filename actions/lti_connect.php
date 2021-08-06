@@ -87,3 +87,4 @@ $lti_connection->execute();
 $lti_connection->print_page();
 
 echo $OUTPUT->footer($course);
+

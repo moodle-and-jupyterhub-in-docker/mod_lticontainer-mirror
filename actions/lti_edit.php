@@ -93,3 +93,4 @@ $lti_edit->execute();
 $lti_edit->print_page();
 
 echo $OUTPUT->footer($course);
+
