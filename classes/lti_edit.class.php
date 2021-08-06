@@ -8,6 +8,7 @@ class  LTIEdit
     var $cmid;
     var $courseid   = 0;
     var $course;
+    var $minstance;
 
     var $ltiid      = 0;
     var $ltirec;
@@ -24,14 +25,15 @@ class  LTIEdit
     var $custom_txt = '';
 
 
-    function  __construct($cmid, $courseid)
+    function  __construct($cmid, $courseid, $minstance)
     {
-        global $CFG, $DB, $USER;
+        global $CFG, $DB;
 
-        $this->cmid     = $cmid;
-        $this->courseid = $courseid;
-        $this->course   = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
-
+        $this->cmid      = $cmid;
+        $this->courseid  = $courseid;
+        $this->course    = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+        $this->minstance = $minstance;
+        #
         $this->ltiid = required_param('ltiid', PARAM_INT);
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
@@ -55,11 +57,13 @@ class  LTIEdit
     {
         global $CFG, $DB;
 
-        $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), 'id,course,name,instructorcustomparameters,timemodified');
+        $fields = 'id, course, name, instructorcustomparameters, timemodified';
+        $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
         if (!$this->ltirec) {
             print_error('no_dataf_ound', 'mdlds', $this->action_url);
         }
 
+        // POST
         if ($formdata = data_submitted()) {
             if (!confirm_sesskey()) {
                 print_error('invalid_sesskey', 'mdlds', $this->action_url);
@@ -72,8 +76,7 @@ class  LTIEdit
         }
 
         //
-        $rslts = array();
-        exec('/usr/bin/docker -H unix:///var/run/mdlds_172.22.1.75.sock images', $rslts);
+        $rslts = docker_exec('images', $this->minstance);
 
         $i = 0;
         foreach ($rslts as $rslt) {

@@ -33,7 +33,8 @@ require_once(__DIR__.'/upgradelib.php');
  * @param int $oldversion
  * @return bool
  */
-function xmldb_mdlds_upgrade($oldversion) {
+function xmldb_mdlds_upgrade($oldversion)
+{
     global $DB;
 
     $dbman = $DB->get_manager();
@@ -42,6 +43,29 @@ function xmldb_mdlds_upgrade($oldversion) {
     //
     // You will also have to create the db/install.xml file by using the XMLDB Editor.
     // Documentation for the XMLDB Editor can be found at {@link https://docs.moodle.org/dev/XMLDB_editor}.
+
+    // 2021080603
+    if ($oldversion < 2021080603) {
+        $table = new xmldb_table('mdlds');
+        //
+        $field = new xmldb_field('docker_host', XMLDB_TYPE_CHAR, '128', null, null, null, 'localhost', 'introformat');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        //
+        $field = new xmldb_field('docker_user', XMLDB_TYPE_CHAR, '64', null, null, null, 'docker', 'docker_host');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        //
+        $field = new xmldb_field('docker_pass', XMLDB_TYPE_CHAR, '64', null, null, null, '', 'docker_user');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
 
     return true;
 }

@@ -28,6 +28,7 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 /**
  * Module instance settings form.
+q
  *
  * @package     mod_mdlds
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
@@ -38,14 +39,14 @@ class mod_mdlds_mod_form extends moodleform_mod {
     /**
      * Defines forms elements
      */
-    public function definition() {
+    public function definition()
+    {
         global $CFG;
 
         $mform = $this->_form;
 
-        // Adding the "general" fieldset, where all the common settings are shown.
+        //-------------------------------------------------------------------------------
         $mform->addElement('header', 'general', get_string('general', 'form'));
-
         // Adding the standard "name" field.
         $mform->addElement('text', 'name', get_string('mdldsname', 'mod_mdlds'), array('size' => '64'));
 
@@ -61,19 +62,37 @@ class mod_mdlds_mod_form extends moodleform_mod {
 
         // Adding the standard "intro" and "introformat" fields.
         if ($CFG->branch >= 29) {
-            $this->standard_intro_elements();
+            $this->standard_intro_elements(get_string('description', 'mod_mdlds'));
         } else {
-            $this->add_intro_editor();
+            $this->add_intro_editor(true, get_string('description', 'mod_mdlds'));
         }
 
-        // Adding the rest of mod_mdlds settings, spreading all them into this fieldset
-        // ... or adding more fieldsets ('header' elements) if needed for better logic.
-        $mform->addElement('static', 'label1', 'mdldssettings', get_string('mdldssettings', 'mod_mdlds'));
+        //-------------------------------------------------------------------------------
         $mform->addElement('header', 'mdldsfieldset', get_string('mdldsfieldset', 'mod_mdlds'));
 
+        $mform->addElement('text', 'docker_host', get_string('docker_host', 'mod_mdlds'), array('size' => '64'));
+        $mform->addHelpButton('docker_host', 'docker_host', 'mod_mdlds');
+        $mform->setType('docker_host', PARAM_TEXT);
+        $mform->setDefault('docker_host', 'localhost');
+
+        $mform->addElement('text', 'docker_user', get_string('docker_user', 'mod_mdlds'), array('size' => '32'));
+        $mform->addHelpButton('docker_user', 'docker_user', 'mod_mdlds');
+        $mform->setType('docker_user', PARAM_TEXT);
+        $mform->setDefault('docker_user', 'docker');
+
+        $mform->addElement('password', 'docker_pass', get_string('docker_pass', 'mod_mdlds'), array('size' => '32'));
+        $mform->addHelpButton('docker_pass', 'docker_pass', 'mod_mdlds');
+        $mform->setType('docker_pass', PARAM_TEXT);
+        $mform->setDefault('docker_pass', '');
+
+
+
+
+        //-------------------------------------------------------------------------------
         // Add standard elements.
         $this->standard_coursemodule_elements();
 
+        //-------------------------------------------------------------------------------
         // Add standard buttons.
         $this->add_action_buttons();
     }

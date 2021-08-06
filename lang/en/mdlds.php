@@ -29,7 +29,17 @@ $string['pluginname'] = 'MDLDockerSpawner';
 $string['modulename'] = 'Moodle DockerSpawner';
 $string['modulenameplural'] = 'MDLDockerSpawners';
 
+// mod_form
 $string['mdldsname']  = 'Name ';
+$string['description'] = 'Description';
+$string['mdldsname_help'] = 'Name of this instance of module';
+$string['mdldsfieldset'] = 'Options of Moodle DockerSpawner module';
+$string['docker_host'] = 'Docker host';
+$string['docker_host_help'] = 'IP address or FQDN of docker host';
+$string['docker_user'] = 'Docker user';
+$string['docker_user_help'] = 'Name of user that belongs docker group on docker host. This user should not have an executable shell';
+$string['docker_pass'] = 'Password of docker user';
+$string['docker_pass_help'] = 'Password of docker user';
 //$string['mdldsfieldset'] = 'Field set';
 //$string['mdldssettings'] = 'Settings';
 

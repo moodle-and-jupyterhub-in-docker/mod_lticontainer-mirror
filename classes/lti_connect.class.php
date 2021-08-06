@@ -47,7 +47,7 @@ class  LTIConnect
         global $DB;
 
         $sort   = '';
-        $fields = 'id, name, instructorcustomparameters';
+        $fields = 'id,name,instructorcustomparameters';
         $this->items = $DB->get_records('lti', array('course' => $this->courseid), $sort, $fields);
 
         return true;

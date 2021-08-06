@@ -60,7 +60,37 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
 }
     
 
+function docker_exec($cmd, $mi)
+{
+    $rslts  = array();
+    $local_docker = true;
 
+    if ($mi->docker_host=='') {
+        return $rslts;
+    }
+    else if ($mi->docker_host=='localhost' or $mi->docker_host=='127.0.0.1') {
+        $unix_socket = '/var/run/docker.sock';
+    }
+    else {
+        $local_docker = false;
+        $socket_dir   = '/tmp';
+        $unix_socket  = $socket_dir.'/mdlds_'.$mi->docker_host.'.sock';
+        $socket_cmd   = __DIR__.'/sh/docker_rsock.sh '.$mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_dir;
+        if (!file_exists($unix_socket)) {
+            exec($socket_cmd);
+        }
+    }
+
+    $docker_cmd = '/usr/bin/docker -H unix://'.$unix_socket.' '.$cmd;
+    exec($docker_cmd, $rslts);
+
+    if (empty($rslts) and !$local_docker) {
+        exec($socket_cmd);
+        exec($docker_cmd, $rslts);
+    }
+
+    return $rslts;
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////

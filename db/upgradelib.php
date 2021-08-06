@@ -28,7 +28,8 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Helper function used by the upgrade.php file.
  */
-function mod_mdlds_helper_function() {
+function mod_mdlds_helper_function()
+{
     global $DB;
 
     // Please note: you can only use raw low level database access here.

@@ -86,7 +86,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_edit.class.php');
 
-$lti_edit = new LTIEdit($cmid, $courseid);
+$lti_edit = new LTIEdit($cmid, $courseid, $minstance);
 
 $lti_edit->set_condition();
 $lti_edit->execute();
