@@ -1,7 +1,6 @@
 <?php
 
-
-function show_lti_edit_table_cmd($cmds)
+function show_lti_edit_table_cmd($cmds, $images)
 {
     $table = new html_table();
     //
@@ -10,7 +9,7 @@ function show_lti_edit_table_cmd($cmds)
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Name/Users';
+    $table->head [] = 'Users/Image Name';
     $table->align[] = 'left';
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';
@@ -32,22 +31,29 @@ function show_lti_edit_table_cmd($cmds)
     if (!isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))   $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]   = '';
 
     // MDLDS_LTI_USER_CMD
-    $table->data[$i][] = get_string('user_cmd_ttl', 'mdlds');
+    $table->data[$i][] = '<strong>'.get_string('user_cmd_ttl', 'mdlds').'</strong>';
     $table->data[$i][] = '<input type="text" name="users" size="50" maxlength="200" value="'.$cmds->custom_cmd[MDLDS_LTI_USER_CMD].'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
 
     // MDLDS_LTI_TEACHER_CMD
-    $table->data[$i][] = get_string('teacher_cmd_ttl', 'mdlds');
+    $table->data[$i][] = '<strong>'.get_string('teacher_cmd_ttl', 'mdlds').'</strong>';
     $table->data[$i][] = '<input type="text" name="teachers" size="50" maxlength="200" value="'.$cmds->custom_cmd[MDLDS_LTI_TEACHER_CMD].'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
 
+
     // MDLDS_LTI_IMAGE_CMD
-    $table->data[$i][] = get_string('image_cmd_ttl', 'mdlds');
-    $table->data[$i][] = '<input type="text" name="image" size="25" maxlength="50" value="'.$cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD].'" />';
+    $select_opt = '';
+    foreach($images as $image) {
+        $selected = '';
+        if ($image==$cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$image.'" '.$selected.'>'.$image.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('image_cmd_ttl', 'mdlds').'</strong>';
+    $table->data[$i][] = '<select name="image" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
@@ -79,7 +85,7 @@ function show_lti_edit_table_vol($cmds)
     $table->size [] = '150px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Name/Users';
+    $table->head [] = 'Accessible Users';
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
@@ -91,7 +97,7 @@ function show_lti_edit_table_vol($cmds)
     // Mount Volumes
     if (isset($cmds->mount_vol)) {
         $select_opt  = '<option value="'.MDLDS_LTI_VOLUME_CMD.'" selected="selected" />'.get_string('vol_cmd_ttl', 'mdlds').'</option>';
-        $select_opt .= '<option value="'.MDLDS_LTI_SUBMIT_CMD.'" />'.get_string('vol_cmd_ttl', 'mdlds').'</option>';
+        $select_opt .= '<option value="'.MDLDS_LTI_SUBMIT_CMD.'" />'.get_string('sub_cmd_ttl', 'mdlds').'</option>';
         foreach($cmds->mount_vol as $key => $value) { 
             if (!isset($cmds->vol_user[$key])) $cmds->vol_user[$key] = '';
             $table->data[$i][] = '<select name="vol_cmd_'.$i.'" autocomplete="off">'.$select_opt.'</select>'; 
@@ -116,7 +122,7 @@ function show_lti_edit_table_vol($cmds)
         }
     }
 
-    $table->data[$i][] = ''; 
+    $table->data[$i][] = '<strong>New Volumes</strong>'; 
     $i++;
 
     // New Volumes
@@ -139,9 +145,9 @@ function show_lti_edit_table_vol($cmds)
 
 
 
-function show_lti_edit_table($cmds)
+function show_lti_edit_table($cmds, $images)
 {
-    show_lti_edit_table_cmd($cmds);
+    show_lti_edit_table_cmd($cmds, $images);
     echo '<hr />';
     show_lti_edit_table_vol($cmds);
 }

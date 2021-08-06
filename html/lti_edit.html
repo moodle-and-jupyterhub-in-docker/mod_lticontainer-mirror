@@ -1,26 +1,41 @@
 <?php require_once(__DIR__.'/../html/lti_edit_table.php'); ?>
 
-<style type="text/css">
-  <?php include(__DIR__."../html/styles.css"); ?>
+<style type='text/css'>
+  <?php include(__DIR__.'../html/styles.css'); ?>
 </style>
 
-<table align="center" class="generalbox">
+<table align='center' class='generalbox'>
   <tr>
-    <td align="center">
-      <table border="0" style="margin: 0px 0px 0px 0px;">
+    <td align='center'>
+      <table border='0' style='margin: 0px 0px 0px 0px;'>
         <tr><td>
-          <?php echo $OUTPUT->heading(get_string('lti_connect','mdlds').' :: '.get_string('lti_edit','mdlds')); ?>
+          <?php echo $OUTPUT->heading(get_string('lti_edit','mdlds').' :: '.$this->ltirec->name); ?>
         </td></tr>
       </table>
     </td>
   </tr>
   <tr>
-    <td class="generalboxcontent" align="center">
+    <td class='generalboxcontent' align='center'>
 
-      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
-        <table border="0" align="center" cellpadding="0" cellspacing="0">
+      <form name='gsess' method='post' action='<?php echo $this->action_url;?>'>
+        <table border='0' align='center' cellpadding='0' cellspacing='0'>
           <tr>
-            <?php show_lti_edit_table($this->custom_cmds); ?>
+            <?php show_lti_edit_table($this->custom_cmds, $this->images); ?>
+          </tr>
+          <tr>
+            <td align='center'>
+              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
+              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
+              <input type='hidden' name='ltiid'   value='<?php echo $this->ltirec->id;?>' />
+              <input type='hidden' name='others'  value='<?php echo serialize($this->custom_cmds->other_cmd);?>' />
+              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
+              <input type='submit' name='submit_lti_update'  value='<?php echo get_string("update");?>' />
+              &nbsp;&nbsp;
+              <input type='reset' name='reset'  value='<?php echo get_string("reset");?>' />
+            </td>
+          </tr>
+          <tr>
+            <td></td>
           </tr>
         </table>
       </form>

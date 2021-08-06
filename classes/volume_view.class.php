@@ -49,7 +49,7 @@ class  VolumeView
         global $DB;
 
         $rslts = array();
-        exec('docker -H unix:///var/run/mdlds_172.22.1.75.sock volume ls', $rslts);
+        exec('/usr/bin/docker -H unix:///var/run/mdlds_172.22.1.75.sock volume ls', $rslts);
 
         $check_course = '_'.$this->courseid;
         $len_check = strlen($check_course);

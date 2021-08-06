@@ -54,3 +54,13 @@ $string['lti_edit'] = 'LTI Edit';
 $string['volume_view'] = 'Volume View';
 $string['volume_name'] = 'Volume Name';
 
+// LTI Edit
+$string['user_cmd_ttl'] = 'Accessible users';
+$string['teacher_cmd_ttl'] = 'Teachers';
+$string['image_cmd_ttl'] = 'Container image';
+$string['vol_cmd_ttl'] = 'Mount  volume';
+$string['sub_cmd_ttl'] = 'Submit volume';
+
+
+
+

@@ -73,6 +73,7 @@ $PAGE->set_url('/mod/mdlds/view.php', array('id' => $cm->id, 'm' => $instanceid)
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
+
 echo $OUTPUT->header();
 
 
