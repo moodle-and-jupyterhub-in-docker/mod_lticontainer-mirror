@@ -10,7 +10,7 @@ function show_demo_disp_table($items, $base_url)
     $table->size [] = '20px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('lti_name','mdlds');
+    $table->head [] = get_string('lti_name','mod_mdlds');
     $table->align[] = 'center';
     $table->size [] = '60px';
     $table->wrap [] = 'nowrap';

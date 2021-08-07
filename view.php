@@ -68,7 +68,7 @@ $event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:over_view', 'mdlds'));
+$PAGE->navbar->add(get_string('mdlds:over_view', 'mod_mdlds'));
 $PAGE->set_url('/mod/mdlds/view.php', array('id' => $cm->id, 'm' => $instanceid));
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));

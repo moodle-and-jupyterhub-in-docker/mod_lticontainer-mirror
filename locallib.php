@@ -60,44 +60,51 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
 }
  
 
+function docker_socket($mi, $socket_file)
+{
+    $socket_cmd = __DIR__.'/sh/docker_rsock.sh '.$mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
+
+    $rslts = array();
+    $home_dir = posix_getpwuid(posix_geteuid())['dir'];
+    if (!is_writable($home_dir)) {
+        $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
+        return $rslts;
+    }
+    exec($socket_cmd);
+
+    return $rslts;
+}
+
+
+
+
 
 function docker_exec($cmd, $mi)
 {
     $rslts = array();
     $local_docker = true;
+    $socket_file  = '/xtmp/mdlds_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
     }
     else if ($mi->docker_host=='localhost' or $mi->docker_host=='127.0.0.1') {
-        $unix_socket = '/var/run/docker.sock';
+        $socket_file = '/var/run/docker.sock';
     }
     else {
         $local_docker = false;
-        $socket_dir   = '/tmp';
-        $unix_socket  = $socket_dir.'/mdlds_'.$mi->docker_host.'.sock';
-        $socket_cmd   = __DIR__.'/sh/docker_rsock.sh '.$mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_dir;
-
-        if (!file_exists($unix_socket)) {
-            $home_dir = posix_getpwuid(posix_geteuid())['dir'];
-            if (!is_writable($home_dir)) {
-                $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
-                return $rslts;
-            }
-            exec($socket_cmd);
+        if (!file_exists($socket_file)) {
+            $rslts = docker_socket($mi, $socket_file);
+            if (!empty($rslts)) return $rslts;          // error
         }
     }
 
-    $docker_cmd = '/usr/bin/docker -H unix://'.$unix_socket.' '.$cmd;
+    $docker_cmd = '/usr/bin/docker -H unix://'.$socket_file.' '.$cmd;
     exec($docker_cmd, $rslts);
 
     if (empty($rslts) and !$local_docker) {
-        $home_dir = posix_getpwuid(posix_geteuid())['dir'];
-        if (!is_writable($home_dir)) {
-            $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
-            return $rslts;
-        }
-        exec($socket_cmd);
+        $rslts = docker_socket($mi, $socket_file);
+        if (!empty($rslts)) return $rslts;              // error
         exec($docker_cmd, $rslts);
     }
 
@@ -175,25 +182,30 @@ function mdlds_join_custom_params($formdata)
     $param = MDLDS_LTI_IMAGE_CMD.'='.$formdata->mdl_image;
     $custom_params .= $param."\r\n";
 
+    // Volume
+    $vol_array = array();
     $i = 0;
     foreach ($formdata->mdl_vol_ as $vol) {
         if ($formdata->mdl_vol_name[$i]!='' and $formdata->mdl_vol_disp[$i]!='') {
             if ($vol==MDLDS_LTI_VOLUME_CMD) {
                 $user = '';
                 if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
-                $param = MDLDS_LTI_VOLUME_CMD.$formdata->mdl_vol_name[$i].'='.$formdata->mdl_vol_disp[$i].$user;
-                $custom_params .= $param."\r\n";
+                $vol_array[MDLDS_LTI_VOLUME_CMD.$formdata->mdl_vol_name[$i]] = $formdata->mdl_vol_disp[$i].$user;
             }
             else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
                 $user = '';
                 if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
-                $param = MDLDS_LTI_SUBMIT_CMD.$formdata->mdl_vol_name[$i].'='.$formdata->mdl_vol_disp[$i].$user;
-                $custom_params .= $param."\r\n";
+                $vol_array[MDLDS_LTI_SUBMIT_CMD.$formdata->mdl_vol_name[$i]] = $formdata->mdl_vol_disp[$i].$user;
             }
         }
         $i++;
     }
 
+    foreach ($vol_array as $key=>$value) {
+        $custom_params .= $key.'='.$value."\r\n";
+    }    
+
+    //
     if (isset($formdata->others)) {
         $other_cmds = unserialize($formdata->others);
         foreach ($other_cmds as $cmd=>$value) {

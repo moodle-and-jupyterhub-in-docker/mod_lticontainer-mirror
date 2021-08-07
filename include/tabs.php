@@ -47,35 +47,35 @@ if (!isset($current_tab)) {
 
 // Overview
 $viewurl = new moodle_url('/mod/mdlds/view.php', array('id'=>$used_id, 'do'=>'over_view'));
-$row[]   = new tabobject('over_view', $viewurl->out(), get_string('over_view', 'mdlds'));
+$row[]   = new tabobject('over_view', $viewurl->out(), get_string('over_view', 'mod_mdlds'));
 
 // for Demo
 //$demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_id, 'do'=>'show_demo'));
-//$row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
+//$row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mod_mdlds'));
 
 // View LTI Connections
 if (has_capability('mod/mdlds:lti_connect', $context)) {
     $url_params = array('id'=>$used_id, 'do'=>'lti_connect');
     $cnnect_url = new moodle_url('/mod/mdlds/actions/lti_connect.php', $url_params);
-    $row[]      = new tabobject('lti_connect', $cnnect_url->out(), get_string('lti_connect', 'mdlds'));
+    $row[]      = new tabobject('lti_connect', $cnnect_url->out(), get_string('lti_connect', 'mod_mdlds'));
 }
 
 // View LTI Edit
 if ($current_tab=='lti_edit' and has_capability('mod/mdlds:lti_edit', $context)) {
     $url_params = array('id'=>$used_id, 'do'=>'lti_edit');
     $cnnect_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $url_params);
-    $row[]      = new tabobject('lti_edit', $cnnect_url->out(), get_string('lti_edit', 'mdlds'));
+    $row[]      = new tabobject('lti_edit', $cnnect_url->out(), get_string('lti_edit', 'mod_mdlds'));
 }
 
 // View Volumes
 if (has_capability('mod/mdlds:volume_view', $context)) {
     $url_params = array('id'=>$used_id, 'do'=>'volume_view');
     $volume_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $url_params);
-    $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mdlds'));
+    $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mod_mdlds'));
 }
 
 // Return to Course
-$row[] = new tabobject('', $CFG->wwwroot.'/course/view.php?id='.$courseid, get_string('returnto_course', 'mdlds'));
+$row[] = new tabobject('', $CFG->wwwroot.'/course/view.php?id='.$courseid, get_string('returnto_course', 'mod_mdlds'));
 
 //
 if (count($row) > 1) {

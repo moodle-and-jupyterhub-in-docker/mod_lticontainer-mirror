@@ -69,7 +69,7 @@ $this_url = new moodle_url($base_url);
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:lti_connect', 'mdlds'));
+$PAGE->navbar->add(get_string('mdlds:lti_connect', 'mod_mdlds'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));

@@ -10,22 +10,22 @@ function show_volume_view_table($items, $base_url)
     $table->size [] = '10px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('driver_name','mdlds');
+    $table->head [] = get_string('driver_name','mod_mdlds');
     $table->align[] = 'center';
     $table->size [] = '30px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_name','mdlds');
+    $table->head [] = get_string('volume_name','mod_mdlds');
     $table->align[] = 'center';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_role','mdlds');
+    $table->head [] = get_string('volume_role','mod_mdlds');
     $table->align[] = 'center';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_delete','mdlds');
+    $table->head [] = get_string('volume_delete','mod_mdlds');
     $table->align[] = 'center';
     $table->size [] = '80px';
     $table->wrap [] = 'nowrap';

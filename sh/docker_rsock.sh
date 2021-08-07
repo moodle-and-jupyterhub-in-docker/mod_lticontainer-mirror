@@ -1,15 +1,14 @@
 #!/bin/bash
 #
-#  ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp
+#  ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
 #  docker -H unix:///tmp/mdlds_docker.hogebar.jp.sock ps
 #
 
-if [ -n "$PASSWORD" ]; then
-    echo "$PASSWORD"
+if [ -n "$SSH_PASSWORD" ]; then
+    echo $SSH_PASSWORD
     exit 0
 fi
 
-#
 #
 if [ $# -lt 3 ]; then
     exit 1
@@ -20,23 +19,24 @@ printf -v SSH_USER '%q' "$2"
 printf -v SSH_PASS '%q' "$3"
 
 if [ "$4" != "" ]; then
-    printf -v SOCK_DIR '%q' "$4"
+    printf -v LLSOCKET '%q' "$4"
 else
-    SOCK_DIR="/tmp"
+    LLSOCKET=/tmp/mdlds_${SSH_HOST}.sock
 fi
 
 WEBGROUP=`groups`
-LLSOCKET=${SOCK_DIR}/mdlds_${SSH_HOST}.sock
 RTSOCKET=/var/run/docker.sock
 
 #
-export PASSWORD=$SSH_PASS
+export SSH_PASSWORD=$SSH_PASS
 export SSH_ASKPASS=$0
 export DISPLAY=:0.0
 
 rm -f $LLSOCKET
+ps ax | grep ssh | grep "${LLSOCKET}:${RTSOCKET}" | awk -F" " '{print $1}' | xargs kill -9 
+
 #
-setsid ssh -o StrictHostKeyChecking=no -fNL $LLSOCKET:$RTSOCKET $SSH_USER@$SSH_HOST 
+setsid ssh -oStrictHostKeyChecking=no -oServerAliveInterval=120 -oServerAliveCountMax=3 -fNL ${LLSOCKET}:${RTSOCKET} ${SSH_USER}@${SSH_HOST} 
 
 #
 CNT=0
@@ -50,3 +50,4 @@ done
 
 chmod g+rw $LLSOCKET
 chgrp $WEBGROUP $LLSOCKET
+

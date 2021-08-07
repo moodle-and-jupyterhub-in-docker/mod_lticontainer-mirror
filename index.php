@@ -44,13 +44,13 @@ include(__DIR__.'/html/styles.css');
 echo '</style>';
 
 
-$modulenameplural = get_string('modulenameplural', 'mdlds');
+$modulenameplural = get_string('modulenameplural', 'mod_mdlds');
 echo $OUTPUT->heading($modulenameplural);
 
 $mdldss = get_all_instances_in_course('mdlds', $course);
 
 if (empty($mdldss)) {
-    notice(get_string('no$mdldsinstances', 'mdlds'), new moodle_url('/course/view.php', array('id' => $course->id)));
+    notice(get_string('no$mdldsinstances', 'mod_mdlds'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();

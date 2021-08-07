@@ -75,7 +75,7 @@ if (data_submitted()) {
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:lti_edit', 'mdlds'));
+$PAGE->navbar->add(get_string('mdlds:lti_edit', 'mod_mdlds'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
