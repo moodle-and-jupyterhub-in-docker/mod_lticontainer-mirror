@@ -50,8 +50,8 @@ $viewurl = new moodle_url('/mod/mdlds/view.php', array('id'=>$used_id, 'do'=>'ov
 $row[]   = new tabobject('over_view', $viewurl->out(), get_string('over_view', 'mdlds'));
 
 // for Demo
-$demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_id, 'do'=>'show_demo'));
-$row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
+//$demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_id, 'do'=>'show_demo'));
+//$row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
 
 // View LTI Connections
 if (has_capability('mod/mdlds:lti_connect', $context)) {
