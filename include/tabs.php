@@ -53,13 +53,6 @@ $row[]   = new tabobject('over_view', $viewurl->out(), get_string('over_view', '
 $demourl = new moodle_url('/mod/mdlds/actions/show_demo.php', array('id'=>$used_id, 'do'=>'show_demo'));
 $row[]   = new tabobject('show_demo', $demourl->out(), get_string('show_demo', 'mdlds'));
 
-// View Volumes
-if (has_capability('mod/mdlds:volume_view', $context)) {
-    $url_params = array('id'=>$used_id, 'do'=>'volume_view', 'sort'=>'time_modified', 'order'=>'DESC');
-    $volume_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $url_params);
-    $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mdlds'));
-}
-
 // View LTI Connections
 if (has_capability('mod/mdlds:lti_connect', $context)) {
     $url_params = array('id'=>$used_id, 'do'=>'lti_connect');
@@ -72,6 +65,13 @@ if ($current_tab=='lti_edit' and has_capability('mod/mdlds:lti_edit', $context))
     $url_params = array('id'=>$used_id, 'do'=>'lti_edit');
     $cnnect_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $url_params);
     $row[]      = new tabobject('lti_edit', $cnnect_url->out(), get_string('lti_edit', 'mdlds'));
+}
+
+// View Volumes
+if (has_capability('mod/mdlds:volume_view', $context)) {
+    $url_params = array('id'=>$used_id, 'do'=>'volume_view', 'sort'=>'time_modified', 'order'=>'DESC');
+    $volume_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $url_params);
+    $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mdlds'));
 }
 
 // Return to Course
