@@ -177,7 +177,7 @@ function mdlds_join_custom_params($formdata)
 
     $i = 0;
     foreach ($formdata->mdl_vol_ as $vol) {
-        if ($formdata->mdl_vol_name[$i]!='') {
+        if ($formdata->mdl_vol_name[$i]!='' and $formdata->mdl_vol_disp[$i]!='') {
             if ($vol==MDLDS_LTI_VOLUME_CMD) {
                 $user = '';
                 if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
