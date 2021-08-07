@@ -40,8 +40,6 @@ class  VolumeView
 
     function  set_condition() 
     {
-        $this->order = optional_param('order', '', PARAM_TEXT);
-
         return true;
     }
 

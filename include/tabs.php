@@ -69,7 +69,7 @@ if ($current_tab=='lti_edit' and has_capability('mod/mdlds:lti_edit', $context))
 
 // View Volumes
 if (has_capability('mod/mdlds:volume_view', $context)) {
-    $url_params = array('id'=>$used_id, 'do'=>'volume_view', 'sort'=>'time_modified', 'order'=>'DESC');
+    $url_params = array('id'=>$used_id, 'do'=>'volume_view');
     $volume_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $url_params);
     $row[]      = new tabobject('volume_view', $volume_url->out(), get_string('volume_view', 'mdlds'));
 }
