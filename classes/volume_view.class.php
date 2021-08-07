@@ -55,12 +55,15 @@ class  VolumeView
             }
             $this->submitted  = true;
             
-            $deletes = $formdata->delete;
-            foreach ($deletes as $del=>$value) {
-                docker_exec('volume rm '.$del, $this->minstance);
-            } 
+            if (property_exists($formdata, 'delete')) {
+                $deletes = $formdata->delete;
+                foreach ($deletes as $del=>$value) {
+                    docker_exec('volume rm '.$del, $this->minstance);
+                 } 
+            }
         }
 
+        //
         $rslts = docker_exec('volume ls', $this->minstance);
         if (isset($rslts['error'])) {
             print_error($rslts['error'], 'mdlds', $this->action_url, $rslts['home_dir']);
