@@ -11,7 +11,7 @@
         <tr>
           <td bgcolor="#d8e8d8">&nbsp;</td>
           <td bgcolor="#d8e8d8">
-            <?php echo $OUTPUT->heading('<strong>'.get_string('lti_edit','mdlds').' :: '.$this->ltirec->name).'</strong>'; ?>
+            <?php echo $OUTPUT->heading('<strong>'.$this->ltirec->name.' :: '.get_string('lti_edit','mdlds').'</strong>'); ?>
           </td>
           <td bgcolor="#d8e8d8">&nbsp;</td>
         </tr>
@@ -46,8 +46,8 @@
       </form>
     </td>
   </tr>
+  <?php if ($this->minstance->custom_params and $this->custom_txt!='') { ?>
   <tr><td><hr /></td></tr>
-  <?php if ($this->custom_txt!='') { ?>
   <tr>
     <td class='generalboxcontent' align='center'>
       <table align='center' class='generalbox' cellpadding='4' cellspacing='1' border='1'>

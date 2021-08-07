@@ -74,7 +74,7 @@ if ($current_tab=='lti_edit' and has_capability('mod/mdlds:lti_edit', $context))
     $row[]      = new tabobject('lti_edit', $cnnect_url->out(), get_string('lti_edit', 'mdlds'));
 }
 
-// Return Course
+// Return to Course
 $row[] = new tabobject('', $CFG->wwwroot.'/course/view.php?id='.$courseid, get_string('returnto_course', 'mdlds'));
 
 //

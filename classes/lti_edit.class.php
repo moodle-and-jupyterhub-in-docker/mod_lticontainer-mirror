@@ -60,7 +60,7 @@ class  LTIEdit
         $fields = 'id, course, name, instructorcustomparameters, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
         if (!$this->ltirec) {
-            print_error('no_dataf_ound', 'mdlds', $this->action_url);
+            print_error('no_data_found', 'mdlds', $this->action_url);
         }
 
         // POST
@@ -77,6 +77,9 @@ class  LTIEdit
 
         //
         $rslts = docker_exec('images', $this->minstance);
+        if (isset($rslts['error'])) {
+            print_error($rslts['error'], 'mdlds', $this->action_url, $rslts['home_dir']);
+        }
 
         $i = 0;
         foreach ($rslts as $rslt) {

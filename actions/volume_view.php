@@ -44,8 +44,12 @@ $user_id  = $USER->id;
 require_login($course, true, $cm);
 //
 $mdlds_volume_view_cap = false;
+$mdlds_volume_edit_cap = false;
 if (has_capability('mod/mdlds:volume_view', $mcontext)) {
     $mdlds_volume_view = true;
+}
+if (has_capability('mod/mdlds:volume_edit', $mcontext)) {
+    $mdlds_volume_edit = true;
 }
 
 
@@ -80,7 +84,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/volume_view.class.php');
 
-$volume_view = new VolumeView($cmid, $courseid);
+$volume_view = new VolumeView($cmid, $courseid, $minstance);
 
 $volume_view->set_condition();
 $volume_view->execute();

@@ -58,11 +58,12 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
 
     return $event;
 }
-    
+ 
+
 
 function docker_exec($cmd, $mi)
 {
-    $rslts  = array();
+    $rslts = array();
     $local_docker = true;
 
     if ($mi->docker_host=='') {
@@ -76,7 +77,13 @@ function docker_exec($cmd, $mi)
         $socket_dir   = '/tmp';
         $unix_socket  = $socket_dir.'/mdlds_'.$mi->docker_host.'.sock';
         $socket_cmd   = __DIR__.'/sh/docker_rsock.sh '.$mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_dir;
+
         if (!file_exists($unix_socket)) {
+            $home_dir = posix_getpwuid(posix_geteuid())['dir'];
+            if (!is_writable($home_dir)) {
+                $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
+                return $rslts;
+            }
             exec($socket_cmd);
         }
     }
@@ -85,12 +92,18 @@ function docker_exec($cmd, $mi)
     exec($docker_cmd, $rslts);
 
     if (empty($rslts) and !$local_docker) {
+        $home_dir = posix_getpwuid(posix_geteuid())['dir'];
+        if (!is_writable($home_dir)) {
+            $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
+            return $rslts;
+        }
         exec($socket_cmd);
         exec($docker_cmd, $rslts);
     }
 
     return $rslts;
 }
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,3 +205,4 @@ function mdlds_join_custom_params($formdata)
     $custom_params = trim($custom_params);
     return $custom_params;
 }
+

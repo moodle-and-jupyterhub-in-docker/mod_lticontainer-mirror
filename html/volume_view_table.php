@@ -20,9 +20,14 @@ function show_volume_view_table($items, $base_url)
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_name','mdlds');
+    $table->head [] = get_string('volume_role','mdlds');
     $table->align[] = 'center';
     $table->size [] = '200px';
+    $table->wrap [] = 'nowrap';
+
+    $table->head [] = get_string('volume_delete','mdlds');
+    $table->align[] = 'center';
+    $table->size [] = '80px';
     $table->wrap [] = 'nowrap';
 
     //
@@ -30,8 +35,9 @@ function show_volume_view_table($items, $base_url)
     foreach($items as $item) { 
         $table->data[$i][] = $i;
         $table->data[$i][] = $item->driver;
-        $table->data[$i][] = $item->volname;
-        $table->data[$i][] = $item->command;
+        $table->data[$i][] = $item->shrtname;
+        $table->data[$i][] = $item->role;
+        $table->data[$i][] = '<input type="checkbox" name="delete['.$item->fullname.']" value="1" />';
         $i++;
     }
 

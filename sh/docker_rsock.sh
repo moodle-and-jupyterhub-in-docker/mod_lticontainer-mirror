@@ -22,7 +22,7 @@ printf -v SSH_PASS '%q' "$3"
 if [ "$4" != "" ]; then
     printf -v SOCK_DIR '%q' "$4"
 else
-    SOCK_DIR='/tmp'
+    SOCK_DIR="/tmp"
 fi
 
 WEBGROUP=`groups`

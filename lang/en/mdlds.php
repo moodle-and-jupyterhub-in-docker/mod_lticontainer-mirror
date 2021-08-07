@@ -25,6 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// module
 $string['pluginname'] = 'MDLDockerSpawner';
 $string['modulename'] = 'Moodle DockerSpawner';
 $string['modulenameplural'] = 'MDLDockerSpawners';
@@ -40,31 +41,41 @@ $string['docker_user'] = 'Docker user';
 $string['docker_user_help'] = 'Name of user that belongs docker group on docker host. This user should not have an executable shell';
 $string['docker_pass'] = 'Password of docker user';
 $string['docker_pass_help'] = 'Password of docker user';
-//$string['mdldsfieldset'] = 'Field set';
-//$string['mdldssettings'] = 'Settings';
+$string['show_custom_params'] = 'Show custom parameters';
+$string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
 
 // print_error
 $string['access_forbidden'] = 'Access forbidden';
-$string['invalid_sesskey'] = 'Invalid Session Key';
-$string['no_dataf_ound'] = 'No Data found!';
+$string['invalid_sesskey'] = 'Invalid session key';
+$string['no_data_found'] = 'No data found!';
+$string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions of {$a}';
+
+// パンくずメニュー
+$string['mdlds:over_view'] = 'Over View';
+$string['mdlds:show_demo'] = 'Demo';
+$string['mdlds:volume_view'] = 'Volumes';
+$string['mdlds:lti_connect'] = 'LTI Connections';
+$string['mdlds:lti_edit'] = 'LTI Edit';
 
 // tab
 $string['over_view'] = 'Over View';
 $string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
-$string['returnto_course'] = 'Return to Course';
-
-$string['mdlds:lti_connect'] = 'LTI Connections';   // パンくずメニュー
-$string['mdlds:lti_edit'] = 'LTI Edit';
-
-$string['lti_name'] = 'LTI Name';
 $string['lti_connect'] = 'LTI Connections';
 $string['lti_edit'] = 'LTI Edit';
+$string['returnto_course'] = 'Return';
 
-$string['volume_view'] = 'Volume View';
+// Table: LTI volume
+$string['volume_view'] = 'Volumes';
+$string['driver_name'] = 'Driver';
 $string['volume_name'] = 'Volume Name';
+$string['volume_role'] = 'Volume Role';
+$string['volume_delete'] = 'Delete';
 
-// LTI Edit
+// Table: LTI connect/edit
+$string['lti_name'] = 'LTI Name';
+
+// Title
 $string['user_cmd_ttl'] = 'Accessible users';
 $string['teacher_cmd_ttl'] = 'Teachers';
 $string['image_cmd_ttl'] = 'Container image';

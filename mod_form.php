@@ -85,7 +85,10 @@ class mod_mdlds_mod_form extends moodleform_mod {
         $mform->setType('docker_pass', PARAM_TEXT);
         $mform->setDefault('docker_pass', '');
 
-
+        $mform->addElement('selectyesno', 'custom_params', get_string('show_custom_params', 'mod_mdlds'));
+        $mform->addHelpButton('custom_params', 'show_custom_params', 'mod_mdlds');
+        $mform->setType('custom_params', PARAM_INT);
+        $mform->setDefault('custom_params', 0);
 
 
         //-------------------------------------------------------------------------------

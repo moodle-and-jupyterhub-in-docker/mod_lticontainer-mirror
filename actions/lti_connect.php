@@ -80,7 +80,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_connect.class.php');
 
-$lti_connection = new LTIConnect($cmid, $courseid);
+$lti_connection = new LTIConnect($cmid, $courseid, $minstance);
 
 $lti_connection->set_condition();
 $lti_connection->execute();

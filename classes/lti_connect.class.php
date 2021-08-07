@@ -5,6 +5,7 @@ class  LTIConnect
     var $cmid;
     var $courseid   = 0;
     var $course;
+    var $minstance;
 
     var $isGuest    = true;
 
@@ -14,13 +15,14 @@ class  LTIConnect
 
     var $items;
 
-    function  __construct($cmid, $courseid)
+    function  __construct($cmid, $courseid, $minstance)
     {
         global $DB;
         
-        $this->cmid     = $cmid;
-        $this->courseid = $courseid;
-        $this->course   = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+        $this->cmid      = $cmid;
+        $this->courseid  = $courseid;
+        $this->course    = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
+        $this->minstance = $minstance;
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/lti_connect.php', $this->url_params);
