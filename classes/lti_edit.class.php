@@ -77,7 +77,7 @@ class  LTIEdit
 
         //
         $rslts = docker_exec('images', $this->minstance);
-        if (isset($rslts['error'])) {
+        if (!empty($rslts) and isset($rslts['error'])) {
             print_error($rslts['error'], 'mdlds', $this->action_url, $rslts['home_dir']);
         }
 
@@ -85,8 +85,10 @@ class  LTIEdit
         foreach ($rslts as $rslt) {
             if ($i==0) $this->images[$i] = '';
             else {
+                $rslt  = preg_replace("/[<>]/", '', $rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);
+                if ($image[0]=='none' and isset($image[2])) $image[0] = $image[2];
                 $this->images[$i] = $image[0];
             }
             $i++;
