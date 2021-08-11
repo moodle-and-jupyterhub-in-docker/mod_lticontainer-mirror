@@ -1,6 +1,6 @@
 <?php
 
-function show_lti_edit_table_cmd($cmds, $images)
+function show_lti_edit_table_cmd($cmds, $images, $urls)
 {
     $table = new html_table();
     //
@@ -29,9 +29,11 @@ function show_lti_edit_table_cmd($cmds, $images)
     $user_cmd = '';
     $teacher_cmd = '';
     $image_cmd = '';
+    $url_cmd = '';
     if (isset($cmds->custom_cmd[MDLDS_LTI_USER_CMD]))    $user_cmd    = $cmds->custom_cmd[MDLDS_LTI_USER_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_TEACHER_CMD])) $teacher_cmd = $cmds->custom_cmd[MDLDS_LTI_TEACHER_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))   $image_cmd   = $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_URL_CMD]))     $url_cmd     = $cmds->custom_cmd[MDLDS_LTI_URL_CMD];
 
     // MDLDS_LTI_USER_CMD
     $table->data[$i][] = '<strong>'.get_string('user_cmd_ttl', 'mod_mdlds').'</strong>';
@@ -47,7 +49,6 @@ function show_lti_edit_table_cmd($cmds, $images)
     $table->data[$i][] = '';
     $i++;
 
-
     // MDLDS_LTI_IMAGE_CMD
     $select_opt = '';
     foreach($images as $image) {
@@ -60,6 +61,25 @@ function show_lti_edit_table_cmd($cmds, $images)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
+
+    // MDLDS_LTI_URL_CMD
+    $select_opt = '';
+    foreach($urls as $key=>$url) {
+        $selected = '';
+        if ($url==$url_cmd) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$url.'" '.$selected.'>'.$key.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('lab_url_cmd_ttl', 'mod_mdlds').'</strong>';
+    $table->data[$i][] = '<select name="'.MDLDS_LTI_URL_CMD.'" >'.$select_opt.'</select>';
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
+    $i++;
+
+    // dummy
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
 
     echo '<div align="center">';
     echo html_writer::table($table);
@@ -140,10 +160,9 @@ function show_lti_edit_table_vol($cmds)
 
 
 //
-function show_lti_edit_table($cmds, $images)
+function show_lti_edit_table($cmds, $images, $urls)
 {
-    show_lti_edit_table_cmd($cmds, $images);
-    echo '<hr />';
+    show_lti_edit_table_cmd($cmds, $images, $urls);
     show_lti_edit_table_vol($cmds);
 }
 

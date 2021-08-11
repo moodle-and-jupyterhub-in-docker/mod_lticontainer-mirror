@@ -13,6 +13,7 @@ class  LTIEdit
     var $ltiid      = 0;
     var $ltirec;
     var $images     = array();
+    var $lab_urls   = array();
 
     var $submitted  = false;
 
@@ -38,6 +39,7 @@ class  LTIEdit
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $this->url_params);
+        $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'NoteBook'=>'/tree');
 
         // for Guest
         $this->isGuest = isguestuser();
@@ -83,7 +85,7 @@ class  LTIEdit
 
         $i = 0;
         foreach ($rslts as $rslt) {
-            if ($i==0) $this->images[$i] = '';
+            if ($i==0) $this->images[$i] = 'default';
             else {
                 //$rslt  = preg_replace("/[<>]/", '', $rslt);
                 $rslt  = htmlspecialchars ($rslt);
