@@ -9,7 +9,7 @@ function show_lti_edit_table_cmd($cmds, $images, $urls)
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Users/Image Name';
+    $table->head [] = 'Users/Image';
     $table->align[] = 'left';
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';

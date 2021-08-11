@@ -30,4 +30,4 @@ $plugin->maturity = MATURITY_ALPHA;
 
 $plugin->release = '0.3.0';
 
-$plugin->version = 2021080700;
+$plugin->version = 2021081005;
