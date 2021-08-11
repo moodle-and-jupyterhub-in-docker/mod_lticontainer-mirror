@@ -85,10 +85,11 @@ class  LTIEdit
         foreach ($rslts as $rslt) {
             if ($i==0) $this->images[$i] = '';
             else {
-                $rslt  = preg_replace("/[<>]/", '', $rslt);
+                //$rslt  = preg_replace("/[<>]/", '', $rslt);
+                $rslt  = htmlspecialchars ($rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);
-                if ($image[0]=='none' and isset($image[2])) $image[0] = $image[2];
+                if ($image[0]=='&lt;none&gt;' and isset($image[2])) $image[0] = $image[2];
                 $this->images[$i] = $image[0];
             }
             $i++;
