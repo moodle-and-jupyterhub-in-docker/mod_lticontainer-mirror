@@ -25,6 +25,7 @@
 //require(__DIR__.'/../../../config.php');
 //require_once(__DIR__.'/../lib.php');
 
+file_put_contents("/xtmp/ZZZZZ", "xxxxxxxxxxxx", FILE_APPEND);
 
 $json = file_get_contents("php://input");
 $contents = json_decode($json, true);

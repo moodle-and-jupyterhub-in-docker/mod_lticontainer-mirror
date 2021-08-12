@@ -6,11 +6,6 @@ require_once("$CFG->libdir/externallib.php");
 require_once(dirname(__FILE__).'/classes/mdlds_webservice_handler.php');
 
 
-//
-// see https://docs.moodle.org/dev/Adding_a_web_service_to_a_plugin#Deprecation
-//
-
-
 class mod_mdlds_external extends external_api 
 {
     /**
@@ -35,22 +30,24 @@ class mod_mdlds_external extends external_api
 
 
 
+
     /**
     $data->host = ....;
     $data->session = ....;
     $params = array($data);
-    $post = xmlrpc_encode_request($functionname, $params);
+    $post = xmlrpc_encode_request($functionname, array($params));
     */
     public static function write_nb_data($data)
     {
         global $CFG, $DB;
 
-        $param = self::validate_parameters(self::write_nb_data_parameters(), array($data));
-    
-        $nb_data = (object)$param;
-        file_put_contents("/xtmp/ZZ", "++++++++++++++++++++++++\n", FILE_APPEND);
-        file_put_contents("/xtmp/ZZ", $nb_data->host."\n", FILE_APPEND);
-        file_put_contents("/xtmp/ZZ", $nb_data->session."\n", FILE_APPEND);
+        $params = self::validate_parameters(self::write_nb_data_parameters(), array('nb_data'=>$data));
+
+        foreach ($params['nb_data'] as $nb_data) {
+            $nb_data = (object)$nb_data;
+            file_put_contents("/xtmp/ZZ", $nb_data->host."\n", FILE_APPEND);
+            file_put_contents("/xtmp/ZZ", $nb_data->session."\n", FILE_APPEND);
+        }
 
         return $data;
     }
@@ -62,10 +59,12 @@ class mod_mdlds_external extends external_api
     {
         return new external_function_parameters(
             array (
-                new external_single_structure(
-                    array(
-                        'host' => new external_value(PARAM_TEXT, 'server or client'),
-                        'session' => new external_value(PARAM_TEXT, 'session id'),
+                'nb_data' => new external_multiple_structure (
+                    new external_single_structure(
+                        array (
+                            'host' => new external_value(PARAM_TEXT, 'server or client'),
+                            'session' => new external_value(PARAM_TEXT, 'session id'),
+                        )
                     )
                 )
             )
@@ -76,10 +75,12 @@ class mod_mdlds_external extends external_api
     //
     public static function write_nb_data_returns()
     {
-        return new external_single_structure(
-            array (
-                'host' => new external_value(PARAM_TEXT, 'server or client'),
-                'session' => new external_value(PARAM_TEXT, 'session id'),
+        return new external_multiple_structure(
+            new external_single_structure(
+                array (
+                    'host' => new external_value(PARAM_TEXT, 'server or client'),
+                    'session' => new external_value(PARAM_TEXT, 'session id'),
+                )
             )
         );
     }
