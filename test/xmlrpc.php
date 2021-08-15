@@ -1,7 +1,7 @@
 <?php
 
 /// SETUP - NEED TO BE CHANGED
-$token = '6807de8a19ed1e1db10c0895abf6714c';
+$token = 'deaf443d3a403c5cb5847dd352683e0d';
 $domainname = 'https://el.mml.tuis.ac.jp';
 $functionname = 'mod_mdlds_write_nbdata';
 
@@ -27,7 +27,7 @@ require_once('./curl.php');
 $curl = new curl;
 //$post = xmlrpc_encode_request($functionname, array($params));
 $post = xmlrpc_encode_request($functionname, $params);
-echo $serverurl;
-echo $post;
+//echo $serverurl;
+//echo $post;
 $resp = xmlrpc_decode($curl->post($serverurl, $post));
 print_r($resp);

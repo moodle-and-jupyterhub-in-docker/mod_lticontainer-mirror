@@ -6,17 +6,17 @@
   <TABLES>
     <TABLE NAME="mdlds" COMMENT="Stores the mdlds activity module instances.">
       <FIELDS>
-        <FIELD NAME="id"            TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
-        <FIELD NAME="course"        TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
-        <FIELD NAME="name"          TYPE="char" LENGTH="255" NOTNULL="true"              SEQUENCE="false" COMMENT="The name of the activity module instance"/>
-        <FIELD NAME="timecreated"   TYPE="int"  LENGTH="10"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was added to the course."/>
-        <FIELD NAME="timemodified"  TYPE="int"  LENGTH="10"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
-        <FIELD NAME="intro"         TYPE="text"              NOTNULL="false"             SEQUENCE="false" COMMENT="Activity description."/>
-        <FIELD NAME="introformat"   TYPE="int"  LENGTH="4"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="The format of the intro field."/>
+        <FIELD NAME="id"            TYPE="int"  LENGTH="10"  NOTNULL="true"               SEQUENCE="true"/>
+        <FIELD NAME="course"        TYPE="int"  LENGTH="10"  NOTNULL="true"               SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
+        <FIELD NAME="name"          TYPE="char" LENGTH="255" NOTNULL="true"               SEQUENCE="false" COMMENT="The name of the activity module instance"/>
+        <FIELD NAME="timecreated"   TYPE="int"  LENGTH="10"  NOTNULL="true"  DEFAULT="0"  SEQUENCE="false" COMMENT="Timestamp of when the instance was added to the course."/>
+        <FIELD NAME="timemodified"  TYPE="int"  LENGTH="10"  NOTNULL="true"  DEFAULT="0"  SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
+        <FIELD NAME="intro"         TYPE="text"              NOTNULL="false"              SEQUENCE="false" COMMENT="Activity description."/>
+        <FIELD NAME="introformat"   TYPE="int"  LENGTH="4"   NOTNULL="true"  DEFAULT="0"  SEQUENCE="false" COMMENT="The format of the intro field."/>
         <FIELD NAME="docker_host"   TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT=""/>
         <FIELD NAME="docker_user"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT="docker"    SEQUENCE="false" COMMENT=""/>
         <FIELD NAME="docker_pass"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""          SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="custom_params" TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0"         SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="custom_params" TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0"         SEQUENCE="false" COMMENT="show custom parameters"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>
@@ -24,31 +24,42 @@
       </KEYS>
     </TABLE>
 
-    <TABLE NAME="mdlds_websock_server" COMMENT="Websocket server data">
+    <TABLE NAME="mdlds_websock_data" COMMENT="Websocket server/client data">
       <FIELDS>
-        <FIELD NAME="id"           TYPE="int"  LENGTH="10"  NOTNULL="true"               SEQUENCE="true"/>
-        <FIELD NAME="course"       TYPE="int"  LENGTH="10"  NOTNULL="true"               SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
-        <FIELD NAME="session"      TYPE="char" LENGTH="48"  NOTNULL="false"              SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="prntsession"  TYPE="char" LENGTH="48"  NOTNULL="false"              SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="messageid"    TYPE="char" LENGTH="48"  NOTNULL="false"              SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="username"     TYPE="char" LENGTH="32"  NOTNULL="false"              SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="status"       TYPE="char" LENGTH="10"  NOTNULL="true"  DEFAULT="ok" SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="date"         TYPE="char" LENGTH="32"  NOTNULL="true"  DEFAULT="0"  SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
+        <FIELD NAME="host"     TYPE="char" LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="server or client that data from"/>
+        <FIELD NAME="session"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="message"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="message id"/>
+        <FIELD NAME="status"   TYPE="char" LENGTH="10"  NOTNULL="false"             SEQUENCE="false" COMMENT="status of user operation"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="32"  NOTNULL="false"             SEQUENCE="false" COMMENT="user name"/>
+        <FIELD NAME="cell_id"  TYPE="char" LENGTH="42"  NOTNULL="false"             SEQUENCE="false" COMMENT="cell id that is operated"/>
+        <FIELD NAME="date"     TYPE="char" LENGTH="32"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
+        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
 
-    <TABLE NAME="mdlds_websock_client" COMMENT="Websocket client data">
+    <TABLE NAME="mdlds_websock_session" COMMENT="Websocket session with LTI id">
       <FIELDS>
-        <FIELD NAME="id"           TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
-        <FIELD NAME="course"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="ID of the course this activity is part of."/>
-        <FIELD NAME="session"      TYPE="char" LENGTH="48"  NOTNULL="false"             SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="messageid"    TYPE="char" LENGTH="48"  NOTNULL="false"             SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="cellid"       TYPE="char" LENGTH="48"  NOTNULL="false"             SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="tags"         TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT=""/>
-        <FIELD NAME="date"         TYPE="char" LENGTH="32"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT=""/>
+        <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
+        <FIELD NAME="session"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="course"   TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="id of the course"/>
+        <FIELD NAME="lti_id"   TYPE="int"  LENGTH="10"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="LTI id"/>
+        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="update time"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="mdlds_websock_tags" COMMENT="Tags of cells">
+      <FIELDS>
+        <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
+        <FIELD NAME="cell_id"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="cell id that is operated"/>
+        <FIELD NAME="tags"     TYPE="text"              NOTNULL="true"              SEQUENCE="false" COMMENT="tag of cell"/>
+        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>
