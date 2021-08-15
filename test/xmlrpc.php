@@ -9,23 +9,25 @@ $functionname = 'mod_mdlds_write_nbdata';
 
 $data = new stdClass();
 $data->host = 'HOST';
-$data->session = '1234';
-//$data->message = '5678';
-//$data->status = 'ok';
-//$data->username = 'iseki';
-//$data->cell_id = '1123';
-//$data->tags = '感じ';
-//$data->date = '202100';
+$data->lti_id = '1234';
+$data->session = '456';
+$data->message = 'mess';
+$data->status = 'XXXX';
+$data->username = 'iseki';
+$data->cell_id = '987';
+$data->tags = '2021/08/21';
+$data->date = '2021/08/21';
 $params = array($data);
 
 /// XML-RPC CALL
 header('Content-Type: text/plain');
-$serverurl = $domainname . '/moodle/webservice/xmlrpc/server.php'. '?wstoken=' . $token.'&courseid=98';
+$serverurl = $domainname . '/moodle/webservice/xmlrpc/server.php'. '?wstoken=' . $token;
 //$serverurl = $domainname . '/moodle/mod/mdlds/actions/json_post.php'. '?wstoken=' . $token;
 require_once('./curl.php');
 $curl = new curl;
 //$post = xmlrpc_encode_request($functionname, array($params));
 $post = xmlrpc_encode_request($functionname, $params);
-//echo $post;
+echo $serverurl;
+echo $post;
 $resp = xmlrpc_decode($curl->post($serverurl, $post));
 print_r($resp);

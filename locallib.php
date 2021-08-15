@@ -2,14 +2,15 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-define('MDLDS_LTI_PREFIX_CMD',  'mdl_');
-define('MDLDS_LTI_USER_CMD',    'mdl_user');
-define('MDLDS_LTI_TEACHER_CMD', 'mdl_teacher');
-define('MDLDS_LTI_TGRPNAME_CMD','mdl_grpname');
-define('MDLDS_LTI_IMAGE_CMD',   'mdl_image');
-define('MDLDS_LTI_URL_CMD',     'mdl_url');
-define('MDLDS_LTI_VOLUME_CMD',  'mdl_vol_');
-define('MDLDS_LTI_SUBMIT_CMD',  'mdl_sub_');
+define('MDLDS_LTI_PREFIX_CMD',      'mdl_');
+define('MDLDS_LTI_USER_CMD',        'mdl_user');
+define('MDLDS_LTI_TEACHER_CMD',     'mdl_teacher');
+define('MDLDS_LTI_TGRPNAME_CMD',    'mdl_grpname');
+define('MDLDS_LTI_SESSIONINFO_CMD', 'mdl_sessioninfo');
+define('MDLDS_LTI_IMAGE_CMD',       'mdl_image');
+define('MDLDS_LTI_URL_CMD',         'mdl_url');
+define('MDLDS_LTI_VOLUME_CMD',      'mdl_vol_');
+define('MDLDS_LTI_SUBMIT_CMD',      'mdl_sub_');
 
 
 
@@ -117,6 +118,7 @@ function docker_exec($cmd, $mi)
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
 
+// コマンドの分解
 function mdlds_explode_custom_params($custom_params)
 {
     $comms = new stdClass();
@@ -169,7 +171,8 @@ function mdlds_explode_custom_params($custom_params)
 
 
 
-function mdlds_join_custom_params($formdata)
+// コマンドを結合してテキストへ
+function mdlds_join_custom_params($formdata, $ltiid)
 {
     $custom_params = '';
     if (!isset($formdata->mdl_user))     $formdata->mdl_user    = '';
@@ -185,6 +188,8 @@ function mdlds_join_custom_params($formdata)
     $param = MDLDS_LTI_IMAGE_CMD.'='.$formdata->mdl_image;
     $custom_params .= $param."\r\n";
     $param = MDLDS_LTI_URL_CMD.'='.$formdata->mdl_url;
+    $custom_params .= $param."\r\n";
+    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$ltiid;              // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     // Volume

@@ -71,7 +71,7 @@ class  LTIEdit
                 print_error('invalid_sesskey', 'mdlds', $this->action_url);
             }
             $this->submitted  = true;
-            $this->custom_txt = mdlds_join_custom_params($formdata);
+            $this->custom_txt = mdlds_join_custom_params($formdata, $this->ltiid);
             $this->ltirec->instructorcustomparameters = $this->custom_txt;
             $this->ltirec->timemodified = time();
             $DB->update_record('lti', $this->ltirec);
