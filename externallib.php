@@ -18,14 +18,6 @@ class mod_mdlds_external extends external_api
      * @param int $userid
      * @return array
      */
-/*
-    public static function get_mdlds_handler($userid)
-    {
-        return mdlds_handler::get_mdlds_handler($userid);
-    }
-*/
-
-
 
     /**
     client side:
