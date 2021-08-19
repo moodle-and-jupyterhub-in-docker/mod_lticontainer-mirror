@@ -1,7 +1,9 @@
 #!/bin/bash
 #
-#  ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
-#  docker -H unix:///tmp/mdlds_docker.hogebar.jp.sock ps
+# usage ... docker_rsock.sh host_name user_name user_password socket_file
+#
+#  ex.) ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
+#       docker -H unix:///tmp/mdlds_docker.hogebar.jp.sock ps
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
