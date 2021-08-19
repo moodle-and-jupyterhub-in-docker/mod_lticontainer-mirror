@@ -85,7 +85,7 @@ function docker_exec($cmd, $mi)
 {
     $rslts = array();
     $local_docker = true;
-    $socket_file  = '/xtmp/mdlds_'.$mi->docker_host.'.sock';
+    $socket_file  = '/tmp/mdlds_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;

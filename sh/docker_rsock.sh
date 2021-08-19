@@ -35,7 +35,7 @@ export SSH_ASKPASS=$0
 export DISPLAY=:0.0
 
 rm -f $LLSOCKET
-ps ax | grep ssh | grep "${LLSOCKET}:${RTSOCKET}" | awk -F" " '{print $1}' | xargs kill -9 
+ps ax | grep ssh | grep "${LLSOCKET}:${RTSOCKET}" | awk -F" " '{print $1}' | xargs kill -9 > /dev/null 2>&1
 
 #
 setsid ssh -oStrictHostKeyChecking=no -oServerAliveInterval=120 -oServerAliveCountMax=3 -fNL ${LLSOCKET}:${RTSOCKET} ${SSH_USER}@${SSH_HOST} 
