@@ -13,6 +13,7 @@ class  LTIEdit
     var $ltiid      = 0;
     var $ltirec;
     var $images     = array();
+    var $options    = array();
     var $lab_urls   = array();
 
     var $submitted  = false;
@@ -40,6 +41,8 @@ class  LTIEdit
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $this->url_params);
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
+        // option の設定
+        $this->options    = array('none'=>'', 'double args'=>'doubleargs');
 
         // for Guest
         $this->isGuest = isguestuser();
@@ -91,8 +94,9 @@ class  LTIEdit
                 $rslt  = htmlspecialchars ($rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);
-                if ($image[0]=='&lt;none&gt;' and isset($image[2])) $image[0] = $image[2];
-                $this->images[$i] = $image[0];
+                $idisp = $image[0].' : '.$image[1];
+                if ($image[0]=='&lt;none&gt;' and isset($image[2])) $idisp = $image[2];
+                $this->images[$i] = $idisp;
             }
             $i++;
         }

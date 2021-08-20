@@ -81,7 +81,7 @@ $string['teacher_cmd_ttl'] = 'Teachers';
 $string['image_cmd_ttl'] = 'Container image';
 $string['vol_cmd_ttl'] = 'Presen volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
-$string['lab_url_cmd_ttl'] = 'Function';
+$string['lab_url_cmd_ttl'] = 'Sub URL';
 
 
 

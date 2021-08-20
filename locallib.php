@@ -8,7 +8,8 @@ define('MDLDS_LTI_TEACHER_CMD',     'mdl_teacher');
 define('MDLDS_LTI_TGRPNAME_CMD',    'mdl_grpname');
 define('MDLDS_LTI_SESSIONINFO_CMD', 'mdl_sessioninfo');
 define('MDLDS_LTI_IMAGE_CMD',       'mdl_image');
-define('MDLDS_LTI_URL_CMD',         'mdl_url');
+define('MDLDS_LTI_OPTION_CMD',      'mdl_option');
+define('MDLDS_LTI_SUBURL_CMD',      'mdl_suburl');
 define('MDLDS_LTI_VOLUME_CMD',      'mdl_vol_');
 define('MDLDS_LTI_SUBMIT_CMD',      'mdl_sub_');
 
@@ -76,8 +77,6 @@ function docker_socket($mi, $socket_file)
 
     return $rslts;
 }
-
-
 
 
 
@@ -175,11 +174,12 @@ function mdlds_explode_custom_params($custom_params)
 function mdlds_join_custom_params($formdata, $ltiid)
 {
     $custom_params = '';
-    if (!isset($formdata->mdl_user))     $formdata->mdl_user    = '';
-    if (!isset($formdata->mdl_teacher))  $formdata->mdl_teacher = '';
-    if (!isset($formdata->mdl_image))    $formdata->mdl_image   = '';
-    if (!isset($formdata->mdl_url))      $formdata->mdl_url     = '';
-    if ($formdata->mdl_image=='default') $formdata->mdl_image   = '';
+    if (!isset($formdata->mdl_user))      $formdata->mdl_user    = '';
+    if (!isset($formdata->mdl_teacher))   $formdata->mdl_teacher = '';
+    if (!isset($formdata->mdl_image))     $formdata->mdl_image   = '';
+    if (!isset($formdata->mdl_option))    $formdata->mdl_option  = '';
+    if (!isset($formdata->mdl_suburl))    $formdata->mdl_suburl  = '';
+    if ($formdata->mdl_image =='default') $formdata->mdl_image   = '';
 
     $param = MDLDS_LTI_USER_CMD.'='.$formdata->mdl_user;
     $custom_params .= $param."\r\n";
@@ -187,7 +187,9 @@ function mdlds_join_custom_params($formdata, $ltiid)
     $custom_params .= $param."\r\n";
     $param = MDLDS_LTI_IMAGE_CMD.'='.$formdata->mdl_image;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_URL_CMD.'='.$formdata->mdl_url;
+    //$param = MDLDS_LTI_OPTION_CMD.'='.$formdata->mdl_option;
+    //$custom_params .= $param."\r\n";
+    $param = MDLDS_LTI_SUBURL_CMD.'='.$formdata->mdl_suburl;
     $custom_params .= $param."\r\n";
     $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$ltiid;              // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
