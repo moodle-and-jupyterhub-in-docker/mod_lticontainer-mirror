@@ -3,26 +3,31 @@
  ipynb_conv.php : ipnb ファイル変換  v0.9.2
          filename: と codenum: を metadata の tags の配列に追加
                                     by Fumi.Iseki    2021 08/19
+
+   ex.) php ipynb_conv.php  example.ipynb
+        php ipynb_conv.php  example.ipynb  ../../mon1/test1.ipynb  10
+        php ipynb_conv.php  example.ipynb  -  10  >  ./example_tag.ipynb    /// "-" meens stdout
 */
 
 
 if ($argc<2) {
-    print('usage ... '.$argv[0]." in_filename [out_filename]\n");
+    print('usage ... '.$argv[0]." in_filename [out_filename] [num_fac]\n");
     exit(1);
 }
 
 //
 $in_file  = $argv[1];
 $out_file = "";
+$num_fac  = 1;
 //
-if ($argc==2) {
-    $filename = $in_file;
+if ($argc>2) {
+    if ($out_file!="-") $out_file = $argv[2];
+    if ($argc>3) $num_fac = intval($argv[3]);
 }
-else if ($argc>2) {
-    $out_file = $argv[2];
-    $filename = $out_file;
-}
+if ($out_file!="") $filename = basename($out_file);
+else               $filename = basename($in_file);
 
+//
 $fp = fopen($in_file, 'r');
 $contents = fread($fp, filesize($in_file));
 fclose($fp);
@@ -48,7 +53,7 @@ function  chek_code_cell(&$p_val, $filename, &$num)
             if      (substr($tag, 0, 10)=='filename: ') unset($tags[$key]);
             else if (substr($tag, 0,  9)=='codenum: ')  unset($tags[$key]);
         }
-        $insnum = $num*10;
+        $insnum = $num*$num_fac;
         $tags[] = "filename: ".$filename;
         $tags[] = "codenum: ".$insnum;
         $num++;
