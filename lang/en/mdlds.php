@@ -84,5 +84,9 @@ $string['sub_cmd_ttl'] = 'Submit volume';
 $string['lab_url_cmd_ttl'] = 'Sub URL';
 
 
+// view.php
+$string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds';
+$string['Edit'] = 'Edit';
+$string['Edit_settings'] = 'Edit settings';
 
 

@@ -85,6 +85,13 @@ echo $OUTPUT->heading(format_text($minstance->name), 3);
 echo '</div>';
 //
 
+include('html/overview.html');
+
+include('version.php');
+echo '<div align="center">';
+echo '<a href="'.get_string('wiki_url', 'mod_mdlds').'" target="_blank"><i>mod_mdlds '.$plugin->release.'</i></a>';
+echo '<br />';
+echo '</div>';
 ///////////////////////////////////////////////////////////////////////////
 /// Finish the page
 echo $OUTPUT->footer();
