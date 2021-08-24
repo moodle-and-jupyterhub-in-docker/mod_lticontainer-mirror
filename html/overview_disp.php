@@ -8,9 +8,9 @@ $setup_url = new moodle_url('/course/modedit.php', $params);
 
 echo '<br />'; 
 echo '<h4>'; 
-print('Docker Host : '.$minstance->docker_host.'<br />');
-print('Docker User : '.$minstance->docker_user.'<br />');
-print('Show LTI parameters : '.$disp.'<br />');
+print('Docker Host : <strong>'.$minstance->docker_host.'</strong><br />');
+print('Docker User : <strong>'.$minstance->docker_user.'</strong><br />');
+print('Show LTI parameters : <strong>'.$disp.'</strong><br />');
 print('<a href='.$setup_url.' > '.get_string('Edit_settings', 'mod_mdlds').' </a><br />');
 echo '</h4>'; 
 
