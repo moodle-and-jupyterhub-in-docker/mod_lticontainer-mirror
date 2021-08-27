@@ -90,9 +90,9 @@ class restore_mdlds_activity_task extends restore_activity_task
         $rules = array();
 
         // Define the rules.
-        $rules[] = new restore_log_rule('mdlds', 'overview', 'view.php?id={course_module}', '{mdlds}');
+        $rules[] = new restore_log_rule('mdlds', 'over_view', 'view.php?id={course_module}', '{mdlds}');
         $rules[] = new restore_log_rule('mdlds', 'lti_edit', 'lti_edit.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'volume_view', 'volume_view.php?id={course_module}', '{mdlds}');
+        $rules[] = new restore_log_rule('mdlds', 'volume_delete', 'volume_view.php?id={course_module}', '{mdlds}');
 
         return $rules;
     }

@@ -66,7 +66,9 @@ $this_url = new moodle_url($base_url);
 
 // Event
 if (data_submitted()) {
-    $event = mdlds_get_event($cmid, $minstance->id, $this_action, $urlparams);
+    $event = mdlds_get_event($cmid, $this_action, $urlparams);
+    $event->add_record_snapshot('course', $course);
+    $event->add_record_snapshot('mdlds',  $minstance);
     $event->trigger();
 }
 

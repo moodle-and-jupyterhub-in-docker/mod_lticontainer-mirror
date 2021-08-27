@@ -10,7 +10,7 @@ class delete_submit extends \core\event\base
 {
     public static function get_name()        // イベント名
     {
-        return 'delete';
+        return 'volume_del';
     }
 
 
@@ -21,7 +21,7 @@ class delete_submit extends \core\event\base
         if (!is_array($params)) $params = array();
 
         $params = array_merge(array('course' => $this->courseid), $params);
-        return new \moodle_url('/mod/mdlds/delete_submit.php', $params);
+        return new \moodle_url('/mod/mdlds/actions/volume_view.php', $params);
     }
 
 

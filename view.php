@@ -60,10 +60,10 @@ if (!$instanceid) $instanceid = $minstance->id;
 require_login($course, true, $cm);
 
 //
-//$event = mdlds_get_event($cmid, $instanceid, $this_action);
-//$event->add_record_snapshot('course', $course);
-//$event->add_record_snapshot('mdlds',  $minstance);
-//$event->trigger();
+$event = mdlds_get_event($cmid, $this_action);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('mdlds',  $minstance);
+$event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////

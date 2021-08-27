@@ -31,7 +31,7 @@ function  pack_space($str)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
+function mdlds_get_event($cmid, $action, $params='', $info='')
 {
     global $CFG;
     //require_once($CFG->dirroot.'/mod/mdlds/jbxl/jbxl_tools.php');
@@ -41,7 +41,6 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
     if (!is_array($params)) $params = array();
 
     $args = array(
-        'objectid' => $instanceid,
         'context'  => context_module::instance($cmid),
         'other'    => array('params' => $params, 'info'=> $info),
     );
@@ -52,12 +51,9 @@ function mdlds_get_event($cmid, $instanceid, $action, $params='', $info='')
     else if ($action=='lti_edit') {
         $event = \mod_mdlds\event\lti_edit::create($args);
     }
-    //else if ($action=='user_submit') {
-    //    $event = \mod_mdlds\event\user_submit::create($args);
-    //}
-    //else if ($action=='delete') {
-    //    $event = \mod_mdlds\event\delete_submit::create($args);
-    //}
+    else if ($action=='volume_del') {
+        $event = \mod_mdlds\event\volume_del::create($args);
+    }
 
     return $event;
 }
