@@ -9,6 +9,7 @@ class  LTIEdit
     var $courseid   = 0;
     var $course;
     var $minstance;
+    var $mcontext;
 
     var $ltiid      = 0;
     var $ltirec;
@@ -49,6 +50,11 @@ class  LTIEdit
         if ($this->isGuest) {
             print_error('access_forbidden', 'mdlds', $this->action_url);
         }
+        //
+        $this->mcontext = context_module::instance($cmid);
+        if (!has_capability('mod/mdlds:lti_edit', $this->mcontext)) {
+            print_error('access_forbidden', 'mdlds', $this->action_url);
+        }
     }
 
 
@@ -70,6 +76,9 @@ class  LTIEdit
 
         // POST
         if ($formdata = data_submitted()) {
+            if (!has_capability('mod/mdlds:db_write', $this->mcontext)) {
+                print_error('access_forbidden', 'mdlds', $this->action_url);
+            }
             if (!confirm_sesskey()) {
                 print_error('invalid_sesskey', 'mdlds', $this->action_url);
             }

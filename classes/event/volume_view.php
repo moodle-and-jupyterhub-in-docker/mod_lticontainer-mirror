@@ -6,11 +6,11 @@ namespace mod_mdlds\event;
 defined('MOODLE_INTERNAL') || die();
 
 
-class delete_submit extends \core\event\base
+class volume_view extends \core\event\base
 {
     public static function get_name()        // イベント名
     {
-        return 'volume_del';
+        return 'volume_view';
     }
 
 
@@ -36,7 +36,7 @@ class delete_submit extends \core\event\base
 
     protected function init()
     {
-        $this->data['crud'] = 'd';                       // イベントの種類　c(reate), r(ead), u(pdate), d(elete)
+        $this->data['crud'] = 'r';                       // イベントの種類　c(reate), r(ead), u(pdate), d(elete)
         $this->data['edulevel'] = self::LEVEL_OTHER;     // 教育レベル LEVEL_TEACHING, LEVEL_PARTICIPATING or LEVEL_OTHER 
     }
 }

@@ -48,7 +48,6 @@ if (has_capability('mod/mdlds:lti_connect', $mcontext)) {
     $mdlds_lti_connection_cap = true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array();
 $urlparams['id'] = $cmid;
@@ -61,10 +60,6 @@ $this_action = 'lti_connect';
 $base_url = new moodle_url('/mod/mdlds/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
-
-// Event
-//$event =  mdlds_get_event($cmid, $minstance->id, $this_action, $urlparams);
-//jbxl_add_to_log($event);
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -80,11 +75,12 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_connect.class.php');
 
-$lti_connection = new LTIConnect($cmid, $courseid, $minstance);
-
-$lti_connection->set_condition();
-$lti_connection->execute();
-$lti_connection->print_page();
+if ($mdlds_lti_connection_cap) {
+    $lti_connection = new LTIConnect($cmid, $courseid, $minstance);
+    $lti_connection->set_condition();
+    $lti_connection->execute();
+    $lti_connection->print_page();
+}
 
 echo $OUTPUT->footer($course);
 

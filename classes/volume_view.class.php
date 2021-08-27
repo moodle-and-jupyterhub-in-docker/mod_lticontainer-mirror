@@ -8,6 +8,7 @@ class  VolumeView
     var $courseid   = 0;
     var $course;
     var $minstance;
+    var $mcontext;
 
     var $isGuest    = true;
 
@@ -35,6 +36,11 @@ class  VolumeView
         if ($this->isGuest) {
             print_error('access_forbidden', 'mdlds', $this->action_url);
         }
+        //
+        $this->mcontext = context_module::instance($cmid);
+        if (!has_capability('mod/mdlds:volume_view', $this->mcontext)) {
+            print_error('access_forbidden', 'mdlds', $this->action_url);
+        }
     }
 
 
@@ -50,6 +56,9 @@ class  VolumeView
 
         // POST
         if ($formdata = data_submitted()) {
+            if (!has_capability('mod/mdlds:volume_edit', $this->mcontext)) {
+                print_error('access_forbidden', 'mdlds', $this->action_url);
+            }
             if (!confirm_sesskey()) {
                 print_error('invalid_sesskey', 'mdlds', $this->action_url);
             }
@@ -58,8 +67,12 @@ class  VolumeView
             if (property_exists($formdata, 'delete')) {
                 $deletes = $formdata->delete;
                 foreach ($deletes as $del=>$value) {
-                    docker_exec('volume rm '.$del, $this->minstance);
-                 } 
+                    $cmd = 'volume rm '.$del;
+                    docker_exec($cmd, $this->minstance);
+                    //
+                    $event = mdlds_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
+                    $event->trigger();
+                } 
             }
         }
 

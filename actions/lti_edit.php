@@ -25,7 +25,8 @@
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
 require_once(__DIR__.'/../locallib.php');
-require_once(__DIR__.'/../jbxl/jbxl_moodle_tools.php');
+require_once(__DIR__.'/../classes/event/lti_view.php');
+require_once(__DIR__.'/../classes/event/lti_edit.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
@@ -52,7 +53,6 @@ if (has_capability('mod/mdlds:lti_edit', $mcontext)) {
     $mdlds_lti_edit_cap = true;
 }
 
-
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array('id' => $cmid, 'ltiid' => $ltiid);
 $current_tab = 'lti_edit';
@@ -67,10 +67,11 @@ $this_url = new moodle_url($base_url);
 // Event
 if (data_submitted()) {
     $event = mdlds_get_event($cmid, $this_action, $urlparams);
-    $event->add_record_snapshot('course', $course);
-    $event->add_record_snapshot('mdlds',  $minstance);
-    $event->trigger();
 }
+else {
+    $event = mdlds_get_event($cmid, 'lti_view',   $urlparams);
+}
+$event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -86,11 +87,12 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_edit.class.php');
 
-$lti_edit = new LTIEdit($cmid, $courseid, $minstance);
-
-$lti_edit->set_condition();
-$lti_edit->execute();
-$lti_edit->print_page();
+if ($mdlds_lti_edit_cap) { 
+    $lti_edit = new LTIEdit($cmid, $courseid, $minstance);
+    $lti_edit->set_condition();
+    $lti_edit->execute();
+    $lti_edit->print_page();
+}
 
 echo $OUTPUT->footer($course);
 

@@ -48,8 +48,14 @@ function mdlds_get_event($cmid, $action, $params='', $info='')
     if ($action=='over_view') {
         $event = \mod_mdlds\event\over_view::create($args);
     }
+    else if ($action=='lti_view') {
+        $event = \mod_mdlds\event\lti_view::create($args);
+    }
     else if ($action=='lti_edit') {
         $event = \mod_mdlds\event\lti_edit::create($args);
+    }
+    else if ($action=='volume_view') {
+        $event = \mod_mdlds\event\volume_view::create($args);
     }
     else if ($action=='volume_del') {
         $event = \mod_mdlds\event\volume_del::create($args);

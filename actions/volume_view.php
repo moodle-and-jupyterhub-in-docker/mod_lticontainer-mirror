@@ -24,6 +24,9 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
+require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../classes/event/volume_view.php');
+require_once(__DIR__.'/../classes/event/volume_del.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
@@ -44,14 +47,9 @@ $user_id  = $USER->id;
 require_login($course, true, $cm);
 //
 $mdlds_volume_view_cap = false;
-$mdlds_volume_edit_cap = false;
 if (has_capability('mod/mdlds:volume_view', $mcontext)) {
     $mdlds_volume_view = true;
 }
-if (has_capability('mod/mdlds:volume_edit', $mcontext)) {
-    $mdlds_volume_edit = true;
-}
-
 
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array();
@@ -67,12 +65,8 @@ $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
 // Event
-if (data_submitted()) {
-    $event = mdlds_get_event($cmid, $this_action, $urlparams);
-    $event->add_record_snapshot('course', $course);
-    $event->add_record_snapshot('mdlds',  $minstance);
-    $event->trigger();
-}
+$event = mdlds_get_event($cmid, $this_action, $urlparams);
+$event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -88,11 +82,12 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/volume_view.class.php');
 
-$volume_view = new VolumeView($cmid, $courseid, $minstance);
-
-$volume_view->set_condition();
-$volume_view->execute();
-$volume_view->print_page();
+if ($mdlds_volume_view) {
+    $volume_view = new VolumeView($cmid, $courseid, $minstance);
+    $volume_view->set_condition();
+    $volume_view->execute();
+    $volume_view->print_page();
+}
 
 echo $OUTPUT->footer($course);
 
