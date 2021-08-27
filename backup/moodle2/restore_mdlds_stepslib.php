@@ -40,10 +40,46 @@ class restore_mdlds_activity_structure_step extends restore_activity_structure_s
      */
     protected function define_structure() {
         $paths = array();
-        $userinfo = $this->get_setting_value('userinfo');
+        //$userinfo = $this->get_setting_value('userinfo');
+
+        $paths[] = new restore_path_element('mdlds', '/activity/mdlds');
+        $paths[] = new restore_path_element('mdlds_websock_session', '/activity/mdlds/sessions/session');
 
         return $this->prepare_activity_structure($paths);
     }
+
+
+    protected function process_mdlds($data)
+    {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->course       = $this->get_courseid();
+        $data->timecreated  = $this->apply_date_offset($data->timecreated);
+        $data->timemodified = $this->apply_date_offset($data->timemodified);
+
+        $newitemid = $DB->insert_record('mdlds', $data);
+        $this->apply_activity_instance($newitemid);
+    }
+
+
+    protected function process_mdlds_websock_session($data)
+    {
+        global $DB;
+
+        $data = (object)$data;
+        $oldid = $data->id;
+
+        $data->course   = $this->get_courseid();
+        $data->inst_id  = $this->get_new_parentid('mdlds');
+        $data->updatetm = $this->apply_date_offset($data->updatetm);
+
+        $newitemid = $DB->insert_record('mdlds_wedsock_session', $data);
+        $this->apply_activity_instance($newitemid);
+    }
+
 
     /**
      * Defines post-execution actions.
@@ -52,3 +88,4 @@ class restore_mdlds_activity_structure_step extends restore_activity_structure_s
         return;
     }
 }
+

@@ -39,14 +39,16 @@ class backup_mdlds_activity_task extends backup_activity_task
     /**
      * Defines particular settings for the plugin.
      */
-    protected function define_my_settings() {
+    protected function define_my_settings() 
+    {
         return;
     }
 
     /**
      * Defines particular steps for the backup process.
      */
-    protected function define_my_steps() {
+    protected function define_my_steps()
+    {
         $this->add_step(new backup_mdlds_activity_structure_step('mdlds_structure', 'mdlds.xml'));
     }
 
@@ -56,17 +58,18 @@ class backup_mdlds_activity_task extends backup_activity_task
      * @param string $content
      * @return string
      */
-    public static function encode_content_links($content) {
+    public static function encode_content_links($content)
+    {
         global $CFG;
 
         $base = preg_quote($CFG->wwwroot, '/');
 
         // Link to the list of choices.
-        $search = "/(".$base."\//mod\/mdlds\/index.php\?id\=)([0-9]+)/";
+        $search = "/(".$base."\/mod\/mdlds\/index.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@MDLDSINDEX*$2@$', $content);
 
         // Link to choice view by moduleid.
-        $search = "/(".$base."\//mod\/mdlds\/view.php\?id\=)([0-9]+)/";
+        $search = "/(".$base."\/mod\/mdlds\/view.php\?id\=)([0-9]+)/";
         $content = preg_replace($search, '$@MDLDSVIEWBYID*$2@$', $content);
 
         return $content;

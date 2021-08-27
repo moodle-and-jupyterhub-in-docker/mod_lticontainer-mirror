@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Backup steps for mod_mdlds are defined here.
+ * Backup steps for mdlds are defined here.
  *
  * @package     mod_mdlds
  * @category    backup
@@ -38,22 +38,35 @@ class backup_mdlds_activity_structure_step extends backup_activity_structure_ste
      *
      * @return backup_nested_element The structure wrapped by the common 'activity' element.
      */
-    protected function define_structure() {
-        $userinfo = $this->get_setting_value('userinfo');
+    protected function define_structure() 
+    {
+        //$userinfo = $this->get_setting_value('userinfo');
 
         // Replace with the attributes and final elements that the element will handle.
-        $attributes = null;
-        $finalelements = null;
-        $root = new backup_nested_element('mod_mdlds', $attributes, $finalelements);
+        $attributes = array('id');
+        $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 'custom_params');
+        $mdlds = new backup_nested_element('mdlds', $attributes, $finalelements);
 
+        $finalelements = array('session', 'lti_id', 'updatetm');
+        $session = new backup_nested_element('mdlds_websock_session', $attributes, $finalelements);
+
+        $sessions = new backup_nested_element('sessions');
+        
         // Build the tree with these elements with $root as the root of the backup tree.
+        //$mdlds->add_child($session);
+
+        $mdlds->add_child($sessions);
+        $sessions->add_child($session);
 
         // Define the source tables for the elements.
+        $mdlds->set_source_table('mdlds', array('id' => backup::VAR_ACTIVITYID));
+        $session->set_source_table('mdlds_websock_session', array('inst_id' => backup::VAR_PARENTID));
 
         // Define id annotations.
 
         // Define file annotations.
+        $mdlds->annotate_files('mdlds', 'intro', null); 
 
-        return $this->prepare_activity_structure($root);
+        return $this->prepare_activity_structure($mdlds);
     }
 }
