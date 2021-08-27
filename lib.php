@@ -108,8 +108,15 @@ function mdlds_delete_instance($id)
     if (!$exists) {
         return false;
     }
-
     $DB->delete_records('mdlds', array('id' => $id));
+
+    //
+    $sessions = $DB->get_records('mdlds_websock_session', array('inst_id' => $id));
+    foreach ($sessions as $session) {
+        $DB->delete_records('mdlds_websock_data', array('session' => $session->session));
+    }
+    $DB->delete_records('mdlds_websock_session', array('inst_id' => $id));
 
     return true;
 }
+

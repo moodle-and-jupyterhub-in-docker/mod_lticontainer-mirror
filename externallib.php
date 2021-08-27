@@ -35,7 +35,7 @@ class mod_mdlds_external extends external_api
         $nb_data->updatetm = time();
 
         //file_put_contents('/xtmp/ZZ', "-----------------------------\n", FILE_APPEND);
-        //file_put_contents('/xtmp/ZZ', 'session = '.$nb_data->session."\n", FILE_APPEND);
+        //file_put_contents('/xtmp/ZZ', 'lti_id = '. $nb_data->lti_id."\n", FILE_APPEND);
 
         if ($nb_data->host=='server') {
             $condition = array('host'=>'client', 'session'=>$nb_data->session, 'message'=>$nb_data->message);
@@ -77,6 +77,7 @@ class mod_mdlds_external extends external_api
                 new external_single_structure(
                     array(
                         'host'     => new external_value(PARAM_TEXT, 'server or client'),
+                        'inst_id'  => new external_value(PARAM_TEXT, 'id of mod_mdlds instance'),
                         'lti_id'   => new external_value(PARAM_TEXT, 'id of LTI module instance'),
                         'session'  => new external_value(PARAM_TEXT, 'id of session'),
                         'message'  => new external_value(PARAM_TEXT, 'id of message'),

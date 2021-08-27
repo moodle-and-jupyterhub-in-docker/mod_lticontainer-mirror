@@ -45,7 +45,8 @@
       <FIELDS>
         <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
         <FIELD NAME="session"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="sessoin id"/>
-        <FIELD NAME="course"   TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="id of the course"/>
+        <FIELD NAME="course"   TYPE="int"  LENGTH="10"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="id of the course"/>
+        <FIELD NAME="inst_id"  TYPE="int"  LENGTH="10"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="id of the module instance"/>
         <FIELD NAME="lti_id"   TYPE="int"  LENGTH="10"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="LTI id"/>
         <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>

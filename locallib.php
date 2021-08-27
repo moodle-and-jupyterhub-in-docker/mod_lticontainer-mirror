@@ -171,7 +171,7 @@ function mdlds_explode_custom_params($custom_params)
 
 
 // コマンドを結合してテキストへ
-function mdlds_join_custom_params($formdata, $ltiid)
+function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
 {
     $custom_params = '';
     if (!isset($formdata->mdl_user))      $formdata->mdl_user    = '';
@@ -191,7 +191,7 @@ function mdlds_join_custom_params($formdata, $ltiid)
     //$custom_params .= $param."\r\n";
     $param = MDLDS_LTI_SUBURL_CMD.'='.$formdata->mdl_suburl;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$ltiid;              // Session情報用．ユーザによる操作はなし．
+    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$instanceid.','.$ltiid;      // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     // Volume
