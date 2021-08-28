@@ -90,12 +90,6 @@ class mod_mdlds_mod_form extends moodleform_mod {
         $mform->setType('custom_params', PARAM_INT);
         $mform->setDefault('custom_params', 0);
 
-        $mform->addElement('checkbox', 'lti_notdisp', get_string('show_custom_params', 'mod_mdlds'));
-        $mform->setAdvanced('lti_notdisp');
-        $mform->addHelpButton('lti_notdisp', 'show_custom_params', 'mod_mdlds');
-        $mform->setType('lti_nodisp', PARAM_INT);
-        $mform->setDefault('custom_params', 0);
-
         //-------------------------------------------------------------------------------
         // Add standard elements.
         $this->standard_coursemodule_elements();
