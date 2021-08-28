@@ -44,7 +44,7 @@ class backup_mdlds_activity_structure_step extends backup_activity_structure_ste
 
         // Replace with the attributes and final elements that the element will handle.
         $attributes = array('id');
-        $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 'custom_params');
+        $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 'custom_params', 'no_disp_lti');
         $mdlds = new backup_nested_element('mdlds', $attributes, $finalelements);
 
         $finalelements = array('session', 'lti_id', 'updatetm');
@@ -53,8 +53,6 @@ class backup_mdlds_activity_structure_step extends backup_activity_structure_ste
         $sessions = new backup_nested_element('sessions');
         
         // Build the tree with these elements with $root as the root of the backup tree.
-        //$mdlds->add_child($session);
-
         $mdlds->add_child($sessions);
         $sessions->add_child($session);
 

@@ -52,6 +52,9 @@ function mdlds_get_event($cmid, $action, $params='', $info='')
     else if ($action=='lti_edit') {
         $event = \mod_mdlds\event\lti_edit::create($args);
     }
+    else if ($action=='lti_setting') {
+        $event = \mod_mdlds\event\lti_setting::create($args);
+    }
     else if ($action=='volume_view') {
         $event = \mod_mdlds\event\volume_view::create($args);
     }

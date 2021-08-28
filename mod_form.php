@@ -90,10 +90,10 @@ class mod_mdlds_mod_form extends moodleform_mod {
         $mform->setType('custom_params', PARAM_INT);
         $mform->setDefault('custom_params', 0);
 
-
         //-------------------------------------------------------------------------------
         // Add standard elements.
         $this->standard_coursemodule_elements();
+        //$mform->setAdvanced('cmidnumber');
 
         //-------------------------------------------------------------------------------
         // Add standard buttons.

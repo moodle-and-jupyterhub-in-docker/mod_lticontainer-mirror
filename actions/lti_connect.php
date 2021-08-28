@@ -24,6 +24,7 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
+require_once(__DIR__.'/../classes/event/lti_setting.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
