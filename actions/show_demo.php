@@ -63,7 +63,7 @@ $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
 // Event
-//$event = apply_get_event($cm, 'view', $urlparams);
+//$event = apply_get_event($cm, 'over_view', $urlparams);
 //jbxl_add_to_log($event);
 
 ///////////////////////////////////////////////////////////////////////////

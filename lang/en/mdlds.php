@@ -63,6 +63,7 @@ $string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
 $string['lti_connect'] = 'LTI Connections';
 $string['lti_edit'] = 'LTI Edit';
+$string['lti_setting'] = 'LTI Setting';
 $string['returnto_course'] = 'Return to course';
 
 // Table: LTI volume

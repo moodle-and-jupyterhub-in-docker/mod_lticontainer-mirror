@@ -78,11 +78,22 @@ function xmldb_mdlds_upgrade($oldversion)
         }
     }
 
-    // 2021080605
+    // 2021082701
     if ($oldversion < 2021082701) {
         $table = new xmldb_table('mdlds_websock_session');
         //
         $field = new xmldb_field('inst_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'course');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    // 2021082804
+    if ($oldversion < 2021082804) {
+        $table = new xmldb_table('mdlds');
+        //
+        $field = new xmldb_field('no_disp_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);

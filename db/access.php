@@ -65,6 +65,16 @@ $capabilities = [
         ],
     ],
 
+    'mod/mdlds:lti_setting' => [
+        'riskbitmask' => RISK_SPAM | RISK_XSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+        ],
+    ],
+
     'mod/mdlds:db_write' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
