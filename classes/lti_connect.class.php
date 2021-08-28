@@ -69,20 +69,19 @@ class  LTIConnect
             }
             $this->submitted  = true;
 
+            $this->minstance->no_disp_lti = '';
             if (property_exists($formdata, 'nodisp')) {
                 $no_disp = array();
-                $nodisp_list = '';
                 $nodisps = $formdata->nodisp;
                 foreach ($nodisps as $key => $val) {
                     $no_disp[] = $key;
-                    $nodisp_list .= $key.' ';
                 }
-                $event = mdlds_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$nodisp_list);
+                $no_disp_list = implode(',', $no_disp);
+                $event = mdlds_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$no_disp_list);
                 $event->trigger();
-                //
-                $this->minstance->no_disp_lti = implode(',', $no_disp);
-                $DB->update_record('mdlds', $this->minstance);
+                $this->minstance->no_disp_lti = $no_disp_list;
             }
+            $DB->update_record('mdlds', $this->minstance);
         }
 
         $nodisp = explode(',', $this->minstance->no_disp_lti);
