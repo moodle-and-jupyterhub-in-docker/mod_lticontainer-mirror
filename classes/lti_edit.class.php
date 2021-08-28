@@ -89,12 +89,15 @@ class  LTIEdit
             $this->ltirec->timemodified = time();
             $DB->update_record('lti', $this->ltirec);
 
-
-            foreach ($formdata->mdl_vol_name as $name) {
-                print($name.'<br />');
+            // create volume
+            $i = 0;
+            foreach ($formdata->mdl_vol_ as $vol) {
+                if ($formdata->mdl_vol_name[$i]!='') {
+                    $cmd = 'volume create '.$vol.$formdata->mdl_vol_name[$i].'_'.$this->courseid;
+                    docker_exec($cmd, $this->minstance);
+                }
+                $i++;
             }
-
-die();
         }
 
         //
