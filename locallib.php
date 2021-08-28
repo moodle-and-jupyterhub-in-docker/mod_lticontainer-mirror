@@ -34,8 +34,6 @@ function  pack_space($str)
 function mdlds_get_event($cmid, $action, $params='', $info='')
 {
     global $CFG;
-    //require_once($CFG->dirroot.'/mod/mdlds/jbxl/jbxl_tools.php');
-    //require_once($CFG->dirroot.'/mod/mdlds/jbxl/jbxl_moodle_tools.php');
 
     $event = null;
     if (!is_array($params)) $params = array();
@@ -64,6 +62,7 @@ function mdlds_get_event($cmid, $action, $params='', $info='')
     return $event;
 }
  
+
 
 function docker_socket($mi, $socket_file)
 {
