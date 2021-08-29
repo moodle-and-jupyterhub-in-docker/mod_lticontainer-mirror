@@ -206,13 +206,15 @@ function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
             $users = '';
             if ($vol==MDLDS_LTI_VOLUME_CMD) {
                 if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
-                $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
-                $vol_array[MDLDS_LTI_VOLUME_CMD.$vol_name] = $formdata->mdl_vol_disp[$i].$users;
+                $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+                $dirname = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+                $vol_array[MDLDS_LTI_VOLUME_CMD.$dirname] = $formdata->mdl_vol_disp[$i].$users;
             }
             else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
                 if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
-                $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
-                $vol_array[MDLDS_LTI_SUBMIT_CMD.$vol_name] = $formdata->mdl_vol_disp[$i].$users;
+                $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+                $dirname = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+                $vol_array[MDLDS_LTI_SUBMIT_CMD.$dirname] = $formdata->mdl_vol_disp[$i].$users;
             }
         }
         $i++;

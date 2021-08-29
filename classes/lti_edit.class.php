@@ -93,8 +93,9 @@ class  LTIEdit
             $i = 0;
             foreach ($formdata->mdl_vol_ as $vol) {
                 if ($formdata->mdl_vol_name[$i]!='') {
-                    $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
-                    $cmd = 'volume create '.$vol.$vol_name.'_'.$this->courseid;
+                    $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+                    $dirname = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+                    $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid;
                     docker_exec($cmd, $this->minstance);
                 }
                 $i++;
