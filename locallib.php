@@ -203,15 +203,16 @@ function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
     $i = 0;
     foreach ($formdata->mdl_vol_ as $vol) {
         if ($formdata->mdl_vol_name[$i]!='' and $formdata->mdl_vol_disp[$i]!='') {
+            $users = '';
             if ($vol==MDLDS_LTI_VOLUME_CMD) {
-                $user = '';
-                if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
-                $vol_array[MDLDS_LTI_VOLUME_CMD.$formdata->mdl_vol_name[$i]] = $formdata->mdl_vol_disp[$i].$user;
+                if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
+                $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
+                $vol_array[MDLDS_LTI_VOLUME_CMD.$vol_name] = $formdata->mdl_vol_disp[$i].$users;
             }
             else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
-                $user = '';
-                if ($formdata->mdl_vol_user[$i]!='') $user = ':'.$formdata->mdl_vol_user[$i];
-                $vol_array[MDLDS_LTI_SUBMIT_CMD.$formdata->mdl_vol_name[$i]] = $formdata->mdl_vol_disp[$i].$user;
+                if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
+                $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
+                $vol_array[MDLDS_LTI_SUBMIT_CMD.$vol_name] = $formdata->mdl_vol_disp[$i].$users;
             }
         }
         $i++;

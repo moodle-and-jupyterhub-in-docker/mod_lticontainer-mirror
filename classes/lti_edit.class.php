@@ -93,7 +93,8 @@ class  LTIEdit
             $i = 0;
             foreach ($formdata->mdl_vol_ as $vol) {
                 if ($formdata->mdl_vol_name[$i]!='') {
-                    $cmd = 'volume create '.$vol.$formdata->mdl_vol_name[$i].'_'.$this->courseid;
+                    $vol_name = mb_strtolower($formdata->mdl_vol_name[$i]);
+                    $cmd = 'volume create '.$vol.$vol_name.'_'.$this->courseid;
                     docker_exec($cmd, $this->minstance);
                 }
                 $i++;
