@@ -1,0 +1,47 @@
+<?php require_once(__DIR__.'/../html/lti_setting_table.php'); ?>
+
+<style type="text/css">
+  <?php include(__DIR__."../html/styles.css"); ?>
+</style>
+
+<table align="center" class="generalbox">
+  <tr>
+    <td align="center">
+      <table border="0" style="margin: 0px 0px 0px 0px;">
+        <tr>
+          <td bgcolor="#d8e8d8">&nbsp;</td>
+          <td bgcolor="#d8e8d8">
+            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('lti_setting','mod_mdlds').'</strong>'); ?>
+          </td>
+          <td bgcolor="#d8e8d8">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="generalboxcontent" align="center">
+
+      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
+        <table border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td>
+              <?php show_lti_disp_table($this->items); ?>
+            </td>
+          </tr>
+          <tr>
+            <td align='center'>
+              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
+              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
+              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
+              <input type='submit' name='submit_lti_setting'  value='<?php echo get_string("submit");?>' />
+              &nbsp;&nbsp;
+              <input type='reset' name='reset'  value='<?php echo get_string("reset");?>' />
+              <br /><br />
+            </td>
+          </tr>
+        </table>
+      </form>
+
+    </td>
+  </tr>
+</table>
