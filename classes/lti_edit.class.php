@@ -10,6 +10,7 @@ class  LTIEdit
     var $course;
     var $minstance;
     var $mcontext;
+    var $host_name  = 'localhost';
 
     var $ltiid      = 0;
     var $ltirec;
@@ -36,6 +37,7 @@ class  LTIEdit
         $this->courseid  = $courseid;
         $this->course    = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
         $this->minstance = $minstance;
+        $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
         #
         $this->ltiid = required_param('ltiid', PARAM_INT);
 
@@ -66,7 +68,7 @@ class  LTIEdit
 
     function  execute()
     {
-        global $CFG, $DB;
+        global $DB;
 
         $fields = 'id, course, name, instructorcustomparameters, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
@@ -95,7 +97,7 @@ class  LTIEdit
                 if ($formdata->mdl_vol_name[$i]!='') {
                     $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
                     $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
-                    $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid;
+                    $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
                     docker_exec($cmd, $this->minstance);
                 }
                 $i++;

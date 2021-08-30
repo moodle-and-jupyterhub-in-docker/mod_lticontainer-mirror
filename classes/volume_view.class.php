@@ -9,6 +9,7 @@ class  VolumeView
     var $course;
     var $minstance;
     var $mcontext;
+    var $host_name  = 'localhost';
 
     var $isGuest    = true;
 
@@ -21,12 +22,13 @@ class  VolumeView
 
     function  __construct($cmid, $courseid, $minstance)
     {
-        global $DB;
+        global $CFG, $DB;
         
         $this->cmid      = $cmid;
         $this->courseid  = $courseid;
         $this->course    = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
         $this->minstance = $minstance;
+        $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $this->url_params);
@@ -54,6 +56,9 @@ class  VolumeView
     {
         global $DB;
 
+        $check_course = '_'.$this->courseid.'_'.$this->host_name;
+        $len_check = strlen($check_course);
+
         // POST
         if ($formdata = data_submitted()) {
             if (!has_capability('mod/mdlds:volume_edit', $this->mcontext)) {
@@ -67,11 +72,13 @@ class  VolumeView
             if (property_exists($formdata, 'delete')) {
                 $deletes = $formdata->delete;
                 foreach ($deletes as $del=>$value) {
-                    $cmd = 'volume rm '.$del;
-                    docker_exec($cmd, $this->minstance);
-                    //
-                    $event = mdlds_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
-                    $event->trigger();
+                    if (substr($del, -$len_check)==$check_course) { 
+                        $cmd = 'volume rm '.$del;
+                        docker_exec($cmd, $this->minstance);
+                        //
+                        $event = mdlds_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
+                        $event->trigger();
+                    }
                 } 
             }
         }
@@ -81,9 +88,6 @@ class  VolumeView
         if (isset($rslts['error'])) {
             print_error($rslts['error'], 'mdlds', $this->action_url, $rslts['home_dir']);
         }
-
-        $check_course = '_'.$this->courseid;
-        $len_check = strlen($check_course);
 
         $i = 0;
         foreach ($rslts as $rslt) {
