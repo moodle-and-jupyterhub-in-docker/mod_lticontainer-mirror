@@ -207,13 +207,13 @@ function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
             if ($vol==MDLDS_LTI_VOLUME_CMD) {
                 if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
                 $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
-                $dirname = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+                $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                 $vol_array[MDLDS_LTI_VOLUME_CMD.$dirname] = $formdata->mdl_vol_disp[$i].$users;
             }
             else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
                 if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
                 $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
-                $dirname = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+                $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                 $vol_array[MDLDS_LTI_SUBMIT_CMD.$dirname] = $formdata->mdl_vol_disp[$i].$users;
             }
         }
