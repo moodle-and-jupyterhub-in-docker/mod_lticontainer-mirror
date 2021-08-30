@@ -100,5 +100,16 @@ function xmldb_mdlds_upgrade($oldversion)
         }
     }
 
+    // 2021083000
+    if ($oldversion < 2021083000) {
+        $table = new xmldb_table('mdlds');
+        //
+        $field = new xmldb_field('make_volumes', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'custom_params');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

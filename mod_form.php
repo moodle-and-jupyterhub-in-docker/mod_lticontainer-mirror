@@ -28,7 +28,6 @@ require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 /**
  * Module instance settings form.
-q
  *
  * @package     mod_mdlds
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
@@ -89,6 +88,11 @@ class mod_mdlds_mod_form extends moodleform_mod {
         $mform->addHelpButton('custom_params', 'show_custom_params', 'mod_mdlds');
         $mform->setType('custom_params', PARAM_INT);
         $mform->setDefault('custom_params', 0);
+
+        $mform->addElement('selectyesno', 'make_volumes', get_string('make_docker_volumes', 'mod_mdlds'));
+        $mform->addHelpButton('make_volumes', 'make_docker_volumes', 'mod_mdlds');
+        $mform->setType('make_volumes', PARAM_INT);
+        $mform->setDefault('make_volumes', 0);
 
         //-------------------------------------------------------------------------------
         // Add standard elements.

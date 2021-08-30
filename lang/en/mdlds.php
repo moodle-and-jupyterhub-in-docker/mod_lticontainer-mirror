@@ -43,6 +43,8 @@ $string['docker_pass'] = 'Password of docker user';
 $string['docker_pass_help'] = 'Password of docker user';
 $string['show_custom_params'] = 'Show custom parameters';
 $string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
+$string['make_docker_volumes'] = 'Does mod_mdlds create docker volumes';
+$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_mdlds at LTI Edit Tab';
 
 // print_error
 $string['access_forbidden'] = 'Access forbidden';
@@ -83,7 +85,6 @@ $string['image_cmd_ttl'] = 'Container image';
 $string['vol_cmd_ttl'] = 'Presen volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
 $string['lab_url_cmd_ttl'] = 'Sub URL';
-
 
 // view.php
 $string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds';

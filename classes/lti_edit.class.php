@@ -92,15 +92,17 @@ class  LTIEdit
             $DB->update_record('lti', $this->ltirec);
 
             // create volume
-            $i = 0;
-            foreach ($formdata->mdl_vol_ as $vol) {
-                if ($formdata->mdl_vol_name[$i]!='') {
-                    $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
-                    $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
-                    $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
-                    docker_exec($cmd, $this->minstance);
+            if ($this->minstance->make_volumes==1) {
+                $i = 0;
+                foreach ($formdata->mdl_vol_ as $vol) {
+                    if ($formdata->mdl_vol_name[$i]!='') {
+                        $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+                        $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
+                        $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
+                        docker_exec($cmd, $this->minstance);
+                    }
+                    $i++;
                 }
-                $i++;
             }
         }
 
