@@ -30,7 +30,7 @@ $plugin->requires = 2018051700;
 $plugin->component = 'mod_mdlds';
 $plugin->maturity = MATURITY_ALPHA;
 
-$plugin->release = '0.9.7';
+$plugin->release = '0.9.8';
 
 $plugin->version = 2021083000;
 

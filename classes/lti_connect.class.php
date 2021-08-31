@@ -37,12 +37,12 @@ class  LTIConnect
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/mdlds:lti_connect', $this->mcontext)) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
     }
 
@@ -62,10 +62,10 @@ class  LTIConnect
         // POST
         if ($formdata = data_submitted()) {
             if (!has_capability('mod/mdlds:lti_setting', $this->mcontext)) {
-                print_error('access_forbidden', 'mdlds', $this->action_url);
+                print_error('access_forbidden', 'mod_mdlds', $this->action_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
             }
             $this->submitted  = true;
 

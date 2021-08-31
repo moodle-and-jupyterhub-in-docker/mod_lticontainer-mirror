@@ -50,12 +50,12 @@ class  LTIEdit
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/mdlds:lti_edit', $this->mcontext)) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
     }
 
@@ -73,16 +73,19 @@ class  LTIEdit
         $fields = 'id, course, name, instructorcustomparameters, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
         if (!$this->ltirec) {
-            print_error('no_data_found', 'mdlds', $this->action_url);
+            print_error('no_data_found', 'mod_mdlds', $this->action_url);
+        }
+        if (!file_exists(MDLDS_DOCKER_CMD)) {
+            print_error('no_docker_command ('.MDLDS_DOCKER_CMD.')', 'mod_mdlds', $this->action_url);
         }
 
         // POST
         if ($formdata = data_submitted()) {
             if (!has_capability('mod/mdlds:db_write', $this->mcontext)) {
-                print_error('access_forbidden', 'mdlds', $this->action_url);
+                print_error('access_forbidden', 'mod_mdlds', $this->action_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
             }
             //
             $this->submitted  = true;
@@ -109,7 +112,7 @@ class  LTIEdit
         //
         $rslts = docker_exec('images', $this->minstance);
         if (!empty($rslts) and isset($rslts['error'])) {
-            print_error($rslts['error'], 'mdlds', $this->action_url, $rslts['home_dir']);
+            print_error($rslts['error'], 'mod_mdlds', $this->action_url, $rslts['home_dir']);
         }
 
         $i = 0;

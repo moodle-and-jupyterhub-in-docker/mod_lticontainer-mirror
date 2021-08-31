@@ -31,12 +31,12 @@ class  LTIConnect
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/mdlds:lti_setting', $this->mcontext)) {
-            print_error('access_forbidden', 'mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
     }
 

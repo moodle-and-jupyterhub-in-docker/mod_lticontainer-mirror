@@ -74,6 +74,7 @@ $string['driver_name'] = 'Driver';
 $string['volume_name'] = 'Volume Name';
 $string['volume_role'] = 'Volume Role';
 $string['volume_delete'] = 'Delete';
+$string['no_docker_command'] = 'docker command does not exist';
 
 // Table: LTI connect/edit
 $string['lti_name'] = 'LTI Name';

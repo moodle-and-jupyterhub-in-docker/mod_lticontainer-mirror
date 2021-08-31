@@ -2,6 +2,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+define('MDLDS_DOCKER_CMD',          '/usr/bin/docker');
+
 define('MDLDS_LTI_PREFIX_CMD',      'mdl_');
 define('MDLDS_LTI_USER_CMD',        'mdl_user');
 define('MDLDS_LTI_TEACHER_CMD',     'mdl_teacher');
@@ -104,7 +106,7 @@ function docker_exec($cmd, $mi)
         }
     }
 
-    $docker_cmd = '/usr/bin/docker -H unix://'.$socket_file.' '.$cmd;
+    $docker_cmd = MDLDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
     exec($docker_cmd, $rslts);
 
     if (empty($rslts) and !$local_docker) {
