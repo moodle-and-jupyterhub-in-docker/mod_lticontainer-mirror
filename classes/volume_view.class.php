@@ -60,7 +60,7 @@ class  VolumeView
         $len_check = strlen($check_course);
 
         if (!file_exists(MDLDS_DOCKER_CMD)) {
-            print_error('no_docker_command ('.MDLDS_DOCKER_CMD.')', 'mod_mdlds', $this->action_url);
+            print_error('no_docker_command', 'mod_mdlds', $this->action_url, MDLDS_DOCKER_CMD);
         }
 
         // POST
@@ -90,7 +90,7 @@ class  VolumeView
         //
         $rslts = docker_exec('volume ls', $this->minstance);
         if (isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_mdlds', $this->action_url, $rslts['home_dir']);
+            print_error($rslts['error'], 'mod_mdlds', $this->action_url);
         }
 
         $i = 0;

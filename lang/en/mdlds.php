@@ -51,6 +51,7 @@ $string['access_forbidden'] = 'Access forbidden';
 $string['invalid_sesskey'] = 'Invalid session key';
 $string['no_data_found'] = 'No data found!';
 $string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions of {$a}';
+$string['no_docker_command'] = 'docker command does not exist ({$a})';
 
 // パンくずメニュー
 $string['mdlds:over_view'] = 'Over View';
@@ -74,7 +75,6 @@ $string['driver_name'] = 'Driver';
 $string['volume_name'] = 'Volume Name';
 $string['volume_role'] = 'Volume Role';
 $string['volume_delete'] = 'Delete';
-$string['no_docker_command'] = 'docker command does not exist';
 
 // Table: LTI connect/edit
 $string['lti_name'] = 'LTI Name';
