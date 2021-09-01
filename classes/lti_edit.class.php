@@ -98,7 +98,7 @@ class  LTIEdit
             if ($this->minstance->make_volumes==1) {
                 $i = 0;
                 foreach ($formdata->mdl_vol_ as $vol) {
-                    if ($formdata->mdl_vol_name[$i]!='') {
+                    if ($formdata->mdl_vol_name[$i]!='' and $vol!=MDLDS_LTI_PRSNAL_CMD) {
                         $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
@@ -119,7 +119,6 @@ class  LTIEdit
         foreach ($rslts as $rslt) {
             if ($i==0) $this->images[$i] = 'default';
             else {
-                //$rslt  = preg_replace("/[<>]/", '', $rslt);
                 $rslt  = htmlspecialchars ($rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);

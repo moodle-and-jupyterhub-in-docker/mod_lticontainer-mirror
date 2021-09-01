@@ -83,8 +83,9 @@ $string['lti_name'] = 'LTI Name';
 $string['user_cmd_ttl'] = 'Accessible users';
 $string['teacher_cmd_ttl'] = 'Teachers';
 $string['image_cmd_ttl'] = 'Container image';
-$string['vol_cmd_ttl'] = 'Presen volume';
+$string['vol_cmd_ttl'] = 'Task volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
+$string['prs_cmd_ttl'] = 'Personal volume';
 $string['lab_url_cmd_ttl'] = 'Sub URL';
 
 // view.php
