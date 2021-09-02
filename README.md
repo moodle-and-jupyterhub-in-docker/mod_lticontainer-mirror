@@ -3,8 +3,7 @@
 Moodle Module for JupyterHub/MDLDockerSpawner
 
 Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
-
-https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds
+- https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds
 
 ## Installing via uploaded ZIP file ##
 
