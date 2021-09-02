@@ -2,9 +2,8 @@
 
 Moodle Module for JupyterHub/MDLDockerSpawner
 
-TODO Describe the plugin shortly here.
-
-TODO Provide more detailed description here.
+Please see bellow wiki (but sorry, this wiki is Japanese Text only)
+https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds
 
 ## Installing via uploaded ZIP file ##
 
