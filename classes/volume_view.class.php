@@ -100,7 +100,7 @@ class  VolumeView
             if (isset($vol[1])) {
                 $role = '';
                 if (!strncmp(MDLDS_LTI_VOLUME_CMD, $vol[1], strlen(MDLDS_LTI_VOLUME_CMD))) {
-                    $role = 'Presen Volume';
+                    $role = 'Task Volume';
                     $len_cmd = strlen(MDLDS_LTI_VOLUME_CMD);
                 }
                 else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $vol[1], strlen(MDLDS_LTI_SUBMIT_CMD))) {

@@ -4,17 +4,17 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
 {
     $table = new html_table();
     //
-    $table->head [] = 'Command';
+    $table->head [] = get_string('custom_command', 'mod_mdlds');
     $table->align[] = 'left';
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Users/Image';
+    $table->head [] = get_string('users/image', 'mod_mdlds'); 
     $table->align[] = 'left';
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; //'Option';
+    $table->head [] = ''; // get_string('command_option', 'mod_mdlds'); 
     $table->align[] = 'left';
     $table->size [] = '300px0';
     $table->wrap [] = 'nowrap';
@@ -104,22 +104,22 @@ function show_lti_edit_table_vol($cmds)
 {
     $table = new html_table();
     //
-    $table->head [] = 'Volume Role';
+    $table->head [] = get_string('volume_role', 'mod_mdlds');
     $table->align[] = 'left';
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Volume Name';
+    $table->head [] = get_string('volume_name', 'mod_mdlds');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Display Name';
+    $table->head [] = get_string('access_name', 'mod_mdlds');
     $table->align[] = 'left';
     $table->size [] = '150px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'Accessible Users';
+    $table->head [] = get_string('access_users', 'mod_mdlds');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';

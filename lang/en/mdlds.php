@@ -66,18 +66,23 @@ $string['show_demo'] = 'Demo';
 $string['view_volumes'] = 'Docker Volumes';
 $string['lti_connect'] = 'LTI Connections';
 $string['lti_edit'] = 'LTI Edit';
-$string['lti_setting'] = 'LTI Setting';
+$string['lti_setting'] = 'LTI Settings';
 $string['returnto_course'] = 'Return to course';
+
+// Table: LTI connect/edit
+$string['lti_name'] = 'LTI Name';
+$string['custom_command'] = 'Command';
+$string['users/image'] = 'Users/Image';
+$string['command_option'] = 'Option';
+$string['volume_role'] = 'Volume Role';
+$string['volume_name'] = 'Display Name';
+$string['access_name'] = 'Access Name';
+$string['access_users'] = 'Accessible Users';
 
 // Table: LTI volume
 $string['volume_view'] = 'Volumes';
 $string['driver_name'] = 'Driver';
-$string['volume_name'] = 'Volume Name';
-$string['volume_role'] = 'Volume Role';
 $string['volume_delete'] = 'Delete';
-
-// Table: LTI connect/edit
-$string['lti_name'] = 'LTI Name';
 
 // Title
 $string['user_cmd_ttl'] = 'Accessible users';
