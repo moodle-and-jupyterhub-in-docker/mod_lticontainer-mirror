@@ -147,7 +147,6 @@ function mdlds_explode_custom_params($custom_params)
 
             if (!strncmp(MDLDS_LTI_PREFIX_CMD, $cmd[0], strlen(MDLDS_LTI_PREFIX_CMD))) {
                 if (!strncmp(MDLDS_LTI_VOLUME_CMD, $cmd[0], strlen(MDLDS_LTI_VOLUME_CMD))) {
-                    if ($cmd[1]=='') $cmd[1] = '.';
                     $vol = explode('_', $cmd[0]);
                     if (isset($vol[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -156,7 +155,6 @@ function mdlds_explode_custom_params($custom_params)
                     }
                 }
                 else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $cmd[0], strlen(MDLDS_LTI_SUBMIT_CMD))) {
-                    if ($cmd[1]=='') $cmd[1] = '.';
                     $sub = explode('_', $cmd[0]);
                     if (isset($sub[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -165,7 +163,6 @@ function mdlds_explode_custom_params($custom_params)
                     }
                 }
                 else if (!strncmp(MDLDS_LTI_PRSNAL_CMD, $cmd[0], strlen(MDLDS_LTI_PRSNAL_CMD))) {
-                    if ($cmd[1]=='') $cmd[1] = '.';
                     $prs = explode('_', $cmd[0]);
                     if (isset($prs[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -222,18 +219,6 @@ function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
             $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
             $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
             $vol_array[$vol.$dirname] = $formdata->mdl_vol_link[$i].$users;
-            //
-            /*
-            if ($vol==MDLDS_LTI_VOLUME_CMD) {
-                $vol_array[MDLDS_LTI_VOLUME_CMD.$dirname] = $formdata->mdl_vol_link[$i].$users;
-            }
-            else if ($vol==MDLDS_LTI_SUBMIT_CMD) {
-                $vol_array[MDLDS_LTI_SUBMIT_CMD.$dirname] = $formdata->mdl_vol_link[$i].$users;
-            }
-            else if ($vol==MDLDS_LTI_PRSNAL_CMD) {
-                $vol_array[MDLDS_LTI_PRSNAL_CMD.$dirname] = $formdata->mdl_vol_link[$i].$users;
-            }
-            */
         }
         $i++;
     }
