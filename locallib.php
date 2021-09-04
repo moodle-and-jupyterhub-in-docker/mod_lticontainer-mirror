@@ -11,6 +11,7 @@ define('MDLDS_LTI_TGRPNAME_CMD',    'mdl_grpname');
 define('MDLDS_LTI_SESSIONINFO_CMD', 'mdl_sessioninfo');
 define('MDLDS_LTI_IMAGE_CMD',       'mdl_image');
 define('MDLDS_LTI_OPTION_CMD',      'mdl_option');
+define('MDLDS_LTI_IFRAME_CMD',      'mdl_iframe');
 define('MDLDS_LTI_SUBURL_CMD',      'mdl_suburl');
 define('MDLDS_LTI_VOLUME_CMD',      'mdl_vol_');
 define('MDLDS_LTI_SUBMIT_CMD',      'mdl_sub_');
@@ -18,9 +19,7 @@ define('MDLDS_LTI_PRSNAL_CMD',      'mdl_prs_');
 
 
 
-
 //////////////////////////////////////////////////////////////////////////////////////////////
-
 
 function  pack_space($str)
 {
@@ -186,39 +185,42 @@ function mdlds_explode_custom_params($custom_params)
 
 
 // コマンドを結合してテキストへ
-function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
+function mdlds_join_custom_params($custom_data)
 {
     $custom_params = '';
-    if (!isset($formdata->mdl_user))      $formdata->mdl_user    = '';
-    if (!isset($formdata->mdl_teacher))   $formdata->mdl_teacher = '';
-    if (!isset($formdata->mdl_image))     $formdata->mdl_image   = '';
-    if (!isset($formdata->mdl_option))    $formdata->mdl_option  = '';
-    if (!isset($formdata->mdl_suburl))    $formdata->mdl_suburl  = '';
-    if ($formdata->mdl_image =='default') $formdata->mdl_image   = '';
+    if (!isset($custom_data->mdl_user))      $custom_data->mdl_user    = '';
+    if (!isset($custom_data->mdl_teacher))   $custom_data->mdl_teacher = '';
+    if (!isset($custom_data->mdl_image))     $custom_data->mdl_image   = '';
+    if (!isset($custom_data->mdl_option))    $custom_data->mdl_option  = '';
+    if (!isset($custom_data->mdl_iframe))    $custom_data->mdl_iframe  = '';
+    if (!isset($custom_data->mdl_suburl))    $custom_data->mdl_suburl  = '';
+    if ($custom_data->mdl_image =='default') $custom_data->mdl_image   = '';
 
-    $param = MDLDS_LTI_USER_CMD.'='.$formdata->mdl_user;
+    $param = MDLDS_LTI_USER_CMD.'='.$custom_data->mdl_user;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_TEACHER_CMD.'='.$formdata->mdl_teacher;
+    $param = MDLDS_LTI_TEACHER_CMD.'='.$custom_data->mdl_teacher;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_IMAGE_CMD.'='.$formdata->mdl_image;
+    $param = MDLDS_LTI_IMAGE_CMD.'='.$custom_data->mdl_image;
     $custom_params .= $param."\r\n";
-    //$param = MDLDS_LTI_OPTION_CMD.'='.$formdata->mdl_option;
+    //$param = MDLDS_LTI_OPTION_CMD.'='.$custom_data->mdl_option;
     //$custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_SUBURL_CMD.'='.$formdata->mdl_suburl;
+    $param = MDLDS_LTI_SUBURL_CMD.'='.$custom_data->mdl_suburl;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$instanceid.','.$ltiid;      // Session情報用．ユーザによる操作はなし．
+    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$custom_data->instanceid.','.$custom_data->ltiid;    // Session情報用．ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+    $param = MDLDS_LTI_IFRAME_CMD.'='.$custom_data->mdl_iframe;                                 // iframeサポート．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     // Volume
     $vol_array = array();
     $i = 0;
-    foreach ($formdata->mdl_vol_ as $vol) {
-        if ($formdata->mdl_vol_name[$i]!='' and $formdata->mdl_vol_link[$i]!='') {
+    foreach ($custom_data->mdl_vol_ as $vol) {
+        if ($custom_data->mdl_vol_name[$i]!='' and $custom_data->mdl_vol_link[$i]!='') {
             $users = '';
-            if ($formdata->mdl_vol_user[$i]!='') $users = ':'.$formdata->mdl_vol_user[$i];
-            $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+            if ($custom_data->mdl_vol_user[$i]!='') $users = ':'.$custom_data->mdl_vol_user[$i];
+            $lowstr  = mb_strtolower($custom_data->mdl_vol_name[$i]);
             $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
-            $vol_array[$vol.$dirname] = $formdata->mdl_vol_link[$i].$users;
+            $vol_array[$vol.$dirname] = $custom_data->mdl_vol_link[$i].$users;
         }
         $i++;
     }
@@ -228,8 +230,8 @@ function mdlds_join_custom_params($formdata, $instanceid, $ltiid)
     }    
 
     //
-    if (isset($formdata->others)) {
-        $other_cmds = unserialize($formdata->others);
+    if (isset($custom_data->others)) {
+        $other_cmds = unserialize($custom_data->others);
         foreach ($other_cmds as $cmd=>$value) {
             $param = $cmd.'='.$value;
             $custom_params .= $param."\r\n";

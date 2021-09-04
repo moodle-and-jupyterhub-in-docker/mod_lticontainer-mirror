@@ -70,7 +70,7 @@ class  LTIEdit
     {
         global $DB;
 
-        $fields = 'id, course, name, instructorcustomparameters, timemodified';
+        $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
         if (!$this->ltirec) {
             print_error('no_data_found', 'mod_mdlds', $this->action_url);
@@ -78,9 +78,16 @@ class  LTIEdit
         if (!file_exists(MDLDS_DOCKER_CMD)) {
             print_error('no_docker_command', 'mod_mdlds', $this->action_url, MDLDS_DOCKER_CMD);
         }
+        
+        // Launcher Container
+        $launch = $this->ltirec->launchcontainer;
+        if ($launch=='1') {     //default
+            $ret = $DB->get_record('lti_types_config', array('name'=>'launchcontainer', 'typeid'=>$this->ltirec->typeid), 'value');
+            if ($ret) $launch = $ret->value;
+        }
 
         // POST
-        if ($formdata = data_submitted()) {
+        if ($custom_data = data_submitted()) {
             if (!has_capability('mod/mdlds:db_write', $this->mcontext)) {
                 print_error('access_forbidden', 'mod_mdlds', $this->action_url);
             }
@@ -88,8 +95,13 @@ class  LTIEdit
                 print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
             }
             //
+            $custom_data->mdl_iframe = '0';
+            if ($launch=='2' or $launch=='3') $custom_data->mdl_iframe = '1';   // 埋め込み
+            $custom_data->instanceid = $this->minstance->id;
+            $custom_data->ltiid = $this->ltiid;
+            //
             $this->submitted  = true;
-            $this->custom_txt = mdlds_join_custom_params($formdata, $this->minstance->id, $this->ltiid);
+            $this->custom_txt = mdlds_join_custom_params($custom_data);
             $this->ltirec->instructorcustomparameters = $this->custom_txt;
             $this->ltirec->timemodified = time();
             $DB->update_record('lti', $this->ltirec);
@@ -97,9 +109,9 @@ class  LTIEdit
             // create volume
             if ($this->minstance->make_volumes==1) {
                 $i = 0;
-                foreach ($formdata->mdl_vol_ as $vol) {
-                    if ($formdata->mdl_vol_name[$i]!='' and $vol!=MDLDS_LTI_PRSNAL_CMD) {
-                        $lowstr  = mb_strtolower($formdata->mdl_vol_name[$i]);
+                foreach ($custom_data->mdl_vol_ as $vol) {
+                    if ($custom_data->mdl_vol_name[$i]!='' and $vol!=MDLDS_LTI_PRSNAL_CMD) {
+                        $lowstr  = mb_strtolower($custom_data->mdl_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
                         docker_exec($cmd, $this->minstance);
