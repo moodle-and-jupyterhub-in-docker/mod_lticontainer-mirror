@@ -99,13 +99,13 @@ class  VolumeView
             $vol  = explode(' ', $rslt);
             if (isset($vol[1])) {
                 $role = '';
-                if (!strncmp(MDLDS_LTI_VOLUME_CMD, $vol[1], strlen(MDLDS_LTI_VOLUME_CMD))) {
+                if (!strncmp(MDLDS_LTI_VOLUMES_CMD, $vol[1], strlen(MDLDS_LTI_VOLUMES_CMD))) {
                     $role = 'Task Volume';
-                    $len_cmd = strlen(MDLDS_LTI_VOLUME_CMD);
+                    $len_cmd = strlen(MDLDS_LTI_VOLUMES_CMD);
                 }
-                else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $vol[1], strlen(MDLDS_LTI_SUBMIT_CMD))) {
+                else if (!strncmp(MDLDS_LTI_SUBMITS_CMD, $vol[1], strlen(MDLDS_LTI_SUBMITS_CMD))) {
                     $role = 'Submit Volume';
-                    $len_cmd = strlen(MDLDS_LTI_SUBMIT_CMD);
+                    $len_cmd = strlen(MDLDS_LTI_SUBMITS_CMD);
                 }
 
                 if ($role!='' and substr($vol[1], -$len_check)==$check_course) { 

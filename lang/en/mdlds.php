@@ -85,8 +85,8 @@ $string['driver_name'] = 'Driver';
 $string['volume_delete'] = 'Delete';
 
 // Title
-$string['user_cmd_ttl'] = 'Accessible users';
-$string['teacher_cmd_ttl'] = 'Teachers';
+$string['users_cmd_ttl'] = 'Accessible users';
+$string['teachers_cmd_ttl'] = 'Teachers';
 $string['image_cmd_ttl'] = 'Container image';
 $string['vol_cmd_ttl'] = 'Task volume';
 $string['sub_cmd_ttl'] = 'Submit volume';

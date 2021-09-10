@@ -26,27 +26,27 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
 
     //
     $i = 0;
-    $user_cmd = '';
-    $teacher_cmd = '';
+    $users_cmd = '';
+    $teachers_cmd = '';
     $image_cmd = '';
     $option_cmd = '';
     $url_cmd = '';
-    if (isset($cmds->custom_cmd[MDLDS_LTI_USER_CMD]))    $user_cmd    = $cmds->custom_cmd[MDLDS_LTI_USER_CMD];
-    if (isset($cmds->custom_cmd[MDLDS_LTI_TEACHER_CMD])) $teacher_cmd = $cmds->custom_cmd[MDLDS_LTI_TEACHER_CMD];
-    if (isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))   $image_cmd   = $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD];
-    if (isset($cmds->custom_cmd[MDLDS_LTI_OPTION_CMD]))  $option_cmd  = $cmds->custom_cmd[MDLDS_LTI_OPTION_CMD];
-    if (isset($cmds->custom_cmd[MDLDS_LTI_SUBURL_CMD]))  $url_cmd     = $cmds->custom_cmd[MDLDS_LTI_SUBURL_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_USERS_CMD]))    $users_cmd    = $cmds->custom_cmd[MDLDS_LTI_USERS_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD])) $teachers_cmd = $cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))    $image_cmd    = $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_OPTION_CMD]))   $option_cmd   = $cmds->custom_cmd[MDLDS_LTI_OPTION_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_DEFURL_CMD]))   $url_cmd      = $cmds->custom_cmd[MDLDS_LTI_DEFURL_CMD];
 
-    // MDLDS_LTI_USER_CMD
-    $table->data[$i][] = '<strong>'.get_string('user_cmd_ttl', 'mod_mdlds').'</strong>';
-    $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_USER_CMD.'" size="50" maxlength="200" value="'.$user_cmd.'" />';
+    // MDLDS_LTI_USERS_CMD
+    $table->data[$i][] = '<strong>'.get_string('users_cmd_ttl', 'mod_mdlds').'</strong>';
+    $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_USERS_CMD.'" size="50" maxlength="200" value="'.$users_cmd.'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
 
-    // MDLDS_LTI_TEACHER_CMD
-    $table->data[$i][] = '<strong>'.get_string('teacher_cmd_ttl', 'mod_mdlds').'</strong>';
-    $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_TEACHER_CMD.'" size="50" maxlength="200" value="'.$teacher_cmd.'" />';
+    // MDLDS_LTI_TEACHERS_CMD
+    $table->data[$i][] = '<strong>'.get_string('teachers_cmd_ttl', 'mod_mdlds').'</strong>';
+    $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_TEACHERS_CMD.'" size="50" maxlength="200" value="'.$teachers_cmd.'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
@@ -75,7 +75,7 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
     $table->data[$i][] = '';
     $i++;
 
-    // MDLDS_LTI_SUBURL_CMD
+    // MDLDS_LTI_DEFURL_CMD
     $select_opt = '';
     foreach($urls as $key=>$url) {
         $selected = '';
@@ -83,7 +83,7 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
         $select_opt .= '<option value="'.$url.'" '.$selected.'>'.$key.'</option>';
     }
     $table->data[$i][] = '<strong>'.get_string('lab_url_cmd_ttl', 'mod_mdlds').'</strong>';
-    $table->data[$i][] = '<select name="'.MDLDS_LTI_SUBURL_CMD.'" >'.$select_opt.'</select>';
+    $table->data[$i][] = '<select name="'.MDLDS_LTI_DEFURL_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
@@ -129,12 +129,12 @@ function show_lti_edit_table_vol($cmds)
     // Presen Volumes
     if (isset($cmds->mount_vol)) {
         foreach($cmds->mount_vol as $key => $value) { 
-            if (!isset($cmds->vol_user[$key])) $cmds->vol_user[$key] = '';
-            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUME_CMD.'[]" value="'.MDLDS_LTI_VOLUME_CMD.'" />'. 
+            if (!isset($cmds->vol_users[$key])) $cmds->vol_users[$key] = '';
+            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUMES_CMD.'[]" value="'.MDLDS_LTI_VOLUMES_CMD.'" />'. 
                                  '<strong>'.get_string('vol_cmd_ttl', 'mod_mdlds').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'name[]" size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'link[]" size="30" maxlength="60"  value="'.$value.'" />';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'user[]" size="50" maxlength="200" value="'.$cmds->vol_user[$key].'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'name[]"  size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'link[]"  size="30" maxlength="60"  value="'.$value.'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->vol_users[$key].'" />';
             $i++;
         }
     }
@@ -142,12 +142,12 @@ function show_lti_edit_table_vol($cmds)
     // Submit Volumes
     if (isset($cmds->mount_sub)) {
         foreach($cmds->mount_sub as $key => $value) { 
-            if (!isset($cmds->sub_user[$key])) $cmds->sub_user[$key] = '';
-            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUME_CMD.'[]" value="'.MDLDS_LTI_SUBMIT_CMD.'" />'. 
+            if (!isset($cmds->sub_users[$key])) $cmds->sub_users[$key] = '';
+            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUMES_CMD.'[]" value="'.MDLDS_LTI_SUBMITS_CMD.'" />'. 
                                  '<strong>'.get_string('sub_cmd_ttl', 'mod_mdlds').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'name[]" size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'link[]" size="30" maxlength="60"  value="'.$value.'" />';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'user[]" size="50" maxlength="200" value="'.$cmds->sub_user[$key].'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'name[]"  size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'link[]"  size="30" maxlength="60"  value="'.$value.'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->sub_users[$key].'" />';
             $i++;
         }
     }
@@ -155,26 +155,26 @@ function show_lti_edit_table_vol($cmds)
     // Personal Volumes
     if (isset($cmds->mount_prs)) {
         foreach($cmds->mount_prs as $key => $value) { 
-            if (!isset($cmds->prs_user[$key])) $cmds->prs_user[$key] = '';
-            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUME_CMD.'[]" value="'.MDLDS_LTI_PRSNAL_CMD.'" />'. 
+            if (!isset($cmds->prs_users[$key])) $cmds->prs_users[$key] = '';
+            $table->data[$i][] = '<input type="hidden" name="'.MDLDS_LTI_VOLUMES_CMD.'[]" value="'.MDLDS_LTI_PRSNALS_CMD.'" />'. 
                                  '<strong>'.get_string('prs_cmd_ttl', 'mod_mdlds').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'name[]" size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'link[]" size="30" maxlength="60"  value="'.$value.'" />';
-            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'user[]" size="50" maxlength="200" value="'.$cmds->prs_user[$key].'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'name[]"  size="15" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'link[]"  size="30" maxlength="60"  value="'.$value.'" />';
+            $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->prs_users[$key].'" />';
             $i++;
         }
     }
 
     // New Volumes
     $num = 3;
-    $select_opt  = '<option value="'.MDLDS_LTI_VOLUME_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_mdlds').'</option>';
-    $select_opt .= '<option value="'.MDLDS_LTI_SUBMIT_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_mdlds').'</option>';
-    $select_opt .= '<option value="'.MDLDS_LTI_PRSNAL_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_mdlds').'</option>';
+    $select_opt  = '<option value="'.MDLDS_LTI_VOLUMES_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_mdlds').'</option>';
+    $select_opt .= '<option value="'.MDLDS_LTI_SUBMITS_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_mdlds').'</option>';
+    $select_opt .= '<option value="'.MDLDS_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_mdlds').'</option>';
     for ($cnt=0; $cnt<$num; $cnt++) {
-        $table->data[$i][] = '<select name="'.MDLDS_LTI_VOLUME_CMD.'[]" autocomplete="off">'.$select_opt.'</select>'; 
-        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'name[]" size="15" maxlength="30"  value="" />';
-        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'link[]" size="30" maxlength="60"  value="" />';
-        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUME_CMD.'user[]" size="50" maxlength="200" value="" />';
+        $table->data[$i][] = '<select name="'.MDLDS_LTI_VOLUMES_CMD.'[]" autocomplete="off">'.$select_opt.'</select>'; 
+        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'name[]" size="15" maxlength="30"  value="" />';
+        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'link[]" size="30" maxlength="60"  value="" />';
+        $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_VOLUMES_CMD.'user[]" size="50" maxlength="200" value="" />';
         $i++;
     }
 

@@ -5,17 +5,19 @@ defined('MOODLE_INTERNAL') || die;
 define('MDLDS_DOCKER_CMD',          '/usr/bin/docker');
 
 define('MDLDS_LTI_PREFIX_CMD',      'mdl_');
-define('MDLDS_LTI_USER_CMD',        'mdl_user');
-define('MDLDS_LTI_TEACHER_CMD',     'mdl_teacher');
+define('MDLDS_LTI_USERS_CMD',       'mdl_users');
+define('MDLDS_LTI_TEACHERS_CMD',    'mdl_teachers');
 define('MDLDS_LTI_TGRPNAME_CMD',    'mdl_grpname');
 define('MDLDS_LTI_SESSIONINFO_CMD', 'mdl_sessioninfo');
 define('MDLDS_LTI_IMAGE_CMD',       'mdl_image');
+define('MDLDS_LTI_CPULIMIT_CMD',    'mdl_cpulimit');
+define('MDLDS_LTI_MEMLIMIT_CMD',    'mdl_memlimit');
 define('MDLDS_LTI_OPTION_CMD',      'mdl_option');
 define('MDLDS_LTI_IFRAME_CMD',      'mdl_iframe');
-define('MDLDS_LTI_SUBURL_CMD',      'mdl_suburl');
-define('MDLDS_LTI_VOLUME_CMD',      'mdl_vol_');
-define('MDLDS_LTI_SUBMIT_CMD',      'mdl_sub_');
-define('MDLDS_LTI_PRSNAL_CMD',      'mdl_prs_');
+define('MDLDS_LTI_DEFURL_CMD',      'mdl_defurl');
+define('MDLDS_LTI_VOLUMES_CMD',     'mdl_vol_');
+define('MDLDS_LTI_SUBMITS_CMD',     'mdl_sub_');
+define('MDLDS_LTI_PRSNALS_CMD',     'mdl_prs_');
 
 
 
@@ -132,9 +134,9 @@ function mdlds_explode_custom_params($custom_params)
     $cmds->mount_vol  = array();
     $cmds->mount_sub  = array();
     $cmds->mount_prs  = array();
-    $cmds->vol_user   = array();
-    $cmds->sub_user   = array();
-    $cmds->prs_user   = array();
+    $cmds->vol_users  = array();
+    $cmds->sub_users  = array();
+    $cmds->prs_users  = array();
 
     $str = str_replace(array("\r\n", "\r", "\n"), "\n", $custom_params);
     $customs = explode("\n", $str);
@@ -145,28 +147,28 @@ function mdlds_explode_custom_params($custom_params)
             if (!isset($cmd[1])) $cmd[1] = '';
 
             if (!strncmp(MDLDS_LTI_PREFIX_CMD, $cmd[0], strlen(MDLDS_LTI_PREFIX_CMD))) {
-                if (!strncmp(MDLDS_LTI_VOLUME_CMD, $cmd[0], strlen(MDLDS_LTI_VOLUME_CMD))) {
+                if (!strncmp(MDLDS_LTI_VOLUMES_CMD, $cmd[0], strlen(MDLDS_LTI_VOLUMES_CMD))) {
                     $vol = explode('_', $cmd[0]);
                     if (isset($vol[2])) {
                         $actl = explode(':', $cmd[1]);
                         $cmds->mount_vol[$vol[2]] = $actl[0];
-                        if (isset($actl[1])) $cmds->vol_user[$vol[2]] = $actl[1];
+                        if (isset($actl[1])) $cmds->vol_users[$vol[2]] = $actl[1];
                     }
                 }
-                else if (!strncmp(MDLDS_LTI_SUBMIT_CMD, $cmd[0], strlen(MDLDS_LTI_SUBMIT_CMD))) {
+                else if (!strncmp(MDLDS_LTI_SUBMITS_CMD, $cmd[0], strlen(MDLDS_LTI_SUBMITS_CMD))) {
                     $sub = explode('_', $cmd[0]);
                     if (isset($sub[2])) {
                         $actl = explode(':', $cmd[1]);
                         $cmds->mount_sub[$sub[2]] = $actl[0];
-                        if (isset($actl[1])) $cmds->sub_user[$sub[2]] = $actl[1];
+                        if (isset($actl[1])) $cmds->sub_users[$sub[2]] = $actl[1];
                     }
                 }
-                else if (!strncmp(MDLDS_LTI_PRSNAL_CMD, $cmd[0], strlen(MDLDS_LTI_PRSNAL_CMD))) {
+                else if (!strncmp(MDLDS_LTI_PRSNALS_CMD, $cmd[0], strlen(MDLDS_LTI_PRSNALS_CMD))) {
                     $prs = explode('_', $cmd[0]);
                     if (isset($prs[2])) {
                         $actl = explode(':', $cmd[1]);
                         $cmds->mount_prs[$prs[2]] = $actl[0];
-                        if (isset($actl[1])) $cmds->prs_user[$prs[2]] = $actl[1];
+                        if (isset($actl[1])) $cmds->prs_users[$prs[2]] = $actl[1];
                     }
                 }
                 else {
@@ -188,27 +190,61 @@ function mdlds_explode_custom_params($custom_params)
 function mdlds_join_custom_params($custom_data)
 {
     $custom_params = '';
-    if (!isset($custom_data->mdl_user))      $custom_data->mdl_user    = '';
-    if (!isset($custom_data->mdl_teacher))   $custom_data->mdl_teacher = '';
-    if (!isset($custom_data->mdl_image))     $custom_data->mdl_image   = '';
-    if (!isset($custom_data->mdl_option))    $custom_data->mdl_option  = '';
-    if (!isset($custom_data->mdl_iframe))    $custom_data->mdl_iframe  = '';
-    if (!isset($custom_data->mdl_suburl))    $custom_data->mdl_suburl  = '';
-    if ($custom_data->mdl_image =='default') $custom_data->mdl_image   = '';
+    if (!isset($custom_data->mdl_users))     $custom_data->mdl_users    = '';
+    if (!isset($custom_data->mdl_teachers))  $custom_data->mdl_teachers = '';
+    if (!isset($custom_data->mdl_image))     $custom_data->mdl_image    = '';
+    if (!isset($custom_data->mdl_cpulimit))  $custom_data->mdl_cpulimit = '';
+    if (!isset($custom_data->mdl_memlimit))  $custom_data->mdl_memlimit = '';
+    if (!isset($custom_data->mdl_option))    $custom_data->mdl_option   = '';
+    if (!isset($custom_data->mdl_iframe))    $custom_data->mdl_iframe   = '';
+    if (!isset($custom_data->mdl_defurl))    $custom_data->mdl_defurl   = '';
+    if ($custom_data->mdl_image =='default') $custom_data->mdl_image    = '';
 
-    $param = MDLDS_LTI_USER_CMD.'='.$custom_data->mdl_user;
+    $lowstr = mb_strtolower($custom_data->mdl_users);
+    $value  = preg_replace("/[^a-z0-9\*, ]/", '', $lowstr);
+    $param  = MDLDS_LTI_USERS_CMD.'='.$value;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_TEACHER_CMD.'='.$custom_data->mdl_teacher;
+
+    $lowstr = mb_strtolower($custom_data->mdl_teachers);
+    $value  = preg_replace("/[^a-z0-9\*, ]/", '', $lowstr);
+    $param  = MDLDS_LTI_TEACHERS_CMD.'='.$value;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_IMAGE_CMD.'='.$custom_data->mdl_image;
+
+    $lowstr = mb_strtolower($custom_data->mdl_image);
+    $value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
+    $param  = MDLDS_LTI_IMAGE_CMD.'='.$value;
     $custom_params .= $param."\r\n";
-    //$param = MDLDS_LTI_OPTION_CMD.'='.$custom_data->mdl_option;
+
+    $lowstr = mb_strtolower($custom_data->mdl_cpulimit);
+    $value  = preg_replace("/[^0-9\.]/", '', $lowstr);
+    $param  = MDLDS_LTI_CPULIMIT_CMD.'='.$value;
+    $custom_params .= $param."\r\n";
+
+    $lowstr = mb_strtolower($custom_data->mdl_memlimit);
+    $value  = preg_replace("/[^0-9KMGTP]/", '', $lowstr);
+    $param  = MDLDS_LTI_MEMLIMIT_CMD.'='.$value;
+    $custom_params .= $param."\r\n";
+
+    //$lowstr = mb_strtolower($custom_data->mdl_option);
+    //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+    //$param  = MDLDS_LTI_OPTION_CMD.'='.$avlue;
     //$custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_SUBURL_CMD.'='.$custom_data->mdl_suburl;
+
+    $lowstr = mb_strtolower($custom_data->mdl_defurl);
+    $value  = preg_replace("/[^a-z\/]/", '', $lowstr);
+    $param  = MDLDS_LTI_DEFURL_CMD.'='.$value;
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_SESSIONINFO_CMD.'='.$custom_data->instanceid.','.$custom_data->ltiid;    // Session情報用．ユーザによる操作はなし．
+
+    $lowstr = mb_strtolower($custom_data->mdl_iframe);
+    $value = preg_replace("/[^0-9]/", '', $lowstr);
+    $param = MDLDS_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
-    $param = MDLDS_LTI_IFRAME_CMD.'='.$custom_data->mdl_iframe;                                 // iframeサポート．ユーザによる操作はなし．
+
+    $lowstr = mb_strtolower($custom_data->instanceid);
+    $instid = preg_replace("/[^0-9]/", '', $lowstr);
+    $lowstr = mb_strtolower($custom_data->ltiid);
+    $ltiid  = preg_replace("/[^0-9]/", '', $lowstr);
+    $param  = MDLDS_LTI_SESSIONINFO_CMD.'='.$instid.','.$ltiid;             // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     // Volume
@@ -217,7 +253,7 @@ function mdlds_join_custom_params($custom_data)
     foreach ($custom_data->mdl_vol_ as $vol) {
         if ($custom_data->mdl_vol_name[$i]!='' and $custom_data->mdl_vol_link[$i]!='') {
             $users = '';
-            if ($custom_data->mdl_vol_user[$i]!='') $users = ':'.$custom_data->mdl_vol_user[$i];
+            if ($custom_data->mdl_vol_users[$i]!='') $users = ':'.$custom_data->mdl_vol_users[$i];
             $lowstr  = mb_strtolower($custom_data->mdl_vol_name[$i]);
             $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
             $vol_array[$vol.$dirname] = $custom_data->mdl_vol_link[$i].$users;
