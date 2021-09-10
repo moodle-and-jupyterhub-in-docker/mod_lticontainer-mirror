@@ -36,11 +36,13 @@ function show_lti_edit_table_cmd($cmds, $params)
 
     //
     $i = 0;
-    $users_cmd = '';
+    $users_cmd    = '';
     $teachers_cmd = '';
-    $image_cmd = '';
-    $options_cmd = '';
-    $url_cmd = '';
+    $image_cmd    = '';
+    $cpulimit_cmd = '';
+    $memlimit_cmd = '';
+    $options_cmd  = '';
+    $url_cmd      = '';
     if (isset($cmds->custom_cmd[MDLDS_LTI_USERS_CMD]))    $users_cmd    = $cmds->custom_cmd[MDLDS_LTI_USERS_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD])) $teachers_cmd = $cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))    $image_cmd    = $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD];

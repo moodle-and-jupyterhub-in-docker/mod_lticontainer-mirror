@@ -93,7 +93,7 @@ $string['image_cmd_ttl'] = 'Container image';
 $string['vol_cmd_ttl'] = 'Task volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
 $string['prs_cmd_ttl'] = 'Personal volume';
-$string['lab_url_cmd_ttl'] = 'Sub URL';
+$string['lab_url_cmd_ttl'] = 'Default URL';
 $string['cpulimit_cmd_ttl'] = 'CPU Limit';
 $string['memlimit_cmd_ttl'] = 'Memory Limit';
 
