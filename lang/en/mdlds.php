@@ -43,6 +43,8 @@ $string['docker_pass'] = 'Password of docker user';
 $string['docker_pass_help'] = 'Password of docker user';
 $string['show_custom_params'] = 'Show custom parameters';
 $string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
+$string['imagename_filter'] = 'Image name filter words';
+$string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
 $string['make_docker_volumes'] = 'Does mod_mdlds create docker volumes';
 $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_mdlds at LTI Edit Tab';
 
@@ -73,7 +75,7 @@ $string['returnto_course'] = 'Return to course';
 $string['lti_name'] = 'LTI Name';
 $string['custom_command'] = 'Command';
 $string['users/image'] = 'Users/Image';
-$string['command_option'] = 'Option';
+$string['command_options'] = 'Options';
 $string['volume_role'] = 'Volume Role';
 $string['volume_name'] = 'Display Name';
 $string['access_name'] = 'Access Name';
@@ -92,6 +94,8 @@ $string['vol_cmd_ttl'] = 'Task volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
 $string['prs_cmd_ttl'] = 'Personal volume';
 $string['lab_url_cmd_ttl'] = 'Sub URL';
+$string['cpulimit_cmd_ttl'] = 'CPU Limit';
+$string['memlimit_cmd_ttl'] = 'Memory Limit';
 
 // view.php
 $string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds';

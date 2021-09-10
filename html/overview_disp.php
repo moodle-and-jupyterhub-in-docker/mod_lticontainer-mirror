@@ -13,6 +13,7 @@ echo '<h4>';
 print('Docker Host : <strong>'.$minstance->docker_host.'</strong><br />');
 print('Docker User : <strong>'.$minstance->docker_user.'</strong><br />');
 print('Shows LTI parameters : <strong>'.$disp.'</strong><br />');
+print('Image Name Filter : <strong>'.$minstance->imgname_fltr.'</strong><br />');
 print('Creates volumes : <strong>'.$make.'</strong><br />');
 
 if (has_capability('mod/mdlds:db_write', $mcontext)) {

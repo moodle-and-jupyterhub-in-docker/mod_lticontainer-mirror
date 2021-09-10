@@ -17,6 +17,8 @@ class  LTIEdit
     var $images     = array();
     var $options    = array();
     var $lab_urls   = array();
+    var $cpu_limit  = array();
+    var $mem_limut  = array();
 
     var $submitted  = false;
 
@@ -27,6 +29,7 @@ class  LTIEdit
 
     var $custom_ary = array();
     var $custom_txt = '';
+    var $costom_prm;
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -44,6 +47,14 @@ class  LTIEdit
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
         $this->action_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $this->url_params);
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
+        $this->cpu_limit  = array('default'=>'', 'no limit'=>'0', '1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', 
+                                                    '8'=>'8', '9'=>'9', '10'=>'10', '12'=>'12', '14'=>'14', '16'=>'16', '18'=>'18', '20'=>'20');
+        $this->mem_limit  = array('default'=>'', 'no limit'=>'0',            '300MiB'=>   '314,572,800', '500MiB'=>  '524,288,000', '800MiB'=>   '838,860,800',
+                                                    '1GiB' => '1,073,741,824', '2GiB'=> '2,147,483,648',   '3GiB'=>'3,221,225,472',   '4GiB'=> '4,294,967,296', 
+                                                    '5GiB' => '5,368,709,120', '6GiB'=> '6,442,450,944',   '7GiB'=>'7,516,192,768',   '8GiB'=> '8,589,934,592', 
+                                                    '9GiB' => '9,663,676,416','10GiB'=>'10,737,418,240',  '12GiB'=>'12,884,901,888', '14GiB'=>'15,032,385,536', 
+                                                    '16GiB'=>'17,179,869,184','18GiB'=>'19,327,352,832',  '20GiB'=>'21,474,836,480');
+        $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
         // option の設定
         $this->options    = array('none'=>'', 'double args'=>'doubleargs');
 
@@ -57,6 +68,12 @@ class  LTIEdit
         if (!has_capability('mod/mdlds:lti_edit', $this->mcontext)) {
             print_error('access_forbidden', 'mod_mdlds', $this->action_url);
         }
+
+        $this->custom_prm = new stdClass();
+        $this->custom_prm->lab_urls  = $this->lab_urls;
+        $this->custom_prm->cpu_limit = $this->cpu_limit;
+        $this->custom_prm->mem_limit = $this->mem_limit;
+        $this->custom_prm->options   = $this->options;
     }
 
 
@@ -129,19 +146,21 @@ class  LTIEdit
 
         $i = 0;
         foreach ($rslts as $rslt) {
-            if ($i==0) $this->images[$i] = 'default';
+            if ($i==0) $this->images[$i++] = 'default';
             else {
-                $rslt  = htmlspecialchars ($rslt);
+                $rslt  = htmlspecialchars($rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);
                 $idisp = $image[0].' : '.$image[1];
                 if ($image[0]=='&lt;none&gt;' and isset($image[2])) $idisp = $image[2];
-                $this->images[$i] = $idisp;
+                if (check_include_substr($idisp, $this->minstance->imgname_fltr)) {
+                    $this->images[$i++] = $idisp;
+                }
             }
-            $i++;
         }
         $this->custom_txt = $this->ltirec->instructorcustomparameters;
         $this->custom_ary = mdlds_explode_custom_params($this->custom_txt);
+        $this->custom_prm->images = $this->images;
 
         return true;
     }

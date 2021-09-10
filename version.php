@@ -28,9 +28,9 @@ $plugin = new stdClass();
 
 $plugin->requires = 2018051700;
 $plugin->component = 'mod_mdlds';
-$plugin->maturity = MATURITY_ALPHA;
+$plugin->maturity = MATURITY_BETA;
 
-$plugin->release = '0.9.10';
+$plugin->release = '0.9.11';
 
-$plugin->version = 2021083000;
+$plugin->version = 2021091000;
 

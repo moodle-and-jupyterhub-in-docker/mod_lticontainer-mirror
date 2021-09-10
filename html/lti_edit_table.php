@@ -1,6 +1,6 @@
 <?php
 
-function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
+function show_lti_edit_table_cmd($cmds, $params)
 {
     $table = new html_table();
     //
@@ -14,32 +14,46 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; // get_string('command_option', 'mod_mdlds'); 
+    $table->head [] = ''; // get_string('command_options', 'mod_mdlds'); 
     $table->align[] = 'left';
-    $table->size [] = '300px0';
+    $table->size [] = '50px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = '';
-    $table->align[] = '';
-    $table->size [] = '0';
-    $table->wrap [] = '';
+    $table->head [] = ''; 
+    $table->align[] = 'left';
+    $table->size [] = '100px';
+    $table->wrap [] = 'nowrap';
+
+    $table->head [] = ''; 
+    $table->align[] = 'left';
+    $table->size [] = '200px';
+    $table->wrap [] = 'nowrap';
+
+    $table->head [] = ''; 
+    $table->align[] = 'left';
+    $table->size [] = '100px';
+    $table->wrap [] = 'nowrap';
 
     //
     $i = 0;
     $users_cmd = '';
     $teachers_cmd = '';
     $image_cmd = '';
-    $option_cmd = '';
+    $options_cmd = '';
     $url_cmd = '';
     if (isset($cmds->custom_cmd[MDLDS_LTI_USERS_CMD]))    $users_cmd    = $cmds->custom_cmd[MDLDS_LTI_USERS_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD])) $teachers_cmd = $cmds->custom_cmd[MDLDS_LTI_TEACHERS_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD]))    $image_cmd    = $cmds->custom_cmd[MDLDS_LTI_IMAGE_CMD];
-    if (isset($cmds->custom_cmd[MDLDS_LTI_OPTION_CMD]))   $option_cmd   = $cmds->custom_cmd[MDLDS_LTI_OPTION_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_CPULIMIT_CMD])) $cpulimit_cmd = $cmds->custom_cmd[MDLDS_LTI_CPULIMIT_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_MEMLIMIT_CMD])) $memlimit_cmd = $cmds->custom_cmd[MDLDS_LTI_MEMLIMIT_CMD];
+    if (isset($cmds->custom_cmd[MDLDS_LTI_OPTIONS_CMD]))  $options_cmd  = $cmds->custom_cmd[MDLDS_LTI_OPTIONS_CMD];
     if (isset($cmds->custom_cmd[MDLDS_LTI_DEFURL_CMD]))   $url_cmd      = $cmds->custom_cmd[MDLDS_LTI_DEFURL_CMD];
 
     // MDLDS_LTI_USERS_CMD
     $table->data[$i][] = '<strong>'.get_string('users_cmd_ttl', 'mod_mdlds').'</strong>';
     $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_USERS_CMD.'" size="50" maxlength="200" value="'.$users_cmd.'" />';
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $i++;
@@ -49,35 +63,46 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
     $table->data[$i][] = '<input type="text" name="'.MDLDS_LTI_TEACHERS_CMD.'" size="50" maxlength="200" value="'.$teachers_cmd.'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
     $i++;
 
     // MDLDS_LTI_IMAGE_CMD
     $select_opt = '';
-    foreach($images as $image) {
+    foreach($params->images as $image) {
         $selected = '';
         if ($image==$image_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$image.'" '.$selected.'>'.$image.'</option>';
     }
     $table->data[$i][] = '<strong>'.get_string('image_cmd_ttl', 'mod_mdlds').'</strong>';
     $table->data[$i][] = '<select name="'.MDLDS_LTI_IMAGE_CMD.'" >'.$select_opt.'</select>';
+    $table->data[$i][] = '';
 
-    // MDLDS_LTI_OPTION_CMD
-    /*
+    // MDLDS_LTI_OPTIONS_CMD
+    /*/
     $select_opt = '';
-    foreach($options as $key=>$option) {
+    foreach($params->options as $key=>$option) {
         $selected = '';
-        if ($option==$option_cmd) $selected = 'selected="selected"';
+        if ($option==$options_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$option.'" '.$selected.'>'.$key.'</option>';
     }
-    $table->data[$i][] = '<select name="'.MDLDS_LTI_OPTION_CMD.'" >'.$select_opt.'</select>';
-    */
-    $table->data[$i][] = '';
+    $table->data[$i][] = '<select name="'.MDLDS_LTI_OPTIONS_CMD.'" >'.$select_opt.'</select>';
+    /*/
+    // MDLDS_CPULIMIT_CMD
+    $select_opt = '';
+    foreach($params->cpu_limit as $key=>$cpu) {
+        $selected = '';
+        if ($cpu==$cpulimit_cmd) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('cpulimit_cmd_ttl', 'mod_mdlds').'</strong>';
+    $table->data[$i][] = '<select name="'.MDLDS_LTI_CPULIMIT_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
     $i++;
 
     // MDLDS_LTI_DEFURL_CMD
     $select_opt = '';
-    foreach($urls as $key=>$url) {
+    foreach($params->lab_urls as $key=>$url) {
         $selected = '';
         if ($url==$url_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$url.'" '.$selected.'>'.$key.'</option>';
@@ -85,10 +110,22 @@ function show_lti_edit_table_cmd($cmds, $images, $options, $urls)
     $table->data[$i][] = '<strong>'.get_string('lab_url_cmd_ttl', 'mod_mdlds').'</strong>';
     $table->data[$i][] = '<select name="'.MDLDS_LTI_DEFURL_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
+
+    // MDLDS_MEMLIMIT_CMD
+    $select_opt = '';
+    foreach($params->mem_limit as $key=>$mem) {
+        $selected = '';
+        if ($mem==$memlimit_cmd) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('memlimit_cmd_ttl', 'mod_mdlds').'</strong>';
+    $table->data[$i][] = '<select name="'.MDLDS_LTI_MEMLIMIT_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
     $i++;
 
     // dummy
+    $table->data[$i][] = '';
+    $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
@@ -185,9 +222,9 @@ function show_lti_edit_table_vol($cmds)
 
 
 //
-function show_lti_edit_table($cmds, $images, $options, $urls)
+function show_lti_edit_table($cmds, $params)
 {
-    show_lti_edit_table_cmd($cmds, $images, $options, $urls);
+    show_lti_edit_table_cmd($cmds, $params);
     show_lti_edit_table_vol($cmds);
 }
 

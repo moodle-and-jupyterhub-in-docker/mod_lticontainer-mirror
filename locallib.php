@@ -12,7 +12,7 @@ define('MDLDS_LTI_SESSIONINFO_CMD', 'mdl_sessioninfo');
 define('MDLDS_LTI_IMAGE_CMD',       'mdl_image');
 define('MDLDS_LTI_CPULIMIT_CMD',    'mdl_cpulimit');
 define('MDLDS_LTI_MEMLIMIT_CMD',    'mdl_memlimit');
-define('MDLDS_LTI_OPTION_CMD',      'mdl_option');
+define('MDLDS_LTI_OPTIONS_CMD',     'mdl_options');
 define('MDLDS_LTI_IFRAME_CMD',      'mdl_iframe');
 define('MDLDS_LTI_DEFURL_CMD',      'mdl_defurl');
 define('MDLDS_LTI_VOLUMES_CMD',     'mdl_vol_');
@@ -32,6 +32,18 @@ function  pack_space($str)
 }
 
 
+function  check_include_substr($name, $check_strs)
+{
+    $strs = preg_split("/[ ,]/ ", $check_strs);
+    if (empty($strs)) return true;
+
+    foreach ($strs as $str) {
+        if ($str!='' and preg_match("/$str/", $name)) return true;
+    }
+    return false;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -43,8 +55,8 @@ function mdlds_get_event($cmid, $action, $params='', $info='')
     if (!is_array($params)) $params = array();
 
     $args = array(
-        'context'  => context_module::instance($cmid),
-        'other'    => array('params' => $params, 'info'=> $info),
+        'context' => context_module::instance($cmid),
+        'other'   => array('params' => $params, 'info'=> $info),
     );
     //
     if ($action=='over_view') {
@@ -195,7 +207,7 @@ function mdlds_join_custom_params($custom_data)
     if (!isset($custom_data->mdl_image))     $custom_data->mdl_image    = '';
     if (!isset($custom_data->mdl_cpulimit))  $custom_data->mdl_cpulimit = '';
     if (!isset($custom_data->mdl_memlimit))  $custom_data->mdl_memlimit = '';
-    if (!isset($custom_data->mdl_option))    $custom_data->mdl_option   = '';
+    if (!isset($custom_data->mdl_options))   $custom_data->mdl_options  = '';
     if (!isset($custom_data->mdl_iframe))    $custom_data->mdl_iframe   = '';
     if (!isset($custom_data->mdl_defurl))    $custom_data->mdl_defurl   = '';
     if ($custom_data->mdl_image =='default') $custom_data->mdl_image    = '';
@@ -221,13 +233,13 @@ function mdlds_join_custom_params($custom_data)
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->mdl_memlimit);
-    $value  = preg_replace("/[^0-9KMGTP]/", '', $lowstr);
+    $value  = preg_replace("/[^0-9,]/", '', $lowstr);
     $param  = MDLDS_LTI_MEMLIMIT_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
-    //$lowstr = mb_strtolower($custom_data->mdl_option);
+    //$lowstr = mb_strtolower($custom_data->mdl_options);
     //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
-    //$param  = MDLDS_LTI_OPTION_CMD.'='.$avlue;
+    //$param  = MDLDS_LTI_OPTIONS_CMD.'='.$avlue;
     //$custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->mdl_defurl);
