@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Backup steps for mdlds are defined here.
+ * Backup steps for ltids are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Define the complete structure for backup, with file and id annotations.
  */
-class backup_mdlds_activity_structure_step extends backup_activity_structure_step
+class backup_ltids_activity_structure_step extends backup_activity_structure_step
 {
     /**
      * Defines the structure of the resulting xml file.
@@ -45,26 +45,26 @@ class backup_mdlds_activity_structure_step extends backup_activity_structure_ste
         // Replace with the attributes and final elements that the element will handle.
         $attributes = array('id');
         $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 'custom_params', 'no_disp_lti');
-        $mdlds = new backup_nested_element('mdlds', $attributes, $finalelements);
+        $ltids = new backup_nested_element('ltids', $attributes, $finalelements);
 
         $finalelements = array('session', 'lti_id', 'updatetm');
-        $session = new backup_nested_element('mdlds_websock_session', $attributes, $finalelements);
+        $session = new backup_nested_element('ltids_websock_session', $attributes, $finalelements);
 
         $sessions = new backup_nested_element('sessions');
         
         // Build the tree with these elements with $root as the root of the backup tree.
-        $mdlds->add_child($sessions);
+        $ltids->add_child($sessions);
         $sessions->add_child($session);
 
         // Define the source tables for the elements.
-        $mdlds->set_source_table('mdlds', array('id' => backup::VAR_ACTIVITYID));
-        $session->set_source_table('mdlds_websock_session', array('inst_id' => backup::VAR_PARENTID));
+        $ltids->set_source_table('ltids', array('id' => backup::VAR_ACTIVITYID));
+        $session->set_source_table('ltids_websock_session', array('inst_id' => backup::VAR_PARENTID));
 
         // Define id annotations.
 
         // Define file annotations.
-        $mdlds->annotate_files('mdlds', 'intro', null); 
+        $ltids->annotate_files('ltids', 'intro', null); 
 
-        return $this->prepare_activity_structure($mdlds);
+        return $this->prepare_activity_structure($ltids);
     }
 }

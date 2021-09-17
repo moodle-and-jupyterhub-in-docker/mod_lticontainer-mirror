@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Display information about all the mod_mdlds modules in the requested course.
+ * Display information about all the mod_ltids modules in the requested course.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -32,7 +32,7 @@ require_course_login($course);
 $ccontext = context_course::instance($course->id);
 
 $PAGE->set_pagelayout('incourse');
-$PAGE->set_url('/mod/mdlds/index.php', array('id' => $cmid));
+$PAGE->set_url('/mod/ltids/index.php', array('id' => $cmid));
 $PAGE->set_title(format_string($course->fullname));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($ccontext);
@@ -44,13 +44,13 @@ include(__DIR__.'/html/styles.css');
 echo '</style>';
 
 
-$modulenameplural = get_string('modulenameplural', 'mod_mdlds');
+$modulenameplural = get_string('modulenameplural', 'mod_ltids');
 echo $OUTPUT->heading($modulenameplural);
 
-$mdldss = get_all_instances_in_course('mdlds', $course);
+$ltidss = get_all_instances_in_course('ltids', $course);
 
-if (empty($mdldss)) {
-    notice(get_string('no$mdldsinstances', 'mod_mdlds'), new moodle_url('/course/view.php', array('id' => $course->id)));
+if (empty($ltidss)) {
+    notice(get_string('no$ltidsinstances', 'mod_ltids'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();
@@ -70,21 +70,21 @@ else {
 }
 
 //
-foreach ($mdldss as $mdlds) {
-    if (!$mdlds->visible) {
+foreach ($ltidss as $ltids) {
+    if (!$ltids->visible) {
         $link = html_writer::link(
-            new moodle_url('/mod/mdlds/view.php', array('id' => $mdlds->coursemodule)),
-            format_string($mdlds->name, true),
+            new moodle_url('/mod/ltids/view.php', array('id' => $ltids->coursemodule)),
+            format_string($ltids->name, true),
             array('class' => 'dimmed'));
     }
     else {
         $link = html_writer::link(
-            new moodle_url('/mod/mdlds/view.php', array('id' => $mdlds->coursemodule)),
-            format_string($mdlds->name, true));
+            new moodle_url('/mod/ltids/view.php', array('id' => $ltids->coursemodule)),
+            format_string($ltids->name, true));
     }
 
     if ($course->format == 'weeks' or $course->format == 'topics') {
-        $table->data[] = array($mdlds->section, $link);
+        $table->data[] = array($ltids->section, $link);
     }
     else {
         $table->data[] = array($link);

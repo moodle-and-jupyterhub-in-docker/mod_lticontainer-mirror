@@ -30,19 +30,19 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/mdlds/actions/lti_connect.php', $this->url_params);
-        $this->setup_url  = new moodle_url('/mod/mdlds/actions/lti_setting.php', $this->url_params);
-        $this->edit_url   = new moodle_url('/mod/mdlds/actions/lti_edit.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_connect.php', $this->url_params);
+        $this->setup_url  = new moodle_url('/mod/ltids/actions/lti_setting.php', $this->url_params);
+        $this->edit_url   = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/mdlds:lti_connect', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+        if (!has_capability('mod/ltids:lti_connect', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
     }
 
@@ -61,11 +61,11 @@ class  LTIConnect
 
         // POST
         if ($formdata = data_submitted()) {
-            if (!has_capability('mod/mdlds:lti_setting', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            if (!has_capability('mod/ltids:lti_setting', $this->mcontext)) {
+                print_error('access_forbidden', 'mod_ltids', $this->action_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
             $this->submitted  = true;
 
@@ -77,11 +77,11 @@ class  LTIConnect
                     $no_disp[] = $key;
                 }
                 $no_disp_list = implode(',', $no_disp);
-                $event = mdlds_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$no_disp_list);
+                $event = ltids_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$no_disp_list);
                 $event->trigger();
                 $this->minstance->no_disp_lti = $no_disp_list;
             }
-            $DB->update_record('mdlds', $this->minstance);
+            $DB->update_record('ltids', $this->minstance);
         }
 
         $nodisp = explode(',', $this->minstance->no_disp_lti);

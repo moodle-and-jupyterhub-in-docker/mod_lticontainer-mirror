@@ -17,7 +17,7 @@
 /**
  * Plugin version and other meta-data are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 $plugin = new stdClass();
 
 $plugin->requires = 2018051700;
-$plugin->component = 'mod_mdlds';
+$plugin->component = 'mod_ltids';
 $plugin->maturity = MATURITY_BETA;
 
 $plugin->release = '0.9.11';

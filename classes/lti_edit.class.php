@@ -45,7 +45,7 @@ class  LTIEdit
         $this->ltiid = required_param('ltiid', PARAM_INT);
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
-        $this->action_url = new moodle_url('/mod/mdlds/actions/lti_edit.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
         $this->cpu_limit  = array('default'=>'', 'no limit'=>'0', '1'=>'1', '2'=>'2', '3'=>'3', '4'=>'4', '5'=>'5', '6'=>'6', '7'=>'7', 
                                                     '8'=>'8', '9'=>'9', '10'=>'10', '12'=>'12', '14'=>'14', '16'=>'16', '18'=>'18', '20'=>'20');
@@ -61,12 +61,12 @@ class  LTIEdit
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/mdlds:lti_edit', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+        if (!has_capability('mod/ltids:lti_edit', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
 
         $this->custom_prm = new stdClass();
@@ -90,10 +90,10 @@ class  LTIEdit
         $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
         if (!$this->ltirec) {
-            print_error('no_data_found', 'mod_mdlds', $this->action_url);
+            print_error('no_data_found', 'mod_ltids', $this->action_url);
         }
-        if (!file_exists(MDLDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_mdlds', $this->action_url, MDLDS_DOCKER_CMD);
+        if (!file_exists(LTIDS_DOCKER_CMD)) {
+            print_error('no_docker_command', 'mod_ltids', $this->action_url, LTIDS_DOCKER_CMD);
         }
         
         // Launcher Container
@@ -105,20 +105,20 @@ class  LTIEdit
 
         // POST
         if ($custom_data = data_submitted()) {
-            if (!has_capability('mod/mdlds:db_write', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            if (!has_capability('mod/ltids:db_write', $this->mcontext)) {
+                print_error('access_forbidden', 'mod_ltids', $this->action_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
             //
-            $custom_data->mdl_iframe = '0';
-            if ($launch=='2' or $launch=='3') $custom_data->mdl_iframe = '1';   // 埋め込み
+            $custom_data->lms_iframe = '0';
+            if ($launch=='2' or $launch=='3') $custom_data->lms_iframe = '1';   // 埋め込み
             $custom_data->instanceid = $this->minstance->id;
             $custom_data->ltiid = $this->ltiid;
             //
             $this->submitted  = true;
-            $this->custom_txt = mdlds_join_custom_params($custom_data);
+            $this->custom_txt = ltids_join_custom_params($custom_data);
             $this->ltirec->instructorcustomparameters = $this->custom_txt;
             $this->ltirec->timemodified = time();
             $DB->update_record('lti', $this->ltirec);
@@ -126,9 +126,9 @@ class  LTIEdit
             // create volume
             if ($this->minstance->make_volumes==1) {
                 $i = 0;
-                foreach ($custom_data->mdl_vol_ as $vol) {
-                    if ($custom_data->mdl_vol_name[$i]!='' and $vol!=MDLDS_LTI_PRSNAL_CMD) {
-                        $lowstr  = mb_strtolower($custom_data->mdl_vol_name[$i]);
+                foreach ($custom_data->lms_vol_ as $vol) {
+                    if ($custom_data->lms_vol_name[$i]!='' and $vol!=LTIDS_LTI_PRSNAL_CMD) {
+                        $lowstr  = mb_strtolower($custom_data->lms_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
                         docker_exec($cmd, $this->minstance);
@@ -141,7 +141,7 @@ class  LTIEdit
         //
         $rslts = docker_exec('images', $this->minstance);
         if (!empty($rslts) and isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_mdlds', $this->action_url);
+            print_error($rslts['error'], 'mod_ltids', $this->action_url);
         }
 
         $i = 0;
@@ -159,7 +159,7 @@ class  LTIEdit
             }
         }
         $this->custom_txt = $this->ltirec->instructorcustomparameters;
-        $this->custom_ary = mdlds_explode_custom_params($this->custom_txt);
+        $this->custom_ary = ltids_explode_custom_params($this->custom_txt);
         $this->custom_prm->images = $this->images;
 
         return true;

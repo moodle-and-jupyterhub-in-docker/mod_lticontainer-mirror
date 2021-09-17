@@ -1,6 +1,6 @@
 <?php
 
-namespace mod_mdlds\event;
+namespace mod_ltids\event;
 
 
 defined('MOODLE_INTERNAL') || die();
@@ -21,7 +21,7 @@ class over_view extends \core\event\base
 		if (!is_array($params)) $params = array();
 
 		$params = array_merge(array('id' => $this->contextinstanceid), $params);
-		return new \moodle_url('/mod/mdlds/view.php', $params);
+		return new \moodle_url('/mod/ltids/view.php', $params);
 	}
 
 

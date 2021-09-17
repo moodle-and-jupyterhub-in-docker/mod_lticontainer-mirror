@@ -3,7 +3,7 @@
 /// SETUP - NEED TO BE CHANGED
 $token = 'deaf443d3a403c5cb5847dd352683e0d';
 $domainname = 'https://el.mml.tuis.ac.jp';
-$functionname = 'mod_mdlds_write_nbdata';
+$functionname = 'mod_ltids_write_nbdata';
 
 //////// moodle_user_create_users ////////
 
@@ -22,7 +22,7 @@ $params = array($data);
 /// XML-RPC CALL
 header('Content-Type: text/plain');
 $serverurl = $domainname . '/moodle/webservice/xmlrpc/server.php'. '?wstoken=' . $token;
-//$serverurl = $domainname . '/moodle/mod/mdlds/actions/json_post.php'. '?wstoken=' . $token;
+//$serverurl = $domainname . '/moodle/mod/ltids/actions/json_post.php'. '?wstoken=' . $token;
 require_once('./curl.php');
 $curl = new curl;
 //$post = xmlrpc_encode_request($functionname, array($params));

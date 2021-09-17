@@ -1,9 +1,9 @@
-# mod_mdlds 
+# mod_ltids 
 
-Moodle Module for JupyterHub/MDLDockerSpawner
+Moodle Module for JupyterHub/LTIDockerSpawner
 
 Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
-- https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds
+- https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_ltids
 
 ## Installing via uploaded ZIP file ##
 
@@ -17,7 +17,7 @@ Please see bellow wiki (but sorry, this wiki is Japanese Text only)
 
 The plugin can be also installed by putting the contents of this directory to
 
-    {your/moodle/dirroot}/mod/mdlds
+    {your/moodle/dirroot}/mod/ltids
 
 Afterwards, log in to your Moodle site as an admin and go to _Site administration >
 Notifications_ to complete the installation.

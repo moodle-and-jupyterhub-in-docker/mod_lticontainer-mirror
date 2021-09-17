@@ -25,12 +25,12 @@ class  ShowDemo
         $this->courseid   = $courseid;
         $this->course     = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
-        $this->action_url = new moodle_url('/mod/mdlds/actions/show_demo.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/show_demo.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
     }
 
@@ -44,7 +44,7 @@ class  ShowDemo
         // Post Check
         if (data_submitted()) {
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
         }
         return true;

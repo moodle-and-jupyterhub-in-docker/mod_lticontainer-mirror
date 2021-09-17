@@ -17,7 +17,7 @@
 /**
  * Code to be executed after the plugin's database scheme has been installed is defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    upgrade
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,11 +28,11 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Custom code to be run on installing the plugin.
  */
-function xmldb_mdlds_install()
+function xmldb_ltids_install()
 {
     global $DB;
 
-    $DB->set_field('modules', 'visible', 1, array('name'=>'mdlds'));
+    $DB->set_field('modules', 'visible', 1, array('name'=>'ltids'));
 
     return true;
 }

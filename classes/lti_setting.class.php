@@ -26,17 +26,17 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/mdlds/actions/lti_connect.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_connect.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/mdlds:lti_setting', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+        if (!has_capability('mod/ltids:lti_setting', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
     }
 

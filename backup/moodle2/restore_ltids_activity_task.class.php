@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * The task that provides a complete restore of mod_mdlds is defined here.
+ * The task that provides a complete restore of mod_ltids is defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 // More information about the backup process: {@link https://docs.moodle.org/dev/Backup_API}.
 // More information about the restore process: {@link https://docs.moodle.org/dev/Restore_API}.
 
-require_once($CFG->dirroot.'//mod/mdlds/backup/moodle2/restore_mdlds_stepslib.php');
+require_once($CFG->dirroot.'//mod/ltids/backup/moodle2/restore_ltids_stepslib.php');
 
 /**
- * Restore task for mod_mdlds.
+ * Restore task for mod_ltids.
  */
-class restore_mdlds_activity_task extends restore_activity_task
+class restore_ltids_activity_task extends restore_activity_task
 {
     /**
      * Defines particular settings that this activity can have.
@@ -48,7 +48,7 @@ class restore_mdlds_activity_task extends restore_activity_task
      * @return base_step.
      */
     protected function define_my_steps() {
-        $this->add_step(new restore_mdlds_activity_structure_step('mdlds_structure', 'mdlds.xml'));
+        $this->add_step(new restore_ltids_activity_structure_step('ltids_structure', 'ltids.xml'));
     }
 
     /**
@@ -61,7 +61,7 @@ class restore_mdlds_activity_task extends restore_activity_task
 
         // Define the contents.
 
-        $contents[] = new restore_decode_content('mdlds', array('intro'), 'mdlds');
+        $contents[] = new restore_decode_content('ltids', array('intro'), 'ltids');
 
         return $contents;
     }
@@ -81,7 +81,7 @@ class restore_mdlds_activity_task extends restore_activity_task
 
     /**
      * Defines the restore log rules that will be applied by the
-     * {@see restore_logs_processor} when restoring mod_mdlds logs. It
+     * {@see restore_logs_processor} when restoring mod_ltids logs. It
      * must return one array of {@see restore_log_rule} objects.
      *
      * @return array.
@@ -90,12 +90,12 @@ class restore_mdlds_activity_task extends restore_activity_task
         $rules = array();
 
         // Define the rules.
-        $rules[] = new restore_log_rule('mdlds', 'over_view',  'view.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'lti_view',   'actions/lti_edit.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'lti_edit',   'actions/lti_edit.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'lti_setting','classes/lti_connect.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'volume_view','actions/volume_view.php?id={course_module}', '{mdlds}');
-        $rules[] = new restore_log_rule('mdlds', 'volume_del', 'calsses/volume_view.php?id={course_module}', '{mdlds}');
+        $rules[] = new restore_log_rule('ltids', 'over_view',  'view.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'lti_view',   'actions/lti_edit.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'lti_edit',   'actions/lti_edit.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'lti_setting','classes/lti_connect.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'volume_view','actions/volume_view.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'volume_del', 'calsses/volume_view.php?id={course_module}', '{ltids}');
 
         return $rules;
     }

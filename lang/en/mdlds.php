@@ -17,7 +17,7 @@
 /**
  * Plugin strings are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    string
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -26,15 +26,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 // module
-$string['pluginname'] = 'MDLDockerSpawner';
-$string['modulename'] = 'Moodle DockerSpawner';
-$string['modulenameplural'] = 'MDLDockerSpawners';
+$string['pluginname'] = 'LTIDockerSpawner';
+$string['modulename'] = 'LTI DockerSpawner';
+$string['modulenameplural'] = 'LTIDockerSpawners';
 
 // mod_form
-$string['mdldsname']  = 'Name ';
+$string['ltidsname']  = 'Name ';
 $string['description'] = 'Description';
-$string['mdldsname_help'] = 'Name of this instance of module';
-$string['mdldsfieldset'] = 'Options of Moodle DockerSpawner module';
+$string['ltidsname_help'] = 'Name of this instance of module';
+$string['ltidsfieldset'] = 'Options of LTI DockerSpawner module';
 $string['docker_host'] = 'Docker host';
 $string['docker_host_help'] = 'IP address or FQDN of docker host';
 $string['docker_user'] = 'Docker user';
@@ -45,8 +45,8 @@ $string['show_custom_params'] = 'Show custom parameters';
 $string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
 $string['imagename_filter'] = 'Image name filter words';
 $string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
-$string['make_docker_volumes'] = 'Does mod_mdlds create docker volumes';
-$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_mdlds at LTI Edit Tab';
+$string['make_docker_volumes'] = 'Does mod_ltids create docker volumes';
+$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_ltids at LTI Edit Tab';
 
 // print_error
 $string['access_forbidden'] = 'Access forbidden';
@@ -56,11 +56,11 @@ $string['web_homedir_forbidden'] = 'The web server process does not have write a
 $string['no_docker_command'] = 'docker command does not exist ({$a})';
 
 // パンくずメニュー
-$string['mdlds:over_view'] = 'Over View';
-$string['mdlds:show_demo'] = 'Demo';
-$string['mdlds:volume_view'] = 'Volumes';
-$string['mdlds:lti_connect'] = 'LTI Connections';
-$string['mdlds:lti_edit'] = 'LTI Edit';
+$string['ltids:over_view'] = 'Over View';
+$string['ltids:show_demo'] = 'Demo';
+$string['ltids:volume_view'] = 'Volumes';
+$string['ltids:lti_connect'] = 'LTI Connections';
+$string['ltids:lti_edit'] = 'LTI Edit';
 
 // tab
 $string['over_view'] = 'Over View';
@@ -98,7 +98,7 @@ $string['cpulimit_cmd_ttl'] = 'CPU Limit';
 $string['memlimit_cmd_ttl'] = 'Memory Limit';
 
 // view.php
-$string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_mdlds';
+$string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_ltids';
 $string['Edit'] = 'Edit';
 $string['Edit_settings'] = 'Edit settings';
 
