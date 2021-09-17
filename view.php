@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_mdlds.
+ * Prints an instance of mod_ltids.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -39,14 +39,14 @@ $this_action = 'over_view';
 ////////////////////////////////////////////////////////
 //get the objects
 if ($cmid) {
-    $cm = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                  // コースモジュール
+    $cm = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                  // コースモジュール
     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);      // コースデータ from DB
-    $minstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);  // モジュールインスタンス
+    $minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);  // モジュールインスタンス
 } 
 else {
-    $minstance = $DB->get_record('mdlds', array('id' => $instanceid), '*', MUST_EXIST);
+    $minstance = $DB->get_record('ltids', array('id' => $instanceid), '*', MUST_EXIST);
     $course = $DB->get_record('course', array('id' => $minstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('mdlds', $minstance->id, $course->id, false, MUST_EXIST);
+    $cm = get_coursemodule_from_instance('ltids', $minstance->id, $course->id, false, MUST_EXIST);
 }
 
 $mcontext = context_module::instance($cm->id);
@@ -60,16 +60,16 @@ if (!$instanceid) $instanceid = $minstance->id;
 require_login($course, true, $cm);
 
 //
-$event = mdlds_get_event($cmid, $this_action);
+$event = ltids_get_event($cmid, $this_action);
 $event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('mdlds',  $minstance);
+$event->add_record_snapshot('ltids',  $minstance);
 $event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:over_view', 'mod_mdlds'));
-$PAGE->set_url('/mod/mdlds/view.php', array('id' => $cm->id, 'm' => $instanceid));
+$PAGE->navbar->add(get_string('ltids:over_view', 'mod_ltids'));
+$PAGE->set_url('/mod/ltids/view.php', array('id' => $cm->id, 'm' => $instanceid));
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
@@ -89,7 +89,7 @@ include('html/overview.html');
 
 include('version.php');
 echo '<div align="center">';
-echo '<a href="'.get_string('wiki_url', 'mod_mdlds').'" target="_blank"><i>mod_mdlds '.$plugin->release.'</i></a>';
+echo '<a href="'.get_string('wiki_url', 'mod_ltids').'" target="_blank"><i>mod_ltids '.$plugin->release.'</i></a>';
 echo '<br />';
 echo '</div>';
 ///////////////////////////////////////////////////////////////////////////

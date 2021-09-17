@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_mdlds.
+ * Prints an instance of mod_ltids.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -30,10 +30,10 @@ require_once(__DIR__.'/../classes/event/volume_del.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
+$cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 
 $course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -46,9 +46,9 @@ $user_id  = $USER->id;
 // Check
 require_login($course, true, $cm);
 //
-$mdlds_volume_view_cap = false;
-if (has_capability('mod/mdlds:volume_view', $mcontext)) {
-    $mdlds_volume_view = true;
+$ltids_volume_view_cap = false;
+if (has_capability('mod/ltids:volume_view', $mcontext)) {
+    $ltids_volume_view = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -60,18 +60,18 @@ $this_action = 'volume_view';
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
-$base_url = new moodle_url('/mod/mdlds/actions/'.$this_action.'.php');
+$base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
 // Event
-$event = mdlds_get_event($cmid, $this_action, $urlparams);
+$event = ltids_get_event($cmid, $this_action, $urlparams);
 $event->trigger();
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:volume_view', 'mod_mdlds'));
+$PAGE->navbar->add(get_string('ltids:volume_view', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -82,7 +82,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/volume_view.class.php');
 
-if ($mdlds_volume_view) {
+if ($ltids_volume_view) {
     $volume_view = new VolumeView($cmid, $courseid, $minstance);
     $volume_view->set_condition();
     $volume_view->execute();

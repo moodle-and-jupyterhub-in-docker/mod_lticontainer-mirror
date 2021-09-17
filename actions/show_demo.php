@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_mdlds.
+ * Prints an instance of mod_ltids.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -25,13 +25,13 @@
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
 
-//mdlds_init_session();
-//$SESSION->mdlds->is_started = false;
+//ltids_init_session();
+//$SESSION->ltids->is_started = false;
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
+$cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 $course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -43,9 +43,9 @@ $user_id  = $USER->id;
 // Check
 require_login($course, true, $cm);
 //
-//$mdlds_show_demo_cap = false;
-//if (has_capability('mod/mdlds:show_demo', $mcontext)) {
-//    $mdlds_show_demo_cap = true;
+//$ltids_show_demo_cap = false;
+//if (has_capability('mod/ltids:show_demo', $mcontext)) {
+//    $ltids_show_demo_cap = true;
 //}
 
 ///////////////////////////////////////////////////////////////////////////
@@ -58,7 +58,7 @@ $this_action = 'show_demo';
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
-$base_url = new moodle_url('/mod/mdlds/actions/'.$this_action.'.php');
+$base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
@@ -68,7 +68,7 @@ $this_url = new moodle_url($base_url);
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:show_demo', 'mod_mdlds'));
+$PAGE->navbar->add(get_string('ltids:show_demo', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));

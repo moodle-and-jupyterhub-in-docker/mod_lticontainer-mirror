@@ -16,9 +16,9 @@ print('Shows LTI parameters : <strong>'.$disp.'</strong><br />');
 print('Image Name Filter : <strong>'.$minstance->imgname_fltr.'</strong><br />');
 print('Creates volumes : <strong>'.$make.'</strong><br />');
 
-if (has_capability('mod/mdlds:db_write', $mcontext)) {
+if (has_capability('mod/ltids:db_write', $mcontext)) {
     print('<br />');
-    print('<a href='.$setup_url.' > '.get_string('Edit_settings', 'mod_mdlds').' </a><br />');
+    print('<a href='.$setup_url.' > '.get_string('Edit_settings', 'mod_ltids').' </a><br />');
 }
 echo '</h4>'; 
 

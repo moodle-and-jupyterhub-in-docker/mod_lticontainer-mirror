@@ -31,17 +31,17 @@ class  VolumeView
         $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
-        $this->action_url = new moodle_url('/mod/mdlds/actions/volume_view.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/mdlds:volume_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+        if (!has_capability('mod/ltids:volume_view', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
     }
 
@@ -59,17 +59,17 @@ class  VolumeView
         $check_course = '_'.$this->courseid.'_'.$this->host_name;
         $len_check = strlen($check_course);
 
-        if (!file_exists(MDLDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_mdlds', $this->action_url, MDLDS_DOCKER_CMD);
+        if (!file_exists(LTIDS_DOCKER_CMD)) {
+            print_error('no_docker_command', 'mod_ltids', $this->action_url, LTIDS_DOCKER_CMD);
         }
 
         // POST
         if ($formdata = data_submitted()) {
-            if (!has_capability('mod/mdlds:volume_edit', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_mdlds', $this->action_url);
+            if (!has_capability('mod/ltids:volume_edit', $this->mcontext)) {
+                print_error('access_forbidden', 'mod_ltids', $this->action_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_mdlds', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
             $this->submitted  = true;
             
@@ -80,7 +80,7 @@ class  VolumeView
                         $cmd = 'volume rm '.$del;
                         docker_exec($cmd, $this->minstance);
                         //
-                        $event = mdlds_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
+                        $event = ltids_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
                         $event->trigger();
                     }
                 } 
@@ -90,7 +90,7 @@ class  VolumeView
         //
         $rslts = docker_exec('volume ls', $this->minstance);
         if (isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_mdlds', $this->action_url);
+            print_error($rslts['error'], 'mod_ltids', $this->action_url);
         }
 
         $i = 0;
@@ -99,13 +99,13 @@ class  VolumeView
             $vol  = explode(' ', $rslt);
             if (isset($vol[1])) {
                 $role = '';
-                if (!strncmp(MDLDS_LTI_VOLUMES_CMD, $vol[1], strlen(MDLDS_LTI_VOLUMES_CMD))) {
+                if (!strncmp(LTIDS_LTI_VOLUMES_CMD, $vol[1], strlen(LTIDS_LTI_VOLUMES_CMD))) {
                     $role = 'Task Volume';
-                    $len_cmd = strlen(MDLDS_LTI_VOLUMES_CMD);
+                    $len_cmd = strlen(LTIDS_LTI_VOLUMES_CMD);
                 }
-                else if (!strncmp(MDLDS_LTI_SUBMITS_CMD, $vol[1], strlen(MDLDS_LTI_SUBMITS_CMD))) {
+                else if (!strncmp(LTIDS_LTI_SUBMITS_CMD, $vol[1], strlen(LTIDS_LTI_SUBMITS_CMD))) {
                     $role = 'Submit Volume';
-                    $len_cmd = strlen(MDLDS_LTI_SUBMITS_CMD);
+                    $len_cmd = strlen(LTIDS_LTI_SUBMITS_CMD);
                 }
 
                 if ($role!='' and substr($vol[1], -$len_check)==$check_course) { 

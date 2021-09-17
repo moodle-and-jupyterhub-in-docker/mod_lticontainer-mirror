@@ -17,7 +17,7 @@
 /**
  * The task that provides all the steps to perform a complete backup is defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,13 +28,13 @@ defined('MOODLE_INTERNAL') || die();
 // More information about the backup process: {@link https://docs.moodle.org/dev/Backup_API}.
 // More information about the restore process: {@link https://docs.moodle.org/dev/Restore_API}.
 
-require_once($CFG->dirroot.'//mod/mdlds/backup/moodle2/backup_mdlds_stepslib.php');
-require_once($CFG->dirroot.'//mod/mdlds/backup/moodle2/backup_mdlds_settingslib.php');
+require_once($CFG->dirroot.'//mod/ltids/backup/moodle2/backup_ltids_stepslib.php');
+require_once($CFG->dirroot.'//mod/ltids/backup/moodle2/backup_ltids_settingslib.php');
 
 /**
- * Provides all the settings and steps to perform a complete backup of mod_mdlds.
+ * Provides all the settings and steps to perform a complete backup of mod_ltids.
  */
-class backup_mdlds_activity_task extends backup_activity_task
+class backup_ltids_activity_task extends backup_activity_task
 {
     /**
      * Defines particular settings for the plugin.
@@ -49,7 +49,7 @@ class backup_mdlds_activity_task extends backup_activity_task
      */
     protected function define_my_steps()
     {
-        $this->add_step(new backup_mdlds_activity_structure_step('mdlds_structure', 'mdlds.xml'));
+        $this->add_step(new backup_ltids_activity_structure_step('ltids_structure', 'ltids.xml'));
     }
 
     /**
@@ -65,12 +65,12 @@ class backup_mdlds_activity_task extends backup_activity_task
         $base = preg_quote($CFG->wwwroot, '/');
 
         // Link to the list of choices.
-        $search = "/(".$base."\/mod\/mdlds\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@MDLDSINDEX*$2@$', $content);
+        $search = "/(".$base."\/mod\/ltids\/index.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@LTIDSINDEX*$2@$', $content);
 
         // Link to choice view by moduleid.
-        $search = "/(".$base."\/mod\/mdlds\/view.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@MDLDSVIEWBYID*$2@$', $content);
+        $search = "/(".$base."\/mod\/ltids\/view.php\?id\=)([0-9]+)/";
+        $content = preg_replace($search, '$@LTIDSVIEWBYID*$2@$', $content);
 
         return $content;
     }

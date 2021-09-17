@@ -17,7 +17,7 @@
 /**
  * Library of interface functions and constants.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param string $feature Constant representing the feature.
  * @return true | null True if the feature is supported, null otherwise.
  */
-function mdlds_supports($feature) 
+function ltids_supports($feature) 
 {
     switch ($feature) {
         case FEATURE_GROUPS:                  return false;
@@ -51,71 +51,71 @@ function mdlds_supports($feature)
 
 
 /**
- * Saves a new instance of the mod_mdlds into the database.
+ * Saves a new instance of the mod_ltids into the database.
  *
  * Given an object containing all the necessary data, (defined by the form
  * in mod_form.php) this function will create a new instance and return the id
  * number of the instance.
  *
  * @param object $moduleinstance An object from the form.
- * @param mod_mdlds_mod_form $mform The form.
+ * @param mod_ltids_mod_form $mform The form.
  * @return int The id of the newly inserted record.
  */
-function mdlds_add_instance($moduleinstance, $mform = null)
+function ltids_add_instance($moduleinstance, $mform = null)
 {
     global $DB;
 
     $moduleinstance->timecreated = time();
 
-    $id = $DB->insert_record('mdlds', $moduleinstance);
+    $id = $DB->insert_record('ltids', $moduleinstance);
 
     return $id;
 }
 
 
 /**
- * Updates an instance of the mod_mdlds in the database.
+ * Updates an instance of the mod_ltids in the database.
  *
  * Given an object containing all the necessary data (defined in mod_form.php),
  * this function will update an existing instance with new data.
  *
  * @param object $moduleinstance An object from the form in mod_form.php.
- * @param mod_mdlds_mod_form $mform The form.
+ * @param mod_ltids_mod_form $mform The form.
  * @return bool True if successful, false otherwise.
  */
-function mdlds_update_instance($moduleinstance, $mform = null)
+function ltids_update_instance($moduleinstance, $mform = null)
 {
     global $DB;
 
     $moduleinstance->timemodified = time();
     $moduleinstance->id = $moduleinstance->instance;
 
-    return $DB->update_record('mdlds', $moduleinstance);
+    return $DB->update_record('ltids', $moduleinstance);
 }
 
 
 /**
- * Removes an instance of the mod_mdlds from the database.
+ * Removes an instance of the mod_ltids from the database.
  *
  * @param int $id Id of the module instance.
  * @return bool True if successful, false on failure.
  */
-function mdlds_delete_instance($id)
+function ltids_delete_instance($id)
 {
     global $DB;
 
-    $exists = $DB->get_record('mdlds', array('id' => $id));
+    $exists = $DB->get_record('ltids', array('id' => $id));
     if (!$exists) {
         return false;
     }
-    $DB->delete_records('mdlds', array('id' => $id));
+    $DB->delete_records('ltids', array('id' => $id));
 
     //
-    $sessions = $DB->get_records('mdlds_websock_session', array('inst_id' => $id));
+    $sessions = $DB->get_records('ltids_websock_session', array('inst_id' => $id));
     foreach ($sessions as $session) {
-        $DB->delete_records('mdlds_websock_data', array('session' => $session->session));
+        $DB->delete_records('ltids_websock_data', array('session' => $session->session));
     }
-    $DB->delete_records('mdlds_websock_session', array('inst_id' => $id));
+    $DB->delete_records('ltids_websock_session', array('inst_id' => $id));
 
     return true;
 }

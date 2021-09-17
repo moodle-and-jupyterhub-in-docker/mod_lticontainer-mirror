@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_mdlds.
+ * Prints an instance of mod_ltids.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -28,10 +28,10 @@ require_once(__DIR__.'/../classes/event/lti_setting.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('mdlds', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
+$cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 
 $course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('mdlds', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -44,9 +44,9 @@ $user_id  = $USER->id;
 // Check
 require_login($course, true, $cm);
 //
-$mdlds_lti_connection_cap = false;
-if (has_capability('mod/mdlds:lti_connect', $mcontext)) {
-    $mdlds_lti_connection_cap = true;
+$ltids_lti_connection_cap = false;
+if (has_capability('mod/ltids:lti_connect', $mcontext)) {
+    $ltids_lti_connection_cap = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -58,14 +58,14 @@ $this_action = 'lti_connect';
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
-$base_url = new moodle_url('/mod/mdlds/actions/'.$this_action.'.php');
+$base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('mdlds:lti_connect', 'mod_mdlds'));
+$PAGE->navbar->add(get_string('ltids:lti_connect', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -76,7 +76,7 @@ echo $OUTPUT->header();
 require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_connect.class.php');
 
-if ($mdlds_lti_connection_cap) {
+if ($ltids_lti_connection_cap) {
     $lti_connection = new LTIConnect($cmid, $courseid, $minstance);
     $lti_connection->set_condition();
     $lti_connection->execute();

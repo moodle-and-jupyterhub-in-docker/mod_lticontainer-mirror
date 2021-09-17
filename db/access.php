@@ -17,7 +17,7 @@
 /**
  * Plugin capabilities are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    access
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = [
 
-    'mod/mdlds:volume_view' => [
+    'mod/ltids:volume_view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
@@ -36,7 +36,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:volume_edit' => [
+    'mod/ltids:volume_edit' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -46,7 +46,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:lti_connect' => [
+    'mod/ltids:lti_connect' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => [
@@ -55,7 +55,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:lti_edit' => [
+    'mod/ltids:lti_edit' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -65,7 +65,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:lti_setting' => [
+    'mod/ltids:lti_setting' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -75,7 +75,7 @@ $capabilities = [
         ],
     ],
 
-    'mod/mdlds:db_write' => [
+    'mod/ltids:db_write' => [
         'riskbitmask' => RISK_SPAM | RISK_XSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,

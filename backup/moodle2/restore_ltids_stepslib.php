@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * All the steps to restore mod_mdlds are defined here.
+ * All the steps to restore mod_ltids are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,9 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 // More information about the restore process: {@link https://docs.moodle.org/dev/Restore_API}.
 
 /**
- * Defines the structure step to restore one mod_mdlds activity.
+ * Defines the structure step to restore one mod_ltids activity.
  */
-class restore_mdlds_activity_structure_step extends restore_activity_structure_step 
+class restore_ltids_activity_structure_step extends restore_activity_structure_step 
 {
     /**
      * Defines the structure to be restored.
@@ -42,14 +42,14 @@ class restore_mdlds_activity_structure_step extends restore_activity_structure_s
         $paths = array();
         //$userinfo = $this->get_setting_value('userinfo');
 
-        $paths[] = new restore_path_element('mdlds', '/activity/mdlds');
-        $paths[] = new restore_path_element('mdlds_websock_session', '/activity/mdlds/sessions/session');
+        $paths[] = new restore_path_element('ltids', '/activity/ltids');
+        $paths[] = new restore_path_element('ltids_websock_session', '/activity/ltids/sessions/session');
 
         return $this->prepare_activity_structure($paths);
     }
 
 
-    protected function process_mdlds($data)
+    protected function process_ltids($data)
     {
         global $DB;
 
@@ -60,12 +60,12 @@ class restore_mdlds_activity_structure_step extends restore_activity_structure_s
         $data->timecreated  = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
-        $newitemid = $DB->insert_record('mdlds', $data);
+        $newitemid = $DB->insert_record('ltids', $data);
         $this->apply_activity_instance($newitemid);
     }
 
 
-    protected function process_mdlds_websock_session($data)
+    protected function process_ltids_websock_session($data)
     {
         global $DB;
 
@@ -73,10 +73,10 @@ class restore_mdlds_activity_structure_step extends restore_activity_structure_s
         $oldid = $data->id;
 
         $data->course   = $this->get_courseid();
-        $data->inst_id  = $this->get_new_parentid('mdlds');
+        $data->inst_id  = $this->get_new_parentid('ltids');
         $data->updatetm = $this->apply_date_offset($data->updatetm);
 
-        $newitemid = $DB->insert_record('mdlds_wedsock_session', $data);
+        $newitemid = $DB->insert_record('ltids_wedsock_session', $data);
         $this->apply_activity_instance($newitemid);
     }
 

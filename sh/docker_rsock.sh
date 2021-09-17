@@ -5,7 +5,7 @@
 #  usage ... docker_rsock.sh host_name user_name user_password socket_file
 #
 #  ex.) # ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
-#       # docker -H unix:///tmp/mdlds_docker.hogebar.jp.sock ps
+#       # docker -H unix:///tmp/ltids_docker.hogebar.jp.sock ps
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
@@ -25,7 +25,7 @@ printf -v SSH_PASS '%q' "$3"
 if [ "$4" != "" ]; then
     printf -v LLSOCKET '%q' "$4"
 else
-    LLSOCKET=/tmp/mdlds_${SSH_HOST}.sock
+    LLSOCKET=/tmp/ltids_${SSH_HOST}.sock
 fi
 
 WEBGROUP=`groups`

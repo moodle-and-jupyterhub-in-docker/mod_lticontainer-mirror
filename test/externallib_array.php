@@ -3,16 +3,16 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once("$CFG->libdir/externallib.php");
-require_once(dirname(__FILE__).'/classes/mdlds_webservice_handler.php');
+require_once(dirname(__FILE__).'/classes/ltids_webservice_handler.php');
 
 
-class mod_mdlds_external extends external_api 
+class mod_ltids_external extends external_api 
 {
     /**
      * Get parameter list.
      * @return external_function_parameters
      */
-    public static function get_mdlds()
+    public static function get_ltids()
     {
         return "HELL World!!";
     }
@@ -23,9 +23,9 @@ class mod_mdlds_external extends external_api
      * @param int $userid
      * @return array
      */
-    public static function get_mdlds_handler($userid)
+    public static function get_ltids_handler($userid)
     {
-        return mdlds_handler::get_mdlds_handler($userid);
+        return ltids_handler::get_ltids_handler($userid);
     }
 
 

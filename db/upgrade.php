@@ -17,7 +17,7 @@
 /**
  * Plugin upgrade steps are defined here.
  *
- * @package     mod_mdlds
+ * @package     mod_ltids
  * @category    upgrade
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__.'/upgradelib.php');
 
 /**
- * Execute mod_mdlds upgrade from the given old version.
+ * Execute mod_ltids upgrade from the given old version.
  *
  * @param int $oldversion
  * @return bool
  */
-function xmldb_mdlds_upgrade($oldversion)
+function xmldb_ltids_upgrade($oldversion)
 {
     global $DB;
 
@@ -46,7 +46,7 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021080603
     if ($oldversion < 2021080603) {
-        $table = new xmldb_table('mdlds');
+        $table = new xmldb_table('ltids');
         //
         $field = new xmldb_field('docker_host', XMLDB_TYPE_CHAR, '128', null, null, null, 'localhost', 'introformat');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -69,7 +69,7 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021080605
     if ($oldversion < 2021080605) {
-        $table = new xmldb_table('mdlds');
+        $table = new xmldb_table('ltids');
         //
         $field = new xmldb_field('custom_params', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'docker_pass');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -80,7 +80,7 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021082701
     if ($oldversion < 2021082701) {
-        $table = new xmldb_table('mdlds_websock_session');
+        $table = new xmldb_table('ltids_websock_session');
         //
         $field = new xmldb_field('inst_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'course');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -91,7 +91,7 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021082804
     if ($oldversion < 2021082804) {
-        $table = new xmldb_table('mdlds');
+        $table = new xmldb_table('ltids');
         //
         $field = new xmldb_field('no_disp_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -102,7 +102,7 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021083000
     if ($oldversion < 2021083000) {
-        $table = new xmldb_table('mdlds');
+        $table = new xmldb_table('ltids');
         //
         $field = new xmldb_field('make_volumes', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -113,9 +113,9 @@ function xmldb_mdlds_upgrade($oldversion)
 
     // 2021091000
     if ($oldversion < 2021091000) {
-        $table = new xmldb_table('mdlds');
+        $table = new xmldb_table('ltids');
         //
-        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, mdlds', 'custom_params');
+        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, ltids', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
