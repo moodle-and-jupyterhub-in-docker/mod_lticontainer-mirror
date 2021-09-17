@@ -115,7 +115,7 @@ function xmldb_ltids_upgrade($oldversion)
     if ($oldversion < 2021091000) {
         $table = new xmldb_table('ltids');
         //
-        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, mdlds', 'custom_params');
+        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, ltids', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
