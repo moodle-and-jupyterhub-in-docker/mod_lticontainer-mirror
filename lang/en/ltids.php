@@ -52,8 +52,8 @@ $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by Jup
 $string['access_forbidden'] = 'Access forbidden';
 $string['invalid_sesskey'] = 'Invalid session key';
 $string['no_data_found'] = 'No data found!';
-$string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions of {$a}';
-$string['no_docker_command'] = 'docker command does not exist ({$a})';
+$string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions';
+$string['no_docker_command'] = 'docker command does not exist /usr/bin/docker)';
 
 // パンくずメニュー
 $string['ltids:over_view'] = 'Over View';

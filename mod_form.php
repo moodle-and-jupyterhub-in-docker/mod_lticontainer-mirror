@@ -82,7 +82,7 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->addElement('password', 'docker_pass', get_string('docker_pass', 'mod_ltids'), array('size' => '32'));
         $mform->addHelpButton('docker_pass', 'docker_pass', 'mod_ltids');
         $mform->setType('docker_pass', PARAM_TEXT);
-        $mform->setDefault('docker_pass', '');
+        $mform->setDefault('docker_pass', 'pass');
 
         $mform->addElement('selectyesno', 'custom_params', get_string('show_custom_params', 'mod_ltids'));
         $mform->addHelpButton('custom_params', 'show_custom_params', 'mod_ltids');

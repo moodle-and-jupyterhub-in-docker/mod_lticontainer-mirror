@@ -60,7 +60,7 @@ class  VolumeView
         $len_check = strlen($check_course);
 
         if (!file_exists(LTIDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_ltids', $this->action_url, LTIDS_DOCKER_CMD);
+            print_error('no_docker_command', 'mod_ltids', $this->action_url);
         }
 
         // POST
