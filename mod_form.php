@@ -92,7 +92,7 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->addElement('text', 'imgname_fltr', get_string('imagename_filter', 'mod_ltids'), array('size' => '96'));
         $mform->addHelpButton('imgname_fltr', 'imagename_filter', 'mod_ltids');
         $mform->setType('imgname_fltr', PARAM_TEXT);
-        $mform->setDefault('imgname_fltr', 'jupyter, notebook');
+        $mform->setDefault('imgname_fltr', 'jupyter, notebook, mdlds');
 
         $mform->addElement('selectyesno', 'make_volumes', get_string('make_docker_volumes', 'mod_ltids'));
         $mform->addHelpButton('make_volumes', 'make_docker_volumes', 'mod_ltids');
