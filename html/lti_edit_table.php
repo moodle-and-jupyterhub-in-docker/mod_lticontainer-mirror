@@ -211,9 +211,9 @@ function show_lti_edit_table_vol($cmds)
     $select_opt .= '<option value="'.LTIDS_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_ltids').'</option>';
     for ($cnt=0; $cnt<$num; $cnt++) {
         $table->data[$i][] = '<select name="'.LTIDS_LTI_VOLUMES_CMD.'[]" autocomplete="off">'.$select_opt.'</select>'; 
-        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]" size="15" maxlength="30"  value="" />';
-        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]" size="30" maxlength="60"  value="" />';
-        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'user[]" size="50" maxlength="200" value="" />';
+        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="15" maxlength="30"  value="" />';
+        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="30" maxlength="60"  value="" />';
+        $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="" />';
         $i++;
     }
 
