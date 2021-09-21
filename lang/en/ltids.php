@@ -47,6 +47,8 @@ $string['imagename_filter'] = 'Image name filter words';
 $string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
 $string['make_docker_volumes'] = 'Does mod_ltids create docker volumes';
 $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_ltids at LTI Edit Tab';
+$string['use_podman'] = 'Use podman instead of Docker';
+$string['use_podman_help'] = 'Support podman instead of Docker. This function is experimentary. Any features will not work.';
 
 // print_error
 $string['access_forbidden'] = 'Access forbidden';

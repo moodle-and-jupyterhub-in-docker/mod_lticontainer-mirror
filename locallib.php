@@ -36,11 +36,13 @@ function  pack_space($str)
 
 function  check_include_substr($name, $check_strs)
 {
-    $strs = preg_split("/[ ,]/ ", $check_strs);
-    if (empty($strs)) return true;
+    $strs     = preg_replace("/\s+/", '', trim($check_strs));
+    $arry_str = explode(",", $strs);
+    if (empty($arry_str)) return true;
 
-    foreach ($strs as $str) {
-        if ($str!='' and preg_match("/$str/", $name)) return true;
+    foreach ($arry_str as $str) {
+        if ($str=='' or $str=='*') return true;
+        if (preg_match("/$str/", $name)) return true;
     }
     return false;
 }

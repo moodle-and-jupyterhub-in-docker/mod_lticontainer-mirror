@@ -99,6 +99,11 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->setType('make_volumes', PARAM_INT);
         $mform->setDefault('make_volumes', 0);
 
+        $mform->addElement('selectyesno', 'use_podman', get_string('use_podman', 'mod_ltids'));
+        $mform->addHelpButton('use_podman', 'use_podman', 'mod_ltids');
+        $mform->setType('use_podman', PARAM_INT);
+        $mform->setDefault('use_podman', 0);
+
         //-------------------------------------------------------------------------------
         // Add standard elements.
         $this->standard_coursemodule_elements();

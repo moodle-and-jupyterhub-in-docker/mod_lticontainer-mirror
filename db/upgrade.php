@@ -122,5 +122,16 @@ function xmldb_ltids_upgrade($oldversion)
         }
     }
 
+    // 20210902101
+    if ($oldversion < 2021092101) {
+        $table = new xmldb_table('ltids');
+        //
+        $field = new xmldb_field('use_podman', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'no_disp_lti');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
