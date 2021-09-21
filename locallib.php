@@ -10,6 +10,8 @@ define('LTIDS_LTI_TEACHERS_CMD',    'lms_teachers');
 define('LTIDS_LTI_TGRPNAME_CMD',    'lms_grpname');
 define('LTIDS_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTIDS_LTI_IMAGE_CMD',       'lms_image');
+define('LTIDS_LTI_CPUGRNT_CMD',     'lms_cpugrnt');
+define('LTIDS_LTI_MEMGRNT_CMD',     'lms_memgrnt');
 define('LTIDS_LTI_CPULIMIT_CMD',    'lms_cpulimit');
 define('LTIDS_LTI_MEMLIMIT_CMD',    'lms_memlimit');
 define('LTIDS_LTI_OPTIONS_CMD',     'lms_options');
@@ -205,6 +207,8 @@ function ltids_join_custom_params($custom_data)
     if (!isset($custom_data->lms_users))     $custom_data->lms_users    = '';
     if (!isset($custom_data->lms_teachers))  $custom_data->lms_teachers = '';
     if (!isset($custom_data->lms_image))     $custom_data->lms_image    = '';
+    if (!isset($custom_data->lms_cpugrnt))   $custom_data->lms_cpugrnt  = '';
+    if (!isset($custom_data->lms_memgrnt))   $custom_data->lms_memgrnt  = '';
     if (!isset($custom_data->lms_cpulimit))  $custom_data->lms_cpulimit = '';
     if (!isset($custom_data->lms_memlimit))  $custom_data->lms_memlimit = '';
     if (!isset($custom_data->lms_options))   $custom_data->lms_options  = '';
@@ -228,13 +232,31 @@ function ltids_join_custom_params($custom_data)
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_cpulimit);
-    $value  = preg_replace("/[^0-9\.]/", '', $lowstr);
-    $param  = LTIDS_LTI_CPULIMIT_CMD.'='.$value;
+    $climit = preg_replace("/[^0-9\.]/", '', $lowstr);
+    $param  = LTIDS_LTI_CPULIMIT_CMD.'='.$climit;
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_memlimit);
+    $mlimit = preg_replace("/[^0-9,]/", '', $lowstr);
+    $param  = LTIDS_LTI_MEMLIMIT_CMD.'='.$mlimit;
+    $custom_params .= $param."\r\n";
+
+    $lowstr = mb_strtolower($custom_data->lms_cpugrnt);
+    $value  = preg_replace("/[^0-9\.]/", '', $lowstr);
+    if ($climit!='' and $climit!='0.0') {
+        if ((float)$climit < (float)$value) $value = $climit;
+    }
+    $param  = LTIDS_LTI_CPUGRNT_CMD.'='.$value;
+    $custom_params .= $param."\r\n";
+
+    $lowstr = mb_strtolower($custom_data->lms_memgrnt);
     $value  = preg_replace("/[^0-9,]/", '', $lowstr);
-    $param  = LTIDS_LTI_MEMLIMIT_CMD.'='.$value;
+    if ($mlimit!='' and $mlimit!='0') {
+        $int_mlimit = (int)preg_replace("/[^0-9]/", '', $mlimit);
+        $int_value  = (int)preg_replace("/[^0-9]/", '', $value);
+        if ($int_mlimit < $int_value) $value = $mlimit;
+    }
+    $param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_options);

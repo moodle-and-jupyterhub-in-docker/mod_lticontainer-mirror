@@ -17,6 +17,8 @@ class  LTIEdit
     var $images     = array();
     var $options    = array();
     var $lab_urls   = array();
+    var $cpu_grnt   = array();
+    var $mem_grnt   = array();
     var $cpu_limit  = array();
     var $mem_limut  = array();
 
@@ -55,6 +57,9 @@ class  LTIEdit
                                                     '5GiB' => '5,368,709,120', '6GiB'=> '6,442,450,944',   '7GiB'=>'7,516,192,768',   '8GiB'=> '8,589,934,592', 
                                                     '9GiB' => '9,663,676,416','10GiB'=>'10,737,418,240',  '12GiB'=>'12,884,901,888', '14GiB'=>'15,032,385,536', 
                                                     '16GiB'=>'17,179,869,184','18GiB'=>'19,327,352,832',  '20GiB'=>'21,474,836,480');
+        $this->cpu_grnt   = $this->cpu_limit;
+        $this->mem_grnt   = $this->mem_limit;
+
         // option の設定
         $this->options    = array('none'=>'', 'double args'=>'doubleargs');
 
@@ -71,6 +76,8 @@ class  LTIEdit
 
         $this->custom_prm = new stdClass();
         $this->custom_prm->lab_urls  = $this->lab_urls;
+        $this->custom_prm->cpu_grnt  = $this->cpu_grnt;
+        $this->custom_prm->mem_grnt  = $this->mem_grnt;
         $this->custom_prm->cpu_limit = $this->cpu_limit;
         $this->custom_prm->mem_limit = $this->mem_limit;
         $this->custom_prm->options   = $this->options;
@@ -127,7 +134,7 @@ class  LTIEdit
             if ($this->minstance->make_volumes==1) {
                 $i = 0;
                 foreach ($custom_data->lms_vol_ as $vol) {
-                    if ($custom_data->lms_vol_name[$i]!='' and $vol!=LTIDS_LTI_PRSNAL_CMD) {
+                    if ($custom_data->lms_vol_name[$i]!='' and $vol!=LTIDS_LTI_PRSNALS_CMD) {
                         $lowstr  = mb_strtolower($custom_data->lms_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;

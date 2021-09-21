@@ -11,17 +11,17 @@ function show_volume_view_table($items, $base_url)
     $table->wrap [] = 'nowrap';
 
     $table->head [] = get_string('driver_name','mod_ltids');
-    $table->align[] = 'center';
+    $table->align[] = 'left';
     $table->size [] = '50px';
     $table->wrap [] = 'nowrap';
 
     $table->head [] = get_string('volume_name','mod_ltids');
-    $table->align[] = 'center';
+    $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
     $table->head [] = get_string('volume_role','mod_ltids');
-    $table->align[] = 'center';
+    $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 

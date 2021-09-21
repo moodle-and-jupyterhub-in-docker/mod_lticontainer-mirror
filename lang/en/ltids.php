@@ -94,6 +94,8 @@ $string['vol_cmd_ttl'] = 'Task volume';
 $string['sub_cmd_ttl'] = 'Submit volume';
 $string['prs_cmd_ttl'] = 'Personal volume';
 $string['lab_url_cmd_ttl'] = 'Default URL';
+$string['cpugrnt_cmd_ttl'] = 'CPU Guarantee';
+$string['memgrnt_cmd_ttl'] = 'Memory Guarantee';
 $string['cpulimit_cmd_ttl'] = 'CPU Limit';
 $string['memlimit_cmd_ttl'] = 'Memory Limit';
 
