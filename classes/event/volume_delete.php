@@ -6,11 +6,11 @@ namespace mod_ltids\event;
 defined('MOODLE_INTERNAL') || die();
 
 
-class volume_del extends \core\event\base
+class volume_delete extends \core\event\base
 {
     public static function get_name()        // イベント名
     {
-        return 'volume_del';
+        return 'volume_delete';
     }
 
 

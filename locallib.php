@@ -76,8 +76,8 @@ function ltids_get_event($cmid, $action, $params='', $info='')
     else if ($action=='volume_view') {
         $event = \mod_ltids\event\volume_view::create($args);
     }
-    else if ($action=='volume_del') {
-        $event = \mod_ltids\event\volume_del::create($args);
+    else if ($action=='volume_delete') {
+        $event = \mod_ltids\event\volume_delete::create($args);
     }
 
     return $event;

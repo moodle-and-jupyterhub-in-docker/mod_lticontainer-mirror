@@ -84,7 +84,9 @@ $string['access_users'] = 'Accessible Users';
 // Table: LTI volume
 $string['volume_view'] = 'Volumes';
 $string['driver_name'] = 'Driver';
-$string['volume_delete'] = 'Delete';
+$string['volume_del'] = 'Delete';
+$string['volume_delete'] = 'Delete Volumes';
+$string['deletevolconfirm'] = 'Do you really delete these volumes ?';
 
 // Title
 $string['users_cmd_ttl'] = 'Accessible users';

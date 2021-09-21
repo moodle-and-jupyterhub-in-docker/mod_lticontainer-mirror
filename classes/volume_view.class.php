@@ -14,9 +14,11 @@ class  VolumeView
     var $isGuest    = true;
 
     var $submitted  = false;
+    var $confirm    = false;
     var $action_url = '';
     var $edit_url   = '';
     var $url_params = array();
+    var $deletes    = array();
 
     var $items      = array();
 
@@ -72,18 +74,29 @@ class  VolumeView
                 print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
             $this->submitted  = true;
-            
+
+            //
             if (property_exists($formdata, 'delete')) {
-                $deletes = $formdata->delete;
-                foreach ($deletes as $del=>$value) {
-                    if (substr($del, -$len_check)==$check_course) { 
-                        $cmd = 'volume rm '.$del;
-                        docker_exec($cmd, $this->minstance);
-                        //
-                        $event = ltids_get_event($this->cmid, 'volume_del', $this->url_params, $cmd);
-                        $event->trigger();
+                $this->deletes = $formdata->delete;
+                if (!empty($this->deletes)) {
+                    //
+                    // confirm to delete volumes
+                    if (property_exists($formdata, 'submit_volume_del')) {
+                        $this->confirm = true;
                     }
-                } 
+                    // delete volumes
+                    else if (property_exists($formdata, 'submit_volume_delete')) {
+                        foreach ($this->deletes as $del=>$value) {
+                            if (substr($del, -$len_check)==$check_course) { 
+                                $cmd = 'volume rm '.$del;
+                                docker_exec($cmd, $this->minstance);
+                                //
+                                $event = ltids_get_event($this->cmid, 'volume_delete', $this->url_params, $cmd);
+                                $event->trigger();
+                            }
+                        }
+                    } 
+                }
             }
         }
 
@@ -128,6 +141,11 @@ class  VolumeView
     {
         global $OUTPUT;
 
-        include(__DIR__.'/../html/volume_view.html');
+        if ($this->confirm) {
+            include(__DIR__.'/../html/volume_delete.html');
+        }
+        else {
+            include(__DIR__.'/../html/volume_view.html');
+        }
     }
 }

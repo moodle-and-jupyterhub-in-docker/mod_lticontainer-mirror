@@ -26,7 +26,7 @@ require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
 require_once(__DIR__.'/../locallib.php');
 require_once(__DIR__.'/../classes/event/volume_view.php');
-require_once(__DIR__.'/../classes/event/volume_del.php');
+require_once(__DIR__.'/../classes/event/volume_delete.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID

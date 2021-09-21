@@ -1,4 +1,4 @@
-<?php require_once(__DIR__.'/../html/volume_view_table.php'); ?>
+<?php require_once(__DIR__.'/../html/volume_delete_table.php'); ?>
 
 <style type="text/css">
   <?php include(__DIR__."../html/styles.css"); ?>
@@ -9,31 +9,38 @@
     <td align="center">
       <table border="0" style="margin: 0px 0px 0px 0px;">
         <tr>
-          <td bgcolor="#d8e8d8">&nbsp;</td>
-          <td bgcolor="#d8e8d8">
-            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('volume_view','mod_ltids').'</strong>'); ?>
+          <td bgcolor="#ff7777">&nbsp;</td>
+          <td bgcolor="#ff7777">
+            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('volume_delete','mod_ltids').'</strong>'); ?>
           </td>
-          <td bgcolor="#d8e8d8">&nbsp;</td>
+          <td bgcolor="#ff7777">&nbsp;</td>
         </tr>
       </table>
     </td>
   </tr>
+
   <tr>
     <td class="generalboxcontent" align="center">
 
       <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
         <table border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <?php show_volume_view_table($this->items, $this->edit_url); ?>
+            <?php show_volume_delete_table($this->deletes, $this->items, $this->edit_url); ?>
+          </tr>
+          <tr>
+            <td align='center'>
+              <h3><?php echo get_string('deletevolconfirm', 'mod_ltids'); ?></h3>
+              <br />
+            </td>
           </tr>
           <tr>
             <td align='center'>
               <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
               <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
               <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
-              <input type='submit' name='submit_volume_del'  value='<?php echo get_string("delete");?>' />
+              <input type='submit' name='submit_volume_delete' value='<?php echo get_string("delete");?>' />
               &nbsp;&nbsp;
-              <input type='reset'  name='reset'   value='<?php echo get_string("reset");?>' />
+              <input type='submit' name='cancel_volume_delete' value='<?php echo get_string("cancel");?>' />
               <br /><br />
             </td>
           </tr>

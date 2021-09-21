@@ -30,7 +30,7 @@ $plugin->requires = 2018051700;
 $plugin->component = 'mod_ltids';
 $plugin->maturity = MATURITY_BETA;
 
-$plugin->release = '0.9.11';
+$plugin->release = '0.9.12';
 
-$plugin->version = 2021091000;
+$plugin->version = 2021092100;
 
