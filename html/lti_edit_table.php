@@ -65,6 +65,7 @@ function show_lti_edit_table_cmd($cmds, $params)
     if (isset($cmds->custom_cmd[LTIDS_LTI_OPTIONS_CMD]))  $options_cmd  = $cmds->custom_cmd[LTIDS_LTI_OPTIONS_CMD];
     if (isset($cmds->custom_cmd[LTIDS_LTI_DEFURL_CMD]))   $url_cmd      = $cmds->custom_cmd[LTIDS_LTI_DEFURL_CMD];
 
+    //
     // LTIDS_LTI_USERS_CMD
     $table->data[$i][] = '<strong>'.get_string('users_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_USERS_CMD.'" size="50" maxlength="200" value="'.$users_cmd.'" />';
@@ -76,6 +77,7 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '';
     $i++;
 
+    //
     // LTIDS_LTI_TEACHERS_CMD
     $table->data[$i][] = '<strong>'.get_string('teachers_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_TEACHERS_CMD.'" size="50" maxlength="200" value="'.$teachers_cmd.'" />';
@@ -87,6 +89,7 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '';
     $i++;
 
+    //
     // LTIDS_LTI_IMAGE_CMD
     $select_opt = '';
     foreach($params->images as $image) {
@@ -111,17 +114,6 @@ function show_lti_edit_table_cmd($cmds, $params)
 
     // LTIDS_CPULIMIT_CMD
     $select_opt = '';
-    foreach($params->cpu_grnt as $key=>$cpu) {
-        $selected = '';
-        if ($cpu==$cpugrnt_cmd) $selected = 'selected="selected"';
-        $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
-    }
-    $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
-    $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
-    $table->data[$i][] = '';
-
-    // LTIDS_CPULIMIT_CMD
-    $select_opt = '';
     foreach($params->cpu_limit as $key=>$cpu) {
         $selected = '';
         if ($cpu==$cpulimit_cmd) $selected = 'selected="selected"';
@@ -129,8 +121,20 @@ function show_lti_edit_table_cmd($cmds, $params)
     }
     $table->data[$i][] = '<strong>'.get_string('cpulimit_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_CPULIMIT_CMD.'" >'.$select_opt.'</select>';
+    $table->data[$i][] = '';
+
+    // LTIDS_CPUGRNT_CMD
+    $select_opt = '';
+    foreach($params->cpu_grnt as $key=>$cpu) {
+        $selected = '';
+        if ($cpu==$cpugrnt_cmd) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
     $i++;
 
+    //
     // LTIDS_LTI_DEFURL_CMD
     $select_opt = '';
     foreach($params->lab_urls as $key=>$url) {
@@ -142,17 +146,6 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '<select name="'.LTIDS_LTI_DEFURL_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
 
-    // LTIDS_MEMLGRNT_CMD
-    $select_opt = '';
-    foreach($params->mem_grnt as $key=>$mem) {
-        $selected = '';
-        if ($mem==$memgrnt_cmd) $selected = 'selected="selected"';
-        $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
-    }
-    $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
-    $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
-    $table->data[$i][] = '';
-
     // LTIDS_MEMLIMIT_CMD
     $select_opt = '';
     foreach($params->mem_limit as $key=>$mem) {
@@ -162,8 +155,20 @@ function show_lti_edit_table_cmd($cmds, $params)
     }
     $table->data[$i][] = '<strong>'.get_string('memlimit_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMLIMIT_CMD.'" >'.$select_opt.'</select>';
+    $table->data[$i][] = '';
+
+    // LTIDS_MEMGRNT_CMD
+    $select_opt = '';
+    foreach($params->mem_grnt as $key=>$mem) {
+        $selected = '';
+        if ($mem==$memgrnt_cmd) $selected = 'selected="selected"';
+        $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
+    }
+    $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
     $i++;
 
+    //
     // dummy
     $table->data[$i][] = '';
     $table->data[$i][] = '';
