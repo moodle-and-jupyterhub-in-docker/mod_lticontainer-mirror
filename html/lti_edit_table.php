@@ -26,9 +26,10 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
 
     $table->head [] = ''; 
     $table->align[] = 'left';
-    $table->size [] = '50px';
+    $table->size [] = '150px';
     $table->wrap [] = 'nowrap';
 
+    /*
     if ($minstance->use_podman==0) {
         $table->head [] = ''; 
         $table->align[] = 'left';
@@ -44,7 +45,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         $table->align[] = 'left';
         $table->size [] = '50px';
         $table->wrap [] = 'nowrap';
-    }
+    }*/
 
     //
     $i = 0;
@@ -75,11 +76,12 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     #
+    /*
     if ($minstance->use_podman==0) {
         $table->data[$i][] = '';
         $table->data[$i][] = '';
         $table->data[$i][] = '';
-    }
+    }*/
     $i++;
 
     //
@@ -90,11 +92,12 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     #
+    /*
     if ($minstance->use_podman==0) {
         $table->data[$i][] = '';
         $table->data[$i][] = '';
         $table->data[$i][] = '';
-    }
+    }*/
     $i++;
 
     //
@@ -131,6 +134,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
     $table->data[$i][] = '<select name="'.LTIDS_LTI_CPULIMIT_CMD.'" >'.$select_opt.'</select>';
 
     // LTIDS_CPUGRNT_CMD
+    /*
     if ($minstance->use_podman==0) {
         $table->data[$i][] = '';
         $select_opt = '';
@@ -141,7 +145,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         }
         $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
         $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
-    }
+    }*/
     $i++;
 
     //
@@ -167,6 +171,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
     $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMLIMIT_CMD.'" >'.$select_opt.'</select>';
 
     // LTIDS_MEMGRNT_CMD
+    /*
     if ($minstance->use_podman==0) {
         $table->data[$i][] = '';
         $select_opt = '';
@@ -177,7 +182,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         }
         $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
         $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
-    }
+    }*/
     $i++;
 
     //
@@ -188,11 +193,12 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     #
+    /*
     if ($minstance->use_podman==0) {
         $table->data[$i][] = '';
         $table->data[$i][] = '';
         $table->data[$i][] = '';
-    }
+    }*/
 
     echo '<div align="center">';
     echo html_writer::table($table);
@@ -224,11 +230,6 @@ function show_lti_edit_table_vol($cmds)
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; 
-    $table->align[] = 'left';
-    $table->size [] = '100px';
-    $table->wrap [] = 'nowrap';
-
     //
     $i = 0;
     // Presen Volumes
@@ -240,7 +241,6 @@ function show_lti_edit_table_vol($cmds)
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->vol_users[$key].'" />';
-            $table->data[$i][] = '';
             $i++;
         }
     }
@@ -254,7 +254,6 @@ function show_lti_edit_table_vol($cmds)
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->sub_users[$key].'" />';
-            $table->data[$i][] = '';
             $i++;
         }
     }
@@ -268,7 +267,6 @@ function show_lti_edit_table_vol($cmds)
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->prs_users[$key].'" />';
-            $table->data[$i][] = '';
             $i++;
         }
     }
@@ -283,7 +281,6 @@ function show_lti_edit_table_vol($cmds)
         $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="" />';
         $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="" />';
         $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="" />';
-        $table->data[$i][] = '';
         $i++;
     }
 
