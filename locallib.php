@@ -3,7 +3,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 define('LTIDS_DOCKER_CMD',          '/usr/bin/docker');
-define('LTIDS_CURL_CMD',            '/usr/bin/curl');
+define('LTIDS_PODMAN_CMD',          '/usr/bin/podman-remote');
 
 define('LTIDS_LTI_PREFIX_CMD',      'lms_');
 define('LTIDS_LTI_USERS_CMD',       'lms_users');
@@ -138,10 +138,7 @@ function container_exec($cmd, $mi)
 
     if ($mi->use_podman==1) {
         #$container_cmd = LTIDS_CURL_CMD.' --unix-socket '.$socket_file.' http://d/v3.0.0/libpod/'.$cmd;
-        if ($cmd=='images') {
-            $cmf = 'images';
-        }
-        $container_cmd = LTIDS_CURL_CMD.' --unix-socket '.$socket_file.' http://d/v3.0.0/libpod/info';
+        $container_cmd = LTIDS_PODMAN_CMD.' --url unix://'.$socket_file.' '.$cmd;
     }
     else {
         $container_cmd = LTIDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
@@ -165,7 +162,7 @@ function container_exec($cmd, $mi)
 // コマンドの分解
 function ltids_explode_custom_params($custom_params)
 {
-    $cmds = new stdClass();
+    mds = new stdClass();
     $cmds->custom_cmd = array();
     $cmds->other_cmd  = array();
     $cmds->mount_vol  = array();

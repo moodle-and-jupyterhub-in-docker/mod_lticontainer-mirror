@@ -101,7 +101,7 @@ class  LTIEdit
         }
         #
         if ($this->minstance->use_podman==1) {
-            if (!file_exists(LTIDS_CURL_CMD))   print_error('no_curl_command', 'mod_ltids',   $this->action_url);
+            if (!file_exists(LTIDS_PODMAN_CMD)) print_error('no_podman_command', 'mod_ltids', $this->action_url);
         }
         else {
             if (!file_exists(LTIDS_DOCKER_CMD)) print_error('no_docker_command', 'mod_ltids', $this->action_url);
