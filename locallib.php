@@ -262,21 +262,21 @@ function ltids_join_custom_params($custom_data)
     $param  = LTIDS_LTI_MEMLIMIT_CMD.'='.$mlimit;
     $custom_params .= $param."\r\n";
 
-    $lowstr = mb_strtolower($custom_data->lms_cpugrnt);
-    $value  = preg_replace("/[^0-9\.]/", '', $lowstr);
-    if ($climit!='' and $climit!='0.0') {
-        if ((float)$climit < (float)$value) $value = $climit;
-    }
-    $param  = LTIDS_LTI_CPUGRNT_CMD.'='.$value;
-    $custom_params .= $param."\r\n";
+    //$lowstr = mb_strtolower($custom_data->lms_cpugrnt);
+    //$value  = preg_replace("/[^0-9\.]/", '', $lowstr);
+    //if ($climit!='' and $climit!='0.0') {
+    //    if ((float)$climit < (float)$value) $value = $climit;
+    //}
+    //$param  = LTIDS_LTI_CPUGRNT_CMD.'='.$value;
+    //$custom_params .= $param."\r\n";
 
-    $lowstr = mb_strtolower($custom_data->lms_memgrnt);
-    $value  = preg_replace("/[^0-9,]/", '', $lowstr);
-    if ($mlimit!='' and $mlimit!='0') {
-        $int_mlimit = (int)preg_replace("/[^0-9]/", '', $mlimit);
-        $int_value  = (int)preg_replace("/[^0-9]/", '', $value);
-        if ($int_mlimit < $int_value) $value = $mlimit;
-    }
+    //$lowstr = mb_strtolower($custom_data->lms_memgrnt);
+    //$value  = preg_replace("/[^0-9,]/", '', $lowstr);
+    //if ($mlimit!='' and $mlimit!='0') {
+    //    $int_mlimit = (int)preg_replace("/[^0-9]/", '', $mlimit);
+    //    $int_value  = (int)preg_replace("/[^0-9]/", '', $value);
+    //    if ($int_mlimit < $int_value) $value = $mlimit;
+    //}
     $param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
