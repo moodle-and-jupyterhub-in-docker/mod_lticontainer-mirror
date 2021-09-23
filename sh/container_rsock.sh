@@ -1,11 +1,16 @@
 #!/bin/bash
 #
-# Docker Remote Shell v0.9.1
+# Container Remote Shell v1.0.0
 #
-#  usage ... docker_rsock.sh host_name user_name user_password socket_file
+#  usage ... container_rsock.sh host_name user_name user_password socket_file remote_soket_file
 #
-#  ex.) # ./docker_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
-#       # docker -H unix:///tmp/ltids_docker.hogebar.jp.sock ps
+#  ex.1) for Docker
+#        # ./container_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
+#        # docker -H unix:///tmp/ltids_docker.hogebar.jp.sock ps
+#
+#  ex.2) for Podman
+#        # ./container_rsock.sh podman.hogebar.jp podman passwd  /tmp/podman.sock  /var/run/podman/podman.sock
+#        # curl -s --unix-socket /tmp/podman.sock -v http://d/v3.0.0/libpod/info
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
@@ -22,13 +27,19 @@ printf -v SSH_HOST '%q' "$1"
 printf -v SSH_USER '%q' "$2"
 printf -v SSH_PASS '%q' "$3"
 
+#
 if [ "$4" != "" ]; then
     printf -v LLSOCKET '%q' "$4"
 else
     LLSOCKET=/tmp/ltids_${SSH_HOST}.sock
 fi
+#
+if [ "$5" != "" ]; then
+    printf -v RTSOCKET '%q' "$5"
+else
+    RTSOCKET=/var/run/docker.sock
+fi
 
-RTSOCKET=/var/run/docker.sock
 WEBGROUP=`groups`
 
 #

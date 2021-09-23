@@ -99,8 +99,12 @@ class  LTIEdit
         if (!$this->ltirec) {
             print_error('no_data_found', 'mod_ltids', $this->action_url);
         }
-        if (!file_exists(LTIDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_ltids', $this->action_url);
+        #
+        if ($this->minstance->use_podman==1) {
+            if (!file_exists(LTIDS_CURL_CMD))   print_error('no_curl_command', 'mod_ltids',   $this->action_url);
+        }
+        else {
+            if (!file_exists(LTIDS_DOCKER_CMD)) print_error('no_docker_command', 'mod_ltids', $this->action_url);
         }
         
         // Launcher Container
@@ -138,7 +142,7 @@ class  LTIEdit
                         $lowstr  = mb_strtolower($custom_data->lms_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
-                        docker_exec($cmd, $this->minstance);
+                        container_exec($cmd, $this->minstance);
                     }
                     $i++;
                 }
@@ -146,7 +150,7 @@ class  LTIEdit
         }
 
         //
-        $rslts = docker_exec('images', $this->minstance);
+        $rslts = container_exec('images', $this->minstance);
         if (!empty($rslts) and isset($rslts['error'])) {
             print_error($rslts['error'], 'mod_ltids', $this->action_url);
         }

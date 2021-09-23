@@ -3,6 +3,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 define('LTIDS_DOCKER_CMD',          '/usr/bin/docker');
+define('LTIDS_CURL_CMD',            '/usr/bin/curl');
 
 define('LTIDS_LTI_PREFIX_CMD',      'lms_');
 define('LTIDS_LTI_USERS_CMD',       'lms_users');
@@ -87,9 +88,15 @@ function ltids_get_event($cmid, $action, $params='', $info='')
  
 
 
-function docker_socket($mi, $socket_file)
+function container_socket($mi, $socket_file)
 {
-    $socket_cmd = __DIR__.'/sh/docker_rsock.sh '.$mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
+    if ($mi->use_podman==1) {
+        $socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file.' /var/run/podman/podman.sock';
+    }
+    else {
+        $socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
+    }
+    $socket_cmd = __DIR__.'/sh/container_rsock.sh '.$socket_params;
 
     $rslts = array();
     $home_dir = posix_getpwuid(posix_geteuid())['dir'];
@@ -104,33 +111,47 @@ function docker_socket($mi, $socket_file)
 
 
 
-function docker_exec($cmd, $mi)
+function container_exec($cmd, $mi)
 {
     $rslts = array();
-    $local_docker = true;
-    $socket_file  = '/tmp/ltids_'.$mi->docker_host.'.sock';
+    $local_container = true;
+    $socket_file     = '/tmp/ltids_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
     }
     else if ($mi->docker_host=='localhost' or $mi->docker_host=='127.0.0.1') {
-        $socket_file = '/var/run/docker.sock';
+        if ($mi->use_podman==1) {
+            $socket_file = '/var/run/podman/podman.sock';
+        }
+        else {
+            $socket_file = '/var/run/docker.sock';
+        }
     }
     else {
-        $local_docker = false;
+        $local_container = false;
         if (!file_exists($socket_file)) {
-            $rslts = docker_socket($mi, $socket_file);
+            $rslts = container_socket($mi, $socket_file);
             if (!empty($rslts)) return $rslts;          // error
         }
     }
 
-    $docker_cmd = LTIDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
-    exec($docker_cmd, $rslts);
+    if ($mi->use_podman==1) {
+        #$container_cmd = LTIDS_CURL_CMD.' --unix-socket '.$socket_file.' http://d/v3.0.0/libpod/'.$cmd;
+        if ($cmd=='images') {
+            $cmf = 'images';
+        }
+        $container_cmd = LTIDS_CURL_CMD.' --unix-socket '.$socket_file.' http://d/v3.0.0/libpod/info';
+    }
+    else {
+        $container_cmd = LTIDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
+    }
+    exec($container_cmd, $rslts);
 
-    if (empty($rslts) and !$local_docker) {
-        $rslts = docker_socket($mi, $socket_file);
+    if (empty($rslts) and !$local_container) {
+        $rslts = container_socket($mi, $socket_file);
         if (!empty($rslts)) return $rslts;              // error
-        exec($docker_cmd, $rslts);
+        exec($container_cmd, $rslts);
     }
 
     return $rslts;

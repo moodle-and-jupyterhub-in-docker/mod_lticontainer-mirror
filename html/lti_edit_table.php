@@ -1,6 +1,6 @@
 <?php
 
-function show_lti_edit_table_cmd($cmds, $params)
+function show_lti_edit_table_cmd($cmds, $params, $minstance)
 {
     $table = new html_table();
     //
@@ -29,20 +29,22 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->size [] = '50px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; 
-    $table->align[] = 'left';
-    $table->size [] = '30px';
-    $table->wrap [] = 'nowrap';
+    if ($minstance->use_podman==0) {
+        $table->head [] = ''; 
+        $table->align[] = 'left';
+        $table->size [] = '30px';
+        $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; 
-    $table->align[] = 'left';
-    $table->size [] = '50px';
-    $table->wrap [] = 'nowrap';
+        $table->head [] = ''; 
+        $table->align[] = 'left';
+        $table->size [] = '50px';
+        $table->wrap [] = 'nowrap';
 
-    $table->head [] = ''; 
-    $table->align[] = 'left';
-    $table->size [] = '50px';
-    $table->wrap [] = 'nowrap';
+        $table->head [] = ''; 
+        $table->align[] = 'left';
+        $table->size [] = '50px';
+        $table->wrap [] = 'nowrap';
+    }
 
     //
     $i = 0;
@@ -72,9 +74,12 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
+    #
+    if ($minstance->use_podman==0) {
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+    }
     $i++;
 
     //
@@ -84,9 +89,12 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
+    #
+    if ($minstance->use_podman==0) {
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+    }
     $i++;
 
     //
@@ -121,17 +129,19 @@ function show_lti_edit_table_cmd($cmds, $params)
     }
     $table->data[$i][] = '<strong>'.get_string('cpulimit_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_CPULIMIT_CMD.'" >'.$select_opt.'</select>';
-    $table->data[$i][] = '';
 
     // LTIDS_CPUGRNT_CMD
-    $select_opt = '';
-    foreach($params->cpu_grnt as $key=>$cpu) {
-        $selected = '';
-        if ($cpu==$cpugrnt_cmd) $selected = 'selected="selected"';
-        $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
+    if ($minstance->use_podman==0) {
+        $table->data[$i][] = '';
+        $select_opt = '';
+        foreach($params->cpu_grnt as $key=>$cpu) {
+            $selected = '';
+            if ($cpu==$cpugrnt_cmd) $selected = 'selected="selected"';
+            $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
+        }
+        $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
+        $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
     }
-    $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
-    $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
     $i++;
 
     //
@@ -155,17 +165,19 @@ function show_lti_edit_table_cmd($cmds, $params)
     }
     $table->data[$i][] = '<strong>'.get_string('memlimit_cmd_ttl', 'mod_ltids').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMLIMIT_CMD.'" >'.$select_opt.'</select>';
-    $table->data[$i][] = '';
 
     // LTIDS_MEMGRNT_CMD
-    $select_opt = '';
-    foreach($params->mem_grnt as $key=>$mem) {
-        $selected = '';
-        if ($mem==$memgrnt_cmd) $selected = 'selected="selected"';
-        $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
+    if ($minstance->use_podman==0) {
+        $table->data[$i][] = '';
+        $select_opt = '';
+        foreach($params->mem_grnt as $key=>$mem) {
+            $selected = '';
+            if ($mem==$memgrnt_cmd) $selected = 'selected="selected"';
+            $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
+        }
+        $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
+        $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
     }
-    $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
-    $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
     $i++;
 
     //
@@ -175,9 +187,12 @@ function show_lti_edit_table_cmd($cmds, $params)
     $table->data[$i][] = '';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
-    $table->data[$i][] = '';
+    #
+    if ($minstance->use_podman==0) {
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+        $table->data[$i][] = '';
+    }
 
     echo '<div align="center">';
     echo html_writer::table($table);
@@ -279,9 +294,9 @@ function show_lti_edit_table_vol($cmds)
 
 
 //
-function show_lti_edit_table($cmds, $params)
+function show_lti_edit_table($cmds, $params, $minstance)
 {
-    show_lti_edit_table_cmd($cmds, $params);
+    show_lti_edit_table_cmd($cmds, $params, $minstance);
     show_lti_edit_table_vol($cmds);
 }
 
