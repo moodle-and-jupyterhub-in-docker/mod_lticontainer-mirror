@@ -116,7 +116,7 @@ function container_exec($cmd, $mi)
 {
     $rslts = array();
     $local_container = true;
-    $socket_file     = '/xtmp/ltids_'.$mi->docker_host.'.sock';
+    $socket_file     = '/tmp/ltids_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
