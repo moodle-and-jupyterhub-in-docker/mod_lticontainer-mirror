@@ -3,7 +3,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 define('LTIDS_DOCKER_CMD',          '/usr/bin/docker');
-define('LTIDS_PODMAN_CMD',          '/usr/bin/podman-remote');
+define('LTIDS_PODMAN_CMD',          '/usr/bin/podman');
+define('LTIDS_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
 
 define('LTIDS_LTI_PREFIX_CMD',      'lms_');
 define('LTIDS_LTI_USERS_CMD',       'lms_users');
@@ -115,18 +116,14 @@ function container_exec($cmd, $mi)
 {
     $rslts = array();
     $local_container = true;
-    $socket_file     = '/tmp/ltids_'.$mi->docker_host.'.sock';
+    $socket_file     = '/xtmp/ltids_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
     }
     else if ($mi->docker_host=='localhost' or $mi->docker_host=='127.0.0.1') {
-        if ($mi->use_podman==1) {
-            $socket_file = '/var/run/podman/podman.sock';
-        }
-        else {
-            $socket_file = '/var/run/docker.sock';
-        }
+        if ($mi->use_podman==1) $socket_file = '/var/run/podman/podman.sock';
+        else                    $socket_file = '/var/run/docker.sock';
     }
     else {
         $local_container = false;
@@ -137,8 +134,12 @@ function container_exec($cmd, $mi)
     }
 
     if ($mi->use_podman==1) {
-        #$container_cmd = LTIDS_CURL_CMD.' --unix-socket '.$socket_file.' http://d/v3.0.0/libpod/'.$cmd;
-        $container_cmd = LTIDS_PODMAN_CMD.' --url unix://'.$socket_file.' '.$cmd;
+        if (file_exists(LTIDS_PODMAN_REMOTE_CMD)) {
+            $container_cmd = LTIDS_PODMAN_REMOTE_CMD.' --url unix://'.$socket_file.' '.$cmd;
+        }
+        else {
+            $container_cmd = LTIDS_PODMAN_CMD.' --remote --url unix://'.$socket_file.' '.$cmd;
+        }
     }
     else {
         $container_cmd = LTIDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
@@ -162,7 +163,7 @@ function container_exec($cmd, $mi)
 // コマンドの分解
 function ltids_explode_custom_params($custom_params)
 {
-    mds = new stdClass();
+    $cmds = new stdClass();
     $cmds->custom_cmd = array();
     $cmds->other_cmd  = array();
     $cmds->mount_vol  = array();
