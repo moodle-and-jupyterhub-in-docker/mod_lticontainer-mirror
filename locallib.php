@@ -115,18 +115,12 @@ function container_socket($mi, $socket_file)
 function container_exec($cmd, $mi)
 {
     $rslts = array();
-    $local_container = true;
-    $socket_file     = '/tmp/ltids_'.$mi->docker_host.'.sock';
+    $socket_file = '/tmp/ltids_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
     }
-    else if ($mi->docker_host=='localhost' or $mi->docker_host=='127.0.0.1') {
-        if ($mi->use_podman==1) $socket_file = '/var/run/podman/podman.sock';
-        else                    $socket_file = '/var/run/docker.sock';
-    }
     else {
-        $local_container = false;
         if (!file_exists($socket_file)) {
             $rslts = container_socket($mi, $socket_file);
             if (!empty($rslts)) return $rslts;          // error
@@ -146,7 +140,8 @@ function container_exec($cmd, $mi)
     }
     exec($container_cmd, $rslts);
 
-    if (empty($rslts) and !$local_container) {
+    // retry
+    if (empty($rslts)) {
         $rslts = container_socket($mi, $socket_file);
         if (!empty($rslts)) return $rslts;              // error
         exec($container_cmd, $rslts);

@@ -9,8 +9,8 @@
 #        # docker -H unix:///tmp/ltids_docker.hogebar.jp.sock ps
 #
 #  ex.2) for Podman
-#        # ./container_rsock.sh podman.hogebar.jp podman passwd  /tmp/podman.sock  /var/run/podman/podman.sock
-#        # curl -s --unix-socket /tmp/podman.sock -v http://d/v3.0.0/libpod/info
+#        # ./container_rsock.sh podman.hogebar.jp podman passwd  /tmp/podman.sock /var/run/podman/podman.sock
+#        # podman-remote --url unix:///tmp/ltidsi_podman.hogebar.jp.sock ps
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
