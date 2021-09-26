@@ -22,8 +22,10 @@ class  LTIEdit
     var $cpu_limit  = array();
     var $mem_limut  = array();
 
-    var $submitted  = false;
+    var $imgname_ok = array();
+    var $imgname_ng = array();
 
+    var $submitted  = false;
     var $isGuest    = true;
 
     var $action_url = '';
@@ -59,6 +61,20 @@ class  LTIEdit
                                                     '16GiB'=>'17,179,869,184','18GiB'=>'19,327,352,832',  '20GiB'=>'21,474,836,480');
         $this->cpu_grnt   = $this->cpu_limit;
         $this->mem_grnt   = $this->mem_limit;
+
+        // filter
+        $this->minstance->imgname_fltr;
+        $imgname_fltr = preg_replace("/,/", ' ', trim($this->minstance->imgname_fltr));
+        $imgname_fltr = preg_replace("/\s+/", ' ', $imgname_fltr);
+        $images_subs  = explode(' ', $imgname_fltr);
+        foreach ($images_subs as $img) {
+            if (substr($img, 0, 1)=='-') {
+                $this->imgname_ng[] = substr($img, 1);
+            }
+            else {
+                $this->imgname_ok[] = $img;
+            }
+        }
 
         // option の設定
         $this->options    = array('none'=>'', 'double args'=>'doubleargs');
@@ -164,10 +180,13 @@ class  LTIEdit
                 $rslt  = htmlspecialchars($rslt);
                 $rslt  = preg_replace("/\s+/", ' ', trim($rslt));
                 $image = explode(' ', $rslt);
-                $idisp = $image[0].' : '.$image[1];
+                $idisp = $image[0].' : '.$image[1]; // image namne
                 if ($image[0]=='&lt;none&gt;' and isset($image[2])) $idisp = $image[2];
-                if (check_include_substr($idisp, $this->minstance->imgname_fltr)) {
-                    $this->images[$i++] = $idisp;
+                //
+                if (check_include_substr($idisp, $this->imgname_ok)) {
+                    if (!check_include_substr($idisp, $this->imgname_ng)) {
+                        $this->images[$i++] = $idisp;
+                    }
                 }
             }
         }

@@ -36,13 +36,9 @@ function  pack_space($str)
 }
 
 
-function  check_include_substr($name, $check_strs)
+function  check_include_substr($name, $array_str)
 {
-    $strs     = preg_replace("/\s+/", '', trim($check_strs));
-    $arry_str = explode(",", $strs);
-    if (empty($arry_str)) return true;
-
-    foreach ($arry_str as $str) {
+    foreach ($array_str as $str) {
         if ($str=='' or $str=='*') return true;
         if (preg_match("/$str/", $name)) return true;
     }
@@ -272,8 +268,8 @@ function ltids_join_custom_params($custom_data)
     //    $int_value  = (int)preg_replace("/[^0-9]/", '', $value);
     //    if ($int_mlimit < $int_value) $value = $mlimit;
     //}
-    $param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
-    $custom_params .= $param."\r\n";
+    //$param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
+    //$custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_options);
     //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
