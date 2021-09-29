@@ -2,7 +2,7 @@
 
 $disp = 'No';
 $make = 'No';
-$podm = 'no';
+$podm = 'No';
 if ($minstance->custom_params==1) $disp = 'Yes';
 if ($minstance->make_volumes ==1) $make = 'Yes';
 if ($minstance->use_podman ==1)   $podm = 'Yes';
