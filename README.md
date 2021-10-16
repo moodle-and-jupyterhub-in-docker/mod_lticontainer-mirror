@@ -1,6 +1,6 @@
 # mod_ltids 
 
-Moodle Module for JupyterHub/LTIDockerSpawner
+Moodle Module for JupyterHub/LTIContainerSpawner
 
 Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
 - https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
