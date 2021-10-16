@@ -3,6 +3,7 @@
 Moodle Module for JupyterHub/LTIDockerSpawner
 
 Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
+- https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
 - https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_ltids
 
 ## Installing via uploaded ZIP file ##
