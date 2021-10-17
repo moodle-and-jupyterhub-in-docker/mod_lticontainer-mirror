@@ -26,15 +26,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 // module
-$string['pluginname'] = 'LTIDockerSpawner';
-$string['modulename'] = 'LTI DockerSpawner';
-$string['modulenameplural'] = 'LTIDockerSpawners';
+$string['pluginname'] = 'LTIContainerSpawner';
+$string['modulename'] = 'LTIContainerSpawner';
+$string['modulenameplural'] = 'LTIConrainerSpawners';
 
 // mod_form
 $string['ltidsname']  = 'Name ';
 $string['description'] = 'Description';
 $string['ltidsname_help'] = 'Name of this instance of module';
-$string['ltidsfieldset'] = 'Options of LTI DockerSpawner module';
+$string['ltidsfieldset'] = 'Options of LTIContainerSpawner module';
 $string['docker_host'] = 'Docker host';
 $string['docker_host_help'] = 'IP address or FQDN of docker host';
 $string['docker_user'] = 'Docker user';
