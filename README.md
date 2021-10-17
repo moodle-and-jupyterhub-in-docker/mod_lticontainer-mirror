@@ -2,32 +2,16 @@
 
 Moodle Module for JupyterHub/LTIContainerSpawner
 
+Japanese Wiki
+- https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids-(J)
+
+English Wiki
+- Sorry, it is under constracting.
+
 Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
 - https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
-- https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_ltids
 
-## Installing via uploaded ZIP file ##
 
-1. Log in to your Moodle site as an admin and go to _Site administration >
-   Plugins > Install plugins_.
-2. Upload the ZIP file with the plugin code. You should only be prompted to add
-   extra details if your plugin type is not automatically detected.
-3. Check the plugin validation report and finish the installation.
-
-## Installing manually ##
-
-The plugin can be also installed by putting the contents of this directory to
-
-    {your/moodle/dirroot}/mod/ltids
-
-Afterwards, log in to your Moodle site as an admin and go to _Site administration >
-Notifications_ to complete the installation.
-
-Alternatively, you can run
-
-    $ php admin/cli/upgrade.php
-
-to complete the installation from the command line.
 
 ## License ##
 
