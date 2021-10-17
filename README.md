@@ -15,7 +15,7 @@ Please see bellow wiki (but sorry, this wiki is Japanese text only)
 
 ## License ##
 
-2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp> and Masanori Urano <j18081mu@edu.tuis.ac.jp>
+2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp> and Masanori Urano <j18081mu@edu.tuis.ac.jp>, NSL of TUIS
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
