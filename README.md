@@ -8,7 +8,7 @@ Japanese Wiki
 English Wiki
 - Sorry, it is under constracting.
 
-Please see bellow wiki (but sorry, this wiki is Japanese Text only) 
+Please see bellow wiki (but sorry, this wiki is Japanese text only) 
 - https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
 
 
