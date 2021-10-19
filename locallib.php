@@ -36,7 +36,17 @@ function  pack_space($str)
 }
 
 
-function  check_include_substr($name, $array_str)
+function  check_include_substr_and($name, $array_str)
+{
+    foreach ($array_str as $str) {
+        if ($str=='' or $str=='*') return true;
+        if (!preg_match("/$str/", $name)) return false;
+    }
+    return true;
+}
+
+
+function  check_include_substr_or($name, $array_str)
 {
     foreach ($array_str as $str) {
         if ($str=='' or $str=='*') return true;
@@ -44,7 +54,6 @@ function  check_include_substr($name, $array_str)
     }
     return false;
 }
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////

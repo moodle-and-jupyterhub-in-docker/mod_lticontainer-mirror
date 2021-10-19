@@ -183,8 +183,8 @@ class  LTIEdit
                 $idisp = $image[0].' : '.$image[1]; // image namne
                 if ($image[0]=='&lt;none&gt;' and isset($image[2])) $idisp = $image[2];
                 //
-                if (check_include_substr($idisp, $this->imgname_ok)) {
-                    if (!check_include_substr($idisp, $this->imgname_ng)) {
+                if (check_include_substr_and($idisp, $this->imgname_ok)) {
+                    if (!check_include_substr_or($idisp, $this->imgname_ng)) {
                         $this->images[$i++] = $idisp;
                     }
                 }
