@@ -45,8 +45,8 @@ $string['show_custom_params'] = 'Show custom parameters';
 $string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
 $string['imagename_filter'] = 'Image name filter words';
 $string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
-$string['make_docker_volumes'] = 'Does mod_ltids create Docker volumes';
-$string['make_docker_volumes_help'] = 'If No, Docker volumes are careated by JupyterHub. If Yes, Docker volumes are careated by mod_ltids at LTI Edit Tab';
+$string['make_docker_volumes'] = 'Does mod_ltids create docker volumes ?';
+$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_ltids when LTI Edit Tab is saved';
 $string['use_podman'] = 'Use Podman instead of Docker';
 $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub. This function is experimentary, so any features will not work.';
 
