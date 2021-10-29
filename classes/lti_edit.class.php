@@ -141,7 +141,7 @@ class  LTIEdit
                 print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
             }
 
-            //
+            /*
             $custom_data->lms_userid  = '';
             $custom_data->lms_grpid   = '';
             $custom_data->lms_grpname = '';
@@ -151,6 +151,7 @@ class  LTIEdit
                 $custom_data->lms_grpid   = $userinfo['gid'];
                 $custom_data->lms_grpname = posix_getgrgid($custom_data->lms_grpid)['name'];
             }
+            */
             //
             $custom_data->lms_iframe = '0';
             if ($launch=='2' or $launch=='3') $custom_data->lms_iframe = '1';   // 埋め込み
