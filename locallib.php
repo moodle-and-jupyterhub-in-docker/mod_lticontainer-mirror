@@ -112,7 +112,7 @@ function container_socket($mi, $socket_file)
         $rslts = array('error'=>'web_homedir_forbidden', 'home_dir'=>$home_dir);
         return $rslts;
     }
-    exec($socket_cmd, $rslts);
+    exec($socket_cmd);
 
     return $rslts;
 }
