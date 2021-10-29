@@ -1,5 +1,5 @@
 --- locallib.php-	2021-10-29 14:34:46.986915441 +0900
-+++ locallib.php	2021-10-29 14:37:58.703336671 +0900
++++ locallib.php	2021-10-29 19:15:20.912390494 +0900
 @@ -908,6 +908,13 @@
          $requestparams['lis_person_name_family'] = $USER->lastname;
          $requestparams['lis_person_name_full'] = fullname($USER);
@@ -7,9 +7,9 @@
 +        //
 +        $userinfo = posix_getpwnam($USER->username);
 +        if ($userinfo) {
-+            $requestparams['custom_lms_userid']  = $userinfo['uid'];
-+            $requestparams['custom_lms_grpid']   = $userinfo['gid'];
-+            $requestparams['custom_lms_grpname'] = posix_getgrgid($custom_data->lms_grpid)['name'];
++            $requestparams['ext_user_userid']    = $userinfo['uid'];
++            $requestparams['ext_user_groupid']   = $userinfo['gid'];
++            $requestparams['ext_user_groupname'] = posix_getgrgid($userinfo['gid'])['name'];
 +        }
      }
  
