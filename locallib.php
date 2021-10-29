@@ -9,9 +9,7 @@ define('LTIDS_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
 define('LTIDS_LTI_PREFIX_CMD',      'lms_');
 define('LTIDS_LTI_USERS_CMD',       'lms_users');
 define('LTIDS_LTI_TEACHERS_CMD',    'lms_teachers');
-define('LTIDS_LTI_USERID_CMD',      'lms_userid');
-define('LTIDS_LTI_GRPID_CMD',       'lms_grpid');
-define('LTIDS_LTI_GRPNAME_CMD',     'lms_grpname');
+define('LTIDS_LTI_TGRPNAME_CMD',    'lms_grpname');
 define('LTIDS_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTIDS_LTI_IMAGE_CMD',       'lms_image');
 define('LTIDS_LTI_CPUGRNT_CMD',     'lms_cpugrnt');
@@ -227,24 +225,20 @@ function ltids_explode_custom_params($custom_params)
 function ltids_join_custom_params($custom_data)
 {
     $custom_params = '';
-    if (!isset($custom_data->lms_users))       $custom_data->lms_users       = '';
-    if (!isset($custom_data->lms_teachers))    $custom_data->lms_teachers    = '';
-    if (!isset($custom_data->lms_image))       $custom_data->lms_image       = '';
-    if (!isset($custom_data->lms_cpulimit))    $custom_data->lms_cpulimit    = '';
-    if (!isset($custom_data->lms_memlimit))    $custom_data->lms_memlimit    = '';
-    if (!isset($custom_data->lms_cpugrnt))     $custom_data->lms_cpugrnt     = '';
-    if (!isset($custom_data->lms_memgrnt))     $custom_data->lms_memgrnt     = '';
-    if (!isset($custom_data->lms_defurl))      $custom_data->lms_defurl      = '';
-    if (!isset($custom_data->lms_userid))      $custom_data->lms_userid      = '';
-    if (!isset($custom_data->lms_grpid))       $custom_data->lms_grpid       = '';
-    if (!isset($custom_data->lms_grpname))     $custom_data->lms_grpname     = '';
-    if (!isset($custom_data->lms_iframe))      $custom_data->lms_iframe      = '';
-    if (!isset($custom_data->lms_sessioninfo)) $custom_data->lms_sessioninfo = '';
-    if (!isset($custom_data->lms_options))     $custom_data->lms_options     = '';
-    if ($custom_data->lms_image =='default')   $custom_data->lms_image       = '';
+    if (!isset($custom_data->lms_users))     $custom_data->lms_users    = '';
+    if (!isset($custom_data->lms_teachers))  $custom_data->lms_teachers = '';
+    if (!isset($custom_data->lms_image))     $custom_data->lms_image    = '';
+    if (!isset($custom_data->lms_cpugrnt))   $custom_data->lms_cpugrnt  = '';
+    if (!isset($custom_data->lms_memgrnt))   $custom_data->lms_memgrnt  = '';
+    if (!isset($custom_data->lms_cpulimit))  $custom_data->lms_cpulimit = '';
+    if (!isset($custom_data->lms_memlimit))  $custom_data->lms_memlimit = '';
+    if (!isset($custom_data->lms_options))   $custom_data->lms_options  = '';
+    if (!isset($custom_data->lms_iframe))    $custom_data->lms_iframe   = '';
+    if (!isset($custom_data->lms_defurl))    $custom_data->lms_defurl   = '';
+    if ($custom_data->lms_image =='default') $custom_data->lms_image    = '';
 
     $lowstr = mb_strtolower($custom_data->lms_users);
-    $value  = preg_replace("/[^a-z0-9\-\_\*, ]/", '', $lowstr);
+    $value  = preg_replace("/[^a-z0-9\*, ]/", '', $lowstr);
     $param  = LTIDS_LTI_USERS_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
@@ -286,24 +280,19 @@ function ltids_join_custom_params($custom_data)
     //$param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
+    //$lowstr = mb_strtolower($custom_data->lms_options);
+    //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
+    //$param  = LTIDS_LTI_OPTIONS_CMD.'='.$avlue;
+    //$custom_params .= $param."\r\n";
+
     $lowstr = mb_strtolower($custom_data->lms_defurl);
     $value  = preg_replace("/[^a-z\/]/", '', $lowstr);
     $param  = LTIDS_LTI_DEFURL_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
-    $lowstr = mb_strtolower($custom_data->lms_userid);
-    $value  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param  = LTIDS_LTI_USERID_CMD.'='.$value;
-    $custom_params .= $param."\r\n";
-
-    $lowstr = mb_strtolower($custom_data->lms_grpid);
-    $value  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param  = LTIDS_LTI_GRPID_CMD.'='.$value;
-    $custom_params .= $param."\r\n";
-
-    $lowstr = mb_strtolower($custom_data->lms_grpname);
-    $value  = preg_replace("/[^a-z0-9\-\_]/", '', $lowstr);
-    $param  = LTIDS_LTI_GRPNAME_CMD.'='.$value;
+    $lowstr = mb_strtolower($custom_data->lms_iframe);
+    $value = preg_replace("/[^0-9]/", '', $lowstr);
+    $param = LTIDS_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->instanceid);
@@ -312,16 +301,6 @@ function ltids_join_custom_params($custom_data)
     $ltiid  = preg_replace("/[^0-9]/", '', $lowstr);
     $param  = LTIDS_LTI_SESSIONINFO_CMD.'='.$instid.','.$ltiid;             // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
-
-    $lowstr = mb_strtolower($custom_data->lms_iframe);
-    $value = preg_replace("/[^0-9]/", '', $lowstr);
-    $param = LTIDS_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
-
-    //$lowstr = mb_strtolower($custom_data->lms_options);
-    //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
-    //$param  = LTIDS_LTI_OPTIONS_CMD.'='.$avlue;
-    //$custom_params .= $param."\r\n";
 
     // Volume
     $vol_array = array();

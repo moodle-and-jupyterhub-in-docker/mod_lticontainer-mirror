@@ -108,7 +108,7 @@ class  LTIEdit
 
     function  execute()
     {
-        global $DB, $USER;
+        global $DB;
 
         $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
         $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
@@ -139,17 +139,6 @@ class  LTIEdit
             }
             if (!confirm_sesskey()) {
                 print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
-            }
-
-            //
-            $custom_data->lms_userid  = '';
-            $custom_data->lms_grpid   = '';
-            $custom_data->lms_grpname = '';
-            $userinfo = posix_getpwnam($USER->username);
-            if ($userinfo) {
-                $custom_data->lms_userid  = $userinfo['uid'];
-                $custom_data->lms_grpid   = $userinfo['gid'];
-                $custom_data->lms_grpname = posix_getgrgid($custom_data->lms_grpid)['name'];
             }
             //
             $custom_data->lms_iframe = '0';
