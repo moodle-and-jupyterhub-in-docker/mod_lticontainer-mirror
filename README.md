@@ -1,6 +1,6 @@
 # mod_ltids 
 
-##### Moodle Module for JupyterHub/LTIContainerSpawner
+#### Moodle Module for JupyterHub/LTIContainerSpawner
 
 - Wiki
     - English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids
