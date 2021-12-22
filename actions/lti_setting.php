@@ -24,13 +24,16 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
+//require_once(__DIR__.'/../locallib.php');
+
+require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
 $cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 
-$course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
+$minstance = $DB->get_record('ltids',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -52,8 +55,14 @@ if (has_capability('mod/ltids:lti_edit', $mcontext)) {
 $urlparams = array();
 $urlparams['id'] = $cmid;
 
-$current_tab = 'lti_setting';
+$current_tab = 'lti_setting_tab';
 $this_action = 'lti_setting';
+
+// Event
+//$event = ltids_get_event($cmid, $this_action, $urlparams);
+//$event->add_record_snapshot('course', $course);
+//$event->add_record_snapshot('ltids', $minstance);
+//$event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
@@ -71,8 +80,8 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
 
 echo $OUTPUT->header();
+echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/lti_setting.class.php');
 
 if ($ltids_lti_edit_cap) {

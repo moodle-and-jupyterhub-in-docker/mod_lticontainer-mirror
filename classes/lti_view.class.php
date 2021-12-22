@@ -30,7 +30,7 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/lti_connect.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_view.php', $this->url_params);
         $this->setup_url  = new moodle_url('/mod/ltids/actions/lti_setting.php', $this->url_params);
         $this->edit_url   = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
 
@@ -41,7 +41,7 @@ class  LTIConnect
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:lti_connect', $this->mcontext)) {
+        if (!has_capability('mod/ltids:lti_view', $this->mcontext)) {
             print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
     }
@@ -78,6 +78,8 @@ class  LTIConnect
                 }
                 $no_disp_list = implode(',', $no_disp);
                 $event = ltids_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$no_disp_list);
+                $event->add_record_snapshot('course', $this->course);
+                $event->add_record_snapshot('ltids',  $this->minstance);
                 $event->trigger();
                 $this->minstance->no_disp_lti = $no_disp_list;
             }
@@ -104,6 +106,6 @@ class  LTIConnect
     {
         global $OUTPUT;
 
-        include(__DIR__.'/../html/lti_connect.html');
+        include(__DIR__.'/../html/lti_view.html');
     }
 }

@@ -62,17 +62,23 @@ $string['no_podman_command'] = 'podman-remote or podman command does not exist (
 $string['ltids:over_view'] = 'Over View';
 $string['ltids:show_demo'] = 'Demo';
 $string['ltids:volume_view'] = 'Volumes';
-$string['ltids:lti_connect'] = 'LTI Connections';
+$string['ltids:lti_view'] = 'LTI Connections';
 $string['ltids:lti_edit'] = 'LTI Edit';
 
-// tab
-$string['over_view'] = 'Over View';
-$string['show_demo'] = 'Demo';
-$string['view_volumes'] = 'Docker Volumes';
-$string['lti_connect'] = 'LTI Connections';
-$string['lti_edit'] = 'LTI Edit';
-$string['lti_setting'] = 'LTI Settings';
-$string['returnto_course'] = 'Return to course';
+// Tab
+$string['over_view_tab'] = 'Over View';
+$string['show_demo_tab'] = 'Demo';
+$string['volume_view_tab'] = 'Docker Volumes';
+$string['volume_delete_tab'] = 'Delete Volumes';
+$string['lti_view_tab'] = 'LTI Connections';
+$string['lti_edit_tab'] = 'LTI Edit';
+$string['lti_setting_tab'] = 'LTI Settings';
+$string['returnto_course_tab'] = 'Return to course';
+
+$string['dashboard_view_tab'] = 'Dashboard';
+$string['dump_db_tab'] = 'Dump DB';
+$string['api_experiment_tab'] = 'API Experiment';
+
 
 // Table: LTI connect/edit
 $string['lti_name'] = 'LTI Name';
@@ -88,7 +94,6 @@ $string['access_users'] = 'Accessible Users';
 $string['volume_view'] = 'Volumes';
 $string['driver_name'] = 'Driver';
 $string['volume_del'] = 'Delete';
-$string['volume_delete'] = 'Delete Volumes';
 $string['deletevolconfirm'] = 'Do you really delete these volumes ?';
 
 // Title
@@ -105,7 +110,8 @@ $string['cpulimit_cmd_ttl'] = 'CPU Limit';
 $string['memlimit_cmd_ttl'] = 'Memory Limit';
 
 // view.php
-$string['wiki_url'] = 'https://www.nsl.tuis.ac.jp/xoops/modules/xpwiki/?mod_ltids';
+$string['wiki_url'] = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids';
+$string['git_url']  = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids';
 $string['Edit'] = 'Edit';
 $string['Edit_settings'] = 'Edit settings';
 

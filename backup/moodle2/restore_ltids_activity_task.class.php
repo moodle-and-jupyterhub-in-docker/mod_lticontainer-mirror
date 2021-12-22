@@ -91,11 +91,12 @@ class restore_ltids_activity_task extends restore_activity_task
 
         // Define the rules.
         $rules[] = new restore_log_rule('ltids', 'over_view',     'view.php?id={course_module}',                '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'lti_view',      'actions/lti_edit.php?id={course_module}',    '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'lti_view',      'actions/lti_view.php?id={course_module}',    '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'lti_setting',   'actions/lti_view.php?id={course_module}',    '{ltids}');
         $rules[] = new restore_log_rule('ltids', 'lti_edit',      'actions/lti_edit.php?id={course_module}',    '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'lti_setting',   'classes/lti_connect.php?id={course_module}', '{ltids}');
         $rules[] = new restore_log_rule('ltids', 'volume_view',   'actions/volume_view.php?id={course_module}', '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'volume_delete', 'calsses/volume_view.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'volume_delete', 'actione/volume_view.php?id={course_module}', '{ltids}');
+        $rules[] = new restore_log_rule('ltids', 'dashboard_view','actions/dashboard.php?id={course_module}',   '{ltids}');
 
         return $rules;
     }

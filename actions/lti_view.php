@@ -24,14 +24,17 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
-require_once(__DIR__.'/../classes/event/lti_setting.php');
+require_once(__DIR__.'/../locallib.php');
+
+require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
+require_once(__DIR__.'/../classes/event/lti_view.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
 $cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 
-$course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
+$minstance = $DB->get_record('ltids',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -44,17 +47,23 @@ $user_id  = $USER->id;
 // Check
 require_login($course, true, $cm);
 //
-$ltids_lti_connection_cap = false;
-if (has_capability('mod/ltids:lti_connect', $mcontext)) {
-    $ltids_lti_connection_cap = true;
+$ltids_lti_viewion_cap = false;
+if (has_capability('mod/ltids:lti_view', $mcontext)) {
+    $ltids_lti_viewion_cap = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array();
 $urlparams['id'] = $cmid;
 
-$current_tab = 'lti_connect';
-$this_action = 'lti_connect';
+$current_tab = 'lti_view_tab';
+$this_action = 'lti_view';
+
+// Event
+$event = ltids_get_event($cmid, $this_action, $urlparams);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('ltids', $minstance);
+$event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
@@ -65,22 +74,22 @@ $this_url = new moodle_url($base_url);
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('ltids:lti_connect', 'mod_ltids'));
+$PAGE->navbar->add(get_string('ltids:lti_view', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
 
 echo $OUTPUT->header();
+echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require(__DIR__.'/../include/tabs.php');
-require_once(__DIR__.'/../classes/lti_connect.class.php');
+require_once(__DIR__.'/../classes/lti_view.class.php');
 
-if ($ltids_lti_connection_cap) {
-    $lti_connection = new LTIConnect($cmid, $courseid, $minstance);
-    $lti_connection->set_condition();
-    $lti_connection->execute();
-    $lti_connection->print_page();
+if ($ltids_lti_viewion_cap) {
+    $lti_viewion = new LTIConnect($cmid, $courseid, $minstance);
+    $lti_viewion->set_condition();
+    $lti_viewion->execute();
+    $lti_viewion->print_page();
 }
 
 echo $OUTPUT->footer($course);

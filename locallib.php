@@ -72,7 +72,7 @@ function ltids_get_event($cmid, $action, $params='', $info='')
         'other'   => array('params' => $params, 'info'=> $info),
     );
     //
-    if ($action=='over_view') {
+    if      ($action=='over_view') {
         $event = \mod_ltids\event\over_view::create($args);
     }
     else if ($action=='lti_view') {
@@ -89,6 +89,12 @@ function ltids_get_event($cmid, $action, $params='', $info='')
     }
     else if ($action=='volume_delete') {
         $event = \mod_ltids\event\volume_delete::create($args);
+    }
+    else if ($action=='dashboard_view') {
+        $event = \mod_ltids\event\dashboard_view::create($args);
+    }
+    else if ($action=='dump_db') {
+        $event = \mod_ltids\event\dump_db::create($args);
     }
 
     return $event;

@@ -26,7 +26,7 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/lti_connect.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();

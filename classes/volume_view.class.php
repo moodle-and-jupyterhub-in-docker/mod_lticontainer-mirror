@@ -92,6 +92,8 @@ class  VolumeView
                                 container_exec($cmd, $this->minstance);
                                 //
                                 $event = ltids_get_event($this->cmid, 'volume_delete', $this->url_params, $cmd);
+                                $event->add_record_snapshot('course', $this->course);
+                                $event->add_record_snapshot('ltids',  $this->minstance);
                                 $event->trigger();
                             }
                         }

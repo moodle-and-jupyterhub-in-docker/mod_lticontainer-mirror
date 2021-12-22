@@ -25,13 +25,17 @@
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
 
+require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
+require_once(__DIR__.'/../classes/event/show_demo.php');
+
+
 //ltids_init_session();
 //$SESSION->ltids->is_started = false;
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
 $cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
-$course    = $DB->get_record('course', array('id'=>$cm->course), '*', MUST_EXIST);          // コースデータ from DB
-$minstance = $DB->get_record('ltids', array('id' => $cm->instance), '*', MUST_EXIST);       // モジュールインスタンス
+$course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
+$minstance = $DB->get_record('ltids',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -42,19 +46,20 @@ $user_id  = $USER->id;
 ///////////////////////////////////////////////////////////////////////////
 // Check
 require_login($course, true, $cm);
-//
-//$ltids_show_demo_cap = false;
-//if (has_capability('mod/ltids:show_demo', $mcontext)) {
-//    $ltids_show_demo_cap = true;
-//}
 
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array();
 $urlparams['id']       = $cmid;
 $urlparams['courseid'] = $courseid;
 
-$current_tab = 'show_demo';
+$current_tab = 'show_demo_tab';
 $this_action = 'show_demo';
+
+// Event
+$event = ltids_get_event($cmid, $this_action, $urlparams);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('ltids', $minstance);
+$event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
@@ -75,8 +80,8 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
 
 echo $OUTPUT->header();
+echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require(__DIR__.'/../include/tabs.php');
 require_once(__DIR__.'/../classes/show_demo.class.php');
 
 $show_demo = new ShowDemo($cmid, $courseid);
