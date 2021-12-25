@@ -66,6 +66,7 @@ $base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
+///////////////////////////////////////////////////////////////////////////
 // Event
 $event = ltids_get_event($cmid, $this_action, $urlparams);
 $event->add_record_snapshot('course', $course);

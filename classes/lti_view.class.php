@@ -19,6 +19,7 @@ class  LTIConnect
 
     var $items;
 
+
     function  __construct($cmid, $courseid, $minstance)
     {
         global $DB;

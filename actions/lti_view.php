@@ -47,9 +47,9 @@ $user_id  = $USER->id;
 // Check
 require_login($course, true, $cm);
 //
-$ltids_lti_viewion_cap = false;
+$ltids_lti_view_cap = false;
 if (has_capability('mod/ltids:lti_view', $mcontext)) {
-    $ltids_lti_viewion_cap = true;
+    $ltids_lti_view_cap = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -59,6 +59,7 @@ $urlparams['id'] = $cmid;
 $current_tab = 'lti_view_tab';
 $this_action = 'lti_view';
 
+///////////////////////////////////////////////////////////////////////////
 // Event
 $event = ltids_get_event($cmid, $this_action, $urlparams);
 $event->add_record_snapshot('course', $course);
@@ -85,11 +86,11 @@ echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
 require_once(__DIR__.'/../classes/lti_view.class.php');
 
-if ($ltids_lti_viewion_cap) {
-    $lti_viewion = new LTIConnect($cmid, $courseid, $minstance);
-    $lti_viewion->set_condition();
-    $lti_viewion->execute();
-    $lti_viewion->print_page();
+if ($ltids_lti_view_cap) {
+    $lti_view = new LTIConnect($cmid, $courseid, $minstance);
+    $lti_view->set_condition();
+    $lti_view->execute();
+    $lti_view->print_page();
 }
 
 echo $OUTPUT->footer($course);

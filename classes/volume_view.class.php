@@ -22,6 +22,7 @@ class  VolumeView
 
     var $items      = array();
 
+
     function  __construct($cmid, $courseid, $minstance)
     {
         global $CFG, $DB;

@@ -58,6 +58,7 @@ $urlparams['id'] = $cmid;
 $current_tab = 'lti_setting_tab';
 $this_action = 'lti_setting';
 
+///////////////////////////////////////////////////////////////////////////
 // Event
 //$event = ltids_get_event($cmid, $this_action, $urlparams);
 //$event->add_record_snapshot('course', $course);
@@ -85,10 +86,10 @@ echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 require_once(__DIR__.'/../classes/lti_setting.class.php');
 
 if ($ltids_lti_edit_cap) {
-    $lti_settingion = new LTIConnect($cmid, $courseid, $minstance);
-    $lti_settingion->set_condition();
-    $lti_settingion->execute();
-    $lti_settingion->print_page();
+    $lti_setting = new LTIConnect($cmid, $courseid, $minstance);
+    $lti_setting->set_condition();
+    $lti_setting->execute();
+    $lti_setting->print_page();
 }
 
 echo $OUTPUT->footer($course);

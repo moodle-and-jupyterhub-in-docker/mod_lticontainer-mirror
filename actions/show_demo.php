@@ -67,6 +67,7 @@ $base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
+///////////////////////////////////////////////////////////////////////////
 // Event
 //$event = apply_get_event($cm, 'over_view', $urlparams);
 //jbxl_add_to_log($event);
