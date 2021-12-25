@@ -83,7 +83,7 @@ echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
 require_once(__DIR__.'/../classes/dashboard_view.class.php');
 
-if (!$ltids_dashdoard_view_cap) {
+if ($ltids_dashdoard_view_cap) {
     $dashboard_view = new DashboardView($cmid, $courseid, $minstance);
     $dashboard_view->set_condition();
     $dashboard_view->execute();

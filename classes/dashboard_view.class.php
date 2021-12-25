@@ -31,11 +31,16 @@ class  DashboardView
     var $selected_lti_inst_id = '*';
 
     var $records;
-    var $userdata;
     var $usernames;
     var $lti_inst_info;
 
+    var $nml_data;
+    var $unk_data;
+    var $ttl_data;
+
+    var $ipynbdata = [];
     var $charts = [];
+
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -58,7 +63,7 @@ class  DashboardView
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:dashborad_view', $this->mcontext)) {
+        if (!has_capability('mod/ltids:dashboard_view', $this->mcontext)) {
             print_error('access_forbidden', 'mod_ltids', $this->action_url);
         }
 
@@ -76,6 +81,28 @@ class  DashboardView
 
         if($_start_date !== '*') $this->start_date = (new DateTime($_start_date))->format('Y-m-d H:i');
         if($_end_date !== '*')   $this->end_date   = (new DateTime($_end_date))->format('Y-m-d H:i');
+
+
+        $this->nml = new StdClass();
+        $this->nml->ok_cnt   = 0;
+        $this->nml->err_cnt  = 0;
+        $this->nml->ok_s     = [];
+        $this->nml->err_s    = [];
+        $this->nml->userdata = [];
+
+        $this->unk = new StdClass();
+        $this->unk->ok_cnt   = 0;
+        $this->unk->err_cnt  = 0;
+        $this->unk->ok_s     = [];
+        $this->unk->err_s    = [];
+        $this->unk->userdata = [];
+
+        $this->ttl = new StdClass();
+        $this->ttl->ok_cnt   = 0;
+        $this->ttl->err_cnt  = 0;
+        $this->ttl->ok_s     = [];
+        $this->ttl->err_s    = [];
+        $this->ttl->userdata = [];
     }
 
 
@@ -96,10 +123,13 @@ class  DashboardView
         // 本環境では多分以下のようにする
         //$dp = DataProvider::instance_generation($start_date, $end_date, $course->id, $selected_lti_inst_id);
 
-        $this->records   = $dp->get_records();
-        $this->userdata  = $dp->get_userdata();
-        $this->usernames = array_keys($userdata);
+        $this->records       = $dp->get_records();
+        $this->nml->userdata = $dp->get_userdata();
+        $this->usernames     = array_keys($this->nml->userdata);
         $this->lti_inst_info = $DB->get_records('lti', ['course'=>$course->id], '', 'id,name');
+
+        $this->get_chart_info();
+        $this->charts = $this->create_chart_inst();
 
         return true;
     }
@@ -107,13 +137,14 @@ class  DashboardView
 
     function  print_page()
     {
+//var $usernames;
+//$lti_inst_info
         global $OUTPUT;
 
         include(__DIR__.'/../html/dashboard_view.html');
     }
 
 
-/////////////////////////////////////////////////////////////////////////////////////
 
     function  get_chart_info()
     {
@@ -124,14 +155,7 @@ class  DashboardView
         // All activities ('*')
         if($this->selected_username === '*'):
         
-            $ipynbdata = [];
-            $ttl_userdata = [];
-            $userdata = [];
-            $ok_cnt = 0;
-            $error_cnt = 0;
-            $unk_userdata = [];
-            $unk_ok_cnt = 0;
-            $unk_error_cnt = 0;
+
             //
             foreach($this->records as $record) {
                 $filename = 'unknown';
@@ -145,35 +169,35 @@ class  DashboardView
                 }
         
                 // Total activities per user
-                if(!array_key_exists($username, $ttl_userdata)) {
+                if(!array_key_exists($username, $this->ttl->userdata)) {
                     if($status === 'ok') {
-                        $ttl_userdata[$username] = ['ok' => 1, 'error' => 0];
+                        $this->ttl->userdata[$username] = ['ok' => 1, 'err' => 0];
                     } else {
-                        $ttl_userdata[$username] = ['ok' => 0, 'error' => 1];
+                        $this->ttl->userdata[$username] = ['ok' => 0, 'err' => 1];
                     }
                 } else if($status === 'ok') {
-                    $ttl_userdata[$username]['ok'] = $ttl_userdata[$username]['ok'] + 1;
+                    $this->ttl->userdata[$username]['ok']  = $this->ttl->userdata[$username]['ok'] + 1;
                 } else {
-                    $ttl_userdata[$username]['error'] = $ttl_userdata[$username]['error'] + 1;
+                    $this->ttl->userdata[$username]['err'] = $this->ttl->userdata[$username]['err'] + 1;
                 }
         
                 // Unknown activities
                 if(empty($record->tags)) {
                     if($status === 'ok')
-                        $unk_ok_cnt++;
+                        $this->unk->ok_cnt++;
                     else
-                        $unk_error_cnt++;
+                        $this->unk->err_cnt++;
         
-                    if(!array_key_exists($username, $unk_userdata)) {
+                    if(!array_key_exists($username, $this->unk->userdata)) {
                         if($status === 'ok') {
-                            $unk_userdata[$username] = ['ok' => 1, 'error' => 0];
+                            $this->unk->userdata[$username] = ['ok' => 1, 'err' => 0];
                         } else {
-                            $unk_userdata[$username] = ['ok' => 0, 'error' => 1];
+                            $this->unk->userdata[$username] = ['ok' => 0, 'err' => 1];
                         }
                     } else if($status === 'ok') {
-                        $unk_userdata[$username]['ok'] = $unk_userdata[$username]['ok'] + 1;
+                        $this->unk->userdata[$username]['ok']  = $this->unk->userdata[$username]['ok'] + 1;
                     } else {
-                        $unk_userdata[$username]['error'] = $unk_userdata[$username]['error'] + 1;
+                        $this->unk->userdata[$username]['err'] = $this->unk->userdata[$username]['err'] + 1;
                     }
         
                     continue;
@@ -181,92 +205,82 @@ class  DashboardView
         
                 // Known activities
                 if($status === 'ok')
-                    $ok_cnt++;
+                    $this->nml->ok_cnt++;
                 else
-                    $error_cnt++;
+                    $this->nml->err_cnt++;
         
-                if(!array_key_exists($username, $userdata)) {
+                if(!array_key_exists($username, $this->nml->userdata)) {
                     if($status === 'ok') {
-                        $userdata[$username] = ['ok' => 1, 'error' => 0];
+                        $this->nml->userdata[$username] = ['ok' => 1, 'err' => 0];
                     } else {
-                        $userdata[$username] = ['ok' => 0, 'error' => 1];
+                        $this->nml->userdata[$username] = ['ok' => 0, 'err' => 1];
                     }
                 } else if($status === 'ok') {
-                    $userdata[$username]['ok'] = $userdata[$username]['ok'] + 1;
+                    $this->nml->userdata[$username]['ok']  = $this->nml->userdata[$username]['ok'] + 1;
                 } else {
-                    $userdata[$username]['error'] = $userdata[$username]['error'] + 1;
+                    $this->nml->userdata[$username]['err'] = $this->nml->userdata[$username]['err'] + 1;
                 }
         
-                // 各ファイルの各コードセル毎の実行結果(ok/error)
-                if(!array_key_exists($filename, $ipynbdata)) {
+                // 各ファイルの各コードセル毎の実行結果(ok/err)
+                if(!array_key_exists($filename, $this->ipynbdata)) {
                     if($status === 'ok') {
-                        $ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>1,'error'=>0]];
-                        $ipynbdata[$filename]['ok'] = 1;
-                        $ipynbdata[$filename]['error'] = 0;
+                        $this->ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>1,'err'=>0]];
+                        $this->ipynbdata[$filename]['ok'] = 1;
+                        $this->ipynbdata[$filename]['err'] = 0;
                     } else {
-                        $ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>0,'error'=>1]];
-                        $ipynbdata[$filename]['ok'] = 0;
-                        $ipynbdata[$filename]['error'] = 1;
+                        $this->ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>0,'err'=>1]];
+                        $this->ipynbdata[$filename]['ok'] = 0;
+                        $this->ipynbdata[$filename]['err'] = 1;
                     }
                     continue;
                 }
         
-                if(!array_key_exists($codenum, $ipynbdata[$filename]['codenums'])) {
+                if(!array_key_exists($codenum, $this->ipynbdata[$filename]['codenums'])) {
                     if($status === 'ok') {
-                        $ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>1,'error'=>0];
-                        $ipynbdata[$filename]['ok'] = $ipynbdata[$filename]['ok'] + 1;
+                        $this->ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>1,'err'=>0];
+                        $this->ipynbdata[$filename]['ok'] = $this->ipynbdata[$filename]['ok'] + 1;
                     } else {
-                        $ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>0,'error'=>1];
-                        $ipynbdata[$filename]['error'] = $ipynbdata[$filename]['error'] + 1;
+                        $this->ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>0,'err'=>1];
+                        $this->ipynbdata[$filename]['err'] = $this->ipynbdata[$filename]['err'] + 1;
                     }
                     continue;
                 }
         
                 if($status === 'ok') {
-                    $ipynbdata[$filename]['codenums'][$codenum]['ok'] = $ipynbdata[$filename]['codenums'][$codenum]['ok'] + 1;
-                    $ipynbdata[$filename]['ok'] = $ipynbdata[$filename]['ok'] + 1;
+                    $this->ipynbdata[$filename]['codenums'][$codenum]['ok'] = $this->ipynbdata[$filename]['codenums'][$codenum]['ok'] + 1;
+                    $this->ipynbdata[$filename]['ok'] = $this->ipynbdata[$filename]['ok'] + 1;
                 } else {
-                    $ipynbdata[$filename]['codenums'][$codenum]['error'] = $ipynbdata[$filename]['codenums'][$codenum]['error'] + 1;
-                    $ipynbdata[$filename]['error'] = $ipynbdata[$filename]['error'] + 1;
+                    $this->ipynbdata[$filename]['codenums'][$codenum]['err'] = $this->ipynbdata[$filename]['codenums'][$codenum]['err'] + 1;
+                    $this->ipynbdata[$filename]['err'] = $this->ipynbdata[$filename]['err'] + 1;
                 }
             }
             //
         
-            $ttl_ok_s = [];
-            $ttl_error_s = [];
-            foreach($ttl_userdata as $userdatum) {
-                $ttl_ok_s[] = $userdatum['ok'];
-                $ttl_error_s[] = $userdatum['error'];
+            foreach($this->ttl->userdata as $userdatum) {
+                $this->ttl->ok_s[]  = $userdatum['ok'];
+                $this->ttl->err_s[] = $userdatum['err'];
             }
-            $ok_s = [];
-            $error_s = [];
-            foreach($userdata as $userdatum) {
-                $ok_s[] = $userdatum['ok'];
-                $error_s[] = $userdatum['error'];
+            foreach($this->nml->userdata as $userdatum) {
+                $this->nml->ok_s[]  = $userdatum['ok'];
+                $this->nml->err_s[] = $userdatum['err'];
             }
-            $unk_ok_s = [];
-            $unk_error_s = [];
-            foreach($unk_userdata as $userdatum) {
-                $unk_ok_s[] = $userdatum['ok'];
-                $unk_error_s[] = $userdatum['error'];
+            foreach($this->unk->userdata as $userdatum) {
+                $this->unk->ok_s[]  = $userdatum['ok'];
+                $this->unk->err_s[] = $userdatum['err'];
             }
         
         
         // User activities
         else:
         
-            $ipynbdata = [];
-            $ok_cnt = 0;
-            $error_cnt = 0;
-            $unk_ok_cnt = 0;
-            $unk_error_cnt = 0;
+            $this->ipynbdata = [];
             $ttl_first_exec_datetime = new DateTime();
             $ttl_last_exec_datetime =  new DateTime();
             $ttl_xcoords = [];
             $ttl_ycoords = [];
             $ttl_ycoords1 = [];
             $first_exec_datetime = new DateTime();
-            $last_exec_datetime = new DateTime();
+            $last_exec_datetime  = new DateTime();
             $xcoords = [];
             $ycoords = [];
             $ycoords1 = [];
@@ -275,19 +289,20 @@ class  DashboardView
             $unk_xcoords = [];
             $unk_ycoords = [];
             $unk_ycoords1 = [];
-            foreach($userdata[$selected_username] as $record) {
-                $filename = $record->tags->filename;
-                $codenum = $record->tags->codenum;
-                $status = $record->status;
+
+            foreach($this->nml->userdata[$this->selected_username] as $record) {
+                $filename   = $record->tags->filename;
+                $codenum    = $record->tags->codenum;
+                $status     = $record->status;
                 $s_datetime = new DateTime($record->s_date);
         
                 // Total progress view
                 if(empty($ttl_xcoords) && empty($ttl_ycoords) && empty($ttl_ycoords1)) {
                     $ttl_first_exec_datetime = $s_datetime;
-                    $ttl_last_exec_datetime = $s_datetime;
+                    $ttl_last_exec_datetime  = $s_datetime;
                     $ttl_xcoords[] = 0;
                     $ttl_ycoords[] = 0;
-                    $ttl_ycoords1[] = $status === 'error' ? 1 : 0;
+                    $ttl_ycoords1[] = $status === 'err' ? 1 : 0;
                 } else {
                     $ttl_last_exec_datetime = $s_datetime;
                     $size = count($ttl_xcoords);
@@ -295,23 +310,23 @@ class  DashboardView
                     $diff = $ttl_first_exec_datetime->diff($s_datetime);
                     $diff = $diff->days * 24 * 60 + $diff->h * 60 + $diff->i;
                     $ttl_ycoords[] = $diff;
-                    $ttl_ycoords1[] = $status === 'error' ? $ttl_ycoords1[$size - 1] + 1 : $ttl_ycoords1[$size - 1];
+                    $ttl_ycoords1[] = $status === 'err' ? $ttl_ycoords1[$size - 1] + 1 : $ttl_ycoords1[$size - 1];
                 }
         
                 // Unknown activities
                 if(empty($record->tags)) {
                     if($status === 'ok')
-                        $unk_ok_cnt++;
+                        $this->unk->ok_cnt++;
                     else
-                        $unk_error_cnt++;
+                        $this->unk->err_cnt++;
         
                     // Unknown progress view
                     if(empty($unk_xcoords) && empty($unk_ycoords) && empty($unk_ycoords1)) {
                         $unk_first_exec_datetime = $s_datetime;
-                        $unk_last_exec_datetime = $s_datetime;
+                        $unk_last_exec_datetime  = $s_datetime;
                         $unk_xcoords[] = 0;
                         $unk_ycoords[] = 0;
-                        $unk_ycoords1[] = $status === 'error' ? 1 : 0;
+                        $unk_ycoords1[] = $status === 'err' ? 1 : 0;
                     } else {
                         $unk_last_exec_datetime = $s_datetime;
                         $size = count($unk_xcoords);
@@ -319,7 +334,7 @@ class  DashboardView
                         $diff = $unk_first_exec_datetime->diff($s_datetime);
                         $diff = $diff->days * 24 * 60 + $diff->h * 60 + $diff->i;
                         $unk_ycoords[] = $diff;
-                        $unk_ycoords1[] = $status === 'error' ? $unk_ycoords1[$size - 1] + 1 : $unk_ycoords1[$size - 1];
+                        $unk_ycoords1[] = $status === 'err' ? $unk_ycoords1[$size - 1] + 1 : $unk_ycoords1[$size - 1];
                     }
         
                     continue;
@@ -327,9 +342,9 @@ class  DashboardView
         
                 // Known activities
                 if($status === 'ok')
-                    $ok_cnt++;
+                    $this->nml->ok_cnt++;
                 else
-                    $error_cnt++;
+                    $this->nml->err_cnt++;
         
                 // Known progress view
                 if(empty($xcoords) && empty($ycoords) && empty($ycoords1)) {
@@ -337,7 +352,7 @@ class  DashboardView
                     $last_exec_datetime = $s_datetime;
                     $xcoords[] = 0;
                     $ycoords[] = 0;
-                    $ycoords1[] = $status === 'error' ? 1 : 0;
+                    $ycoords1[] = $status === 'err' ? 1 : 0;
                 } else {
                     $last_exec_datetime = $s_datetime;
                     $size = count($xcoords);
@@ -345,73 +360,72 @@ class  DashboardView
                     $diff = $first_exec_datetime->diff($s_datetime);
                     $diff = $diff->days * 24 * 60 + $diff->h * 60 + $diff->i;
                     $ycoords[] = $diff;
-                    $ycoords1[] = $status === 'error' ? $ycoords1[$size - 1] + 1 : $ycoords1[$size - 1];
+                    $ycoords1[] = $status === 'err' ? $ycoords1[$size - 1] + 1 : $ycoords1[$size - 1];
                 }
         
-                // 各ファイルの各コードセル毎の実行結果(ok/error)
-                if(!array_key_exists($filename, $ipynbdata)) {
+                // 各ファイルの各コードセル毎の実行結果(ok/err)
+                if(!array_key_exists($filename, $this->ipynbdata)) {
                     if($status === 'ok') {
-                        $ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>1,'error'=>0]];
-                        $ipynbdata[$filename]['ok'] = 1;
-                        $ipynbdata[$filename]['error'] = 0;
+                        $this->ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>1,'err'=>0]];
+                        $this->ipynbdata[$filename]['ok'] = 1;
+                        $this->ipynbdata[$filename]['err'] = 0;
                     } else {
-                        $ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>0,'error'=>1]];
-                        $ipynbdata[$filename]['ok'] = 0;
-                        $ipynbdata[$filename]['error'] = 1;
+                        $this->ipynbdata[$filename]['codenums'] = [$codenum=>['ok'=>0,'err'=>1]];
+                        $this->ipynbdata[$filename]['ok'] = 0;
+                        $this->ipynbdata[$filename]['err'] = 1;
                     }
         
-                    $ipynbdata[$filename]['first_exec_datetime'] = $s_datetime;
-                    $ipynbdata[$filename]['last_exec_datetime'] = $s_datetime;
-                    $ipynbdata[$filename]['xcoords'] = [$codenum];
-                    $ipynbdata[$filename]['ycoords'] = [0];
-                    if($status === 'error')
-                        $ipynbdata[$filename]['ycoords1'] = [1];
+                    $this->ipynbdata[$filename]['first_exec_datetime'] = $s_datetime;
+                    $this->ipynbdata[$filename]['last_exec_datetime'] = $s_datetime;
+                    $this->ipynbdata[$filename]['xcoords'] = [$codenum];
+                    $this->ipynbdata[$filename]['ycoords'] = [0];
+                    if($status === 'err')
+                        $this->ipynbdata[$filename]['ycoords1'] = [1];
                     else
-                        $ipynbdata[$filename]['ycoords1'] = [0];
+                        $this->ipynbdata[$filename]['ycoords1'] = [0];
         
                     continue;
                 }
         
-                $diff = $ipynbdata[$filename]['first_exec_datetime']->diff($s_datetime);
+                $diff = $this->ipynbdata[$filename]['first_exec_datetime']->diff($s_datetime);
                 $diff = $diff->days * 24 * 60 + $diff->h * 60 + $diff->i;
-                $ipynbdata[$filename]['last_exec_datetime'] = $s_datetime;
-                $ipynbdata[$filename]['xcoords'][] = $codenum;
-                $ipynbdata[$filename]['ycoords'][] = $diff;
-                $size = count($ipynbdata[$filename]['ycoords1']);
-                $last_val = $ipynbdata[$filename]['ycoords1'][$size - 1];
-                if($status === 'error')
-                    $ipynbdata[$filename]['ycoords1'][] = $last_val + 1;
+                $this->ipynbdata[$filename]['last_exec_datetime'] = $s_datetime;
+                $this->ipynbdata[$filename]['xcoords'][] = $codenum;
+                $this->ipynbdata[$filename]['ycoords'][] = $diff;
+                $size = count($this->ipynbdata[$filename]['ycoords1']);
+                $last_val = $this->ipynbdata[$filename]['ycoords1'][$size - 1];
+                if($status === 'err')
+                    $this->ipynbdata[$filename]['ycoords1'][] = $last_val + 1;
                 else
-                    $ipynbdata[$filename]['ycoords1'][] = $last_val;
+                    $this->ipynbdata[$filename]['ycoords1'][] = $last_val;
         
         
-                if(!array_key_exists($codenum, $ipynbdata[$filename]['codenums'])) {
+                if(!array_key_exists($codenum, $this->ipynbdata[$filename]['codenums'])) {
                     if($status === 'ok') {
-                        $ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>1,'error'=>0];
-                        $ipynbdata[$filename]['ok'] = $ipynbdata[$filename]['ok'] + 1;
+                        $this->ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>1,'err'=>0];
+                        $this->ipynbdata[$filename]['ok'] = $this->ipynbdata[$filename]['ok'] + 1;
                     } else {
-                        $ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>0,'error'=>1];
-                        $ipynbdata[$filename]['error'] = $ipynbdata[$filename]['error'] + 1;
+                        $this->ipynbdata[$filename]['codenums'][$codenum] = ['ok'=>0,'err'=>1];
+                        $this->ipynbdata[$filename]['err'] = $this->ipynbdata[$filename]['err'] + 1;
                     }
                     continue;
                 }
         
                 if($status === 'ok') {
-                    $ipynbdata[$filename]['codenums'][$codenum]['ok'] = $ipynbdata[$filename]['codenums'][$codenum]['ok'] + 1;
-                    $ipynbdata[$filename]['ok'] = $ipynbdata[$filename]['ok'] + 1;
+                    $this->ipynbdata[$filename]['codenums'][$codenum]['ok'] = $this->ipynbdata[$filename]['codenums'][$codenum]['ok'] + 1;
+                    $this->ipynbdata[$filename]['ok'] = $this->ipynbdata[$filename]['ok'] + 1;
                 } else {
-                    $ipynbdata[$filename]['codenums'][$codenum]['error'] = $ipynbdata[$filename]['codenums'][$codenum]['error'] + 1;
-                    $ipynbdata[$filename]['error'] = $ipynbdata[$filename]['error'] + 1;
+                    $this->ipynbdata[$filename]['codenums'][$codenum]['err'] = $this->ipynbdata[$filename]['codenums'][$codenum]['err'] + 1;
+                    $this->ipynbdata[$filename]['err'] = $this->ipynbdata[$filename]['err'] + 1;
                 }
             }
-        
-        
         
         endif; // // //
     }
         
+
     
-    function  create_inst_chart()
+    function  create_chart_inst()
     {
         //
         // チャートのインスタンスを生成
@@ -420,11 +434,11 @@ class  DashboardView
         $charts = [];
         
         // All activities ('*')
-        if(empty($selected_username) || $selected_username === '*'):
+        if($this->selected_username === '*'):
         
             // Total(Known + Unknown) activities
-            $pie_series = new core\chart_series('total', [$ok_cnt+$unk_ok_cnt, $error_cnt+$unk_error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('total', [$this->nml->ok_cnt + $this->unk->ok_cnt, $this->nml->err_cnt + $this->unk->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -432,8 +446,8 @@ class  DashboardView
             $charts[] = $chart;
         
             // Known activities
-            $pie_series = new core\chart_series('known', [$ok_cnt, $error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('known', [$this->nml->ok_cnt, $this->nml->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -441,8 +455,8 @@ class  DashboardView
             $charts[] = $chart;
         
             // Unknown activities
-            $pie_series = new core\chart_series('unknown', [$unk_ok_cnt, $unk_error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('unknown', [$this->unk->ok_cnt, $this->unk->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -450,85 +464,85 @@ class  DashboardView
             $charts[] = $chart;
         
             // Total(Known + Unknown) activities per user
-            $labels = array_keys($ttl_userdata);
-            $ok_series = new core\chart_series('ok', $ttl_ok_s);
-            $error_series = new core\chart_series('error', $ttl_error_s);
+            $labels = array_keys($this->ttl->userdata);
+            $ok_series  = new core\chart_series('ok',  $this->ttl->ok_s);
+            $err_series = new core\chart_series('err', $this->ttl->err_s);
             $chart = new core\chart_bar();
             $chart->set_horizontal(true);
             $chart->set_stacked(true);
             $chart->add_series($ok_series);
-            $chart->add_series($error_series);
+            $chart->add_series($err_series);
             $chart->set_labels($labels);
             $chart->set_title('Total activities per user');
             $charts[] = $chart;
         
             // Known activities per user
-            $labels = array_keys($userdata);
-            $ok_series = new core\chart_series('ok', $ok_s);
-            $error_series = new core\chart_series('error', $error_s);
+            $labels = array_keys($this->nml->userdata);
+            $ok_series  = new core\chart_series('ok',  $this->nml->ok_s);
+            $err_series = new core\chart_series('err', $this->nml->err_s);
             $chart = new core\chart_bar();
             $chart->set_horizontal(true);
             $chart->set_stacked(true);
             $chart->add_series($ok_series);
-            $chart->add_series($error_series);
+            $chart->add_series($err_series);
             $chart->set_labels($labels);
             $chart->set_title('Known activities per user');
             $charts[] = $chart;
         
             // Unknown activities per user
-            $labels = array_keys($unk_userdata);
-            $ok_series = new core\chart_series('ok', $unk_ok_s);
-            $error_series = new core\chart_series('error', $unk_error_s);
+            $labels = array_keys($this->unk->userdata);
+            $ok_series  = new core\chart_series('ok',  $this->unk->ok_s);
+            $err_series = new core\chart_series('err', $this->unk->err_s);
             $chart = new core\chart_bar();
             $chart->set_horizontal(true);
             $chart->set_stacked(true);
             $chart->add_series($ok_series);
-            $chart->add_series($error_series);
+            $chart->add_series($err_series);
             $chart->set_labels($labels);
             $chart->set_title('Unknown activities per user');
             $charts[] = $chart;
         
             // 各ファイルのコードセルの実行回数とその内訳
-            $filenames = array_keys($ipynbdata);
+            $filenames = array_keys($this->ipynbdata);
             sort($filenames);
-            $file_ok_s = [];
-            $file_error_s = [];
+            $file_ok_s  = [];
+            $file_err_s = [];
             $charts_per_file = [];
             foreach($filenames as $filename) {
-                $ipynb = $ipynbdata[$filename];
+                $ipynb = $this->ipynbdata[$filename];
         
-                $file_ok_s[] = $ipynb['ok'];
-                $file_error_s[] = $ipynb['error'];
+                $file_ok_s[]  = $ipynb['ok'];
+                $file_err_s[] = $ipynb['err'];
         
                 ksort($ipynb['codenums']);
                 $labels = array_keys($ipynb['codenums']);
-                $ok_s = [];
-                $error_s = [];
+                $ok_s  = [];
+                $err_s = [];
                 foreach($labels as $label) {
-                    $ok_s[] = $ipynb['codenums'][$label]['ok'];
-                    $error_s[] = $ipynb['codenums'][$label]['error'];
+                    $ok_s[]  = $ipynb['codenums'][$label]['ok'];
+                    $err_s[] = $ipynb['codenums'][$label]['err'];
                 }
         
-                $ok_series = new core\chart_series('ok', $ok_s);
-                $error_series = new core\chart_series('error', $error_s);
+                $ok_series  = new core\chart_series('ok',  $ok_s);
+                $err_series = new core\chart_series('err', $err_s);
         
                 $chart = new core\chart_bar();
                 $chart->set_stacked(true);
                 $chart->set_horizontal(true);
                 $chart->add_series($ok_series);
-                $chart->add_series($error_series);
+                $chart->add_series($err_series);
                 $chart->set_labels($labels);
                 $chart->set_title($filename);
                 $charts_per_file[] = $chart;
             }
             $labels = $filenames;
-            $ok_series = new core\chart_series('ok', $file_ok_s);
-            $error_series = new core\chart_series('error', $file_error_s);
+            $ok_series  = new core\chart_series('ok',  $file_ok_s);
+            $err_series = new core\chart_series('err', $file_err_s);
             $chart = new core\chart_bar();
             $chart->set_horizontal(true);
             $chart->set_stacked(true);
             $chart->add_series($ok_series);
-            $chart->add_series($error_series);
+            $chart->add_series($err_series);
             $chart->set_labels($labels);
             $chart->set_title('Known activities per file');
             $charts[] = $chart;
@@ -539,8 +553,8 @@ class  DashboardView
         else:
         
             // Total(Known + Unknown) user activities
-            $pie_series = new core\chart_series('total', [$ok_cnt+$unk_ok_cnt, $error_cnt+$unk_error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('total', [$this->nml->ok_cnt + $this->unk->ok_cnt, $this->nml->err_cnt + $this->unk->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -549,7 +563,7 @@ class  DashboardView
         
             // Total progress view
             $ttl_ycoords = new \core\chart_series('activities', $ttl_ycoords);
-            $ttl_ycoords1 = new \core\chart_series('error', $ttl_ycoords1);
+            $ttl_ycoords1 = new \core\chart_series('err', $ttl_ycoords1);
             $chart = new \core\chart_line();
             $chart->set_title('Total activities progress view');
             $chart->set_labels($ttl_xcoords);
@@ -559,7 +573,7 @@ class  DashboardView
             $xaxis->set_stepsize(1);
             $yaxis = new \core\chart_axis();
             $yaxis->set_stepsize(1);
-            $yaxis->set_label('Time (minutes) & Number of errors');
+            $yaxis->set_label('Time (minutes) & Number of errs');
             $yaxis1 = new \core\chart_axis();
             $yaxis1->set_labels([$ttl_first_exec_datetime->format('Y-m-d H:i'), $ttl_last_exec_datetime->format('Y-m-d H:i')]);
             $chart->set_xaxis($xaxis);
@@ -568,8 +582,8 @@ class  DashboardView
             $charts[] = $chart;
         
             // Known user activities
-            $pie_series = new core\chart_series('known', [$ok_cnt, $error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('known', [$this->nml->ok_cnt, $this->nml->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -578,7 +592,7 @@ class  DashboardView
         
             // Known progress view
             $ycoords = new \core\chart_series('activities', $ycoords);
-            $ycoords1 = new \core\chart_series('error', $ycoords1);
+            $ycoords1 = new \core\chart_series('err', $ycoords1);
             $chart = new \core\chart_line();
             $chart->set_title('Known activities progress view');
             $chart->set_labels($xcoords);
@@ -588,7 +602,7 @@ class  DashboardView
             $xaxis->set_stepsize(1);
             $yaxis = new \core\chart_axis();
             $yaxis->set_stepsize(1);
-            $yaxis->set_label('Time (minutes) & Number of errors');
+            $yaxis->set_label('Time (minutes) & Number of errs');
             $yaxis1 = new \core\chart_axis();
             $yaxis1->set_labels([$first_exec_datetime->format('Y-m-d H:i'), $last_exec_datetime->format('Y-m-d H:i')]);
             $chart->set_xaxis($xaxis);
@@ -597,8 +611,8 @@ class  DashboardView
             $charts[] = $chart;
         
             // Unknown user activities
-            $pie_series = new core\chart_series('unknown', [$unk_ok_cnt, $unk_error_cnt]);
-            $labels = ['ok', 'error'];
+            $pie_series = new core\chart_series('unknown', [$this->unk->ok_cnt, $this->unk->err_cnt]);
+            $labels = ['ok', 'err'];
             $chart = new \core\chart_pie();
             $chart->add_series($pie_series);
             $chart->set_labels($labels);
@@ -607,7 +621,7 @@ class  DashboardView
         
             // Unknown progress view
             $unk_ycoords = new \core\chart_series('activities', $unk_ycoords);
-            $unk_ycoords1 = new \core\chart_series('error', $unk_ycoords1);
+            $unk_ycoords1 = new \core\chart_series('err', $unk_ycoords1);
             $chart = new \core\chart_line();
             $chart->set_title('Unknown activities progress view');
             $chart->set_labels($unk_xcoords);
@@ -617,7 +631,7 @@ class  DashboardView
             $xaxis->set_stepsize(1);
             $yaxis = new \core\chart_axis();
             $yaxis->set_stepsize(1);
-            $yaxis->set_label('Time (minutes) & Number of errors');
+            $yaxis->set_label('Time (minutes) & Number of errs');
             $yaxis1 = new \core\chart_axis();
             $yaxis1->set_labels([$unk_first_exec_datetime->format('Y-m-d H:i'), $unk_last_exec_datetime->format('Y-m-d H:i')]);
             $chart->set_xaxis($xaxis);
@@ -626,55 +640,56 @@ class  DashboardView
             $charts[] = $chart;
         
             // 各ファイルのコードセルの実行回数とその内訳
-            $filenames = array_keys($ipynbdata);
+            $filenames = array_keys($this->ipynbdata);
             sort($filenames);
-            $file_ok_s = [];
-            $file_error_s = [];
+            $file_ok_s  = [];
+            $file_err_s = [];
             $charts_per_file = [];
             foreach($filenames as $filename) {
-                $ipynb = $ipynbdata[$filename];
+                $ipynb = $this->ipynbdata[$filename];
         
-                $file_ok_s[] = $ipynb['ok'];
-                $file_error_s[] = $ipynb['error'];
+                $file_ok_s[]  = $ipynb['ok'];
+                $file_err_s[] = $ipynb['err'];
         
                 ksort($ipynb['codenums']);
                 $labels = array_keys($ipynb['codenums']);
-                $ok_s = [];
-                $error_s = [];
+                $ok_s  = [];
+                $err_s = [];
                 foreach($labels as $label) {
-                    $ok_s[] = $ipynb['codenums'][$label]['ok'];
-                    $error_s[] = $ipynb['codenums'][$label]['error'];
+                    $ok_s[]  = $ipynb['codenums'][$label]['ok'];
+                    $err_s[] = $ipynb['codenums'][$label]['err'];
                 }
         
-                $ok_series = new core\chart_series('ok', $ok_s);
-                $error_series = new core\chart_series('error', $error_s);
+                $ok_series  = new core\chart_series('ok',  $ok_s);
+                $err_series = new core\chart_series('err', $err_s);
         
                 $chart = new core\chart_bar();
                 $chart->set_stacked(true);
                 $chart->set_horizontal(true);
                 $chart->add_series($ok_series);
-                $chart->add_series($error_series);
+                $chart->add_series($err_series);
                 $chart->set_labels($labels);
                 $chart->set_title($filename);
                 $charts_per_file[] = $chart;
         
         
-                $ipynbdata[$filename]['ycoords'] = new \core\chart_series('activities', $ipynbdata[$filename]['ycoords']);
-                $ipynbdata[$filename]['ycoords1'] = new \core\chart_series('error', $ipynbdata[$filename]['ycoords1']);
+                $this->ipynbdata[$filename]['ycoords'] = new \core\chart_series('activities', $this->ipynbdata[$filename]['ycoords']);
+                $this->ipynbdata[$filename]['ycoords1'] = new \core\chart_series('err', $this->ipynbdata[$filename]['ycoords1']);
         
                 $chart = new \core\chart_line();
                 $chart->set_title($filename);
-                $chart->set_labels($ipynbdata[$filename]['xcoords']);
-                $chart->add_series($ipynbdata[$filename]['ycoords']);
-                $chart->add_series($ipynbdata[$filename]['ycoords1']);
+                $chart->set_labels($this->ipynbdata[$filename]['xcoords']);
+                $chart->add_series($this->ipynbdata[$filename]['ycoords']);
+                $chart->add_series($this->ipynbdata[$filename]['ycoords1']);
         
                 $xaxis = new \core\chart_axis();
                 $xaxis->set_label('codenum');
                 $yaxis = new \core\chart_axis();
-                $yaxis->set_label('Time (minutes) & Number of errors');
+                $yaxis->set_label('Time (minutes) & Number of errs');
                 $yaxis->set_stepsize(1);
                 $yaxis1 = new \core\chart_axis();
-                $yaxis1->set_labels([$ipynbdata[$filename]['first_exec_datetime']->format('Y-m-d H:i'), $ipynbdata[$filename]['last_exec_datetime']->format('Y-m-d H:i')]);
+                $yaxis1->set_labels([$this->ipynbdata[$filename]['first_exec_datetime']->format('Y-m-d H:i'), 
+                                     $this->ipynbdata[$filename]['last_exec_datetime']->format('Y-m-d H:i')]);
                 $chart->set_xaxis($xaxis);
                 $chart->set_yaxis($yaxis);
                 $chart->set_yaxis($yaxis1, 1);
@@ -682,13 +697,13 @@ class  DashboardView
                 $charts_per_file[] = $chart;
             }
             $labels = $filenames;
-            $ok_series = new core\chart_series('ok', $file_ok_s);
-            $error_series = new core\chart_series('error', $file_error_s);
+            $ok_series  = new core\chart_series('ok',  $file_ok_s);
+            $err_series = new core\chart_series('err', $file_err_s);
             $chart = new core\chart_bar();
             $chart->set_horizontal(true);
             $chart->set_stacked(true);
             $chart->add_series($ok_series);
-            $chart->add_series($error_series);
+            $chart->add_series($err_series);
             $chart->set_labels($labels);
             $chart->set_title('Known activities per file');
             $charts[] = $chart;
@@ -696,6 +711,8 @@ class  DashboardView
         
         
         endif; // // //
+
+        return $charts;
     }
         
 
