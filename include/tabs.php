@@ -78,9 +78,9 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
     }
 
     // Dump DB Tab
-    //if (has_capability('mod/ltids:check_db', $context)) {
+    if (has_capability('mod/ltids:check_db', $context)) {
         $row[] = make_tabobj('dump_db_tab', get_string('dump_db_tab', 'mod_ltids'), '/mod/ltids/actions/dump_db.php', $url_params);
-    //}
+    }
     
     // Return to Course
     $row[] = make_tabobj('', get_string('returnto_course_tab', 'mod_ltids'), $CFG->wwwroot.'/course/view.php', ['id' => $course_id]);
