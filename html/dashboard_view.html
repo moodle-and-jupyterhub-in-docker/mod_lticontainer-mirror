@@ -1,4 +1,4 @@
-<?php require_once(__DIR__.'/../html/dashboard_view_table.php'); ?>
+<?php require_once(__DIR__.'/../html/dashboard_view_chart.php'); ?>
 
 <style type="text/css">
   <?php include(__DIR__."../html/styles.css"); ?>
@@ -24,18 +24,8 @@
       <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
         <table border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <?php show_dashboard_view_table($this->items, $this->edit_url); ?>
-          </tr>
-          <tr>
-            <td align='center'>
-              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
-              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
-              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
-              <input type='submit' name='submit_dashboard_del'  value='<?php echo get_string("delete");?>' />
-              &nbsp;&nbsp;
-              <input type='reset'  name='reset'   value='<?php echo get_string("reset");?>' />
-              <br /><br />
-            </td>
+            <?php show_dashboard_view_chart($this->cmid, $this->kwn_data->userdata, $this->username, 
+                                            $this->lti_inst_info, $this->lti_id, $this->start_date, $this->end_date, $this->charts); ?>
           </tr>
         </table>
       </form>
