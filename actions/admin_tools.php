@@ -1,21 +1,7 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Prints an instance of mod_ltids.
+ * Admin Tools
  *
  * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
@@ -24,14 +10,14 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
-//require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../locallib.php');
 
 require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
+require_once(__DIR__.'/../classes/event/admin_tools.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
 $cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
-
 $course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
 $minstance = $DB->get_record('ltids',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
 
@@ -41,29 +27,28 @@ $ccontext = context_course::instance($course->id);                              
 $courseid = $course->id;
 $user_id  = $USER->id;
 
-
 ///////////////////////////////////////////////////////////////////////////
 // Check
 require_login($course, true, $cm);
-//
-$ltids_lti_edit_cap = false;
-if (has_capability('mod/ltids:lti_edit', $mcontext)) {
-    $ltids_lti_edit_cap = true;
+
+$ltids_admin_tools_cap = false;
+if (has_capability('mod/ltids:admin_tools', $mcontext)) {
+    $ltids_admin_tools_cap = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
 $urlparams = array();
-$urlparams['id'] = $cmid;
+$urlparams['id']       = $cmid;
+$urlparams['courseid'] = $courseid;
 
-$current_tab = 'lti_setting_tab';
-$this_action = 'lti_setting';
+$current_tab = 'admin_tools_tab';
+$this_action = 'admin_tools';
 
-///////////////////////////////////////////////////////////////////////////
 // Event
-//$event = ltids_get_event($cmid, $this_action, $urlparams);
-//$event->add_record_snapshot('course', $course);
-//$event->add_record_snapshot('ltids', $minstance);
-//$event->trigger();
+$event = ltids_get_event($cmid, $this_action, $urlparams);
+$event->add_record_snapshot('course', $course);
+$event->add_record_snapshot('ltids', $minstance);
+$event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
@@ -74,7 +59,7 @@ $this_url = new moodle_url($base_url);
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('ltids:lti_setting', 'mod_ltids'));
+$PAGE->navbar->add(get_string('ltids:admin_tools', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -83,13 +68,15 @@ $PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-if ($ltids_lti_edit_cap) {
-    require_once(__DIR__.'/../classes/lti_setting.class.php');
-    $lti_setting = new LTIConnect($cmid, $courseid, $minstance);
-    $lti_setting->set_condition();
-    $lti_setting->execute();
-    $lti_setting->print_page();
+if ($ltids_admin_tools_cap) {
+    require_once(__DIR__.'/../classes/admin_tools.class.php');
+    $admin_tools = new AdminTools($cmid, $courseid, $minstance);
+    $admin_tools->set_condition();
+    $admin_tools->execute();
+    $admin_tools->print_page();
 }
 
+///////////////////////////////////////////////////////////////////////////
+/// Finish the page
 echo $OUTPUT->footer($course);
 

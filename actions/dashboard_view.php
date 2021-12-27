@@ -71,7 +71,7 @@ $event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('ltids:volume_view', 'mod_ltids'));
+$PAGE->navbar->add(get_string('ltids:dashboard_view', 'mod_ltids'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));
@@ -81,9 +81,8 @@ $PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require_once(__DIR__.'/../classes/dashboard_view.class.php');
-
 if ($ltids_dashdoard_view_cap) {
+    require_once(__DIR__.'/../classes/dashboard_view.class.php');
     $dashboard_view = new DashboardView($cmid, $courseid, $minstance);
     $dashboard_view->set_condition();
     $dashboard_view->execute();

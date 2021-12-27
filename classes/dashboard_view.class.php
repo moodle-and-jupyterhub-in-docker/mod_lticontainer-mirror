@@ -144,8 +144,6 @@ class  DashboardView
         global $DB;
 
         $this->dp = DataProvider::instance_generation($this->course->id, $this->lti_id, $this->start_date, $this->end_date);
-
-        //$this->lti_inst_info = $DB->get_records('lti', ['course'=>$this->course->id], '', 'id, name');
         $this->lti_inst_info = db_get_valid_ltis($this->courseid, $this->minstance);
         $this->get_chart_info();
         $this->charts = $this->create_chart_inst();
@@ -198,20 +196,17 @@ class  DashboardView
         
                 // Unknown activities
                 if(empty($record->tags)) {
-                    if($status === 'ok')
-                        $this->unk_data->ok_cnt++;
-                    else
-                        $this->unk_data->error_cnt++;
+                    if($status === 'ok') $this->unk_data->ok_cnt++;
+                    else                 $this->unk_data->error_cnt++;
         
                     if(!array_key_exists($username, $this->unk_data->userdata)) {
-                        if($status === 'ok') {
-                            $this->unk_data->userdata[$username] = ['ok' => 1, 'error' => 0];
-                        } else {
-                            $this->unk_data->userdata[$username] = ['ok' => 0, 'error' => 1];
-                        }
-                    } else if($status === 'ok') {
+                        if($status === 'ok') $this->unk_data->userdata[$username] = ['ok' => 1, 'error' => 0];
+                        else                 $this->unk_data->userdata[$username] = ['ok' => 0, 'error' => 1];
+                    } 
+                    else if($status === 'ok') {
                         $this->unk_data->userdata[$username]['ok']    = $this->unk_data->userdata[$username]['ok']    + 1;
-                    } else {
+                    } 
+                    else {
                         $this->unk_data->userdata[$username]['error'] = $this->unk_data->userdata[$username]['error'] + 1;
                     }
         

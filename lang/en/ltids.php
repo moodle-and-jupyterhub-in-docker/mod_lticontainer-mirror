@@ -58,12 +58,18 @@ $string['web_homedir_forbidden'] = 'The web server process does not have write a
 $string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker). Please install docker package';
 $string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package';
 
-// パンくずメニュー
+
+// Capability / パンくずメニュー
 $string['ltids:over_view'] = 'Over View';
 $string['ltids:show_demo'] = 'Demo';
-$string['ltids:volume_view'] = 'Volumes';
+$string['ltids:volume_view'] = 'Volumes View';
+$string['ltids:volume_edit'] = 'Volumes Edit';
 $string['ltids:lti_view'] = 'LTI Connections';
 $string['ltids:lti_edit'] = 'LTI Edit';
+$string['ltids:lti_setting'] = 'LTI Settings';
+$string['ltids:dashboard_view'] = 'Dashboard View';
+$string['ltids:admin_tools'] = 'Admin Tools';
+$string['ltids:db_write'] = 'DB Write';
 
 // Tab
 $string['over_view_tab'] = 'Over View';
@@ -73,11 +79,9 @@ $string['volume_delete_tab'] = 'Delete Volumes';
 $string['lti_view_tab'] = 'LTI Connections';
 $string['lti_edit_tab'] = 'LTI Edit';
 $string['lti_setting_tab'] = 'LTI Settings';
-$string['returnto_course_tab'] = 'Return to course';
-
 $string['dashboard_view_tab'] = 'Dashboard';
-$string['dump_db_tab'] = 'Dump DB';
-$string['api_experiment_tab'] = 'API Experiment';
+$string['admin_tools_tab'] = 'Admin Tools';
+$string['returnto_course_tab'] = 'Return to course';
 
 
 // Table: LTI connect/edit

@@ -85,9 +85,8 @@ $PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require_once(__DIR__.'/../classes/volume_view.class.php');
-
 if ($ltids_volume_view_cap) {
+    require_once(__DIR__.'/../classes/volume_view.class.php');
     $volume_view = new VolumeView($cmid, $courseid, $minstance);
     $volume_view->set_condition();
     $volume_view->execute();

@@ -64,7 +64,10 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
 
     // View LTI Edit
     if ($current_tab=='lti_edit_tab' and has_capability('mod/ltids:lti_edit', $context)) {
-        $row[] = make_tabobj('lti_edit_tab', get_string('lti_edit_tab', 'mod_ltids'), '/mod/ltids/actions/lti_edit.php', $url_params);
+        $lti_id = required_param('lti_id', PARAM_INT);
+        $url_params = $url_params;
+        $edit_params['lti_id'] = $lti_id;
+        $row[] = make_tabobj('lti_edit_tab', get_string('lti_edit_tab', 'mod_ltids'), '/mod/ltids/actions/lti_edit.php', $edit_params);
     }
 
     // View Volumes
@@ -77,9 +80,9 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
         $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_ltids'), '/mod/ltids/actions/lti_etting.php', $url_params);
     }
 
-    // Dump DB Tab
-    if (has_capability('mod/ltids:check_db', $context)) {
-        $row[] = make_tabobj('dump_db_tab', get_string('dump_db_tab', 'mod_ltids'), '/mod/ltids/actions/dump_db.php', $url_params);
+    // Admin Tools Tab
+    if (has_capability('mod/ltids:admin_tools', $context)) {
+        $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_ltids'), '/mod/ltids/actions/admin_tools.php', $url_params);
     }
     
     // Return to Course

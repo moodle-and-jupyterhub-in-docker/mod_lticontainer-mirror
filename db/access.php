@@ -25,77 +25,78 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$capabilities = [
 
-    'mod/ltids:lti_view' => [
+$capabilities = array(
+
+    'mod/ltids:lti_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
+        'archetypes' => array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-        ],
-    ],
+        ),
+    ),
 
-    'mod/ltids:volume_view' => [
+    'mod/ltids:volume_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
+        'archetypes' => array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-        ],
-    ],
+        ),
+    ),
 
-    'mod/ltids:volume_edit' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
+    'mod/ltids:volume_edit' => array(
+        'riskbitmask' => RISK_DATALOSS | RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-        ],
-    ],
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+        ),
+    ),
 
-    'mod/ltids:lti_edit' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
+    'mod/ltids:lti_edit' => array(
+        'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-        ],
-    ],
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+        ),
+    ),
 
-    'mod/ltids:lti_setting' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
+    'mod/ltids:lti_setting' => array(
+        'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-        ],
-    ],
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+        ),
+    ),
 
-    'mod/ltids:dashboard_view' => [
+    'mod/ltids:dashboard_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
+        'archetypes' => array(
             'teacher' => CAP_ALLOW,
             'editingteacher' => CAP_ALLOW,
-        ],
-    ],
+        ),
+    ),
 
-    'mod/ltids:check_db' => [
-        'captype' => 'read',
-        'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-        ],
-    ],
-
-    'mod/ltids:db_write' => [
-        'riskbitmask' => RISK_SPAM | RISK_XSS,
+    'mod/ltids:db_write' => array(
+        'riskbitmask' => RISK_DATALOSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
-        'archetypes' => [
-            'teacher' => CAP_ALLOW,
-        ],
-    ],
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+        ),
+    ),
 
-];
+    'mod/ltids:admin_tools' => array(
+        'riskbitmask' => RISK_PERSONAL | RISK_DATALOSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+    ),
+);

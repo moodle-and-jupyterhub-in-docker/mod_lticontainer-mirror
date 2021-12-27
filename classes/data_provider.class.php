@@ -65,8 +65,8 @@ class DataProvider
     {
         global $CFG, $DB;
 
-        $this->sql = make_sql($course, $lti_id, $start_date, $end_date);
-        $_records = $DB->get_records_sql($this->sql);
+        $this->sql = get_course_lti_sql($course, $lti_id, $start_date, $end_date);
+        $_records  = $DB->get_records_sql($this->sql);
 
         $records = [];
         foreach($_records as $record) {
@@ -155,7 +155,7 @@ class DataProvider
         //         )
         // )
         $properties = 'filename|codenum'; // l(小文字のエル)と|(パイプ)は要注意
-        $patterns = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
+        $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
         preg_match_all($patterns, $tags, $matches, PREG_SET_ORDER);
 
         if(empty($matches)) return NULL;

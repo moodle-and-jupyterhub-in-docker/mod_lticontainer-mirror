@@ -133,5 +133,65 @@ function xmldb_ltids_upgrade($oldversion)
         }
     }
 
+
+    // 2021122701
+    if ($oldversion < 2021122701) {
+        $table = new xmldb_table('ltids_websock_server_data');
+
+        $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
+        $table->add_field('message',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
+        $table->add_field('status',   XMLDB_TYPE_CHAR,    '10', null, null,          null, null);
+        $table->add_field('username', XMLDB_TYPE_CHAR,    '32', null, null,          null, null);
+        $table->add_field('date',     XMLDB_TYPE_CHAR,    '32', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('updatetm', XMLDB_TYPE_INTEGER, '12', null, XMLDB_NOTNULL, null, '0');
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+    }
+
+    // 2021122701
+    if ($oldversion < 2021122701) {
+        $table = new xmldb_table('ltids_websock_client_data');
+
+        $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
+        $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
+        $table->add_field('message',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
+        $table->add_field('cell_id',  XMLDB_TYPE_CHAR,    '42', null, null,          null, null);
+        $table->add_field('date',     XMLDB_TYPE_CHAR,    '32', null, XMLDB_NOTNULL, null, '0');
+        $table->add_field('updatetm', XMLDB_TYPE_INTEGER, '12', null, XMLDB_NOTNULL, null, '0');
+
+        $table->add_key('primary', XMLDB_KEY_PRIMARY, array('id'));
+
+        if (!$dbman->table_exists($table)) {
+            $dbman->create_table($table);
+        }
+    }
+
+    // 2021122702
+    if ($oldversion < 2021122702) {
+        $table = new xmldb_table('ltids_websock_tags');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '256', null, null, null, null, 'tags');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    // 2021122702
+    if ($oldversion < 2021122702) {
+        $table = new xmldb_table('ltids_websock_tags');
+        //
+        $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, null, null, null, 'filename');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }

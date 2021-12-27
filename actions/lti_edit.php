@@ -90,9 +90,8 @@ $PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 echo_tabs($current_tab, $courseid, $cmid, $mcontext);
 
-require_once(__DIR__.'/../classes/lti_edit.class.php');
-
 if ($ltids_lti_edit_cap) { 
+    require_once(__DIR__.'/../classes/lti_edit.class.php');
     $lti_edit = new LTIEdit($cmid, $courseid, $minstance);
     $lti_edit->set_condition();
     $lti_edit->execute();

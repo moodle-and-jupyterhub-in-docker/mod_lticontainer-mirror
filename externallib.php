@@ -38,17 +38,24 @@ class mod_ltids_external extends external_api
         //file_put_contents('/xtmp/ZZ', 'lti_id = '. $nb_data->lti_id."\n", FILE_APPEND);
 
         if ($nb_data->host=='server') {
-            $condition = array('host'=>'client', 'session'=>$nb_data->session, 'message'=>$nb_data->message);
-            $recs = $DB->get_records('ltids_websock_data', $condition);
+            $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
+            $recs = $DB->get_records('ltids_websock_client_data', $condition);
             if ($recs) {
-                $DB->insert_record('ltids_websock_data', $nb_data);
+                $DB->insert_record('ltids_websock_server_data', $nb_data);
             }
         }
         else if ($nb_data->host=='client') {
-            $DB->insert_record('ltids_websock_data', $nb_data);
+            $DB->insert_record('ltids_websock_client_data', $nb_data);
             if ($nb_data->tags!='') {
                 $rec = $DB->get_record('ltids_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
+                    $properties = 'filename|codenum';
+                    $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
+                    preg_match_all($patterns, $nb_data->tags, $matches, PREG_SET_ORDER);
+
+                    foreach($matches as $match) {
+                        $nb_data->{$match[1]} = $match[2];
+                    } 
                     $DB->insert_record('ltids_websock_tags', $nb_data);
                 }
             }

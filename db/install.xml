@@ -28,14 +28,26 @@
       </KEYS>
     </TABLE>
 
-    <TABLE NAME="ltids_websock_data" COMMENT="Websocket server/client data">
+    <TABLE NAME="ltids_websock_server_data" COMMENT="Websocket server data">
       <FIELDS>
         <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
-        <FIELD NAME="host"     TYPE="char" LENGTH="10"  NOTNULL="true"              SEQUENCE="false" COMMENT="server or client that data from"/>
         <FIELD NAME="session"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="sessoin id"/>
         <FIELD NAME="message"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="message id"/>
         <FIELD NAME="status"   TYPE="char" LENGTH="10"  NOTNULL="false"             SEQUENCE="false" COMMENT="status of user operation"/>
         <FIELD NAME="username" TYPE="char" LENGTH="32"  NOTNULL="false"             SEQUENCE="false" COMMENT="user name"/>
+        <FIELD NAME="date"     TYPE="char" LENGTH="32"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
+        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="ltids_websock_client_data" COMMENT="Websocket client data">
+      <FIELDS>
+        <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
+        <FIELD NAME="session"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="message"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="message id"/>
         <FIELD NAME="cell_id"  TYPE="char" LENGTH="42"  NOTNULL="false"             SEQUENCE="false" COMMENT="cell id that is operated"/>
         <FIELD NAME="date"     TYPE="char" LENGTH="32"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
         <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
@@ -64,7 +76,9 @@
         <FIELD NAME="id"       TYPE="int"  LENGTH="10"  NOTNULL="true"              SEQUENCE="true"/>
         <FIELD NAME="cell_id"  TYPE="char" LENGTH="42"  NOTNULL="true"              SEQUENCE="false" COMMENT="cell id that is operated"/>
         <FIELD NAME="tags"     TYPE="text"              NOTNULL="true"              SEQUENCE="false" COMMENT="tag of cell"/>
-        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true" DEFAULT="0"  SEQUENCE="false" COMMENT="update time"/>
+        <FIELD NAME="filename" TYPE="char" LENGTH="256" NOTNULL="false"             SEQUENCE="false" COMMENT="name of ipynb file"/>
+        <FIELD NAME="codenum"  TYPE="char" LENGTH="12"  NOTNULL="false"             SEQUENCE="false" COMMENT="id of code cell"/>
+        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary"   TYPE="primary" FIELDS="id"/>

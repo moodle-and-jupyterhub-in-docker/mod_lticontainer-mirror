@@ -93,8 +93,8 @@ function ltids_get_event($cmid, $action, $params='', $info='')
     else if ($action=='dashboard_view') {
         $event = \mod_ltids\event\dashboard_view::create($args);
     }
-    else if ($action=='dump_db') {
-        $event = \mod_ltids\event\dump_db::create($args);
+    else if ($action=='admin_tools') {
+        $event = \mod_ltids\event\admin_tools::create($args);
     }
 
     return $event;

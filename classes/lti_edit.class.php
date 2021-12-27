@@ -50,6 +50,8 @@ class  LTIEdit
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'lti_id'=>$this->lti_id);
         $this->action_url = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
+
+        //
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
         //
         $this->cpu_limit  = array('default'=>'', 'no limit'=>'0.0', '0.1'=>'0.1', '0.2'=>'0.2', '0.3'=>'0.3', '0.5'=>'0.5',  
