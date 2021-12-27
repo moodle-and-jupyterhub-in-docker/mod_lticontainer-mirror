@@ -8,6 +8,7 @@
  */
 
 require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../localdblib.php');
 
 
 class  DashboardView
@@ -142,12 +143,10 @@ class  DashboardView
     {
         global $DB;
 
-        // DBからデータ取得
-        $this->dp = DataProvider::instance_generation($this->start_date, $this->end_date, '*', $this->lti_id);
-        // 本環境では多分以下のようにする
-        //$this->dp = DataProvider::instance_generation($this->start_date, $this->end_date, $this->course->id, $this->lti_id);
+        $this->dp = DataProvider::instance_generation($this->course->id, $this->lti_id, $this->start_date, $this->end_date);
 
-        $this->lti_inst_info = $DB->get_records('lti', ['course'=>$this->course->id], '', 'id, name');
+        //$this->lti_inst_info = $DB->get_records('lti', ['course'=>$this->course->id], '', 'id, name');
+        $this->lti_inst_info = db_get_valid_ltis($this->courseid, $this->minstance);
         $this->get_chart_info();
         $this->charts = $this->create_chart_inst();
 

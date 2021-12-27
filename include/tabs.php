@@ -52,6 +52,11 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
     // for Demo
     //$row[] = make_tabobj('show_demo_tab', get_string('show_demo_tab', 'mod_ltids'), '/mod/ltids/actions/show_demo.php', $url_params);
 
+    // Dashboard Tab
+    if (has_capability('mod/ltids:dashboard_view', $context)) {
+        $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_ltids'), '/mod/ltids/actions/dashboard_view.php', $url_params);
+    }
+
     // View LTI Connections
     if (has_capability('mod/ltids:lti_view', $context)) {
         $row[] = make_tabobj('lti_view_tab', get_string('lti_view_tab', 'mod_ltids'), '/mod/ltids/actions/lti_view.php', $url_params);
@@ -60,11 +65,6 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
     // View LTI Edit
     if ($current_tab=='lti_edit_tab' and has_capability('mod/ltids:lti_edit', $context)) {
         $row[] = make_tabobj('lti_edit_tab', get_string('lti_edit_tab', 'mod_ltids'), '/mod/ltids/actions/lti_edit.php', $url_params);
-    }
-
-    // Dashboard Tab
-    if (has_capability('mod/ltids:dashboard_view', $context)) {
-        $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_ltids'), '/mod/ltids/actions/dashboard_view.php', $url_params);
     }
 
     // View Volumes

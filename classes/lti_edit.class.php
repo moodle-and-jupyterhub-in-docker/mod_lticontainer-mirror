@@ -12,8 +12,8 @@ class  LTIEdit
     var $mcontext;
     var $host_name  = 'localhost';
 
-    var $ltiid      = 0;
-    var $ltirec;
+    var $lti_id     = 0;
+    var $lti_rec;
     var $images     = array();
     var $options    = array();
     var $lab_urls   = array();
@@ -46,9 +46,9 @@ class  LTIEdit
         $this->minstance = $minstance;
         $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
         #
-        $this->ltiid = required_param('ltiid', PARAM_INT);
+        $this->lti_id = required_param('lti_id', PARAM_INT);
 
-        $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'ltiid'=>$this->ltiid);
+        $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'lti_id'=>$this->lti_id);
         $this->action_url = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
         //
@@ -111,8 +111,8 @@ class  LTIEdit
         global $DB, $USER;
 
         $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
-        $this->ltirec = $DB->get_record('lti', array('id' => $this->ltiid), $fields);
-        if (!$this->ltirec) {
+        $this->lti_rec = $DB->get_record('lti', array('id' => $this->lti_id), $fields);
+        if (!$this->lti_rec) {
             print_error('no_data_found', 'mod_ltids', $this->action_url);
         }
         #
@@ -126,9 +126,9 @@ class  LTIEdit
         }
         
         // Launcher Container
-        $launch = $this->ltirec->launchcontainer;
+        $launch = $this->lti_rec->launchcontainer;
         if ($launch=='1') {     //default
-            $ret = $DB->get_record('lti_types_config', array('name'=>'launchcontainer', 'typeid'=>$this->ltirec->typeid), 'value');
+            $ret = $DB->get_record('lti_types_config', array('name'=>'launchcontainer', 'typeid'=>$this->lti_rec->typeid), 'value');
             if ($ret) $launch = $ret->value;
         }
 
@@ -156,13 +156,13 @@ class  LTIEdit
             $custom_data->lms_iframe = '0';
             if ($launch=='2' or $launch=='3') $custom_data->lms_iframe = '1';   // 埋め込み
             $custom_data->instanceid = $this->minstance->id;
-            $custom_data->ltiid = $this->ltiid;
+            $custom_data->lti_id = $this->lti_id;
             //
             $this->submitted  = true;
             $this->custom_txt = ltids_join_custom_params($custom_data);
-            $this->ltirec->instructorcustomparameters = $this->custom_txt;
-            $this->ltirec->timemodified = time();
-            $DB->update_record('lti', $this->ltirec);
+            $this->lti_rec->instructorcustomparameters = $this->custom_txt;
+            $this->lti_rec->timemodified = time();
+            $DB->update_record('lti', $this->lti_rec);
 
             // create volume
             if ($this->minstance->make_volumes==1) {
@@ -202,7 +202,7 @@ class  LTIEdit
                 }
             }
         }
-        $this->custom_txt = $this->ltirec->instructorcustomparameters;
+        $this->custom_txt = $this->lti_rec->instructorcustomparameters;
         $this->custom_ary = ltids_explode_custom_params($this->custom_txt);
         $this->custom_prm->images = $this->images;
 

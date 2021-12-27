@@ -25,7 +25,7 @@ function show_lti_disp_table($items)
         $checked = '';
         if ($item->disp==0) $checked = 'checked';
         //
-        $url_params = array("ltiid"=>$item->id);
+        $url_params = array("lti_id"=>$item->id);
         $table->data[$i][] = $i + 1;
         $table->data[$i][] = $item->name;
         $table->data[$i][] = '<input type="checkbox" name="nodisp['.$item->id.']" value="1" '.$checked.' />';

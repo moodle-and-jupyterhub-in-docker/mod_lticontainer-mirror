@@ -11,7 +11,7 @@
         <tr>
           <td bgcolor="#d8e8d8">&nbsp;</td>
           <td bgcolor="#d8e8d8">
-            <?php echo $OUTPUT->heading('<strong>'.$this->ltirec->name.' :: '.get_string('lti_edit_tab','mod_ltids').'</strong>'); ?>
+            <?php echo $OUTPUT->heading('<strong>'.$this->lti_rec->name.' :: '.get_string('lti_edit_tab','mod_ltids').'</strong>'); ?>
           </td>
           <td bgcolor="#d8e8d8">&nbsp;</td>
         </tr>
@@ -30,7 +30,7 @@
             <td align='center'>
               <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
               <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
-              <input type='hidden' name='ltiid'   value='<?php echo $this->ltirec->id;?>' />
+              <input type='hidden' name='lti_id'  value='<?php echo $this->lti_rec->id;?>' />
               <input type='hidden' name='others'  value='<?php echo serialize($this->custom_ary->other_cmd);?>' />
               <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
               <input type='submit' name='submit_lti_update'  value='<?php echo get_string("update");?>' />

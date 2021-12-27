@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../localdblib.php');
 
 class  LTIConnect
 {
@@ -17,7 +18,7 @@ class  LTIConnect
     var $edit_url   = '';
     var $url_params = array();
 
-    var $items;
+    var $ltis;
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -31,9 +32,9 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/lti_view.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/ltids/actions/lti_view.php',    $this->url_params);
         $this->setup_url  = new moodle_url('/mod/ltids/actions/lti_setting.php', $this->url_params);
-        $this->edit_url   = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
+        $this->edit_url   = new moodle_url('/mod/ltids/actions/lti_edit.php',    $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
@@ -87,17 +88,7 @@ class  LTIConnect
             $DB->update_record('ltids', $this->minstance);
         }
 
-        $nodisp = explode(',', $this->minstance->no_disp_lti);
-        $sort   = '';
-        $fields = 'id,name,instructorcustomparameters';
-        $this->items = $DB->get_records('lti', array('course' => $this->courseid), $sort, $fields);
-
-        foreach ($this->items as &$item) {
-            $item->disp = 1;
-            if (in_array($item->id, $nodisp)) {
-                $item->disp = 0;
-            }
-        }
+        $this->ltis = db_get_valid_ltis($this->courseid, $this->minstance);
 
         return true;
     }
@@ -110,3 +101,4 @@ class  LTIConnect
         include(__DIR__.'/../html/lti_view.html');
     }
 }
+

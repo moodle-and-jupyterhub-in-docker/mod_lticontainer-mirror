@@ -43,7 +43,7 @@ $ccontext = context_course::instance($course->id);                              
 $courseid = $course->id;
 $user_id  = $USER->id;
 
-$ltiid = required_param('ltiid', PARAM_INT);
+$lti_id = required_param('lti_id', PARAM_INT);
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ if (has_capability('mod/ltids:lti_edit', $mcontext)) {
 }
 
 ///////////////////////////////////////////////////////////////////////////
-$urlparams = array('id' => $cmid, 'ltiid' => $ltiid);
+$urlparams = array('id' => $cmid, 'lti_id' => $lti_id);
 $current_tab = 'lti_edit_tab';
 $this_action = 'lti_edit';
 

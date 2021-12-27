@@ -312,11 +312,11 @@ function ltids_join_custom_params($custom_data)
     //$param  = LTIDS_LTI_GRPNAME_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
-    $lowstr = mb_strtolower($custom_data->instanceid);
-    $instid = preg_replace("/[^0-9]/", '', $lowstr);
-    $lowstr = mb_strtolower($custom_data->ltiid);
-    $ltiid  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param  = LTIDS_LTI_SESSIONINFO_CMD.'='.$instid.','.$ltiid;             // Session情報用．ユーザによる操作はなし．
+    $lowstr  = mb_strtolower($custom_data->instanceid);
+    $inst_id = preg_replace("/[^0-9]/", '', $lowstr);
+    $lowstr  = mb_strtolower($custom_data->lti_id);
+    $lti_id  = preg_replace("/[^0-9]/", '', $lowstr);
+    $param   = LTIDS_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_iframe);

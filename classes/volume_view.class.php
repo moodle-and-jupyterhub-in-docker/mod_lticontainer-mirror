@@ -57,8 +57,6 @@ class  VolumeView
 
     function  execute()
     {
-        global $DB;
-
         $check_course = '_'.$this->courseid.'_'.$this->host_name;
         $len_check = strlen($check_course);
 
