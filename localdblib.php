@@ -9,12 +9,15 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-define('DATA_TABLE',       'ltids_websock_data');
-define('TAGS_TABLE',       'ltids_websock_tags');
-define('SESSION_TABLE',    'ltids_websock_session');
+define('DATA_TABLE',        'ltids_websock_data');
+define('SERVER_TABLE',      'ltids_websock_server_data');
+define('CLIENT_TABLE',      'ltids_websock_client_data');
+define('SESSION_TABLE',     'ltids_websock_session');
+define('TAGS_TABLE',        'ltids_websock_tags');
 
-define('SQL_DATETIME_FMT', '%Y-%m-%dT%T.%fZ');
-define('PHP_DATETIME_FMT', 'Y-m-d\TH:i:s.u\Z');
+define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
+//define('PHP_DATETIME_FMT',  'Y-m-d\TH:i:s.u\Z');
+define('PHP_DATETIME_FMT',  '%Y-%m-%d %H:%i');
 
 
 
@@ -22,10 +25,10 @@ function  db_get_valid_ltis($courseid, $minstance, $sort = '')
 {
     global $DB;
 
-    $nodisp = explode(',', $minstance->no_disp_lti);
     $fields = 'id, name, instructorcustomparameters';
     $ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
 
+    $nodisp = explode(',', $minstance->no_disp_lti);
     foreach ($ltis as $key => $lti) {
         if (in_array($lti->id, $nodisp)) {
             unset($ltis[$key]);
@@ -76,6 +79,87 @@ function  db_get_valid_file_code($courseid, $lti_id)
 // make SQL
 //
 
+
+
+function  get_base_sql($courseid, $start_date, $end_date)
+{
+    global $CFG;
+   
+    $server_table  = $CFG->prefix.SERVER_TABLE;
+    $client_table  = $CFG->prefix.CLIENT_TABLE;
+    $session_table = $CFG->prefix.SESSION_TABLE;
+    $tags_table    = $CFG->prefix.TAGS_TABLE;
+
+    // server data
+    $select  = 'SELECT SERVER.date, username, status';
+    $from    = ' FROM '.$server_table.' SERVER'; 
+    $join    = '';
+
+    // client data
+    $select .= ', CLIENT.cell_id';
+    $join    = ' INNER JOIN '.$client_table. ' CLIENT ON SERVER.message = CLIENT.message';
+    $join   .= ' AND STR_TO_DATE(CLIENT.date, \''.SQL_DATETIME_FMT.'\') >= STR_TO_DATE(\''.$start_date.'\', \''.PHP_DATETIME_FMT.'\')';
+    $join   .= ' AND STR_TO_DATE(CLIENT.date, \''.SQL_DATETIME_FMT.'\') <= STR_TO_DATE(\''.$end_date.  '\', \''.PHP_DATETIME_FMT.'\')';
+
+    // session
+    $select .= ', SESSION.lti_id, SESSION.course';
+    $join   .= ' INNER JOIN '.$session_table. ' SESSION ON SERVER.session = SESSION.session';
+
+    // tags
+    $select .= ', TAGS.filename, TAGS.codenum';
+    $join   .= ' LEFT OUTER JOIN '.$tags_table. ' TAGS ON CLIENT.cell_id = TAGS.cell_id';
+
+    // course
+    $where   = ' WHERE course = '.$courseid;
+
+    $sql = $select.$from.$join.$where;
+
+    return $sql;
+}
+
+
+function  get_lti_sql_condition($lti_id = '*') 
+{
+    if (empty($lti_id)) $lti_id = '*';
+
+    $cnd = '';
+    //
+    if (is_array($lti_id)) {
+        $cnd = ' AND (';
+        $i = 0;
+        foreach($lti_id as $id) {
+            if ($i==0) $cnd .= ' lti_id = '.$id;
+            else       $cnd .= ' OR  lti_id = '.$id;
+            $i++;
+        }
+        $cnd .= ' )';
+    }
+    else {
+        if ($lti_id !== '*') {
+            $cnd = ' AND lti_id = '.$lti_id;
+        }
+    }
+
+    return $cnd;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function  get_course_lti_sql($courseid, $lti_id, $start_date, $end_date) 
 {
     global $CFG;
@@ -105,99 +189,6 @@ function  get_course_lti_sql($courseid, $lti_id, $start_date, $end_date)
 
     return $sql;
 }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-function  _get_session_table_sql($course, $lti_id, $start_date, $end_date)
-{
-    global $CFG;
-   
-    $session_table = $CFG->prefix.SESSION_TABLE;
-
-    $sql  = 'SELECT session, course, inst_id, lti_id, updatetm FROM '.$session_table;
-    $sql .= ' WHERE course = '.$course;
-
-    // LTI ID
-    if (empty($lti_id)) $lti_id = '*';
-
-    if (is_array($lti_id)) {
-        $sql .= ' AND (';
-        $i = 0;
-        foreach($lti_id as $id) {
-            if ($i==0) $sql .= ' lti_id = '.$id;
-            else       $sql .= ' OR  lti_id = '.$id;
-            $i++;
-        }
-        $sql .= ' )';
-    }
-    else {
-        if ($lti_id !== '*') {
-            $sql .= ' AND lti_id = '.$lti_id;
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-    return $sql;
-}
-
-
-
-function  _get_data_table_sub_sql($host, $course, $lti_id, $start_date, $end_date)
-{ 
-    global $CFG;
-
-    $data_table = $CFG->prefix.DATA_TABLE;
-    $session_table_sql =  _get_session_table_sql($course, $lti_id, $start_date, $end_date);
-
-    $sql = 'SELECT session, message, status, username, date FROM ( '.$session_table_sql.' ) SESSION ';
-    if ($host=='server') $sql .= ' WHERE host = \'server\'';
-    else                 $sql .= ' WHERE host = \'client\'';
-
-    $sql .= ' AND SESSION.session = '.$data_table.'.session';
-
-    return $sql;
-}
-
-
-
-function  _get_data_table_sql($course, $lti_id, $start_date, $end_date)
-{
-    $server = _get_data_table_sub_sql('server', $course, $lti_id, $start_date, $end_date);
-    $client = _get_data_table_sub_sql('client', $course, $lti_id, $start_date, $end_date);
-
-    $sql  = 'SELECT username, cell_id, status, C.date AS c_date, S.date AS s_date, C.session';
-    $sql .= ' FROM ( '.$client.' ) C, ( '.$server.' ) S WHERE C.message = S.message';
-
-    return $sql;
-}
-
-
-
-function  _get_tags_table_sql($course, $lti_id, $start_date, $end_date)
-{
-    global $CFG;
-   
-    $tags_table = $CFG->prefix.TAGS_TABLE;
-    $data_table_sql = _get_data_table_sql($course, $lti_id, $start_date, $end_date);
-
-    $sql  = 'SELECT username, tags, status, c_date, s_date, session FROM ( '.$data_table_sql.' ) CS';
-    $sql .= ' LEFT OUTER JOIN '.$tags_table.' ON CS.cell_id = '.$tags_table.'.cell_id ';
-
-    return $sql;
-}
-
-
 
 
 
@@ -259,57 +250,3 @@ function  get_session_table_sql($start_date, $end_date, $datetime_fmt)
     return $sql;
 }
 
-
-
-//
-// DB Tools
-//
-
-//
-// DBのtagsの内容をPHPのオブジェクト(stdClass)に変換してそれを返す
-// ※ filename, codenumの情報だけ抜く
-// ※ それ以外の値は無視
-//
-// tagsの内容
-// ["filename: 1-2.ipynb","codenum: 0"]
-// ["raises-exception","filename: 1-4.ipynb","codenum: 1"]
-//
-function decode_tags($tags)
-{
-    if(empty($tags)) return NULL;
-
-    // \"property: value\" の形式の文字列を $tags から探してきて，
-    // それを以下のようなPHPの配列に変換する。
-    // 結果は $matches に格納
-    // ※ : の前後のスペースはあってもなくても結果には影響しない
-    // Array
-    // (
-    //     [0] => Array
-    //         (
-    //             [0] => "property: value"
-    //             [1] => property
-    //             [2] => value
-    //         )
-    //
-    //     [1] => Array
-    //         (
-    //             [0] => "property: value"
-    //             [1] => property
-    //             [2] => value
-    //         )
-    // )
-    //
-    $properties = 'filename|codenum'; // l(小文字のエル)と|(パイプ)は要注意
-    $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
-    preg_match_all($patterns, $tags, $matches, PREG_SET_ORDER);
-
-    if(empty($matches)) return NULL;
-
-    // $matches を元にして，オブジェクトを構築
-    $result = new stdClass();
-    foreach($matches as $match) {
-        $result->{$match[1]} = $match[2];
-    }
-
-    return $result;
-}

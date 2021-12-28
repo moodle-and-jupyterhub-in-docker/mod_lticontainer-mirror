@@ -193,5 +193,39 @@ function xmldb_ltids_upgrade($oldversion)
         }
     }
 
+
+    // 2021122817
+    if ($oldversion < 2021122817) {
+        $table = new xmldb_table('ltids_websock_client_data');
+        $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
+        $dbman->add_index($table, $index);
+        $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
+        $dbman->add_index($table, $index);
+    }
+
+    // 2021122817
+    if ($oldversion < 2021122817) {
+        $table = new xmldb_table('ltids_websock_server_data');
+        $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
+        $dbman->add_index($table, $index);
+        $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
+        $dbman->add_index($table, $index);
+    }
+
+    // 2021122817
+    if ($oldversion < 2021122817) {
+        $table = new xmldb_table('ltids_websock_session');
+        $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
+        $dbman->add_index($table, $index);
+    }
+
+    // 2021122817
+    if ($oldversion < 2021122817) {
+        $table = new xmldb_table('ltids_websock_tags');
+        $index = new xmldb_index('cell_id', XMLDB_INDEX_UNIQUE, array('cell_id'));
+        $dbman->add_index($table, $index);
+    }
+
+
     return true;
 }

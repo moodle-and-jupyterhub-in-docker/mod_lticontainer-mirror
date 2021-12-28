@@ -24,26 +24,20 @@ class  DashboardView
     var $action_url = '';
     var $url_params = array();
 
-    var $items;
-
-    var $start_date = '2021-10-06 00:00';
+    var $start_date = '';
     var $end_date   = '';
     var $username   = '*';
+    var $usernames  = array();
     var $lti_id     = '*';
-    var $lti_inst_info;
+    var $lti_ids    = array();
+    var $lti_info;
 
-    var $ttl_data;
-    var $kwn_data;
-    var $unk_data;
+    var $sql;
+    var $charts     = array();
+    var $titles     = array();
 
-    var $ttl_coords;
-    var $kwn_coords;
-    var $unk_coords;
 
-    var $ipynbdata = [];
-    var $charts    = [];
-
-    var $dp;
+    var $ipynbdata  = array();
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -71,69 +65,50 @@ class  DashboardView
 
         ////////////////////////////////////////////////////////////////////////////
         // 取得するレコードの範囲 (デフォルト)
-        $this->end_date = (new DateTime())->format('Y-m-d H:i');
-
-        // ユーザ名とLTI ID を受け取る
-        $this->username = optional_param('user_select_box',     '*', PARAM_CLEAN);
-        $this->lti_id   = optional_param('lti_inst_select_box', '*', PARAM_CLEAN);
 
         // 開始日(start_date)と終了日(end_date)があるならそれを受け取る
-        $_start_date = optional_param('start_date_input', '*', PARAM_CLEAN);
-        $_end_date   = optional_param('end_date_input',   '*', PARAM_CLEAN);
+        $start_date = optional_param('start_date_input', '*', PARAM_CLEAN);
+        $end_date   = optional_param('end_date_input',   '*', PARAM_CLEAN);
 
-        if($_start_date !== '*') $this->start_date = (new DateTime($_start_date))->format('Y-m-d H:i');
-        if($_end_date   !== '*') $this->end_date   = (new DateTime($_end_date)  )->format('Y-m-d H:i');
+$start_date = '2021-10-1 00:00';
+        $obj_datetime = new DateTime();
+        if ($end_date == '*') {
+            $this->end_date   = $obj_datetime->format('Y-m-d H:i');
+        }
+        else {
+            $this->end_date   = (new DateTime($end_date))->format('Y-m-d H:i');
+        }
+        if ($start_date == '*') {
+            $obj_datetime->sub(new DateInterval('PT5400S'));        // 1:30 前
+            $this->start_date = $obj_datetime->format('Y-m-d H:i');
+        }
+        else {
+            $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
+        }
 
-        $this->ttl_data = new StdClass();
-        $this->ttl_data->ok_cnt    = 0;
-        $this->ttl_data->error_cnt = 0;
-        $this->ttl_data->ok_s      = [];
-        $this->ttl_data->error_s   = [];
-        $this->ttl_data->userdata  = [];
-        $this->ttl_data->exec_datetime = new StdClass();
-        $this->ttl_data->exec_datetime->first = new DateTime();
-        $this->ttl_data->exec_datetime->last  = new DateTime();
+        //
+        // ユーザ名 を受け取る
+        $this->username = optional_param('user_select_box', '*', PARAM_CLEAN);
 
-        $this->kwn_data = new StdClass();
-        $this->kwn_data->ok_cnt    = 0;
-        $this->kwn_data->error_cnt = 0;
-        $this->kwn_data->ok_s      = [];
-        $this->kwn_data->error_s   = [];
-        $this->kwn_data->userdata  = [];
-        $this->kwn_data->exec_datetime = new StdClass();
-        $this->kwn_data->exec_datetime->first = new DateTime();
-        $this->kwn_data->exec_datetime->last  = new DateTime();
+        //
+        // LTI ID を受け取る
+        $this->lti_id = optional_param('lti_select_box', '*', PARAM_CLEAN);
 
-        $this->unk_data = new StdClass();
-        $this->unk_data->ok_cnt   = 0;
-        $this->unk_data->error_cnt  = 0;
-        $this->unk_data->ok_s     = [];
-        $this->unk_data->error_s    = [];
-        $this->unk_data->userdata = [];
-        $this->unk_data->exec_datetime = new StdClass();
-        $this->unk_data->exec_datetime->first = new DateTime();
-        $this->unk_data->exec_datetime->last  = new DateTime();
-
-        $this->ttl_coords = new StdClass();
-        $this->ttl_coords->x  = [];
-        $this->ttl_coords->y0 = [];
-        $this->ttl_coords->y1 = [];
-
-        $this->kwn_coords = new StdClass();
-        $this->kwn_coords->x  = [];
-        $this->kwn_coords->y0 = [];
-        $this->kwn_coords->y1 = [];
-
-        $this->unk_coords = new StdClass();
-        $this->unk_coords->x  = [];
-        $this->unk_coords->y0 = [];
-        $this->unk_coords->y1 = [];
+        $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
+        foreach ($this->lti_info as $lti) {
+            $this->lti_ids[] = $lti->id;
+        }
     }
 
 
     function  set_condition()
     {
-        //$this->order = optional_param('order', '', PARAM_TEXT);
+        if ($this->lti_id == '*') $lti_id = $this->lti_ids;
+        else                      $lti_id = $this->lti_id;
+
+        $this->sql  = get_base_sql($this->courseid, $this->start_date, $this->end_date);
+        $this->sql .= get_lti_sql_condition($lti_id);
+print_r($this->sql);
 
         return true;
     }
@@ -143,10 +118,33 @@ class  DashboardView
     {
         global $DB;
 
-        $this->dp = DataProvider::instance_generation($this->course->id, $this->lti_id, $this->start_date, $this->end_date);
-        $this->lti_inst_info = db_get_valid_ltis($this->courseid, $this->minstance);
-        $this->get_chart_info();
-        $this->charts = $this->create_chart_inst();
+        $recs = $DB->get_records_sql($this->sql);
+
+        foreach ($recs as $rec) {
+            $this->usernames[$rec->username] = $rec->username;
+        }
+
+        $ok  = 0;
+        $err = 0;
+        foreach ($recs as $rec) {
+            $this->usernames[$rec->username] = $rec->username;
+
+            if ($rec->status == 'ok') $ok++;
+            else                      $err++;
+        }
+        
+        // Total(Known + Unknown) activities
+        $series = new core\chart_series('Num', [$ok, $err]);
+        $labels = ['OK', 'ERROR'];
+        $chart  = new \core\chart_pie();
+        $chart->add_series($series);
+        $chart->set_labels($labels);
+        //$chart->set_title('Total Activities');
+        $this->charts[] = $chart;
+        $this->titles[] = 'Total Activities';
+        
+        //$this->get_chart_info();
+        //$this->charts = $this->create_chart_inst();
 
         return true;
     }

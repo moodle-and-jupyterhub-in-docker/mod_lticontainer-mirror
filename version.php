@@ -32,5 +32,5 @@ $plugin->maturity  = MATURITY_BETA;
 
 $plugin->release   = '0.9.30';
 
-$plugin->version   = 2021122815;
+$plugin->version   = 2021122817;
 

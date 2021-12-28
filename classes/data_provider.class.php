@@ -65,8 +65,14 @@ class DataProvider
     {
         global $CFG, $DB;
 
-        $this->sql = get_course_lti_sql($course, $lti_id, $start_date, $end_date);
-        $_records  = $DB->get_records_sql($this->sql);
+        //$this->sql = get_course_lti_sql($course, $lti_id, $start_date, $end_date);
+        //$_records  = $DB->get_records_sql($this->sql);
+        
+        $sql  = get_base_sql($start_date, $end_date);
+        $sql .= get_lti_sql_condition($lti_id);
+        $sql .= get_course_sql_condition($course);
+
+        $_records  = $DB->get_records_sql($sql);
 
         $records = [];
         foreach($_records as $record) {

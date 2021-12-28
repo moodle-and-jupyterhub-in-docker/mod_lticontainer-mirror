@@ -49,6 +49,7 @@ class mod_ltids_external extends external_api
             if ($nb_data->tags!='') {
                 $rec = $DB->get_record('ltids_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
+                    /// by 2021 Urano Masanori
                     $properties = 'filename|codenum';
                     $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
                     preg_match_all($patterns, $nb_data->tags, $matches, PREG_SET_ORDER);
