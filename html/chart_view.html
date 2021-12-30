@@ -1,0 +1,36 @@
+<?php require_once(__DIR__.'/../html/chart_view.php'); ?>
+
+<style type="text/css">
+  <?php include(__DIR__."../html/styles.css"); ?>
+</style>
+
+<table align="center" class="generalbox">
+  <tr>
+    <td align="center">
+      <table border="0" style="margin: 0px 0px 0px 0px;">
+        <tr>
+          <td bgcolor="#d8e8d8">&nbsp;</td>
+          <td bgcolor="#d8e8d8">
+            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('chart_view_tab','mod_ltids').'</strong>'); ?>
+          </td>
+          <td bgcolor="#d8e8d8">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td class="generalboxcontent" align="center">
+
+      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
+        <table border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <td align="center">
+              <?php show_chart_view($this->cmid, $this->args); ?>
+            </td>
+          </tr>
+        </table>
+      </form>
+
+    </td>
+  </tr>
+</table>
