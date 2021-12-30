@@ -22,20 +22,23 @@ class  DashboardView
     var $isGuest    = true;
 
     var $action_url = '';
+    var $error_url  = '';
     var $url_params = array();
 
     var $start_date = '';
     var $end_date   = '';
-    var $username   = '*';
     var $usernames  = array();
-    var $lti_id     = '*';
+    var $filenames  = array();
     var $lti_ids    = array();
     var $lti_info;
 
-    var $sql;
-    var $charts     = array();
-    var $titles     = array();
+    var $username   = '*';
+    var $lti_id     = '*';
+    var $filename   = '*';
 
+    var $sql;
+    var $charts;
+    var $chart_title;
 
     var $ipynbdata  = array();
 
@@ -51,16 +54,17 @@ class  DashboardView
 
         $this->url_params = array('id'=>$cmid);
         $this->action_url = new moodle_url('/mod/ltids/actions/dashboard_view.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/ltids:dashboard_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
 
         ////////////////////////////////////////////////////////////////////////////
@@ -89,8 +93,8 @@ $start_date = '2021-10-1 00:00';
         //
         // ユーザ名 を受け取る
         $this->username = optional_param('user_select_box', '*', PARAM_CLEAN);
+        $this->filename = optional_param('file_select_box', '*', PARAM_CLEAN);
 
-        //
         // LTI ID を受け取る
         $this->lti_id = optional_param('lti_select_box', '*', PARAM_CLEAN);
 
@@ -108,7 +112,6 @@ $start_date = '2021-10-1 00:00';
 
         $this->sql  = get_base_sql($this->courseid, $this->start_date, $this->end_date);
         $this->sql .= get_lti_sql_condition($lti_id);
-print_r($this->sql);
 
         return true;
     }
@@ -119,18 +122,31 @@ print_r($this->sql);
         global $DB;
 
         $recs = $DB->get_records_sql($this->sql);
-
         foreach ($recs as $rec) {
-            $this->usernames[$rec->username] = $rec->username;
+            if (!empty($rec->username)) $this->usernames[$rec->username] = $rec->username;
+            if (!empty($rec->filename)) $this->filenames[$rec->filename] = $rec->filename;
         }
+        ksort($this->usernames);
+        ksort($this->filenames);
 
+        //
         $ok  = 0;
         $err = 0;
-        foreach ($recs as $rec) {
-            $this->usernames[$rec->username] = $rec->username;
 
-            if ($rec->status == 'ok') $ok++;
-            else                      $err++;
+        $exclsn = false;
+        foreach ($recs as $rec) {
+            //
+            if     ($this->username !== '*' and $rec->username !== $this->username) $exclsn = true;
+            if (!$exclsn) {
+                if ($this->filename !== '*' and $rec->filename !== $this->filename) $exclsn = true;
+            }
+            //
+            if (!$exclsn) {
+                if ($rec->status == 'ok') $ok++;
+                else                      $err++;
+            }
+            //
+            $exclsn = false;
         }
         
         // Total(Known + Unknown) activities
@@ -141,7 +157,7 @@ print_r($this->sql);
         $chart->set_labels($labels);
         //$chart->set_title('Total Activities');
         $this->charts[] = $chart;
-        $this->titles[] = 'Total Activities';
+        $this->chart_title = 'Total Activities';
         
         //$this->get_chart_info();
         //$this->charts = $this->create_chart_inst();
@@ -153,6 +169,17 @@ print_r($this->sql);
     function  print_page()
     {
         global $OUTPUT;
+        $this->args = new StdClass();
+        $this->args->usernames   = $this->usernames;
+        $this->args->username    = $this->username;
+        $this->args->filenames   = $this->filenames;
+        $this->args->filename    = $this->filename;
+        $this->args->lti_info    = $this->lti_info;
+        $this->args->lti_id      = $this->lti_id;
+        $this->args->start_date  = $this->start_date;
+        $this->args->end_date    = $this->end_date;
+        $this->args->chart_title = $this->chart_title;
+        $this->args->charts      = $this->charts;
 
         include(__DIR__.'/../html/dashboard_view.html');
     }

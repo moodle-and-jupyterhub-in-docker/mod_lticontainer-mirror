@@ -14,7 +14,7 @@ function show_lti_disp_table($items)
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = 'No Display';
+    $table->head [] = 'Display';
     $table->align[] = 'center';
     $table->size [] = '150px';
     $table->wrap [] = 'nowrap';
@@ -23,12 +23,12 @@ function show_lti_disp_table($items)
     $i = 0;
     foreach($items as $item) { 
         $checked = '';
-        if ($item->disp==0) $checked = 'checked';
+        if ($item->disp==1) $checked = 'checked';
         //
         $url_params = array("lti_id"=>$item->id);
         $table->data[$i][] = $i + 1;
         $table->data[$i][] = $item->name;
-        $table->data[$i][] = '<input type="checkbox" name="nodisp['.$item->id.']" value="1" '.$checked.' />';
+        $table->data[$i][] = '<input type="checkbox" name="disp['.$item->id.']" value="1" '.$checked.' />';
         $i++;
     }
 

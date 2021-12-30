@@ -21,7 +21,9 @@ print('Use Podman instead of Docker : <strong>'.$podm.'</strong><br />');
 
 if (has_capability('mod/ltids:db_write', $mcontext)) {
     print('<br />');
+    print('<strong>');
     print('<a href='.$setup_url.' > '.get_string('Edit_settings', 'mod_ltids').' </a><br />');
+    print('</strong>');
 }
 echo '</h4>'; 
 

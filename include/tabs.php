@@ -57,6 +57,11 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
         $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_ltids'), '/mod/ltids/actions/dashboard_view.php', $url_params);
     }
 
+    // View Chart Tab
+    if (($current_tab=='dashboard_view_tab' or $current_tab=='chart_view_tab') and has_capability('mod/ltids:chart_view', $context)) {
+        $row[] = make_tabobj('chart_view_tab', get_string('chart_view_tab', 'mod_ltids'), '/mod/ltids/actions/chart_view.php', $url_params);
+    }
+
     // View LTI Connections
     if (has_capability('mod/ltids:lti_view', $context)) {
         $row[] = make_tabobj('lti_view_tab', get_string('lti_view_tab', 'mod_ltids'), '/mod/ltids/actions/lti_view.php', $url_params);
@@ -80,9 +85,9 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
         $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_ltids'), '/mod/ltids/actions/lti_etting.php', $url_params);
     }
 
-    // Admin Tools Tab
+    // Admin Tools Tab for debug or development
     if (has_capability('mod/ltids:admin_tools', $context)) {
-        $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_ltids'), '/mod/ltids/actions/admin_tools.php', $url_params);
+    //    $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_ltids'), '/mod/ltids/actions/admin_tools.php', $url_params);
     }
     
     // Return to Course

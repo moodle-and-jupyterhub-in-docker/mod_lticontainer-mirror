@@ -82,8 +82,17 @@ $capabilities = array(
         ),
     ),
 
+    'mod/ltids:chart_view' => array(
+        'captype' => 'read',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'teacher' => CAP_ALLOW,
+            'editingteacher' => CAP_ALLOW,
+        ),
+    ),
+
     'mod/ltids:db_write' => array(
-        'riskbitmask' => RISK_DATALOSS,
+        'riskbitmask' => RISK_DATALOSS | RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(

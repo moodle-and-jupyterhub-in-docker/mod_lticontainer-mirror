@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../localdblib.php');
 
 
 class  LTIEdit
@@ -29,6 +30,7 @@ class  LTIEdit
     var $isGuest    = true;
 
     var $action_url = '';
+    var $error_url  = '';
     var $url_params = array();
 
     var $custom_ary = array();
@@ -50,6 +52,7 @@ class  LTIEdit
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid, 'lti_id'=>$this->lti_id);
         $this->action_url = new moodle_url('/mod/ltids/actions/lti_edit.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/lti_view.php', $this->url_params);
 
         //
         $this->lab_urls   = array('default'=>'', 'Lab'=>'/lab', 'Notebook'=>'/tree');
@@ -84,12 +87,12 @@ class  LTIEdit
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/ltids:lti_edit', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
 
         $this->custom_prm = new stdClass();
@@ -104,6 +107,12 @@ class  LTIEdit
 
     function  set_condition() 
     {
+        $ltis = db_get_valid_ltis($this->courseid, $this->minstance);
+
+        if (!array_key_exists($this->lti_id, $ltis)) {
+            print_error('no_ltiid_found', 'mod_ltids', $this->error_url);
+        }
+
         return true;
     }
 
@@ -115,16 +124,16 @@ class  LTIEdit
         $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
         $this->lti_rec = $DB->get_record('lti', array('id' => $this->lti_id), $fields);
         if (!$this->lti_rec) {
-            print_error('no_data_found', 'mod_ltids', $this->action_url);
+            print_error('no_data_found', 'mod_ltids', $this->error_url);
         }
         #
         if ($this->minstance->use_podman==1) {
             if (!file_exists(LTIDS_PODMAN_CMD) and  !file_exists(LTIDS_PODMAN_REMOTE_CMD)) {
-                print_error('no_podman_command', 'mod_ltids', $this->action_url);
+                print_error('no_podman_command', 'mod_ltids', $this->error_url);
             }
         }
         else {
-            if (!file_exists(LTIDS_DOCKER_CMD)) print_error('no_docker_command', 'mod_ltids', $this->action_url);
+            if (!file_exists(LTIDS_DOCKER_CMD)) print_error('no_docker_command', 'mod_ltids', $this->error_url);
         }
         
         // Launcher Container
@@ -137,10 +146,10 @@ class  LTIEdit
         // POST
         if ($custom_data = data_submitted()) {
             if (!has_capability('mod/ltids:db_write', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_ltids', $this->action_url);
+                print_error('access_forbidden', 'mod_ltids', $this->error_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->error_url);
             }
 
             /*
@@ -184,7 +193,7 @@ class  LTIEdit
         //
         $rslts = container_exec('images', $this->minstance);
         if (!empty($rslts) and isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_ltids', $this->action_url);
+            print_error($rslts['error'], 'mod_ltids', $this->error_url);
         }
 
         $i = 0;

@@ -9,6 +9,7 @@ class  ShowDemo
     var $db_data      = array();
 
     var $action_url   = '';
+    var $error_url    = '';
     var $url_params   = array();
 
     var $items;
@@ -26,11 +27,12 @@ class  ShowDemo
         $this->course     = $DB->get_record('course', array('id' => $courseid), '*', MUST_EXIST);
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/ltids/actions/show_demo.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
     }
 
@@ -44,7 +46,7 @@ class  ShowDemo
         // Post Check
         if (data_submitted()) {
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids', $this->error_url);
             }
         }
         return true;

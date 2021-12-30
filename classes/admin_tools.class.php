@@ -17,6 +17,7 @@ class  AdminTools
 
     var $url_params = array();
     var $action_url = '';
+    var $error_url  = '';
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -31,6 +32,7 @@ class  AdminTools
         #
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/ltids/actions/admin_tools.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php',        $this->url_params);
     }
 
 

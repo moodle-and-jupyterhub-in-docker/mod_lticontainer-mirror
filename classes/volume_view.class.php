@@ -16,7 +16,7 @@ class  VolumeView
     var $submitted  = false;
     var $confirm    = false;
     var $action_url = '';
-    var $edit_url   = '';
+    var $error_url  = '';
     var $url_params = array();
     var $deletes    = array();
 
@@ -35,16 +35,17 @@ class  VolumeView
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php',        $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/ltids:volume_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->action_url);
+            print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
     }
 
@@ -61,16 +62,16 @@ class  VolumeView
         $len_check = strlen($check_course);
 
         if (!file_exists(LTIDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_ltids', $this->action_url);
+            print_error('no_docker_command', 'mod_ltids', $this->error_url);
         }
 
         // POST
         if ($formdata = data_submitted()) {
             if (!has_capability('mod/ltids:volume_edit', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_ltids', $this->action_url);
+                print_error('access_forbidden', 'mod_ltids', $this->error_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_ltids', $this->action_url);
+                print_error('invalid_sesskey', 'mod_ltids',  $this->error_url);
             }
             $this->submitted  = true;
 
@@ -104,7 +105,7 @@ class  VolumeView
         //
         $rslts = container_exec('volume ls', $this->minstance);
         if (isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_ltids', $this->action_url);
+            print_error($rslts['error'], 'mod_ltids', $this->error_url);
         }
 
         $i = 0;
