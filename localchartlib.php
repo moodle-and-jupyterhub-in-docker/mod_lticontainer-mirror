@@ -383,9 +383,9 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
         }
 
         //
-        $chart = new core\chart_bar();
-        $chart->set_horizontal(true);
-        $chart->set_stacked(true);
+        $chart = new core\chart_line();
+        //$chart->set_horizontal(true);
+        //$chart->set_stacked(true);
         $chart->set_labels($cd_wrk);
         $chart->add_series(new core\chart_series('OK',    $ok_wrk));
         $chart->add_series(new core\chart_series('ERROR', $er_wrk));

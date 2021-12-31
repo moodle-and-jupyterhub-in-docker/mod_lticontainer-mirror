@@ -20,6 +20,7 @@ function show_chart_view($args)
     if (!empty($args->charts)) {
         foreach ($args->charts as $chart) {
             echo $OUTPUT->render_chart($chart, false);
+            echo '<br />';
         }
     }
     else {
