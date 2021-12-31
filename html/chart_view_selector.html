@@ -20,6 +20,7 @@
       <input type="datetime-local" name="end_date_input"   value="<?php echo (new DateTime($args->end_date))->format('Y-m-d\TH:i'); ?>">
       &emsp;&emsp;
       <input type="hidden" id="id" name="id" value="<?php echo $cmid; ?>">
+      <input type="hidden" id="chart_kind" name="chart_kind" value="<?php echo $args->chart_kind; ?>">
       <input type="submit" value="Display">
       <div align="right">
         Last update:&ensp;

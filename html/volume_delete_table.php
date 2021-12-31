@@ -1,7 +1,7 @@
 <?php
 
 
-function show_volume_delete_table($deletes, $items, $base_url)
+function show_volume_delete_table($deletes, $items)
 {
     $table = new html_table();
     //

@@ -58,7 +58,7 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
     }
 
     // View Chart Tab
-    if (($current_tab=='dashboard_view_tab' or $current_tab=='chart_view_tab') and has_capability('mod/ltids:chart_view', $context)) {
+    if ($current_tab=='chart_view_tab' and has_capability('mod/ltids:chart_view', $context)) {
         $row[] = make_tabobj('chart_view_tab', get_string('chart_view_tab', 'mod_ltids'), '/mod/ltids/actions/chart_view.php', $url_params);
     }
 

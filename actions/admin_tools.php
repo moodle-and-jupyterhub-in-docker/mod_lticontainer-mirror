@@ -1,7 +1,6 @@
 <?php
-
 /**
- * Admin Tools
+ * admin_tools.php
  *
  * @package     mod_ltids
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>

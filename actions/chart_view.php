@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Use Moodle's Charts API to visualize learning data.
+ * chart_view.php 
  *
  * @package     mod_ltids
  * @copyright   2021 Urano Masanori <j18081mu@edu.tuis.ac.jp> and Fumi.Iseki
@@ -13,8 +13,7 @@ require_once(__DIR__.'/../lib.php');
 require_once(__DIR__.'/../locallib.php');
 
 require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
-require_once(__DIR__.'/../classes/data_provider.class.php'); // for DataProvider
-require_once(__DIR__.'/../classes/event/lti_edit.php');
+require_once(__DIR__.'/../classes/event/chart_view.php');
 
 // Course module id.
 $cmid = required_param('id', PARAM_INT);
@@ -51,7 +50,7 @@ $this_url = new moodle_url($base_url);
 // Event
 $event = ltids_get_event($cmid, $this_action, $urlparams);
 $event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('ltids', $minstance);
+$event->add_record_snapshot('ltids',  $minstance);
 $event->trigger();
 
 

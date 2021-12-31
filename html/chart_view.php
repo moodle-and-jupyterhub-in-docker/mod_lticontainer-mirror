@@ -1,6 +1,6 @@
 <?php
 /**
- * Use Moodle's Charts API to visualize learning data.
+ * chart_view.php
  *
  * @package     mod_ltids
  * @copyright   2021 Urano Masanori and Fumi.Iseki
@@ -76,9 +76,7 @@ function show_chart_view($cmid, $args)
 {
     global $OUTPUT;
 
-    if ($args->chart_mode=='full') {
-        chart_view_selector($cmid, $args);
-    }
+    chart_view_selector($cmid, $args);
 
     // チャートを描画
     echo '<h3><strong>'.$args->chart_title.'</strong></h3>';
@@ -91,7 +89,7 @@ function show_chart_view($cmid, $args)
         }
     }
     else {
-        echo '<h3>No Data !</h3>';
+        echo '<h3>No Data!</h3>';
     }
     //
     echo   '</td></tr>';
