@@ -1,4 +1,5 @@
 <?php require_once(__DIR__.'/../html/chart_view.php'); ?>
+<?php require_once(__DIR__.'/../html/chart_view_selector.php'); ?>
 
 <style type="text/css">
   <?php include(__DIR__."../html/styles.css"); ?>
@@ -25,7 +26,8 @@
         <table border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
             <td align="center">
-              <?php show_chart_view($this->cmid, $this->args); ?>
+              <?php chart_view_selector($this->cmid, $this->args); ?>
+              <?php show_chart_view($this->args); ?>
             </td>
           </tr>
         </table>

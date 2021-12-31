@@ -133,9 +133,18 @@ $start_date = '2021-10-1 00:00';
         ksort($this->filenames);
 
         //
+        // call chart function
         if ($this->chart_kind === 'users_bar') {
-            $this->chart_title = 'Total Activities per User';
+            $this->chart_title = 'Activities per User';
             $this->charts = chart_users_bar($recs, $this->username, $this->filename);
+        }
+        else if ($this->chart_kind === 'codecell_bar') {
+            $this->chart_title = 'Activities per Code Cell';
+            $this->charts = chart_codecell_bar($recs, $this->username, $this->filename);
+        }
+        else if ($this->chart_kind === 'codecell_line') {
+            $this->chart_title = 'User Activities per Code Cell';
+            $this->charts = chart_codecell_line($recs, $this->username, $this->filename);
         }
         else {
             $this->chart_title = 'Total Activities';

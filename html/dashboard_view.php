@@ -32,10 +32,9 @@ function show_dashboard_view($cmid, $charts_data)
     echo html_writer::table($table);
 */
 
-    // チャートを描画
-
     $col_num = 3;
 
+    // チャートを描画
     echo '<table border="1" align="center" cellpadding="0" cellspacing="0">';
     $i = 0;
     foreach ($charts_data as $data) {

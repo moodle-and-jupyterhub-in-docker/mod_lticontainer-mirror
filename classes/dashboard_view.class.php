@@ -30,14 +30,6 @@ class  DashboardView
     var $end_date    = '';
     var $lti_ids     = array();
 
-    //var $usernames  = array();
-    //var $filenames  = array();
-    //var $lti_info;
-
-    //var $username   = '*';
-    //var $filename   = '*';
-    //var $lti_id     = '*';
-
     var $sql;
     var $charts_data = array();
 
@@ -71,8 +63,8 @@ class  DashboardView
         $this->end_date   = $obj_datetime->format('Y-m-d H:i');
         $obj_datetime->sub(new DateInterval('PT5400S'));        // 1:30 前
         $this->start_date = $obj_datetime->format('Y-m-d H:i');
-
 $this->start_date = '2021-10-1 00:00';
+
         $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {
             $this->lti_ids[] = $lti->id;
