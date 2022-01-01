@@ -86,9 +86,9 @@ class  ChartView
             $this->end_date   = (new DateTime($end_date))->format('Y-m-d H:i');
         }
         if ($start_date == '*') {
-            $obj_datetime->sub(new DateInterval('PT5400S'));        // 1:30 前
+            //$obj_datetime->sub(new DateInterval('PT7200S'));        // 2:00 前
+            $obj_datetime->sub(new DateInterval('PT86400S'));        // 24:00 前
             $this->start_date = $obj_datetime->format('Y-m-d H:i');
-$this->start_date = '2021-10-1 00:00';
         }
         else {
             $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
