@@ -2,6 +2,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+
 define('LTIDS_DOCKER_CMD',          '/usr/bin/docker');
 define('LTIDS_PODMAN_CMD',          '/usr/bin/podman');
 define('LTIDS_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
@@ -26,9 +27,45 @@ define('LTIDS_LTI_PRSNALS_CMD',     'lms_prs_');
 //define('LTIDS_LTI_GRPNAME_CMD',     'lms_grpname');
 
 
+//define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
+//define('PHP_DATETIME_FMT',  'Y-m-d\TH:i:s.u\Z');
+define('PHP_DATETIME_FMT',  'Y-m-d H:i:s');
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
+function  timezone_offset()
+{
+    global $TIME_OFFSET, $CFG;
+
+    $TIME_OFFSET = 0;
+    if (property_exists($CFG, 'timezone')) {
+        $tz = new DateTime('now', new DateTimeZone($CFG->timezone));
+        $TIME_OFFSET = $tz->getOffset();
+    }
+
+    return $TIME_OFFSET;
+}
+
+
+
+function  get_tz_datestr($date, $format=PHP_DATETIME_FMT)
+{
+    global $TIME_OFFSET, $CFG;
+
+    if ($TIME_OFFSET==0) timezone_offset();
+
+    $date = preg_replace('/[TZ]/', ' ', $date);
+    $ut   = (new DateTime($date))->format('U') + $TIME_OFFSET;
+    $dt   = date($format, $ut);
+
+    return $dt;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//
 function  pack_space($str)
 {
     $str = str_replace(array('　', '\t'), ' ', $str);

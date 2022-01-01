@@ -9,15 +9,14 @@
 
 defined('MOODLE_INTERNAL') || die;
 
+require_once(__DIR__.'/locallib.php');
+
+
 define('DATA_TABLE',        'ltids_websock_data');
 define('SERVER_TABLE',      'ltids_websock_server_data');
 define('CLIENT_TABLE',      'ltids_websock_client_data');
 define('SESSION_TABLE',     'ltids_websock_session');
 define('TAGS_TABLE',        'ltids_websock_tags');
-
-define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
-//define('PHP_DATETIME_FMT',  'Y-m-d\TH:i:s.u\Z');
-define('PHP_DATETIME_FMT',  '%Y-%m-%d %H:%i');
 
 
 
@@ -46,7 +45,7 @@ function  db_get_valid_ltis($courseid, $minstance, $sort = '')
 
 function  get_base_sql($courseid, $start_date, $end_date)
 {
-    global $CFG;
+    global $CFG, $TIME_OFFSET;
    
     $server_table  = $CFG->prefix.SERVER_TABLE;
     $client_table  = $CFG->prefix.CLIENT_TABLE;
@@ -54,15 +53,19 @@ function  get_base_sql($courseid, $start_date, $end_date)
     $tags_table    = $CFG->prefix.TAGS_TABLE;
 
     // server data
-    $select  = 'SELECT SERVER.date, username, status';
+    $select  = 'SELECT SERVER.date, SERVER.updatetm, username, status';
     $from    = ' FROM '.$server_table.' SERVER'; 
     $join    = '';
+
+    $offset  = timezone_offset();
+    $start_date = strtotime($start_date) - $offset;
+    $end_date   = strtotime($end_date)   - $offset;
 
     // client data
     $select .= ', CLIENT.cell_id';
     $join    = ' INNER JOIN '.$client_table. ' CLIENT ON SERVER.message = CLIENT.message';
-    $join   .= ' AND STR_TO_DATE(CLIENT.date, \''.SQL_DATETIME_FMT.'\') >= STR_TO_DATE(\''.$start_date.'\', \''.PHP_DATETIME_FMT.'\')';
-    $join   .= ' AND STR_TO_DATE(CLIENT.date, \''.SQL_DATETIME_FMT.'\') <= STR_TO_DATE(\''.$end_date.  '\', \''.PHP_DATETIME_FMT.'\')';
+    $join   .= ' AND SERVER.updatetm >= '.$start_date;
+    $join   .= ' AND SERVER.updatetm <= '.$end_date;
 
     // session
     $select .= ', SESSION.lti_id, SESSION.course';
@@ -105,6 +108,4 @@ function  get_lti_sql_condition($lti_id = '*')
 
     return $cnd;
 }
-
-
 

@@ -34,18 +34,21 @@ class mod_ltids_external extends external_api
         $nb_data = (object)$param[0];
         $nb_data->updatetm = time();
 
-        //file_put_contents('/xtmp/ZZ', "-----------------------------\n", FILE_APPEND);
+        //file_put_contents('/xtmp/ZZ', "------------------------------\n", FILE_APPEND);
         //file_put_contents('/xtmp/ZZ', 'lti_id = '. $nb_data->lti_id."\n", FILE_APPEND);
 
         if ($nb_data->host=='server') {
             $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
             $recs = $DB->get_records('ltids_websock_client_data', $condition);
             if ($recs) {
+                if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
                 $DB->insert_record('ltids_websock_server_data', $nb_data);
             }
         }
         else if ($nb_data->host=='client') {
+            if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
             $DB->insert_record('ltids_websock_client_data', $nb_data);
+            //
             if ($nb_data->tags!='') {
                 $rec = $DB->get_record('ltids_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
@@ -53,7 +56,7 @@ class mod_ltids_external extends external_api
                     $properties = 'filename|codenum';
                     $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
                     preg_match_all($patterns, $nb_data->tags, $matches, PREG_SET_ORDER);
-
+                    //
                     foreach($matches as $match) {
                         $nb_data->{$match[1]} = $match[2];
                     } 

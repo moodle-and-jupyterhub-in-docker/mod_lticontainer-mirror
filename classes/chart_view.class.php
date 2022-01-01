@@ -78,7 +78,6 @@ class  ChartView
         $start_date = optional_param('start_date_input', '*', PARAM_TEXT);
         $end_date   = optional_param('end_date_input',   '*', PARAM_TEXT);
 
-$start_date = '2021-10-1 00:00';
         $obj_datetime = new DateTime();
         if ($end_date == '*') {
             $this->end_date   = $obj_datetime->format('Y-m-d H:i');
@@ -89,6 +88,7 @@ $start_date = '2021-10-1 00:00';
         if ($start_date == '*') {
             $obj_datetime->sub(new DateInterval('PT5400S'));        // 1:30 前
             $this->start_date = $obj_datetime->format('Y-m-d H:i');
+$this->start_date = '2021-10-1 00:00';
         }
         else {
             $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
@@ -129,6 +129,8 @@ $start_date = '2021-10-1 00:00';
             if (!empty($rec->username)) $this->usernames[$rec->username] = $rec->username;
             if (!empty($rec->filename)) $this->filenames[$rec->filename] = $rec->filename;
         }
+        if ($this->username!='*') $this->usernames[$this->username] = $this->username;
+        if ($this->filename!='*') $this->filenames[$this->filename] = $this->filename;
         ksort($this->usernames);
         ksort($this->filenames);
 
@@ -143,7 +145,7 @@ $start_date = '2021-10-1 00:00';
             $this->charts = chart_codecell_bar($recs, $this->username, $this->filename);
         }
         else if ($this->chart_kind === 'codecell_line') {
-            $this->chart_title = 'User Activities per Code Cell';
+            $this->chart_title = 'User Progress on the Task';
             $this->charts = chart_codecell_line($recs, $this->username, $this->filename);
         }
         else {
