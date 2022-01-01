@@ -49,7 +49,7 @@ function  timezone_offset()
 
 
 
-function  get_tz_datestr($date, $format=PHP_DATETIME_FMT)
+function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
 {
     global $TIME_OFFSET, $CFG;
 

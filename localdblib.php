@@ -45,7 +45,7 @@ function  db_get_valid_ltis($courseid, $minstance, $sort = '')
 
 function  get_base_sql($courseid, $start_date, $end_date)
 {
-    global $CFG, $TIME_OFFSET;
+    global $CFG;
    
     $server_table  = $CFG->prefix.SERVER_TABLE;
     $client_table  = $CFG->prefix.CLIENT_TABLE;
@@ -57,15 +57,11 @@ function  get_base_sql($courseid, $start_date, $end_date)
     $from    = ' FROM '.$server_table.' SERVER'; 
     $join    = '';
 
-    $offset  = timezone_offset();
-    $start_date = strtotime($start_date) - $offset;
-    $end_date   = strtotime($end_date)   - $offset;
-
     // client data
     $select .= ', CLIENT.cell_id';
     $join    = ' INNER JOIN '.$client_table. ' CLIENT ON SERVER.message = CLIENT.message';
-    $join   .= ' AND SERVER.updatetm >= '.$start_date;
-    $join   .= ' AND SERVER.updatetm <= '.$end_date;
+    $join   .= ' AND SERVER.updatetm >= '.strtotime($start_date);
+    $join   .= ' AND SERVER.updatetm <= '.strtotime($end_date);
 
     // session
     $select .= ', SESSION.lti_id, SESSION.course';
