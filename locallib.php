@@ -39,7 +39,7 @@ function  timezone_offset()
     global $TIME_OFFSET, $CFG;
 
     $TIME_OFFSET = 0;
-    if (property_exists($CFG, 'timezone')) {
+    if (property_exists($CFG, 'timezone') and !empty($CFG->timezone)) {
         $tz = new DateTime('now', new DateTimeZone($CFG->timezone));
         $TIME_OFFSET = $tz->getOffset();
     }

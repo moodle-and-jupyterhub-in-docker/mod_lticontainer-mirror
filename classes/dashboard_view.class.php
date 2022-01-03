@@ -61,8 +61,7 @@ class  DashboardView
         ////////////////////////////////////////////////////////////////////////////
         $obj_datetime = new DateTime();
         $this->end_date   = $obj_datetime->format('Y-m-d H:i');
-        //$obj_datetime->sub(new DateInterval('PT5400S'));        // 1:30 前
-        $obj_datetime->sub(new DateInterval('PT86400S'));        // 1:30 前
+        $obj_datetime->sub(new DateInterval('PT86400S'));        // 24:00 前
         $this->start_date = $obj_datetime->format('Y-m-d H:i');
 
         $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);

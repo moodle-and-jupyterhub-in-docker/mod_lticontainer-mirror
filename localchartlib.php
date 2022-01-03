@@ -14,7 +14,7 @@ require_once(__DIR__.'/locallib.php');
 
 define('CHART_BAR_MAX_USER_NUM',  10);
 define('CHART_BAR_MAX_CODE_NUM',  15);
-define('CHART_LINE_MAX_INTERVAL', 1800);       // 1800s
+define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 define('CHART_LINE_MAX_USER_NUM', 15);
 
 define('CHART_NULL_FILENAME',     'unknown');
@@ -51,6 +51,9 @@ function  chart_dashboard($recs)
 
 
 
+//
+// 全体の正答率
+//
 function  chart_total_pie($recs, $username, $filename, $dashboard=false)
 {
     $ok = 0;
@@ -78,6 +81,7 @@ function  chart_total_pie($recs, $username, $filename, $dashboard=false)
     $chart  = new \core\chart_pie();
     $chart->add_series($series);
     $chart->set_labels($labels);
+    //$chart->set_doughnut(true);
     if ($dashboard) $chart->set_legend_options(['display' => false]);
     //
     $charts = array($chart);
@@ -87,6 +91,8 @@ function  chart_total_pie($recs, $username, $filename, $dashboard=false)
 
 
 
+//
+// ユーザ毎の正答率
 //
 function  chart_users_bar($recs, $username, $filename, $dashboard=false)
 {
@@ -196,6 +202,8 @@ function  chart_users_bar($recs, $username, $filename, $dashboard=false)
 
 
 
+//
+// 課題毎の正答率
 //
 function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
 {
@@ -308,6 +316,8 @@ function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
 
 
 //
+// ユーザ毎の課題進捗状況
+//
 function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
 {
     $date_data = array();
@@ -374,8 +384,15 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
         $i++;
     }
 
-    ////////////////////////////
     $array_num = count($us_srs);
+    if ($array_num==0) {
+        $us_srs[null] = array(null, null);
+        $dt_srs[] = date('m/d H:i', time() - 24*3600);
+        $dt_srs[] = date('m/d H:i', time());
+        $array_num = 1;
+    }
+
+    ////////////////////////////
     $cnt = 0;
     $num = 0;
     $charts = array();
@@ -389,8 +406,8 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
         }
 
         for ($i=0; $i<$stop_i; $i++) {
-            $udt = array_slice($us_srs, $num, 1, true);
-            $us_wrk[key($udt)] = current($udt);
+            $usr = array_slice($us_srs, $num, 1, true);
+            $us_wrk[key($usr)] = current($usr);
             $num++;
         }
 
