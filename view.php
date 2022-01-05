@@ -79,7 +79,7 @@ echo $OUTPUT->header();
 
 
 ///////////////////////////////////////////////////////////////////////////
-echo_tabs($current_tab, $courseid, $cmid, $mcontext);
+echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
 echo '<div align="center">';
 echo $OUTPUT->heading(format_text($minstance->name), 3);

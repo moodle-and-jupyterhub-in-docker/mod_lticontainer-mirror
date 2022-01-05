@@ -86,7 +86,9 @@ class  ChartView
             $this->end_date   = (new DateTime($end_date))->format('Y-m-d H:i');
         }
         if ($start_date == '*') {
-            $obj_datetime->sub(new DateInterval('PT7200S'));        // 2:00 前
+            $startdiff = $this->minstance->during_chart;
+            if ($startdiff <= 0) $startdiff = 5400;     // 1:30前
+            $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
             $this->start_date = $obj_datetime->format('Y-m-d H:i');
         }
         else {
@@ -137,19 +139,19 @@ class  ChartView
         // call chart function
         if ($this->chart_kind === 'users_bar') {
             $this->chart_title = 'Activities per User';
-            $this->charts = chart_users_bar($recs, $this->username, $this->filename);
+            $this->charts = chart_users_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_bar') {
             $this->chart_title = 'Activities per Code Cell';
-            $this->charts = chart_codecell_bar($recs, $this->username, $this->filename);
+            $this->charts = chart_codecell_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_line') {
             $this->chart_title = 'User Progress on the Task';
-            $this->charts = chart_codecell_line($recs, $this->username, $this->filename);
+            $this->charts = chart_codecell_line($recs, $this->username, $this->filename, $this->minstance);
         }
         else {
             $this->chart_title = 'Total Activities';
-            $this->charts = chart_total_pie($recs, $this->username, $this->filename);
+            $this->charts = chart_total_pie($recs, $this->username, $this->filename, $this->minstance);
         }
 
         return true;

@@ -34,7 +34,8 @@ $string['modulenameplural'] = 'LTIConrainerSpawners';
 $string['ltidsname']  = 'Name ';
 $string['description'] = 'Description';
 $string['ltidsname_help'] = 'Name of this instance of module';
-$string['ltidsfieldset'] = 'Options of LTIContainerSpawner module';
+$string['ltids_container_set'] = 'Settings of Container and LTI';
+$string['ltids_chart_set'] = 'Settings of Dashboard and Charts';
 $string['docker_host'] = 'Docker/Podman host';
 $string['docker_host_help'] = 'IP address or FQDN of Docker/Podman host';
 $string['docker_user'] = 'Docker/Podman user';
@@ -48,7 +49,24 @@ $string['imagename_filter_help'] = 'Set filtering keywords when image names are 
 $string['make_docker_volumes'] = 'Does mod_ltids create docker volumes ?';
 $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_ltids when LTI Edit Tab is saved';
 $string['use_podman'] = 'Use Podman instead of Docker';
-$string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub. This function is experimentary, so any features will not work.';
+$string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub.';
+
+$string['use_dashboard'] = 'Use Dashboard function';
+$string['use_dashboard_help'] = 'If Yes, Dashboard tab is shown. But you need to execute the Feserver.';
+
+$string['during_dashboard'] = 'Time period of Dashboard (s)';
+$string['during_dashboard_help'] = 'The time period(second) displayed by Dashboard';
+$string['during_chart'] = 'Time period of Charts (s)';
+$string['during_chart_help'] = 'The time period(second) displayed by Charts';
+$string['chart_bar_usernum'] = 'Max users in Bar chart';
+$string['chart_bar_usernum_help'] = 'Maximum number of users in a Bar chart.';
+$string['chart_bar_codenum'] = 'Max code cells in Bar chart';
+$string['chart_bar_codenum_help'] = 'Maximum number of code cells in a Bar chart.';
+$string['chart_line_usernum'] = 'Max users in Line chart';
+$string['chart_line_usernum_help'] = 'Maximum number of users in a Line chart.';
+$string['chart_line_interval'] = 'Max interval time of line datai (s)';
+$string['chart_line_interval_help'] = 'Maximum interval time(second) between each line data.';
+
 
 // print_error
 $string['access_forbidden'] = 'Access forbidden';

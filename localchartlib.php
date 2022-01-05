@@ -14,35 +14,35 @@ require_once(__DIR__.'/locallib.php');
 
 define('CHART_BAR_MAX_USER_NUM',  10);
 define('CHART_BAR_MAX_CODE_NUM',  15);
-define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 define('CHART_LINE_MAX_USER_NUM', 15);
+define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 
 define('CHART_NULL_FILENAME',     'unknown');
 define('CHART_NULL_CODENUM',      'null');
 
 
 
-function  chart_dashboard($recs)
+function  chart_dashboard($recs, $minstance)
 {
     $charts_data = array();
 
     $charts_data[0] = new StdClass();
-    $charts_data[0]->charts = chart_total_pie($recs, '*', '*', true);
+    $charts_data[0]->charts = chart_total_pie($recs, '*', '*', $minstance, true);
     $charts_data[0]->kind   = 'total_pie';
     $charts_data[0]->title  = 'Total Activities';
 
     $charts_data[1] = new StdClass();
-    $charts_data[1]->charts = chart_users_bar($recs, '*', '*', true);
+    $charts_data[1]->charts = chart_users_bar($recs, '*', '*', $minstance, true);
     $charts_data[1]->kind   = 'users_bar';
     $charts_data[1]->title  = 'Activities per User';
 
     $charts_data[2] = new StdClass();
-    $charts_data[2]->charts = chart_codecell_bar($recs, '*', '*', true);
+    $charts_data[2]->charts = chart_codecell_bar($recs, '*', '*', $minstance, true);
     $charts_data[2]->kind   = 'codecell_bar';
     $charts_data[2]->title  = 'Activities per Code Cell';
 
     $charts_data[3] = new StdClass();
-    $charts_data[3]->charts = chart_codecell_line($recs, '*', '*', true);
+    $charts_data[3]->charts = chart_codecell_line($recs, '*', '*', $minstance, true);
     $charts_data[3]->kind   = 'codecell_line';
     $charts_data[3]->title  = 'User Progress on the Task';
 
@@ -54,7 +54,7 @@ function  chart_dashboard($recs)
 //
 // 全体の正答率
 //
-function  chart_total_pie($recs, $username, $filename, $dashboard=false)
+function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=false)
 {
     $ok = 0;
     $er = 0;
@@ -94,7 +94,7 @@ function  chart_total_pie($recs, $username, $filename, $dashboard=false)
 //
 // ユーザ毎の正答率
 //
-function  chart_users_bar($recs, $username, $filename, $dashboard=false)
+function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=false)
 {
     $user_data = array();
     //
@@ -150,6 +150,8 @@ function  chart_users_bar($recs, $username, $filename, $dashboard=false)
     }
 
     ////////////////////////////
+    $max_usernum = $minstance->chart_bar_usernum;
+    if ($max_usernum <= 0) $max_usernum = CHART_BAR_MAX_USER_NUM;
     $cnt = 0;
     $num = 0;
     $charts = array();
@@ -159,9 +161,9 @@ function  chart_users_bar($recs, $username, $filename, $dashboard=false)
         $ok_wrk = array();
         $er_wrk = array();
 
-        $stop_i = CHART_BAR_MAX_USER_NUM;
-        if (($cnt+1)*CHART_BAR_MAX_USER_NUM > $array_num) {
-            $stop_i = $array_num % CHART_BAR_MAX_USER_NUM;
+        $stop_i = $max_usernum;
+        if (($cnt+1)*$max_usernum > $array_num) {
+            $stop_i = $array_num % $max_usernum;
         }
 
         for ($i=0; $i<$stop_i; $i++) {
@@ -170,7 +172,7 @@ function  chart_users_bar($recs, $username, $filename, $dashboard=false)
             $er_wrk[] = $er_srs[$num];
             $num++;
         }
-        for ($i=$stop_i; $i<CHART_BAR_MAX_USER_NUM; $i++) {
+        for ($i=$stop_i; $i<$max_usernum; $i++) {
             $us_wrk[] = '';
             $ok_wrk[] = 0;
             $er_wrk[] = 0;
@@ -205,7 +207,7 @@ function  chart_users_bar($recs, $username, $filename, $dashboard=false)
 //
 // 課題毎の正答率
 //
-function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
+function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard=false)
 {
     $code_data = array();
     //
@@ -263,6 +265,8 @@ function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
     }
 
     ////////////////////////////
+    $max_codenum = $minstance->chart_bar_codenum;
+    if ($max_codenum <= 0) $max_codenum = CHART_BAR_MAX_CODE_NUM;
     $cnt = 0;
     $num = 0;
     $charts = array();
@@ -272,9 +276,9 @@ function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
         $ok_wrk = array();
         $er_wrk = array();
 
-        $stop_i = CHART_BAR_MAX_CODE_NUM;
-        if (($cnt+1)*CHART_BAR_MAX_CODE_NUM > $array_num) {
-            $stop_i = $array_num % CHART_BAR_MAX_CODE_NUM;
+        $stop_i = $max_codenum;
+        if (($cnt+1)*$max_codenum > $array_num) {
+            $stop_i = $array_num % $max_codenum;
         }
 
         for ($i=0; $i<$stop_i; $i++) {
@@ -283,7 +287,7 @@ function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
             $er_wrk[] = $er_srs[$num];
             $num++;
         }
-        for ($i=$stop_i; $i<CHART_BAR_MAX_CODE_NUM; $i++) {
+        for ($i=$stop_i; $i<$max_codenum; $i++) {
             $cd_wrk[] = '';
             $ok_wrk[] = 0;
             $er_wrk[] = 0;
@@ -318,7 +322,7 @@ function  chart_codecell_bar($recs, $username, $filename, $dashboard=false)
 //
 // ユーザ毎の課題進捗状況
 //
-function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
+function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboard=false)
 {
     $date_data = array();
     $usernames = array();
@@ -359,6 +363,8 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
         $us_srs[$uname] = array();
     }
     //
+    $max_interval = $minstance->chart_line_interval;
+    if ($max_interval <= 0) $max_interval = CHART_LINE_MAX_INTERVAL;
     $i = 0;
     foreach ($date_data as $dt => $users) {
         if ($dashboard) $dt_srs[$i] = '';
@@ -367,14 +373,14 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
 
         foreach ($usernames as $uname) {
             if(!array_key_exists($uname, $users)) {
-                if ($i>0 and $tm_srs[$i]-$tm_srs[$i-1]<CHART_LINE_MAX_INTERVAL) $us_srs[$uname][$i] = $us_srs[$uname][$i-1]; 
-                else                                                            $us_srs[$uname][$i] = null; 
+                if ($i>0 and $tm_srs[$i]-$tm_srs[$i-1]<$max_interval) $us_srs[$uname][$i] = $us_srs[$uname][$i-1]; 
+                else                                                  $us_srs[$uname][$i] = null; 
             }
             else {
                 $cellcode = $users[$uname]['codecell']; 
                 if ($cellcode==CHART_NULL_CODENUM) {
-                    if ($i>0 and $tm_srs[$i]-$tm_srs[$i-1]<CHART_LINE_MAX_INTERVAL) $us_srs[$uname][$i] = $us_srs[$uname][$i-1]; 
-                    else                                                            $us_srs[$uname][$i] = null; 
+                    if ($i>0 and $tm_srs[$i]-$tm_srs[$i-1]<$max_interval) $us_srs[$uname][$i] = $us_srs[$uname][$i-1]; 
+                    else                                                  $us_srs[$uname][$i] = null; 
                 }
                 else {
                     $us_srs[$uname][$i] = $users[$uname]['codecell']; 
@@ -393,6 +399,8 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
     }
 
     ////////////////////////////
+    $max_usernum = $minstance->chart_line_usernum;
+    if ($max_usernum <=0) $max_usernum = CHART_LINE_MAX_USER_NUM;
     $cnt = 0;
     $num = 0;
     $charts = array();
@@ -400,9 +408,9 @@ function  chart_codecell_line($recs, $username, $filename, $dashboard=false)
         //            
         $us_wrk = array();
 
-        $stop_i = CHART_LINE_MAX_USER_NUM;
-        if (($cnt+1)*CHART_LINE_MAX_USER_NUM > $array_num) {
-            $stop_i = $array_num % CHART_LINE_MAX_USER_NUM;
+        $stop_i = $max_usernum;
+        if (($cnt+1)*$max_usernum > $array_num) {
+            $stop_i = $array_num % $max_usernum;
         }
 
         for ($i=0; $i<$stop_i; $i++) {

@@ -65,7 +65,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
 
 echo $OUTPUT->header();
-echo_tabs($current_tab, $courseid, $cmid, $mcontext);
+echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
 if ($ltids_admin_tools_cap) {
     require_once(__DIR__.'/../classes/admin_tools.class.php');

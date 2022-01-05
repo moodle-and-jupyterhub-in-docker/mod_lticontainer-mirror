@@ -67,7 +67,9 @@ class mod_ltids_mod_form extends moodleform_mod {
         }
 
         //-------------------------------------------------------------------------------
-        $mform->addElement('header', 'ltidsfieldset', get_string('ltidsfieldset', 'mod_ltids'));
+        // Settings of Options of LTIContainerSpawner module 
+        //
+        $mform->addElement('header', 'ltids_container_set', get_string('ltids_container_set', 'mod_ltids'));
 
         $mform->addElement('text', 'docker_host', get_string('docker_host', 'mod_ltids'), array('size' => '64'));
         $mform->addHelpButton('docker_host', 'docker_host', 'mod_ltids');
@@ -103,6 +105,59 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->addHelpButton('use_podman', 'use_podman', 'mod_ltids');
         $mform->setType('use_podman', PARAM_INT);
         $mform->setDefault('use_podman', 0);
+
+
+        //-------------------------------------------------------------------------------
+        // Settings of Dashboard and Charts 
+        //
+        $mform->addElement('header', 'ltids_chart_set', get_string('ltids_chart_set', 'mod_ltids'));
+
+        $mform->addElement('selectyesno', 'use_dashboard', get_string('use_dashboard', 'mod_ltids'));
+        $mform->addHelpButton('use_dashboard', 'use_dashboard', 'mod_ltids');
+        $mform->setType('use_dashboard', PARAM_INT);
+        $mform->setDefault('use_dashboard', 0);
+
+        $mform->addElement('text', 'during_dashboard', get_string('during_dashboard', 'mod_ltids'), array('size' => '12'));
+        $mform->addHelpButton('during_dashboard', 'during_dashboard', 'mod_ltids');
+        $mform->setType('during_dashboard', PARAM_INT);
+        $mform->setDefault('during_dashboard', '86400');
+        $mform->hideIf('during_dashboard', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement('text', 'during_chart', get_string('during_chart', 'mod_ltids'), array('size' => '12'));
+        $mform->addHelpButton('during_chart', 'during_chart', 'mod_ltids');
+        $mform->setType('during_chart', PARAM_INT);
+        $mform->setDefault('during_chart', '5400');
+        $mform->hideIf('during_chart', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement( 'select', 'chart_bar_usernum', get_string( 'chart_bar_usernum', 'mod_ltids'), array (
+                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+        ));
+        $mform->setDefault( 'chart_bar_usernum', 10);
+        $mform->addHelpButton('chart_bar_usernum', 'chart_bar_usernum', 'mod_ltids');
+        $mform->setType('chart_bar_usernum', PARAM_INT);
+        $mform->hideIf('chart_bar_usernum', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement( 'select', 'chart_bar_codenum', get_string( 'chart_bar_codenum', 'mod_ltids'), array (
+                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+        ));
+        $mform->setDefault( 'chart_bar_codenum', 15);
+        $mform->addHelpButton('chart_bar_codenum', 'chart_bar_codenum', 'mod_ltids');
+        $mform->setType('chart_bar_codenum', PARAM_INT);
+        $mform->hideIf('chart_bar_codenum', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement( 'select', 'chart_line_usernum', get_string( 'chart_line_usernum', 'mod_ltids'), array (
+                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+        ));
+        $mform->setDefault( 'chart_line_usernum', 15);
+        $mform->addHelpButton('chart_line_usernum', 'chart_line_usernum', 'mod_ltids');
+        $mform->setType('chart_line_usernum', PARAM_INT);
+        $mform->hideIf('chart_line_usernum', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement('text', 'chart_line_interval', get_string('chart_line_interval', 'mod_ltids'), array('size' => '12'));
+        $mform->addHelpButton('chart_line_interval', 'chart_line_interval', 'mod_ltids');
+        $mform->setType('chart_line_interval', PARAM_INT);
+        $mform->setDefault('chart_line_interval', '1800');
+        $mform->hideIf('chart_line_interval', 'use_dashboard', 'eq', 0);
 
         //-------------------------------------------------------------------------------
         // Add standard elements.

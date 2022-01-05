@@ -59,9 +59,12 @@ class  DashboardView
         }
 
         ////////////////////////////////////////////////////////////////////////////
+        $startdiff = $this->minstance->during_dashboard;
+        if ($startdiff <= 0) $startdiff = 86400;    //24:00 前
+
         $obj_datetime = new DateTime();
         $this->end_date   = $obj_datetime->format('Y-m-d H:i');
-        $obj_datetime->sub(new DateInterval('PT86400S'));        // 24:00 前
+        $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
         $this->start_date = $obj_datetime->format('Y-m-d H:i');
 
         $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
@@ -85,7 +88,7 @@ class  DashboardView
         global $DB;
 
         $recs = $DB->get_records_sql($this->sql);
-        $this->charts_data = chart_dashboard($recs);
+        $this->charts_data = chart_dashboard($recs, $this->minstance);
 
         return true;
     }

@@ -13,14 +13,21 @@
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
         <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Activity description."/>
         <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The format of the intro field."/>
-        <FIELD NAME="docker_host" TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT="Docker host name"/>
-        <FIELD NAME="docker_user" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="docker" SEQUENCE="false" COMMENT="Docker user name"/>
-        <FIELD NAME="docker_pass" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="Password of docker user"/>
-        <FIELD NAME="custom_params" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="show custom parameters"/>
-        <FIELD NAME="imgname_fltr" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="jupyter, notebook, ltids" SEQUENCE="false" COMMENT="image name display filter"/>
-        <FIELD NAME="make_volumes" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="does mod_ltids make volumes of docker?"/>
-        <FIELD NAME="no_disp_lti" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="id array of no displaied lti"/>
-        <FIELD NAME="use_podman" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
+        <FIELD NAME="docker_host"   TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT="Docker host name"/>
+        <FIELD NAME="docker_user"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT="docker" SEQUENCE="false" COMMENT="Docker user name"/>
+        <FIELD NAME="docker_pass"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="Password of docker user"/>
+        <FIELD NAME="custom_params" TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="show custom parameters"/>
+        <FIELD NAME="imgname_fltr"  TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="jupyter, notebook, ltids" SEQUENCE="false" COMMENT="image name display filter"/>
+        <FIELD NAME="make_volumes"  TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="does mod_ltids make volumes of docker?"/>
+        <FIELD NAME="no_disp_lti"   TYPE="char" LENGTH="255" NOTNULL="false"             SEQUENCE="false" COMMENT="id array of no displaied lti"/>
+        <FIELD NAME="use_podman"    TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
+        <FIELD NAME="use_dashboard"       TYPE="int" LENGTH="1"  NOTNULL="true" DEFAULT="0"     SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
+        <FIELD NAME="during_dashboard"    TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="86400" SEQUENCE="false" COMMENT="Time interval(s) displayed by Dashboard"/>
+        <FIELD NAME="during_chart"        TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400"  SEQUENCE="false" COMMENT="Time interval(s) displayed by Chart"/>
+        <FIELD NAME="chart_bar_usernum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"    SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
+        <FIELD NAME="chart_bar_codenum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"    SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
+        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"    SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
+        <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800"  SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

@@ -31,5 +31,5 @@ $plugin->component = 'mod_ltids';
 $plugin->maturity  = MATURITY_BETA;
 
 $plugin->release   = '0.9.30';
-$plugin->version   = 2021122900;
+$plugin->version   = 2022010501;
 

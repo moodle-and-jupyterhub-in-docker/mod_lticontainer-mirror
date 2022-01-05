@@ -66,7 +66,7 @@ $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($mcontext);
 
 echo $OUTPUT->header();
-echo_tabs($current_tab, $courseid, $cmid, $mcontext);
+echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
 require_once(__DIR__.'/../classes/show_demo.class.php');
 

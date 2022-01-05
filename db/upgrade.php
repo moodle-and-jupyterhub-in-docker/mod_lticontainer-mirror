@@ -227,5 +227,40 @@ function xmldb_ltids_upgrade($oldversion)
     }
 
 
+    // 2022010501
+    if ($oldversion < 2022010501) {
+        $table = new xmldb_table('ltids');
+
+        $field = new xmldb_field('use_dashboard',       XMLDB_TYPE_INTEGER, '1',  null, XMLDB_NOTNULL, null, '0',     'use_podman');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('during_dashboard',    XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '86400', 'use_dashboard');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('during_chart',        XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '5400',  'during_dashboard');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('chart_bar_usernum',   XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '10',    'during_chart');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('chart_bar_codenum',   XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '15',    'chart_bar_usernum');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('chart_line_usernum',  XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '15',    'chart_bar_codenum');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('chart_line_interval', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '1800',  'chart_line_usernum');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+
     return true;
 }

@@ -39,7 +39,7 @@ function make_tabobj($uniqueid, $title, $filepath, $urlparams)
 }
 
 
-function setup_tabs($current_tab, $course_id, $cm_id, $context) 
+function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance) 
 {
     global $CFG;
 
@@ -53,7 +53,7 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
     //$row[] = make_tabobj('show_demo_tab', get_string('show_demo_tab', 'mod_ltids'), '/mod/ltids/actions/show_demo.php', $url_params);
 
     // Dashboard Tab
-    if (has_capability('mod/ltids:dashboard_view', $context)) {
+    if ($minstance->use_dashboard==1 and has_capability('mod/ltids:dashboard_view', $context)) {
         $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_ltids'), '/mod/ltids/actions/dashboard_view.php', $url_params);
     }
 
@@ -97,7 +97,7 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context)
 }
 
 
-function  echo_tabs($current_tab, $course_id, $cm_id, $context) 
+function  echo_tabs($current_tab, $course_id, $cm_id, $context, $instance) 
 {
     isset($cm_id)     || die();
     $cm_id > 0        || die();
@@ -109,7 +109,7 @@ function  echo_tabs($current_tab, $course_id, $cm_id, $context)
     }
 
     $tabs = array();
-    $row  = setup_tabs($current_tab, $course_id, $cm_id, $context); 
+    $row  = setup_tabs($current_tab, $course_id, $cm_id, $context, $instance); 
     $inactive  = array();
     $activated = array();
 
