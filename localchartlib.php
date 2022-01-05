@@ -82,7 +82,9 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
     $chart->add_series($series);
     $chart->set_labels($labels);
     //$chart->set_doughnut(true);
-    if ($dashboard) $chart->set_legend_options(['display' => false]);
+    if ($dashboard) {
+        if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
+    }
     //
     $charts = array($chart);
 
@@ -185,7 +187,9 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
         $chart->set_labels($us_wrk);
         $chart->add_series(new \core\chart_series('OK',    $ok_wrk));
         $chart->add_series(new \core\chart_series('ERROR', $er_wrk));
-        if ($dashboard or $cnt>0) $chart->set_legend_options(['display' => false]);
+        if ($dashboard or $cnt>0) {
+            if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
+        }
         //
         if ($maxval>0) {
             $xaxis = $chart->get_xaxis(0, true);
@@ -300,7 +304,9 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
         $chart->set_labels($cd_wrk);
         $chart->add_series(new \core\chart_series('OK',    $ok_wrk));
         $chart->add_series(new \core\chart_series('ERROR', $er_wrk));
-        if ($dashboard or $cnt>0) $chart->set_legend_options(['display' => false]);
+        if ($dashboard or $cnt>0) {
+            if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
+        }
         //
         if ($maxval>0) {
             $xaxis = $chart->get_xaxis(0, true);
@@ -427,7 +433,9 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
         }
         $yaxis = $chart->get_yaxis(0, true);
         $yaxis->set_min(0);
-        if ($dashboard) $chart->set_legend_options(['display' => false]);
+        if ($dashboard) {
+            if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
+        }
 
         $charts[] = $chart;
 
