@@ -40,12 +40,12 @@ function chart_view_selector($cmid, $args)
     $file_select_box  = '<select name="file_select_box">';
     $file_select_box .= '<option value="*">*</option>'; 
 
-    if ($args->filename=='unknown') $file_select_box .= '<option value="unknown" selected>unknown</option>'; 
-    else                            $file_select_box .= '<option value="unknown">unknown</option>'; 
+    if ($args->filename=='free') $file_select_box .= '<option value="free" selected>free</option>'; 
+    else                         $file_select_box .= '<option value="free">free</option>'; 
     //
     $filenames = array_keys($args->filenames);
     foreach($filenames as $fn) {
-        if ($fn!=='unknown') {
+        if ($fn!=='free') {
             if($fn === $args->filename) $file_select_box .= '<option value="'.$fn.'" selected>'.$fn.'</option>';
             else                        $file_select_box .= '<option value="'.$fn.'">'.$fn.'</option>';
         }
