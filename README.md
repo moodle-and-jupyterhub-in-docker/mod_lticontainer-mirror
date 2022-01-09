@@ -1,20 +1,20 @@
 # mod_ltids 
 
-#### Moodle Module for JupyterHub/LTIContainerSpawner
+## Moodle Module for JupyterHub/LTIContainerSpawner
 
-- Wiki
-    - English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids
-    - Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids-(J)
+### Wiki
+- English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids
+- Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids-(J)
 
-* Please see also bellow wiki
-    * English:  https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub
-    * Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
+### Please see also bellow wiki
+* English:  https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub
+* Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub-(J)
 
 
 
-## License ##
+### License ###
 
-2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp> and Masanori Urano <j18081mu@edu.tuis.ac.jp>, NSL of TUIS
+2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp> and Masanori Urano <j18081mu@edu.tuis.ac.jp> at NSL of TUIS
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
