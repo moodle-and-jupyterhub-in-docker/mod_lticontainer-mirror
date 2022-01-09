@@ -12,7 +12,7 @@
 
 
 
-### License ###
+### License
 
 2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp> and Masanori Urano <j18081mu@edu.tuis.ac.jp> at NSL of TUIS
 
