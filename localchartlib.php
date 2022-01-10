@@ -18,8 +18,8 @@ define('CHART_LINE_MAX_USER_NUM', 15);
 define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 
 define('CHART_NULL_FILENAME',     '.unknown');
-define('CHART_NULL_CODENUM',      '.none');
 define('CHART_NULL_USERNAME',     '.anyone');
+define('CHART_NULL_CODENUM',      'null');
 
 
 
