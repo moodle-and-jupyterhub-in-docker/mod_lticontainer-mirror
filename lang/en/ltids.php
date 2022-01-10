@@ -54,9 +54,9 @@ $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpa
 $string['use_dashboard'] = 'Use Dashboard function';
 $string['use_dashboard_help'] = 'If Yes, Dashboard tab is shown. But you need to execute the Feserver.';
 
-$string['during_realtime'] = 'Time Period of Real Time Charts (s)';
+$string['during_realtime'] = 'Time period of real time Charts (s)';
 $string['during_realtime_help'] = 'The time period(second) displayed by real time Charts';
-$string['during_anytime'] = 'Time Period of Any Time Charts (s)';
+$string['during_anytime'] = 'Time period of any time Charts (s)';
 $string['during_anytime_help'] = 'The time period(second) displayed by any time Charets';
 $string['chart_bar_usernum'] = 'Max users in Bar chart';
 $string['chart_bar_usernum_help'] = 'Maximum number of users in a Bar chart.';
