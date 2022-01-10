@@ -9,7 +9,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once(__DIR__.'/locallib.php');
+require_once(__DIR__.'/local_lib.php');
 
 
 define('DATA_TABLE',        'ltids_websock_data');

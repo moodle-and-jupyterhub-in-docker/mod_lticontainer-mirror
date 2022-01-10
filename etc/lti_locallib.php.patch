@@ -1,5 +1,5 @@
---- locallib.php-	2021-10-29 14:34:46.986915441 +0900
-+++ locallib.php	2021-10-29 19:15:20.912390494 +0900
+--- local_lib.php-	2021-10-29 14:34:46.986915441 +0900
++++ local_lib.php	2021-10-29 19:15:20.912390494 +0900
 @@ -908,6 +908,13 @@
          $requestparams['lis_person_name_family'] = $USER->lastname;
          $requestparams['lis_person_name_full'] = fullname($USER);

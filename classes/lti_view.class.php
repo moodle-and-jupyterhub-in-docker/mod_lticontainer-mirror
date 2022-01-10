@@ -1,7 +1,7 @@
 <?php
 
-require_once(__DIR__.'/../locallib.php');
-require_once(__DIR__.'/../localdblib.php');
+require_once(__DIR__.'/../local_lib.php');
+require_once(__DIR__.'/../local_dblib.php');
 
 class  LTIConnect
 {
