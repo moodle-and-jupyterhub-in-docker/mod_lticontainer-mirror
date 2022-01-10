@@ -10,13 +10,11 @@
 
 function chart_view_selector($cmid, $args)
 {
-    //
+    ///////////////////////////////////////
     // ユーザ選択用セレクトボックス生成
     $user_select_box  = '<select name="user_select_box">';
     $user_select_box .= '<option value="*">*</option>';     // All user symbol charcter '*'
-
-    if ($args->username==CHART_NULL_USERNAME) $user_select_box .= '<option value="'.CHART_NULL_USERNAME.'" selected>'.CHART_NULL_USERNAME.'</option>'; 
-    else                                      $user_select_box .= '<option value="'.CHART_NULL_USERNAME.'">'.CHART_NULL_USERNAME.'</option>'; 
+    //
     $usernames = array_keys($args->usernames);
     foreach($usernames as $uname) {
         if($uname === $args->username) $user_select_box .= '<option value="'.$uname.'" selected>'.$uname.'</option>';
@@ -24,26 +22,23 @@ function chart_view_selector($cmid, $args)
     }
     $user_select_box .= '</select>';
 
-    //
+    ///////////////////////////////////////
     // LTI選択用セレクトボックス生成
     $lti_select_box  = '<select name="lti_select_box">';
     if (count($args->lti_info)>1) {
         $lti_select_box .= '<option value="*">*</option>'; // All LTI symbol charcter '*'
     }
-
+    //
     foreach($args->lti_info as $lti) {
         if($lti->id === $args->lti_id) $lti_select_box .= '<option value="'.$lti->id.'" selected>'.$lti->name.'</option>';
         else                           $lti_select_box .= '<option value="'.$lti->id.'">'.$lti->name.'</option>';
     }
     $lti_select_box .= '</select>';
 
-    //
+    ///////////////////////////////////////
     // File選択用セレクトボックス生成
     $file_select_box  = '<select name="file_select_box">';
     $file_select_box .= '<option value="*">*</option>'; 
-
-    if ($args->filename==CHART_NULL_FILENAME) $file_select_box .= '<option value="'.CHART_NULL_FILENAME.'" selected>'.CHART_NULL_FILENAME.'</option>'; 
-    else                                      $file_select_box .= '<option value="'.CHART_NULL_FILENAME.'">'.CHART_NULL_FILENAME.'</option>'; 
     //
     $filenames = array_keys($args->filenames);
     foreach($filenames as $fn) {

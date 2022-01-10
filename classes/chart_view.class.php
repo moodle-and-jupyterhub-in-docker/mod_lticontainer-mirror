@@ -127,8 +127,10 @@ class  ChartView
 
         $recs = $DB->get_records_sql($this->sql);
         foreach ($recs as $rec) {
-            if (!empty($rec->username)) $this->usernames[$rec->username] = $rec->username;
-            if (!empty($rec->filename)) $this->filenames[$rec->filename] = $rec->filename;
+            if (empty($rec->username)) $rec->username = CHART_NULL_USERNAME;
+            if (empty($rec->filename)) $rec->filename = CHART_NULL_FILENAME;
+            $this->usernames[$rec->username] = $rec->username;
+            $this->filenames[$rec->filename] = $rec->filename;
         }
         if ($this->username!='*') $this->usernames[$this->username] = $this->username;
         if ($this->filename!='*') $this->filenames[$this->filename] = $this->filename;
