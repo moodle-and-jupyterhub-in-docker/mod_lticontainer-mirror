@@ -17,8 +17,9 @@ define('CHART_BAR_MAX_CODE_NUM',  15);
 define('CHART_LINE_MAX_USER_NUM', 15);
 define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 
-define('CHART_NULL_FILENAME',     'unknown');
-define('CHART_NULL_CODENUM',      'none');
+define('CHART_NULL_FILENAME',     '.unknown');
+define('CHART_NULL_CODENUM',      '.none');
+define('CHART_NULL_USERNAME',     '.anyone');
 
 
 
@@ -61,7 +62,9 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
 
     $exclsn = false;
     foreach ($recs as $rec) {
-        if (empty($rec->filename)) $rec->filename = CHART_NULL_FILENAME; 
+        if (empty($rec->filename))  $rec->filename = CHART_NULL_FILENAME; 
+        if (empty($rec->username))  $rec->username = CHART_NULL_USERNAME; 
+        if (is_null($rec->codenum)) $rec->codenum  = CHART_NULL_CODENUM; 
         //
         if ($username!=='*' and $rec->username!==$username) $exclsn = true;
         if (!$exclsn) {
@@ -102,7 +105,9 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
     //
     $exclsn = false;
     foreach ($recs as $rec) {
-        if (empty($rec->filename)) $rec->filename = CHART_NULL_FILENAME;
+        if (empty($rec->filename))  $rec->filename = CHART_NULL_FILENAME;
+        if (empty($rec->username))  $rec->username = CHART_NULL_USERNAME; 
+        if (is_null($rec->codenum)) $rec->codenum  = CHART_NULL_CODENUM; 
         //
         if ($username!=='*' and $rec->username!==$username) $exclsn = true;
         if (!$exclsn) {
@@ -218,6 +223,7 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
     $exclsn = false;
     foreach ($recs as $rec) {
         if (empty($rec->filename))  $rec->filename = CHART_NULL_FILENAME; 
+        if (empty($rec->username))  $rec->username = CHART_NULL_USERNAME; 
         if (is_null($rec->codenum)) $rec->codenum  = CHART_NULL_CODENUM; 
         //
         if ($username!=='*' and $rec->username!==$username) $exclsn = true;
@@ -336,6 +342,7 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
     $exclsn = false;
     foreach ($recs as $rec) {
         if (empty($rec->filename))  $rec->filename = CHART_NULL_FILENAME; 
+        if (empty($rec->username))  $rec->username = CHART_NULL_USERNAME; 
         if (is_null($rec->codenum)) $rec->codenum  = CHART_NULL_CODENUM; 
         //
         if ($username!=='*' and $rec->username!==$username) $exclsn = true;
@@ -433,6 +440,7 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
         }
         $yaxis = $chart->get_yaxis(0, true);
         $yaxis->set_min(0);
+        $yaxis->set_stepsize(1);
         if ($dashboard) {
             if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
         }
