@@ -71,37 +71,51 @@ class  ChartView
             print_error('access_forbidden', 'mod_ltids', $this->error_url);
         }
 
-        ////////////////////////////////////////////////////////////////////////////
-        // 取得するレコードの範囲 (デフォルト)
-
-        // 開始日(start_date)と終了日(end_date)があるならそれを受け取る
-        $start_date = optional_param('start_date_input', '*', PARAM_TEXT);
-        $end_date   = optional_param('end_date_input',   '*', PARAM_TEXT);
-
-        $obj_datetime = new DateTime();
-        if ($end_date == '*') {
-            $this->end_date   = $obj_datetime->format('Y-m-d H:i');
-        }
-        else {
-            $this->end_date   = (new DateTime($end_date))->format('Y-m-d H:i');
-        }
-        if ($start_date == '*') {
-            $startdiff = $this->minstance->during_chart;
-            if ($startdiff <= 0) $startdiff = 5400;     // 1:30前
-            $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
-            $this->start_date = $obj_datetime->format('Y-m-d H:i');
-        }
-        else {
-            $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
-        }
-
         //
         // Parameters を受け取る
-        $this->chart_kind = optional_param('chart_kind', 'total_pie', PARAM_TEXT);
-        $this->username   = optional_param('user_select_box', '*',    PARAM_TEXT);
-        $this->filename   = optional_param('file_select_box', '*',    PARAM_TEXT);
-        $this->lti_id     = optional_param('lti_select_box',  '*',    PARAM_TEXT);
+        $this->chart_kind  = optional_param('chart_kind',  'total_pie', PARAM_TEXT);
+        $this->time_period = optional_param('time_period', 'real',      PARAM_TEXT);
+        $this->username    = optional_param('user_select_box', '*',     PARAM_TEXT);
+        $this->filename    = optional_param('file_select_box', '*',     PARAM_TEXT);
+        $this->lti_id      = optional_param('lti_select_box',  '*',     PARAM_TEXT);
 
+        ////////////////////////////////////////////////////////////////////////////
+        // Date
+        $startdiff_r = $this->minstance->during_chart;
+        $startdiff_a = $this->minstance->during_dashboard;
+        if ($startdiff_r <= 0) $startdiff_r = CHART_REALTIME_DURING;
+        if ($startdiff_a <= 0) $startdiff_a = CHART_ANYTIME_DURING;
+
+        $obj_datetime = new DateTime();
+
+        // Real Time
+        if ($this->time_period == 'real') {
+            $this->end_date   = $obj_datetime->format('Y-m-d H:i');
+            $obj_datetime->sub(new DateInterval('PT'.$startdiff_r.'S'));
+            $this->start_date = $obj_datetime->format('Y-m-d H:i');
+        }
+        // Any Period Time
+        else {
+            $start_date = optional_param('start_date_input', '*', PARAM_TEXT);
+            $end_date   = optional_param('end_date_input',   '*', PARAM_TEXT);
+
+            if ($end_date == '*') {
+                $this->end_date = $obj_datetime->format('Y-m-d H:i');
+            }
+            else {
+                $this->end_date = (new DateTime($end_date))->format('Y-m-d H:i');
+            }
+            if ($start_date == '*') {
+                $obj_datetime->sub(new DateInterval('PT'.$startdiff_a.'S'));
+                $this->start_date = $obj_datetime->format('Y-m-d H:i');
+            }
+            else {
+                $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////////
+        // LTI
         $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {
             $this->lti_ids[] = $lti->id;
@@ -137,22 +151,25 @@ class  ChartView
         ksort($this->usernames);
         ksort($this->filenames);
 
+        $add_title = '';
+        if ($this->time_period == 'real') $add_title = 'Real Time ';
+
         //
         // call chart function
         if ($this->chart_kind === 'users_bar') {
-            $this->chart_title = 'Activities per User';
+            $this->chart_title = $add_title.'Activities per User';
             $this->charts = chart_users_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_bar') {
-            $this->chart_title = 'Activities per Code Cell';
+            $this->chart_title = $add_title.'Activities per Code Cell';
             $this->charts = chart_codecell_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_line') {
-            $this->chart_title = 'User Progress on the Task';
+            $this->chart_title = $add_title.'User Progress on the Task';
             $this->charts = chart_codecell_line($recs, $this->username, $this->filename, $this->minstance);
         }
         else {
-            $this->chart_title = 'Total Activities';
+            $this->chart_title = $add_title.'Total Activities';
             $this->charts = chart_total_pie($recs, $this->username, $this->filename, $this->minstance);
         }
 
@@ -175,6 +192,7 @@ class  ChartView
         $this->args->end_date    = $this->end_date;
         $this->args->chart_title = $this->chart_title;
         $this->args->chart_kind  = $this->chart_kind;
+        $this->args->time_period = $this->time_period;
         $this->args->charts      = $this->charts;
 
         include(__DIR__.'/../html/chart_view.html');

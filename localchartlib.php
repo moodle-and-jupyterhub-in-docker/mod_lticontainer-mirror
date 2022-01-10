@@ -17,35 +17,66 @@ define('CHART_BAR_MAX_CODE_NUM',  15);
 define('CHART_LINE_MAX_USER_NUM', 15);
 define('CHART_LINE_MAX_INTERVAL', 1800);       // 30m
 
-define('CHART_NULL_FILENAME',     '.unknown');
+define('CHART_REALTIME_DURING',   5400);       // 1:30m
+define('CHART_ANYTIME_DURING',    604800);     // 7days
+
+define('CHART_NULL_FILENAME',     '.none');
 define('CHART_NULL_USERNAME',     '.anyone');
-define('CHART_NULL_CODENUM',      'null');
+define('CHART_NULL_CODENUM',      'none');
 
 
 
-function  chart_dashboard($recs, $minstance)
+function  chart_dashboard($recs_r, $recs_a, $minstance)
 {
     $charts_data = array();
 
     $charts_data[0] = new StdClass();
-    $charts_data[0]->charts = chart_total_pie($recs, '*', '*', $minstance, true);
+    $charts_data[0]->charts = chart_total_pie($recs_r, '*', '*', $minstance, true);
     $charts_data[0]->kind   = 'total_pie';
-    $charts_data[0]->title  = 'Total Activities';
+    $charts_data[0]->period = 'real';
+    $charts_data[0]->title  = 'Real Time Total Activities';
 
     $charts_data[1] = new StdClass();
-    $charts_data[1]->charts = chart_users_bar($recs, '*', '*', $minstance, true);
+    $charts_data[1]->charts = chart_users_bar($recs_r, '*', '*', $minstance, true);
     $charts_data[1]->kind   = 'users_bar';
-    $charts_data[1]->title  = 'Activities per User';
+    $charts_data[1]->period = 'real';
+    $charts_data[1]->title  = 'Real Time Activities per User';
 
     $charts_data[2] = new StdClass();
-    $charts_data[2]->charts = chart_codecell_bar($recs, '*', '*', $minstance, true);
+    $charts_data[2]->charts = chart_codecell_bar($recs_r, '*', '*', $minstance, true);
     $charts_data[2]->kind   = 'codecell_bar';
-    $charts_data[2]->title  = 'Activities per Code Cell';
+    $charts_data[2]->period = 'real';
+    $charts_data[2]->title  = 'Real Time Activities per Code Cell';
 
     $charts_data[3] = new StdClass();
-    $charts_data[3]->charts = chart_codecell_line($recs, '*', '*', $minstance, true);
+    $charts_data[3]->charts = chart_codecell_line($recs_r, '*', '*', $minstance, true);
     $charts_data[3]->kind   = 'codecell_line';
-    $charts_data[3]->title  = 'User Progress on the Task';
+    $charts_data[3]->period = 'real';
+    $charts_data[3]->title  = 'Real Time User Progress on the Task';
+
+    $charts_data[4] = new StdClass();
+    $charts_data[4]->charts = chart_total_pie($recs_a, '*', '*', $minstance, true);
+    $charts_data[4]->kind   = 'total_pie';
+    $charts_data[4]->period = 'any';
+    $charts_data[4]->title  = 'Total Activities';
+
+    $charts_data[5] = new StdClass();
+    $charts_data[5]->charts = chart_users_bar($recs_a, '*', '*', $minstance, true);
+    $charts_data[5]->kind   = 'users_bar';
+    $charts_data[5]->period = 'any';
+    $charts_data[5]->title  = 'Activities per User';
+
+    $charts_data[6] = new StdClass();
+    $charts_data[6]->charts = chart_codecell_bar($recs_a, '*', '*', $minstance, true);
+    $charts_data[6]->kind   = 'codecell_bar';
+    $charts_data[6]->period = 'any';
+    $charts_data[6]->title  = 'Activities per Code Cell';
+
+    $charts_data[7] = new StdClass();
+    $charts_data[7]->charts = chart_codecell_line($recs_a, '*', '*', $minstance, true);
+    $charts_data[7]->kind   = 'codecell_line';
+    $charts_data[7]->period = 'any';
+    $charts_data[7]->title  = 'User Progress on the Task';
 
     return $charts_data;
 }
@@ -378,6 +409,8 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
     //
     $max_interval = $minstance->chart_line_interval;
     if ($max_interval <= 0) $max_interval = CHART_LINE_MAX_INTERVAL;
+    $max_codenum = 0;
+
     $i = 0;
     foreach ($date_data as $dt => $users) {
         if ($dashboard) $dt_srs[$i] = '';
@@ -396,7 +429,9 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
                     else                                                  $us_srs[$uname][$i] = null; 
                 }
                 else {
-                    $us_srs[$uname][$i] = $users[$uname]['codecell']; 
+                    $codenum = $users[$uname]['codecell']; 
+                    $us_srs[$uname][$i] = $codenum; 
+                    if ($codenum > $max_codenum) $max_codenum = $codenum;
                 }
             }
         }
@@ -414,6 +449,7 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
     ////////////////////////////
     $max_usernum = $minstance->chart_line_usernum;
     if ($max_usernum <=0) $max_usernum = CHART_LINE_MAX_USER_NUM;
+
     $cnt = 0;
     $num = 0;
     $charts = array();
@@ -440,6 +476,7 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
         }
         $yaxis = $chart->get_yaxis(0, true);
         $yaxis->set_min(0);
+        $yaxis->set_max($max_codenum + 1);
         $yaxis->set_stepsize(1);
         if ($dashboard) {
             if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);

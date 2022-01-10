@@ -21,13 +21,13 @@
         <FIELD NAME="make_volumes"  TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="does mod_ltids make volumes of docker?"/>
         <FIELD NAME="no_disp_lti"   TYPE="char" LENGTH="255" NOTNULL="false"             SEQUENCE="false" COMMENT="id array of no displaied lti"/>
         <FIELD NAME="use_podman"    TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
-        <FIELD NAME="use_dashboard"       TYPE="int" LENGTH="1"  NOTNULL="true" DEFAULT="0"     SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
-        <FIELD NAME="during_dashboard"    TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="86400" SEQUENCE="false" COMMENT="Time interval(s) displayed by Dashboard"/>
-        <FIELD NAME="during_chart"        TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400"  SEQUENCE="false" COMMENT="Time interval(s) displayed by Chart"/>
-        <FIELD NAME="chart_bar_usernum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"    SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
-        <FIELD NAME="chart_bar_codenum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"    SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
-        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"    SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
-        <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800"  SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
+        <FIELD NAME="use_dashboard"       TYPE="int" LENGTH="1"  NOTNULL="true" DEFAULT="0"      SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
+        <FIELD NAME="during_dashboard"    TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="604800" SEQUENCE="false" COMMENT="Time interval(s) displayed by Dashboard"/>
+        <FIELD NAME="during_chart"        TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400"   SEQUENCE="false" COMMENT="Time interval(s) displayed by Chart"/>
+        <FIELD NAME="chart_bar_usernum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"     SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
+        <FIELD NAME="chart_bar_codenum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
+        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
+        <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800"   SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

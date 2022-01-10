@@ -14,18 +14,18 @@
       &emsp;
       <label for="lti_select_box">File:</label>
       <?php echo $file_select_box; ?>
-      &emsp;
-      <label for="lti_select_box">Date:</label>
-      <input type="datetime-local" name="start_date_input" value="<?php echo (new DateTime($args->start_date))->format('Y-m-d\TH:i'); ?>">&ensp;-&ensp;
-      <input type="datetime-local" name="end_date_input"   value="<?php echo (new DateTime($args->end_date))->format('Y-m-d\TH:i'); ?>">
+
+      <?php if ($args->time_period != 'real') { ?>
+        &emsp;
+        <label for="lti_select_box">Date:</label>
+        <input type="datetime-local" name="start_date_input" value="<?php echo (new DateTime($args->start_date))->format('Y-m-d\TH:i'); ?>">&ensp;-&ensp;
+        <input type="datetime-local" name="end_date_input"   value="<?php echo (new DateTime($args->end_date))->format('Y-m-d\TH:i'); ?>">
+      <?php } ?>
       &emsp;&emsp;
       <input type="hidden" id="id" name="id" value="<?php echo $cmid; ?>">
-      <input type="hidden" id="chart_kind" name="chart_kind" value="<?php echo $args->chart_kind; ?>">
+      <input type="hidden" id="chart_kind"  name="chart_kind"  value="<?php echo $args->chart_kind; ?>">
+      <input type="hidden" id="time_period" name="time_period" value="<?php echo $args->time_period; ?>">
       <input type="submit" value="Display">
-      <div align="right">
-        Last update:&ensp;
-        <?php echo (new DateTime())->format('Y-m-d H:i:s'); ?>
-      </div">
     </form>
   </td></tr>
 </table>

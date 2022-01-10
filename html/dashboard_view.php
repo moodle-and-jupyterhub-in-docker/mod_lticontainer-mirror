@@ -32,21 +32,34 @@ function show_dashboard_view($cmid, $charts_data)
     echo html_writer::table($table);
 */
 
-    $col_num = 3;
+    $chart_ttl = array('Real Time', 'Any Period Time');
+    $col_num   = 4;
 
     // チャートを描画
-    echo '<table border="1" align="center" cellpadding="0" cellspacing="0">';
+    echo '<table width="80%" border="0" align="center" cellpadding="0" cellspacing="0">';
     $i = 0;
     foreach ($charts_data as $data) {
-        if ($i%$col_num==0) echo '<tr>';
-        $chart_url->param('chart_kind', $data->kind);
-        echo '<td width="400" align="center">';
+        if ($i%$col_num==0) {
+            echo '<table border="0" align="center" cellpadding="0" cellspacing="0">';
+            echo '<tr><td><strong>'.$chart_ttl[$i/$col_num].'</strong></td></tr>';
+            echo '</table>';
+            echo '<table border="1" align="center" cellpadding="0" cellspacing="0">';
+            echo '<tr>';
+        }
+        //
+        $chart_url->param('chart_kind',  $data->kind);
+        $chart_url->param('time_period', $data->period);
+        echo '<td width="320" align="center">';
         echo '<a href='.$chart_url.' >';
         echo '<h4><strong>'.$data->title.'</strong></h4>';
         echo $OUTPUT->render_chart($data->charts[0], false);
         echo '</a>';
         echo '</td>';
-        if (($i+1)%$col_num==0) echo '</tr>';
+        //
+        if (($i+1)%$col_num==0) {
+            echo '</tr>';
+            echo '</table>';
+        }
         $i++;
     }
     echo '</table>';

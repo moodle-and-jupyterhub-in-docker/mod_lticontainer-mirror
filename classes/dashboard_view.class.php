@@ -15,23 +15,26 @@ require_once(__DIR__.'/../localchartlib.php');
 class  DashboardView
 {
     var $cmid;
-    var $courseid    = 0;
+    var $courseid     = 0;
     var $course;
     var $minstance;
     var $mcontext;
 
-    var $isGuest     = true;
+    var $isGuest      = true;
 
-    var $action_url  = '';
-    var $error_url   = '';
-    var $url_params  = array();
+    var $action_url   = '';
+    var $error_url    = '';
+    var $url_params   = array();
 
-    var $start_date  = '';
-    var $end_date    = '';
-    var $lti_ids     = array();
+    var $start_date_r = '';
+    var $start_date_a = '';
+    var $start_date   = '';
+    var $end_date     = '';
+    var $lti_ids      = array();
 
-    var $sql;
-    var $charts_data = array();
+    var $sql_r;         // SQL for Real Time
+    var $sql_a;         // SQL for Any Period Time
+    var $charts_data  = array();
 
 
     function  __construct($cmid, $courseid, $minstance)
@@ -59,13 +62,21 @@ class  DashboardView
         }
 
         ////////////////////////////////////////////////////////////////////////////
-        $startdiff = $this->minstance->during_dashboard;
-        if ($startdiff <= 0) $startdiff = 86400;    //24:00 前
+        $startdiff_r = $this->minstance->during_chart;
+        $startdiff_a = $this->minstance->during_dashboard;
+        if ($startdiff_r <= 0) $startdiff_r = CHART_REALTIME_DURING;
+        if ($startdiff_a <= 0) $startdiff_a = CHART_ANYTIME_DURING;
 
         $obj_datetime = new DateTime();
-        $this->end_date   = $obj_datetime->format('Y-m-d H:i');
+        $this->end_date = $obj_datetime->format('Y-m-d H:i');
+
+        $startdiff  = $startdiff_r;
         $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
-        $this->start_date = $obj_datetime->format('Y-m-d H:i');
+        $this->start_date_r = $obj_datetime->format('Y-m-d H:i');
+
+        $startdiff += $startdiff_a - $startdiff_r;
+        $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
+        $this->start_date_a = $obj_datetime->format('Y-m-d H:i');
 
         $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {
@@ -76,8 +87,11 @@ class  DashboardView
 
     function  set_condition()
     {
-        $this->sql  = get_base_sql($this->courseid, $this->start_date, $this->end_date);
-        $this->sql .= get_lti_sql_condition($this->lti_ids);
+        $this->sql_r  = get_base_sql($this->courseid, $this->start_date_r, $this->end_date);
+        $this->sql_r .= get_lti_sql_condition($this->lti_ids);
+        //
+        $this->sql_a  = get_base_sql($this->courseid, $this->start_date_a, $this->end_date);
+        $this->sql_a .= get_lti_sql_condition($this->lti_ids);
 
         return true;
     }
@@ -87,8 +101,9 @@ class  DashboardView
     {
         global $DB;
 
-        $recs = $DB->get_records_sql($this->sql);
-        $this->charts_data = chart_dashboard($recs, $this->minstance);
+        $recs_r = $DB->get_records_sql($this->sql_r);
+        $recs_a = $DB->get_records_sql($this->sql_a);
+        $this->charts_data = chart_dashboard($recs_r, $recs_a, $this->minstance);
 
         return true;
     }

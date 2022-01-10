@@ -117,17 +117,17 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->setType('use_dashboard', PARAM_INT);
         $mform->setDefault('use_dashboard', 0);
 
-        $mform->addElement('text', 'during_dashboard', get_string('during_dashboard', 'mod_ltids'), array('size' => '12'));
-        $mform->addHelpButton('during_dashboard', 'during_dashboard', 'mod_ltids');
-        $mform->setType('during_dashboard', PARAM_INT);
-        $mform->setDefault('during_dashboard', '86400');
-        $mform->hideIf('during_dashboard', 'use_dashboard', 'eq', 0);
-
-        $mform->addElement('text', 'during_chart', get_string('during_chart', 'mod_ltids'), array('size' => '12'));
-        $mform->addHelpButton('during_chart', 'during_chart', 'mod_ltids');
+        $mform->addElement('text', 'during_chart', get_string('during_realtime', 'mod_ltids'), array('size' => '12'));
+        $mform->addHelpButton('during_chart', 'during_realtime', 'mod_ltids');
         $mform->setType('during_chart', PARAM_INT);
         $mform->setDefault('during_chart', '5400');
         $mform->hideIf('during_chart', 'use_dashboard', 'eq', 0);
+
+        $mform->addElement('text', 'during_dashboard', get_string('during_anytime', 'mod_ltids'), array('size' => '12'));
+        $mform->addHelpButton('during_dashboard', 'during_anytime', 'mod_ltids');
+        $mform->setType('during_dashboard', PARAM_INT);
+        $mform->setDefault('during_dashboard', '604800');
+        $mform->hideIf('during_dashboard', 'use_dashboard', 'eq', 0);
 
         $mform->addElement( 'select', 'chart_bar_usernum', get_string( 'chart_bar_usernum', 'mod_ltids'), array (
                 5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
