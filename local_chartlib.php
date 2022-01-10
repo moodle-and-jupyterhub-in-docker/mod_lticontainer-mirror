@@ -467,6 +467,7 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
         $yaxis->set_min(0);
         $yaxis->set_max($max_codenum + 1);
         $yaxis->set_stepsize(1);
+        $yaxis->set_label("Code Cell No.");
         if ($dashboard) {
             if (method_exists($chart, 'set_legend_options')) $chart->set_legend_options(['display' => false]);
         }
