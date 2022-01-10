@@ -26,16 +26,16 @@ function  chart_dashboard($recs_r, $recs_a, $minstance)
     $charts_data[0]->title  = 'Real Time Total Activities';
 
     $charts_data[1] = new StdClass();
-    $charts_data[1]->charts = chart_users_bar($recs_r, '*', '*', $minstance, true);
-    $charts_data[1]->kind   = 'users_bar';
+    $charts_data[1]->charts = chart_codecell_bar($recs_r, '*', '*', $minstance, true);
+    $charts_data[1]->kind   = 'codecell_bar';
     $charts_data[1]->period = 'real';
-    $charts_data[1]->title  = 'Real Time Activities per User';
+    $charts_data[1]->title  = 'Real Time Activities per Code Cell';
 
     $charts_data[2] = new StdClass();
-    $charts_data[2]->charts = chart_codecell_bar($recs_r, '*', '*', $minstance, true);
-    $charts_data[2]->kind   = 'codecell_bar';
+    $charts_data[2]->charts = chart_users_bar($recs_r, '*', '*', $minstance, true);
+    $charts_data[2]->kind   = 'users_bar';
     $charts_data[2]->period = 'real';
-    $charts_data[2]->title  = 'Real Time Activities per Code Cell';
+    $charts_data[2]->title  = 'Real Time Activities per User';
 
     $charts_data[3] = new StdClass();
     $charts_data[3]->charts = chart_codecell_line($recs_r, '*', '*', $minstance, true);
@@ -50,16 +50,16 @@ function  chart_dashboard($recs_r, $recs_a, $minstance)
     $charts_data[4]->title  = 'Total Activities';
 
     $charts_data[5] = new StdClass();
-    $charts_data[5]->charts = chart_users_bar($recs_a, '*', '*', $minstance, true);
-    $charts_data[5]->kind   = 'users_bar';
+    $charts_data[5]->charts = chart_codecell_bar($recs_a, '*', '*', $minstance, true);
+    $charts_data[5]->kind   = 'codecell_bar';
     $charts_data[5]->period = 'any';
-    $charts_data[5]->title  = 'Activities per User';
+    $charts_data[5]->title  = 'Activities per Code Cell';
 
     $charts_data[6] = new StdClass();
-    $charts_data[6]->charts = chart_codecell_bar($recs_a, '*', '*', $minstance, true);
-    $charts_data[6]->kind   = 'codecell_bar';
+    $charts_data[6]->charts = chart_users_bar($recs_a, '*', '*', $minstance, true);
+    $charts_data[6]->kind   = 'users_bar';
     $charts_data[6]->period = 'any';
-    $charts_data[6]->title  = 'Activities per Code Cell';
+    $charts_data[6]->title  = 'Activities per User';
 
     $charts_data[7] = new StdClass();
     $charts_data[7]->charts = chart_codecell_line($recs_a, '*', '*', $minstance, true);
@@ -160,11 +160,11 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
         if ($maxval < $data['ok'] + $data['er']) $maxval = $data['ok'] + $data['er'];
     }
     if ($maxval>0) {
-        $stepsz = ceil($maxval/4);
+        $stepsz = ceil($maxval/5);
         $pw     = 10**(strlen($stepsz)-1);
         $stepsz = floor($stepsz/$pw)*$pw;
         if ($stepsz==0) $stepsz = 1; 
-        $maxval = $stepsz*5;
+        $maxval = (floor($maxval/$stepsz) + 1)*$stepsz;
     }
     //
     $array_num = count($us_srs);
@@ -279,11 +279,11 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
         if ($maxval < $data['ok'] + $data['er']) $maxval = $data['ok'] + $data['er'];
     }
     if ($maxval>0) {
-        $stepsz = ceil($maxval/4);
+        $stepsz = ceil($maxval/5);
         $pw     = 10**(strlen($stepsz)-1);
         $stepsz = floor($stepsz/$pw)*$pw;
         if ($stepsz==0) $stepsz = 1; 
-        $maxval = $stepsz*5;
+        $maxval = (floor($maxval/$stepsz) + 1)*$stepsz;
     }
     //
     $array_num = count($cd_srs);

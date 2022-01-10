@@ -11,6 +11,5 @@ define('CHART_VIEW_SIZE',         720);
 
 define('CHART_NULL_FILENAME',     '.none');
 define('CHART_NULL_USERNAME',     '.anyone');
-define('CHART_NULL_CODENUM',      'none');
-
+define('CHART_NULL_CODENUM',      'null');
 
