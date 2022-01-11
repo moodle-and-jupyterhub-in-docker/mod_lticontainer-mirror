@@ -262,5 +262,31 @@ function xmldb_ltids_upgrade($oldversion)
     }
 
 
+    // 2022011100
+    if ($oldversion < 2022011100) {
+        $table = new xmldb_table('ltids');
+
+        $field = new xmldb_field('during_realtime', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '5400',  'use_dashboard');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        $field = new xmldb_field('during_anytime',  XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '604800', 'during_realtime');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    // 2022011101
+    if ($oldversion < 2022011101) {
+        $table = new xmldb_table('ltids');
+        //
+        $field = new xmldb_field('during_dashboard');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+        //
+        $field = new xmldb_field('during_chart');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+    }
+
+
     return true;
 }

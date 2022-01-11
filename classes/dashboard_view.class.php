@@ -62,10 +62,10 @@ class  DashboardView
         }
 
         ////////////////////////////////////////////////////////////////////////////
-        $startdiff_r = $this->minstance->during_chart;
-        $startdiff_a = $this->minstance->during_dashboard;
-        if ($startdiff_r <= 0) $startdiff_r = CHART_REALTIME_DURING;
-        if ($startdiff_a <= 0) $startdiff_a = CHART_ANYTIME_DURING;
+        $startdiff_r = $this->minstance->during_realtime;
+        $startdiff_a = $this->minstance->during_anytime;
+        if ($startdiff_r <= 0) $startdiff_r = CHART_DURING_REALTIME;
+        if ($startdiff_a <= 0) $startdiff_a = CHART_DURING_ANYTIME;
 
         $obj_datetime = new DateTime();
         $this->end_date = $obj_datetime->format('Y-m-d H:i');
