@@ -26,7 +26,7 @@
         <FIELD NAME="during_anytime"      TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="604800" SEQUENCE="false" COMMENT="Time interval(s) displayed by any time"/>
         <FIELD NAME="chart_bar_usernum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"     SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
         <FIELD NAME="chart_bar_codenum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
-        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
+        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"     SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
         <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800"   SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
       </FIELDS>
       <KEYS>

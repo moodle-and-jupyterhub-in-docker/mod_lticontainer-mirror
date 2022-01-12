@@ -148,7 +148,7 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->addElement( 'select', 'chart_line_usernum', get_string( 'chart_line_usernum', 'mod_ltids'), array (
                 5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
         ));
-        $mform->setDefault( 'chart_line_usernum', 15);
+        $mform->setDefault( 'chart_line_usernum', 10);
         $mform->addHelpButton('chart_line_usernum', 'chart_line_usernum', 'mod_ltids');
         $mform->setType('chart_line_usernum', PARAM_INT);
         $mform->hideIf('chart_line_usernum', 'use_dashboard', 'eq', 0);

@@ -144,6 +144,7 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
         }
         $exclsn = false;
     }
+    ksort($user_data);
 
     //
     // all data
