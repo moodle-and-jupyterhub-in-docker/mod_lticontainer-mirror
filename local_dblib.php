@@ -27,11 +27,9 @@ function  db_get_valid_ltis($courseid, $minstance, $sort = '')
     $fields = 'id, name, instructorcustomparameters';
     $ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
 
-    $nodisp = explode(',', $minstance->no_disp_lti);
+    $disp = explode(',', $minstance->display_lti);
     foreach ($ltis as $key => $lti) {
-        if (in_array($lti->id, $nodisp)) {
-            unset($ltis[$key]);
-        }
+        if (!in_array($lti->id, $disp)) unset($ltis[$key]);
     }
 
     return $ltis;

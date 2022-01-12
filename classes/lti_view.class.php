@@ -74,19 +74,17 @@ class  LTIConnect
             $this->submitted  = true;
 
             if (property_exists($formdata, 'disp')) {
-                $no_disp  = array();
+                $disp  = array();
                 $ltis = $DB->get_records('lti', array('course' => $this->courseid));
                 foreach ($ltis as $lti) {
-                    if (!array_key_exists($lti->id, $formdata->disp)) {
-                        $no_disp[] = $lti->id;
-                    }
+                    if (array_key_exists($lti->id, $formdata->disp)) $disp[] = $lti->id;
                 }
 
-                $no_disp_list = implode(',', $no_disp);
-                $this->minstance->no_disp_lti = $no_disp_list;
+                $disp_list = implode(',', $disp);
+                $this->minstance->display_lti = $disp_list;
                 $DB->update_record('ltids', $this->minstance);
                 //
-                $event = ltids_get_event($this->cmid, 'lti_setting', $this->url_params, 'no disp: '.$no_disp_list);
+                $event = ltids_get_event($this->cmid, 'lti_setting', $this->url_params, 'display: '.$disp_list);
                 $event->add_record_snapshot('course', $this->course);
                 $event->add_record_snapshot('ltids',  $this->minstance);
                 $event->trigger();

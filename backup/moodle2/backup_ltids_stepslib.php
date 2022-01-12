@@ -45,7 +45,7 @@ class backup_ltids_activity_structure_step extends backup_activity_structure_ste
         // Replace with the attributes and final elements that the element will handle.
         $attributes = array('id');
         $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 
-                                                                                       'custom_params', 'imgname_fltr', 'make_volumes', 'no_disp_lti');
+                                                                      'custom_params', 'imgname_fltr', 'make_volumes', 'display_lti', 'use_podman');
         $ltids = new backup_nested_element('ltids', $attributes, $finalelements);
 
         $finalelements = array('session', 'lti_id', 'updatetm');

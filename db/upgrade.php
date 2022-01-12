@@ -243,7 +243,7 @@ function xmldb_ltids_upgrade($oldversion)
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        $field = new xmldb_field('chart_bar_usernum',   XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '10',    'during_chart');
+        $field = new xmldb_field('chart_bar_usernum',   XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '15',    'during_chart');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -251,7 +251,7 @@ function xmldb_ltids_upgrade($oldversion)
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
-        $field = new xmldb_field('chart_line_usernum',  XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '15',    'chart_bar_codenum');
+        $field = new xmldb_field('chart_line_usernum',  XMLDB_TYPE_INTEGER, '5',  null, XMLDB_NOTNULL, null, '10',    'chart_bar_codenum');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -288,5 +288,17 @@ function xmldb_ltids_upgrade($oldversion)
     }
 
 
+    // 2022011200
+    if ($oldversion < 2022011200) {
+        $table = new xmldb_table('ltids');
+        //
+        $field = new xmldb_field('display_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        //
+        $field = new xmldb_field('no_disp_lti');
+        if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
+    }
     return true;
 }

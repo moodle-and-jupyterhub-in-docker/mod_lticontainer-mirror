@@ -37,7 +37,7 @@ function chart_view_selector($cmid, $args)
     ///////////////////////////////////////
     // LTI選択用セレクトボックス生成
     $lti_select_box  = '<select name="lti_select_box">';
-    if (count($args->lti_info)>1) $lti_select_box .= '<option value="*">*</option>';    // All LTI symbol charcter '*'
+    if (count($args->lti_info)>1 or count($args->lti_info)==0) $lti_select_box .= '<option value="*">*</option>';    // All LTI symbol charcter '*'
     //
     foreach($args->lti_info as $lti) {
         if($lti->id === $args->lti_id) $lti_select_box .= '<option value="'.$lti->id.'" selected>'.$lti->name.'</option>';

@@ -130,15 +130,15 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->hideIf('during_anytime', 'use_dashboard', 'eq', 0);
 
         $mform->addElement( 'select', 'chart_bar_usernum', get_string( 'chart_bar_usernum', 'mod_ltids'), array (
-                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25
         ));
-        $mform->setDefault( 'chart_bar_usernum', 10);
+        $mform->setDefault( 'chart_bar_usernum', 15);
         $mform->addHelpButton('chart_bar_usernum', 'chart_bar_usernum', 'mod_ltids');
         $mform->setType('chart_bar_usernum', PARAM_INT);
         $mform->hideIf('chart_bar_usernum', 'use_dashboard', 'eq', 0);
 
         $mform->addElement( 'select', 'chart_bar_codenum', get_string( 'chart_bar_codenum', 'mod_ltids'), array (
-                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25
         ));
         $mform->setDefault( 'chart_bar_codenum', 15);
         $mform->addHelpButton('chart_bar_codenum', 'chart_bar_codenum', 'mod_ltids');
@@ -146,7 +146,7 @@ class mod_ltids_mod_form extends moodleform_mod {
         $mform->hideIf('chart_bar_codenum', 'use_dashboard', 'eq', 0);
 
         $mform->addElement( 'select', 'chart_line_usernum', get_string( 'chart_line_usernum', 'mod_ltids'), array (
-                5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25, 30 => 30
+                1=>1, 2=>2, 3=>3, 5 => 5, 8=>8, 10 => 10, 15 => 15, 20 => 20
         ));
         $mform->setDefault( 'chart_line_usernum', 10);
         $mform->addHelpButton('chart_line_usernum', 'chart_line_usernum', 'mod_ltids');

@@ -56,16 +56,14 @@ class  LTIConnect
     {
         global $DB;
 
-        $nodisp = explode(',', $this->minstance->no_disp_lti);
+        $disp   = explode(',', $this->minstance->display_lti);
         $sort   = '';
         $fields = 'id,name,instructorcustomparameters';
         $this->items = $DB->get_records('lti', array('course' => $this->courseid), $sort, $fields);
 
         foreach ($this->items as &$item) {
             $item->disp = 1;
-            if (in_array($item->id, $nodisp)) {
-                $item->disp = 0;
-            }
+            if (!in_array($item->id, $disp)) $item->disp = 0;
         }
         return true;
     }
