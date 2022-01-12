@@ -1,7 +1,7 @@
 <?php
 
 
-function show_volume_view_table($items, $base_url)
+function show_volume_view_table($items, $edit_cap, $base_url)
 {
     $table = new html_table();
     //
@@ -25,7 +25,8 @@ function show_volume_view_table($items, $base_url)
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_del','mod_ltids');
+    if ($edit_cap) $table->head [] = get_string('volume_del','mod_ltids');
+    else           $table->head [] = '&nbsp;';
     $table->align[] = 'center';
     $table->size [] = '80px';
     $table->wrap [] = 'nowrap';
@@ -37,7 +38,8 @@ function show_volume_view_table($items, $base_url)
         $table->data[$i][] = $item->driver;
         $table->data[$i][] = $item->shrtname;
         $table->data[$i][] = $item->role;
-        $table->data[$i][] = '<input type="checkbox" name="delete['.$item->fullname.']" value="1" />';
+        if ($edit_cap) $table->data[$i][] = '<input type="checkbox" name="delete['.$item->fullname.']" value="1" />';
+        else           $table->data[$i][] = '&nbsp;';
         $i++;
     }
 

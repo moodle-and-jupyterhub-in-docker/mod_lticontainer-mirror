@@ -68,7 +68,7 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
     }
 
     // View LTI Edit
-    if ($current_tab=='lti_edit_tab' and has_capability('mod/ltids:lti_edit', $context)) {
+    if ($current_tab=='lti_edit_tab' and has_capability('mod/ltids:lti_view', $context)) {
         $lti_id = required_param('lti_id', PARAM_INT);
         $url_params = $url_params;
         $edit_params['lti_id'] = $lti_id;

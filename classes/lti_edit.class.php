@@ -26,6 +26,7 @@ class  LTIEdit
     var $imgname_ok = array();
     var $imgname_ng = array();
 
+    var $edit_cap   = false;
     var $submitted  = false;
     var $isGuest    = true;
 
@@ -91,8 +92,11 @@ class  LTIEdit
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:lti_edit', $this->mcontext)) {
+        if (!has_capability('mod/ltids:lti_view', $this->mcontext)) {
             print_error('access_forbidden', 'mod_ltids', $this->error_url);
+        }
+        if (has_capability('mod/ltids:lti_edit', $this->mcontext)) {
+            $this->edit_cap = true;
         }
 
         $this->custom_prm = new stdClass();
@@ -145,6 +149,9 @@ class  LTIEdit
 
         // POST
         if ($custom_data = data_submitted()) {
+            if (!$this->edit_cap) {
+                print_error('access_forbidden', 'mod_ltids', $this->error_url);
+            }
             if (!has_capability('mod/ltids:db_write', $this->mcontext)) {
                 print_error('access_forbidden', 'mod_ltids', $this->error_url);
             }

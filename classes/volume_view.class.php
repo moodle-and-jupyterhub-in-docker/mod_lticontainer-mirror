@@ -13,9 +13,10 @@ class  VolumeView
     var $host_name  = 'localhost';
 
     var $isGuest    = true;
-
+    var $edit_cap   = false;
     var $submitted  = false;
     var $confirm    = false;
+
     var $action_url = '';
     var $error_url  = '';
     var $url_params = array();
@@ -36,7 +37,7 @@ class  VolumeView
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php',        $this->url_params);
+        $this->error_url  = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
@@ -47,6 +48,9 @@ class  VolumeView
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/ltids:volume_view', $this->mcontext)) {
             print_error('access_forbidden', 'mod_ltids', $this->error_url);
+        }
+        if (has_capability('mod/ltids:volume_edit', $this->mcontext)) {
+            $this->edit_cap = true;
         }
     }
 
@@ -68,7 +72,7 @@ class  VolumeView
 
         // POST
         if ($formdata = data_submitted()) {
-            if (!has_capability('mod/ltids:volume_edit', $this->mcontext)) {
+            if (!$this->edit_cap) {
                 print_error('access_forbidden', 'mod_ltids', $this->error_url);
             }
             if (!confirm_sesskey()) {

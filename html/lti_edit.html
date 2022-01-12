@@ -28,14 +28,16 @@
           </tr>
           <tr>
             <td align='center'>
-              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
-              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
-              <input type='hidden' name='lti_id'  value='<?php echo $this->lti_rec->id;?>' />
-              <input type='hidden' name='others'  value='<?php echo serialize($this->custom_ary->other_cmd);?>' />
-              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
-              <input type='submit' name='submit_lti_update'  value='<?php echo get_string("update");?>' />
-              &nbsp;&nbsp;
-              <input type='reset' name='reset'  value='<?php echo get_string("reset");?>' />
+              <?php if ($this->edit_cap) { ?>
+                <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
+                <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
+                <input type='hidden' name='lti_id'  value='<?php echo $this->lti_rec->id;?>' />
+                <input type='hidden' name='others'  value='<?php echo serialize($this->custom_ary->other_cmd);?>' />
+                <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
+                <input type='submit' name='submit_lti_update' value='<?php echo get_string("update");?>' />
+                &nbsp;&nbsp;
+              <?php } ?>
+              <input type='reset' name='reset' value='<?php echo get_string("reset");?>' />
               <br /><br />
             </td>
           </tr>

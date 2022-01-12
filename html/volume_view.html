@@ -24,16 +24,18 @@
       <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
         <table border="0" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <?php show_volume_view_table($this->items, $this->action_url); ?>
+            <?php show_volume_view_table($this->items, $this->edit_cap, $this->action_url); ?>
           </tr>
           <tr>
             <td align='center'>
-              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
-              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
-              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
-              <input type='submit' name='submit_volume_del'  value='<?php echo get_string("delete");?>' />
-              &nbsp;&nbsp;
-              <input type='reset'  name='reset'   value='<?php echo get_string("reset");?>' />
+              <?php if ($this->edit_cap) { ?>
+                <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
+                <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
+                <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
+                <input type='submit' name='submit_volume_del'  value='<?php echo get_string("delete");?>' />
+                &nbsp;&nbsp;
+                <input type='reset'  name='reset'   value='<?php echo get_string("reset");?>' />
+              <?php } ?>
               <br /><br />
             </td>
           </tr>

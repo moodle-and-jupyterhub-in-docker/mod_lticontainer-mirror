@@ -35,9 +35,9 @@ $lti_id = required_param('lti_id', PARAM_INT);
 // Check
 require_login($course, true, $cm);
 //
-$ltids_lti_edit_cap = false;
-if (has_capability('mod/ltids:lti_edit', $mcontext)) {
-    $ltids_lti_edit_cap = true;
+$ltids_lti_view_cap = false;
+if (has_capability('mod/ltids:lti_view', $mcontext)) {
+    $ltids_lti_view_cap = true;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ $PAGE->set_context($mcontext);
 echo $OUTPUT->header();
 echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
-if ($ltids_lti_edit_cap) { 
+if ($ltids_lti_view_cap) { 
     require_once(__DIR__.'/../classes/lti_edit.class.php');
     $lti_edit = new LTIEdit($cmid, $courseid, $minstance);
     $lti_edit->set_condition();
