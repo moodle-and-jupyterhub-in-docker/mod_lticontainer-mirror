@@ -16,10 +16,10 @@ require_once(__DIR__.'/../classes/event/lti_view.php');
 
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
+$cm   = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);              // コースモジュール
 
 $course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
-$minstance = $DB->get_record('lticontainer',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
+$minstance = $DB->get_record('lticontainer',  array('id'=>$cm->instance), '*', MUST_EXIST); // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト

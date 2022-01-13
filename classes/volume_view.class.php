@@ -1,6 +1,10 @@
 <?php
 
+defined('MOODLE_INTERNAL') || die();
+
+
 require_once(__DIR__.'/../local_lib.php');
+
 
 
 class  VolumeView

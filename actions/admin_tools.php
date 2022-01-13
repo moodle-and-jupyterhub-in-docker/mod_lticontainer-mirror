@@ -15,13 +15,13 @@ require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
 require_once(__DIR__.'/../classes/event/admin_tools.php');
 
 
-$cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
-$course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
-$minstance = $DB->get_record('lticontainer',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
+$cmid = required_param('id', PARAM_INT);                                                        // コースモジュール ID
+$cm   = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                  // コースモジュール
+$course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);            // コースデータ from DB
+$minstance = $DB->get_record('lticontainer',  array('id'=>$cm->instance), '*', MUST_EXIST);     // モジュールインスタンス
 
-$mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
-$ccontext = context_course::instance($course->id);                                          // コースコンテキスト
+$mcontext = context_module::instance($cm->id);                                                  // モジュールコンテキスト
+$ccontext = context_course::instance($course->id);                                              // コースコンテキスト
 
 $courseid = $course->id;
 $user_id  = $USER->id;

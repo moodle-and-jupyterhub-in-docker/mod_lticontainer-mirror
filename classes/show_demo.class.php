@@ -1,5 +1,9 @@
 <?php
 
+defined('MOODLE_INTERNAL') || die();
+
+
+
 class  ShowDemo
 {
     var $courseid     = 0;
@@ -34,6 +38,10 @@ class  ShowDemo
         if ($this->isGuest) {
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
+
+        //
+        $cm = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);
+        require_login($course, true, $cm);
     }
 
 

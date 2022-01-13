@@ -7,6 +7,9 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+defined('MOODLE_INTERNAL') || die();
+
+
 require_once(__DIR__.'/../local_lib.php');
 require_once(__DIR__.'/../local_dblib.php');
 require_once(__DIR__.'/../local_chartlib.php');
