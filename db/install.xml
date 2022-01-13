@@ -34,7 +34,7 @@
         <KEY NAME="fk_course" TYPE="foreign" FIELDS="course" REFTABLE="course" REFFIELDS="id"/>
       </KEYS>
     </TABLE>
-    <TABLE NAME="lticontainer_websock_server_data" COMMENT="Websocket server data">
+    <TABLE NAME="lticontainer_server_data" COMMENT="Websocket server data">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
@@ -52,7 +52,7 @@
         <INDEX NAME="message" UNIQUE="false" FIELDS="message"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lticontainer_websock_client_data" COMMENT="Websocket client data">
+    <TABLE NAME="lticontainer_client_data" COMMENT="Websocket client data">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
@@ -69,7 +69,7 @@
         <INDEX NAME="message" UNIQUE="false" FIELDS="message"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lticontainer_websock_session" COMMENT="Websocket session with LTI id">
+    <TABLE NAME="lticontainer_session" COMMENT="Websocket session with LTI id">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
@@ -85,7 +85,7 @@
         <INDEX NAME="session" UNIQUE="false" FIELDS="session"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="lticontainer_websock_tags" COMMENT="Tags of cells">
+    <TABLE NAME="lticontainer_tags" COMMENT="Tags of cells">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="cell_id" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="cell id that is operated"/>

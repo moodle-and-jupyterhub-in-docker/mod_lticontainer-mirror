@@ -12,11 +12,11 @@ defined('MOODLE_INTERNAL') || die;
 require_once(__DIR__.'/local_lib.php');
 
 
-define('DATA_TABLE',        'lticontainer_websock_data');
-define('SERVER_TABLE',      'lticontainer_websock_server_data');
-define('CLIENT_TABLE',      'lticontainer_websock_client_data');
-define('SESSION_TABLE',     'lticontainer_websock_session');
-define('TAGS_TABLE',        'lticontainer_websock_tags');
+define('DATA_TABLE',        'lticontainer_data');
+define('SERVER_TABLE',      'lticontainer_server_data');
+define('CLIENT_TABLE',      'lticontainer_client_data');
+define('SESSION_TABLE',     'lticontainer_session');
+define('TAGS_TABLE',        'lticontainer_tags');
 
 
 

@@ -111,11 +111,11 @@ function lticontainer_delete_instance($id)
     $DB->delete_records('lticontainer', array('id' => $id));
 
     //
-    $sessions = $DB->get_records('lticontainer_websock_session', array('inst_id' => $id));
+    $sessions = $DB->get_records('lticontainer_session', array('inst_id' => $id));
     foreach ($sessions as $session) {
-        $DB->delete_records('lticontainer_websock_data', array('session' => $session->session));
+        $DB->delete_records('lticontainer_data', array('session' => $session->session));
     }
-    $DB->delete_records('lticontainer_websock_session', array('inst_id' => $id));
+    $DB->delete_records('lticontainer_session', array('inst_id' => $id));
 
     return true;
 }

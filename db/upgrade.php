@@ -80,7 +80,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021082701
     if ($oldversion < 2021082701) {
-        $table = new xmldb_table('lticontainer_websock_session');
+        $table = new xmldb_table('lticontainer_session');
         //
         $field = new xmldb_field('inst_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'course');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -136,7 +136,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122701
     if ($oldversion < 2021122701) {
-        $table = new xmldb_table('lticontainer_websock_server_data');
+        $table = new xmldb_table('lticontainer_server_data');
 
         $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
         $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
@@ -155,7 +155,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122701
     if ($oldversion < 2021122701) {
-        $table = new xmldb_table('lticontainer_websock_client_data');
+        $table = new xmldb_table('lticontainer_client_data');
 
         $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
         $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
@@ -173,7 +173,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122702
     if ($oldversion < 2021122702) {
-        $table = new xmldb_table('lticontainer_websock_tags');
+        $table = new xmldb_table('lticontainer_tags');
         //
         $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '256', null, null, null, null, 'tags');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -184,7 +184,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122702
     if ($oldversion < 2021122702) {
-        $table = new xmldb_table('lticontainer_websock_tags');
+        $table = new xmldb_table('lticontainer_tags');
         //
         $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, null, null, null, 'filename');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -196,7 +196,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('lticontainer_websock_client_data');
+        $table = new xmldb_table('lticontainer_client_data');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
         $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
@@ -205,7 +205,7 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('lticontainer_websock_server_data');
+        $table = new xmldb_table('lticontainer_server_data');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
         $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
@@ -214,14 +214,14 @@ function xmldb_lticontainer_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('lticontainer_websock_session');
+        $table = new xmldb_table('lticontainer_session');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
     }
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('lticontainer_websock_tags');
+        $table = new xmldb_table('lticontainer_tags');
         $index = new xmldb_index('cell_id', XMLDB_INDEX_UNIQUE, array('cell_id'));
         $dbman->add_index($table, $index);
     }

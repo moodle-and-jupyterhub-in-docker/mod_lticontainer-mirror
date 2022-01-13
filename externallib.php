@@ -39,18 +39,18 @@ class mod_lticontainer_external extends external_api
 
         if ($nb_data->host=='server') {
             $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
-            $recs = $DB->get_records('lticontainer_websock_client_data', $condition);
+            $recs = $DB->get_records('lticontainer_client_data', $condition);
             if ($recs) {
                 if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
-                $DB->insert_record('lticontainer_websock_server_data', $nb_data);
+                $DB->insert_record('lticontainer_server_data', $nb_data);
             }
         }
         else if ($nb_data->host=='client') {
             if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
-            $DB->insert_record('lticontainer_websock_client_data', $nb_data);
+            $DB->insert_record('lticontainer_client_data', $nb_data);
             //
             if ($nb_data->tags!='') {
-                $rec = $DB->get_record('lticontainer_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
+                $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
                     /// by 2021 Urano Masanori
                     $properties = 'filename|codenum';
@@ -60,17 +60,17 @@ class mod_lticontainer_external extends external_api
                     foreach($matches as $match) {
                         $nb_data->{$match[1]} = $match[2];
                     } 
-                    $DB->insert_record('lticontainer_websock_tags', $nb_data);
+                    $DB->insert_record('lticontainer_tags', $nb_data);
                 }
             }
         }
         else {  // fesvr: cookie
             if ($nb_data->lti_id!='') {
-                $rec = $DB->get_record('lticontainer_websock_session', array('session'=>$nb_data->session)); 
+                $rec = $DB->get_record('lticontainer_session', array('session'=>$nb_data->session)); 
                 if (!$rec) {
                     $rec = $DB->get_record('lti', array('id'=>$nb_data->lti_id), 'course'); 
                     $nb_data->course = $rec->course;
-                    $DB->insert_record('lticontainer_websock_session', $nb_data);
+                    $DB->insert_record('lticontainer_session', $nb_data);
                 }
             }
         }

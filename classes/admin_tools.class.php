@@ -47,17 +47,17 @@ class  AdminTools
         global $DB, $USER;
 
         /*
-        $recs = $DB->get_records('lticontainer_websock_data');
+        $recs = $DB->get_records('lticontainer_data');
         foreach ($recs as $rec) {
             print_r($rec);
             echo '<br />';
             //
             $rec->id = null;
             if ($rec->host=='server') {
-                $ret = $DB->insert_record('lticontainer_websock_server_data', $rec);
+                $ret = $DB->insert_record('lticontainer_server_data', $rec);
             }
             else if ($rec->host=='client') {
-                $ret = $DB->insert_record('lticontainer_websock_client_data', $rec);
+                $ret = $DB->insert_record('lticontainer_client_data', $rec);
             }
         }
         */
@@ -66,7 +66,7 @@ class  AdminTools
         $properties = 'filename|codenum';
         $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
 
-        $recs = $DB->get_records('lticontainer_websock_tags');
+        $recs = $DB->get_records('lticontainer_tags');
         foreach ($recs as $rec) {
             print_r($rec);
             echo '<br />';
@@ -77,7 +77,7 @@ class  AdminTools
                 foreach($matches as $match) {
                     $rec->{$match[1]} = $match[2];
                 }
-                $DB->update_record('lticontainer_websock_tags', $rec);
+                $DB->update_record('lticontainer_tags', $rec);
             }
         }
         */

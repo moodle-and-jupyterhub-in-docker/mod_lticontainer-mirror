@@ -43,7 +43,7 @@ class restore_lticontainer_activity_structure_step extends restore_activity_stru
         //$userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('lticontainer', '/activity/lticontainer');
-        $paths[] = new restore_path_element('lticontainer_websock_session', '/activity/lticontainer/sessions/session');
+        $paths[] = new restore_path_element('lticontainer_session', '/activity/lticontainer/sessions/session');
 
         return $this->prepare_activity_structure($paths);
     }
@@ -65,7 +65,7 @@ class restore_lticontainer_activity_structure_step extends restore_activity_stru
     }
 
 
-    protected function process_lticontainer_websock_session($data)
+    protected function process_lticontainer_session($data)
     {
         global $DB;
 
@@ -76,7 +76,7 @@ class restore_lticontainer_activity_structure_step extends restore_activity_stru
         $data->inst_id  = $this->get_new_parentid('lticontainer');
         $data->updatetm = $this->apply_date_offset($data->updatetm);
 
-        $newitemid = $DB->insert_record('lticontainer_wedsock_session', $data);
+        $newitemid = $DB->insert_record('lticontainer_session', $data);
         $this->apply_activity_instance($newitemid);
     }
 
