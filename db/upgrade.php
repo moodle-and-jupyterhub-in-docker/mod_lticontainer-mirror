@@ -292,7 +292,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022011200) {
         $table = new xmldb_table('lticontainer');
         //
-        $field = new xmldb_field('display_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
+        $field = new xmldb_field('display_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'make_volumes');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }

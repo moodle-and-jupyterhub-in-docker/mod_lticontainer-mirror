@@ -6,7 +6,7 @@ $functions = array(
     'mod_lticontainer_write_nbdata' => array(               // Service Function Name
         'classname'     => 'mod_lticontainer_external',     // 
         'methodname'    => 'write_nbdata',                  // External Function Name
-        'description'   => 'Write Jupyter Lab/Notebook data to DB',
+        'description'   => 'Write Jupyter Notebook data to DB',
         'type'          => 'write',
         'capabilities'  => 'mod/lticontainer:db_write',
     ),
