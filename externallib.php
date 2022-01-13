@@ -26,11 +26,11 @@ class mod_lticontainer_external extends external_api
         $params = array($data);
         $post = xmlrpc_encode_request($functionname, $params);
     */
-    public static function write_nb_data($data)
+    public static function write_nbdata($data)
     {
         global $DB;
 
-        $param = self::validate_parameters(self::write_nb_data_parameters(), array($data));
+        $param = self::validate_parameters(self::write_nbdata_parameters(), array($data));
         $nb_data = (object)$param[0];
         $nb_data->updatetm = time();
 
@@ -81,7 +81,7 @@ class mod_lticontainer_external extends external_api
 
 
     //
-    public static function write_nb_data_parameters()
+    public static function write_nbdata_parameters()
     {
         return new external_function_parameters(
             array (
@@ -105,7 +105,7 @@ class mod_lticontainer_external extends external_api
 
 
     //
-    public static function write_nb_data_returns()
+    public static function write_nbdata_returns()
     {
         return new external_single_structure(
             array (

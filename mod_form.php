@@ -67,7 +67,7 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         }
 
         //-------------------------------------------------------------------------------
-        // Settings of Options of LTIContainerSpawner module 
+        // Settings of Options of LTIContainer module 
         //
         $mform->addElement('header', 'lticontainer_container_set', get_string('lticontainer_container_set', 'mod_lticontainer'));
 

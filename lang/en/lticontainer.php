@@ -26,9 +26,9 @@
 defined('MOODLE_INTERNAL') || die();
 
 // module
-$string['pluginname'] = 'LTIContainerSpawner';
-$string['modulename'] = 'LTIContainerSpawner';
-$string['modulenameplural'] = 'LTIConrainerSpawners';
+$string['pluginname'] = 'LTIContainer';
+$string['modulename'] = 'LTIContainer';
+$string['modulenameplural'] = 'LTIContainer';
 
 // mod_form
 $string['lticontainername']  = 'Name ';
