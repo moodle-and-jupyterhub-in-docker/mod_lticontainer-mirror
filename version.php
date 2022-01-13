@@ -28,8 +28,8 @@ $plugin = new stdClass();
 
 $plugin->requires  = 2018051700;
 $plugin->component = 'mod_lticontainer';
-$plugin->maturity  = MATURITY_BETA;
+$plugin->maturity  = MATURITY_STABLE;
 
-$plugin->release   = '0.9.40';
+$plugin->release   = '1.0.0';
 $plugin->version   = 2022011302;
 
