@@ -2,6 +2,10 @@
 
 ## Moodle Module for JupyterHub/LTIContainerSpawner
 
+### Attention 
+- **mod_ltids is changed name to mod_lticonatiner**
+- **Please uninstall mod_ltids and reinstall mod_lticontainer (2022 1/13)**
+
 ### Wiki
 - English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer/-/wikis/mod_lticontainer
 - Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer/-/wikis/mod_lticontainer-(J)
