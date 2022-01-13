@@ -66,7 +66,7 @@ class  VolumeView
         $check_course = '_'.$this->courseid.'_'.$this->host_name;
         $len_check = strlen($check_course);
 
-        if (!file_exists(LTIDS_DOCKER_CMD)) {
+        if (!file_exists(LTICONTAINER_DOCKER_CMD)) {
             print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
         }
 
@@ -119,13 +119,13 @@ class  VolumeView
             $vol  = explode(' ', $rslt);
             if (isset($vol[1])) {
                 $role = '';
-                if (!strncmp(LTIDS_LTI_VOLUMES_CMD, $vol[1], strlen(LTIDS_LTI_VOLUMES_CMD))) {
+                if (!strncmp(LTICONTAINER_LTI_VOLUMES_CMD, $vol[1], strlen(LTICONTAINER_LTI_VOLUMES_CMD))) {
                     $role = 'Task Volume';
-                    $len_cmd = strlen(LTIDS_LTI_VOLUMES_CMD);
+                    $len_cmd = strlen(LTICONTAINER_LTI_VOLUMES_CMD);
                 }
-                else if (!strncmp(LTIDS_LTI_SUBMITS_CMD, $vol[1], strlen(LTIDS_LTI_SUBMITS_CMD))) {
+                else if (!strncmp(LTICONTAINER_LTI_SUBMITS_CMD, $vol[1], strlen(LTICONTAINER_LTI_SUBMITS_CMD))) {
                     $role = 'Submit Volume';
-                    $len_cmd = strlen(LTIDS_LTI_SUBMITS_CMD);
+                    $len_cmd = strlen(LTICONTAINER_LTI_SUBMITS_CMD);
                 }
 
                 if ($role!='' and substr($vol[1], -$len_check)==$check_course) { 

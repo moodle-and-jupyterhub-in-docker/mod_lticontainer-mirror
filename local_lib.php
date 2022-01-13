@@ -3,28 +3,28 @@
 defined('MOODLE_INTERNAL') || die;
 
 
-define('LTIDS_DOCKER_CMD',          '/usr/bin/docker');
-define('LTIDS_PODMAN_CMD',          '/usr/bin/podman');
-define('LTIDS_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
+define('LTICONTAINER_DOCKER_CMD',          '/usr/bin/docker');
+define('LTICONTAINER_PODMAN_CMD',          '/usr/bin/podman');
+define('LTICONTAINER_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
 
-define('LTIDS_LTI_PREFIX_CMD',      'lms_');
-define('LTIDS_LTI_USERS_CMD',       'lms_users');
-define('LTIDS_LTI_TEACHERS_CMD',    'lms_teachers');
-define('LTIDS_LTI_IMAGE_CMD',       'lms_image');
-define('LTIDS_LTI_CPUGRNT_CMD',     'lms_cpugrnt');
-define('LTIDS_LTI_MEMGRNT_CMD',     'lms_memgrnt');
-define('LTIDS_LTI_CPULIMIT_CMD',    'lms_cpulimit');
-define('LTIDS_LTI_MEMLIMIT_CMD',    'lms_memlimit');
-define('LTIDS_LTI_OPTIONS_CMD',     'lms_options');
-define('LTIDS_LTI_IFRAME_CMD',      'lms_iframe');
-define('LTIDS_LTI_DEFURL_CMD',      'lms_defurl');
-define('LTIDS_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
-define('LTIDS_LTI_VOLUMES_CMD',     'lms_vol_');
-define('LTIDS_LTI_SUBMITS_CMD',     'lms_sub_');
-define('LTIDS_LTI_PRSNALS_CMD',     'lms_prs_');
-//define('LTIDS_LTI_USERID_CMD',      'lms_userid');
-//define('LTIDS_LTI_GRPID_CMD',       'lms_grpid');
-//define('LTIDS_LTI_GRPNAME_CMD',     'lms_grpname');
+define('LTICONTAINER_LTI_PREFIX_CMD',      'lms_');
+define('LTICONTAINER_LTI_USERS_CMD',       'lms_users');
+define('LTICONTAINER_LTI_TEACHERS_CMD',    'lms_teachers');
+define('LTICONTAINER_LTI_IMAGE_CMD',       'lms_image');
+define('LTICONTAINER_LTI_CPUGRNT_CMD',     'lms_cpugrnt');
+define('LTICONTAINER_LTI_MEMGRNT_CMD',     'lms_memgrnt');
+define('LTICONTAINER_LTI_CPULIMIT_CMD',    'lms_cpulimit');
+define('LTICONTAINER_LTI_MEMLIMIT_CMD',    'lms_memlimit');
+define('LTICONTAINER_LTI_OPTIONS_CMD',     'lms_options');
+define('LTICONTAINER_LTI_IFRAME_CMD',      'lms_iframe');
+define('LTICONTAINER_LTI_DEFURL_CMD',      'lms_defurl');
+define('LTICONTAINER_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
+define('LTICONTAINER_LTI_VOLUMES_CMD',     'lms_vol_');
+define('LTICONTAINER_LTI_SUBMITS_CMD',     'lms_sub_');
+define('LTICONTAINER_LTI_PRSNALS_CMD',     'lms_prs_');
+//define('LTICONTAINER_LTI_USERID_CMD',      'lms_userid');
+//define('LTICONTAINER_LTI_GRPID_CMD',       'lms_grpid');
+//define('LTICONTAINER_LTI_GRPNAME_CMD',     'lms_grpname');
 
 
 //define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
@@ -181,15 +181,15 @@ function container_exec($cmd, $mi)
     }
 
     if ($mi->use_podman==1) {
-        if (file_exists(LTIDS_PODMAN_REMOTE_CMD)) {
-            $container_cmd = LTIDS_PODMAN_REMOTE_CMD.' --url unix://'.$socket_file.' '.$cmd;
+        if (file_exists(LTICONTAINER_PODMAN_REMOTE_CMD)) {
+            $container_cmd = LTICONTAINER_PODMAN_REMOTE_CMD.' --url unix://'.$socket_file.' '.$cmd;
         }
         else {
-            $container_cmd = LTIDS_PODMAN_CMD.' --remote --url unix://'.$socket_file.' '.$cmd;
+            $container_cmd = LTICONTAINER_PODMAN_CMD.' --remote --url unix://'.$socket_file.' '.$cmd;
         }
     }
     else {
-        $container_cmd = LTIDS_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
+        $container_cmd = LTICONTAINER_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
     }
     exec($container_cmd, $rslts);
 
@@ -229,8 +229,8 @@ function lticontainer_explode_custom_params($custom_params)
             $cmd = explode('=', $custom);
             if (!isset($cmd[1])) $cmd[1] = '';
 
-            if (!strncmp(LTIDS_LTI_PREFIX_CMD, $cmd[0], strlen(LTIDS_LTI_PREFIX_CMD))) {
-                if (!strncmp(LTIDS_LTI_VOLUMES_CMD, $cmd[0], strlen(LTIDS_LTI_VOLUMES_CMD))) {
+            if (!strncmp(LTICONTAINER_LTI_PREFIX_CMD, $cmd[0], strlen(LTICONTAINER_LTI_PREFIX_CMD))) {
+                if (!strncmp(LTICONTAINER_LTI_VOLUMES_CMD, $cmd[0], strlen(LTICONTAINER_LTI_VOLUMES_CMD))) {
                     $vol = explode('_', $cmd[0]);
                     if (isset($vol[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -238,7 +238,7 @@ function lticontainer_explode_custom_params($custom_params)
                         if (isset($actl[1])) $cmds->vol_users[$vol[2]] = $actl[1];
                     }
                 }
-                else if (!strncmp(LTIDS_LTI_SUBMITS_CMD, $cmd[0], strlen(LTIDS_LTI_SUBMITS_CMD))) {
+                else if (!strncmp(LTICONTAINER_LTI_SUBMITS_CMD, $cmd[0], strlen(LTICONTAINER_LTI_SUBMITS_CMD))) {
                     $sub = explode('_', $cmd[0]);
                     if (isset($sub[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -246,7 +246,7 @@ function lticontainer_explode_custom_params($custom_params)
                         if (isset($actl[1])) $cmds->sub_users[$sub[2]] = $actl[1];
                     }
                 }
-                else if (!strncmp(LTIDS_LTI_PRSNALS_CMD, $cmd[0], strlen(LTIDS_LTI_PRSNALS_CMD))) {
+                else if (!strncmp(LTICONTAINER_LTI_PRSNALS_CMD, $cmd[0], strlen(LTICONTAINER_LTI_PRSNALS_CMD))) {
                     $prs = explode('_', $cmd[0]);
                     if (isset($prs[2])) {
                         $actl = explode(':', $cmd[1]);
@@ -291,27 +291,27 @@ function lticontainer_join_custom_params($custom_data)
 
     $lowstr = mb_strtolower($custom_data->lms_users);
     $value  = preg_replace("/[^a-z0-9\-\_\*, ]/", '', $lowstr);
-    $param  = LTIDS_LTI_USERS_CMD.'='.$value;
+    $param  = LTICONTAINER_LTI_USERS_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_teachers);
     $value  = preg_replace("/[^a-z0-9\*, ]/", '', $lowstr);
-    $param  = LTIDS_LTI_TEACHERS_CMD.'='.$value;
+    $param  = LTICONTAINER_LTI_TEACHERS_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_image);
     $value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
-    $param  = LTIDS_LTI_IMAGE_CMD.'='.$value;
+    $param  = LTICONTAINER_LTI_IMAGE_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_cpulimit);
     $climit = preg_replace("/[^0-9\.]/", '', $lowstr);
-    $param  = LTIDS_LTI_CPULIMIT_CMD.'='.$climit;
+    $param  = LTICONTAINER_LTI_CPULIMIT_CMD.'='.$climit;
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_memlimit);
     $mlimit = preg_replace("/[^0-9,]/", '', $lowstr);
-    $param  = LTIDS_LTI_MEMLIMIT_CMD.'='.$mlimit;
+    $param  = LTICONTAINER_LTI_MEMLIMIT_CMD.'='.$mlimit;
     $custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_cpugrnt);
@@ -319,7 +319,7 @@ function lticontainer_join_custom_params($custom_data)
     //if ($climit!='' and $climit!='0.0') {
     //    if ((float)$climit < (float)$value) $value = $climit;
     //}
-    //$param  = LTIDS_LTI_CPUGRNT_CMD.'='.$value;
+    //$param  = LTICONTAINER_LTI_CPUGRNT_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_memgrnt);
@@ -329,44 +329,44 @@ function lticontainer_join_custom_params($custom_data)
     //    $int_value  = (int)preg_replace("/[^0-9]/", '', $value);
     //    if ($int_mlimit < $int_value) $value = $mlimit;
     //}
-    //$param  = LTIDS_LTI_MEMGRNT_CMD.'='.$value;
+    //$param  = LTICONTAINER_LTI_MEMGRNT_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_defurl);
     $value  = preg_replace("/[^a-z\/]/", '', $lowstr);
-    $param  = LTIDS_LTI_DEFURL_CMD.'='.$value;
+    $param  = LTICONTAINER_LTI_DEFURL_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_userid);
     //$value  = preg_replace("/[^0-9]/", '', $lowstr);
-    //$param  = LTIDS_LTI_USERID_CMD.'='.$value;
+    //$param  = LTICONTAINER_LTI_USERID_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_grpid);
     //$value  = preg_replace("/[^0-9]/", '', $lowstr);
-    //$param  = LTIDS_LTI_GRPID_CMD.'='.$value;
+    //$param  = LTICONTAINER_LTI_GRPID_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_grpname);
     //$value  = preg_replace("/[^a-z0-9\-\_]/", '', $lowstr);
-    //$param  = LTIDS_LTI_GRPNAME_CMD.'='.$value;
+    //$param  = LTICONTAINER_LTI_GRPNAME_CMD.'='.$value;
     //$custom_params .= $param."\r\n";
 
     $lowstr  = mb_strtolower($custom_data->instanceid);
     $inst_id = preg_replace("/[^0-9]/", '', $lowstr);
     $lowstr  = mb_strtolower($custom_data->lti_id);
     $lti_id  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param   = LTIDS_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $lowstr = mb_strtolower($custom_data->lms_iframe);
     $value = preg_replace("/[^0-9]/", '', $lowstr);
-    $param = LTIDS_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
+    $param = LTICONTAINER_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     //$lowstr = mb_strtolower($custom_data->lms_options);
     //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
-    //$param  = LTIDS_LTI_OPTIONS_CMD.'='.$avlue;
+    //$param  = LTICONTAINER_LTI_OPTIONS_CMD.'='.$avlue;
     //$custom_params .= $param."\r\n";
 
     // Volume

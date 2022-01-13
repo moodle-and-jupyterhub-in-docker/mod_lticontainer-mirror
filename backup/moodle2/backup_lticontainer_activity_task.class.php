@@ -66,11 +66,11 @@ class backup_lticontainer_activity_task extends backup_activity_task
 
         // Link to the list of choices.
         $search = "/(".$base."\/mod\/lticontainer\/index.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@LTIDSINDEX*$2@$', $content);
+        $content = preg_replace($search, '$@LTICONTAINERINDEX*$2@$', $content);
 
         // Link to choice view by moduleid.
         $search = "/(".$base."\/mod\/lticontainer\/view.php\?id\=)([0-9]+)/";
-        $content = preg_replace($search, '$@LTIDSVIEWBYID*$2@$', $content);
+        $content = preg_replace($search, '$@LTICONTAINERVIEWBYID*$2@$', $content);
 
         return $content;
     }

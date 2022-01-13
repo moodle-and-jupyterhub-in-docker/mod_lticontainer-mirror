@@ -132,12 +132,12 @@ class  LTIEdit
         }
         #
         if ($this->minstance->use_podman==1) {
-            if (!file_exists(LTIDS_PODMAN_CMD) and  !file_exists(LTIDS_PODMAN_REMOTE_CMD)) {
+            if (!file_exists(LTICONTAINER_PODMAN_CMD) and  !file_exists(LTICONTAINER_PODMAN_REMOTE_CMD)) {
                 print_error('no_podman_command', 'mod_lticontainer', $this->error_url);
             }
         }
         else {
-            if (!file_exists(LTIDS_DOCKER_CMD)) print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
+            if (!file_exists(LTICONTAINER_DOCKER_CMD)) print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
         }
         
         // Launcher Container
@@ -186,7 +186,7 @@ class  LTIEdit
             if ($this->minstance->make_volumes==1) {
                 $i = 0;
                 foreach ($custom_data->lms_vol_ as $vol) {
-                    if ($custom_data->lms_vol_name[$i]!='' and $vol!=LTIDS_LTI_PRSNALS_CMD) {
+                    if ($custom_data->lms_vol_name[$i]!='' and $vol!=LTICONTAINER_LTI_PRSNALS_CMD) {
                         $lowstr  = mb_strtolower($custom_data->lms_vol_name[$i]);
                         $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
                         $cmd = 'volume create '.$vol.$dirname.'_'.$this->courseid.'_'.$this->host_name;
