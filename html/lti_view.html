@@ -11,7 +11,7 @@
         <tr>
           <td bgcolor="#d8e8d8">&nbsp;</td>
           <td bgcolor="#d8e8d8">
-            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('lti_view_tab','mod_ltids').'</strong>'); ?>
+            <?php echo $OUTPUT->heading('<strong>'.$this->minstance->name.' :: '.get_string('lti_view_tab','mod_lticontainer').'</strong>'); ?>
           </td>
           <td bgcolor="#d8e8d8">&nbsp;</td>
         </tr>
@@ -31,8 +31,8 @@
           <tr>
             <td>
               <?php
-              if (has_capability('mod/ltids:lti_setting', $this->mcontext)) {
-                  print('<a href='.$this->setup_url.' > '.get_string('Edit_display_settings', 'mod_ltids').' </a><br />');
+              if (has_capability('mod/lticontainer:lti_setting', $this->mcontext)) {
+                  print('<a href='.$this->setup_url.' > '.get_string('Edit_display_settings', 'mod_lticontainer').' </a><br />');
               }
               ?>
             </td>

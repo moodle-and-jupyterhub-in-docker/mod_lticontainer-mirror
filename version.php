@@ -17,7 +17,7 @@
 /**
  * Plugin version and other meta-data are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -27,9 +27,9 @@ defined('MOODLE_INTERNAL') || die();
 $plugin = new stdClass();
 
 $plugin->requires  = 2018051700;
-$plugin->component = 'mod_ltids';
+$plugin->component = 'mod_lticontainer';
 $plugin->maturity  = MATURITY_BETA;
 
-$plugin->release   = '0.9.33';
-$plugin->version   = 2022011200;
+$plugin->release   = '0.9.40';
+$plugin->version   = 2022011300;
 

@@ -2,7 +2,7 @@
 /**
  * chart_view.php
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Urano Masanori and Fumi.Iseki
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

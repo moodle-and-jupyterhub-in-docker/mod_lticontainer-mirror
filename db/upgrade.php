@@ -17,7 +17,7 @@
 /**
  * Plugin upgrade steps are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    upgrade
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__.'/upgradelib.php');
 
 /**
- * Execute mod_ltids upgrade from the given old version.
+ * Execute mod_lticontainer upgrade from the given old version.
  *
  * @param int $oldversion
  * @return bool
  */
-function xmldb_ltids_upgrade($oldversion)
+function xmldb_lticontainer_upgrade($oldversion)
 {
     global $DB;
 
@@ -46,7 +46,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021080603
     if ($oldversion < 2021080603) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('docker_host', XMLDB_TYPE_CHAR, '128', null, null, null, 'localhost', 'introformat');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -69,7 +69,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021080605
     if ($oldversion < 2021080605) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('custom_params', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'docker_pass');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -80,7 +80,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021082701
     if ($oldversion < 2021082701) {
-        $table = new xmldb_table('ltids_websock_session');
+        $table = new xmldb_table('lticontainer_websock_session');
         //
         $field = new xmldb_field('inst_id', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '0', 'course');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -91,7 +91,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021082804
     if ($oldversion < 2021082804) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('no_disp_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -102,7 +102,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021083000
     if ($oldversion < 2021083000) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('make_volumes', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -113,9 +113,9 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021091000
     if ($oldversion < 2021091000) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
-        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, ltids', 'custom_params');
+        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, lticontainer', 'custom_params');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
@@ -124,7 +124,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 20210902101
     if ($oldversion < 2021092101) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('use_podman', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '0', 'no_disp_lti');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -136,7 +136,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122701
     if ($oldversion < 2021122701) {
-        $table = new xmldb_table('ltids_websock_server_data');
+        $table = new xmldb_table('lticontainer_websock_server_data');
 
         $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
         $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
@@ -155,7 +155,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122701
     if ($oldversion < 2021122701) {
-        $table = new xmldb_table('ltids_websock_client_data');
+        $table = new xmldb_table('lticontainer_websock_client_data');
 
         $table->add_field('id',       XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, XMLDB_SEQUENCE);
         $table->add_field('session',  XMLDB_TYPE_CHAR,    '42', null, XMLDB_NOTNULL, null, '');
@@ -173,7 +173,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122702
     if ($oldversion < 2021122702) {
-        $table = new xmldb_table('ltids_websock_tags');
+        $table = new xmldb_table('lticontainer_websock_tags');
         //
         $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '256', null, null, null, null, 'tags');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -184,7 +184,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122702
     if ($oldversion < 2021122702) {
-        $table = new xmldb_table('ltids_websock_tags');
+        $table = new xmldb_table('lticontainer_websock_tags');
         //
         $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, null, null, null, 'filename');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -196,7 +196,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('ltids_websock_client_data');
+        $table = new xmldb_table('lticontainer_websock_client_data');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
         $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
@@ -205,7 +205,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('ltids_websock_server_data');
+        $table = new xmldb_table('lticontainer_websock_server_data');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
         $index = new xmldb_index('message', XMLDB_INDEX_NOTUNIQUE, array('message'));
@@ -214,14 +214,14 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('ltids_websock_session');
+        $table = new xmldb_table('lticontainer_websock_session');
         $index = new xmldb_index('session', XMLDB_INDEX_NOTUNIQUE, array('session'));
         $dbman->add_index($table, $index);
     }
 
     // 2021122817
     if ($oldversion < 2021122817) {
-        $table = new xmldb_table('ltids_websock_tags');
+        $table = new xmldb_table('lticontainer_websock_tags');
         $index = new xmldb_index('cell_id', XMLDB_INDEX_UNIQUE, array('cell_id'));
         $dbman->add_index($table, $index);
     }
@@ -229,7 +229,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2022010501
     if ($oldversion < 2022010501) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
 
         $field = new xmldb_field('use_dashboard',       XMLDB_TYPE_INTEGER, '1',  null, XMLDB_NOTNULL, null, '0',     'use_podman');
         if (!$dbman->field_exists($table, $field)) {
@@ -264,7 +264,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2022011100
     if ($oldversion < 2022011100) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
 
         $field = new xmldb_field('during_realtime', XMLDB_TYPE_INTEGER, '10', null, XMLDB_NOTNULL, null, '5400',  'use_dashboard');
         if (!$dbman->field_exists($table, $field)) {
@@ -278,7 +278,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2022011101
     if ($oldversion < 2022011101) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('during_dashboard');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
@@ -290,7 +290,7 @@ function xmldb_ltids_upgrade($oldversion)
 
     // 2022011200
     if ($oldversion < 2022011200) {
-        $table = new xmldb_table('ltids');
+        $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('display_lti', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'custom_params');
         if (!$dbman->field_exists($table, $field)) {

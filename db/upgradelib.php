@@ -17,7 +17,7 @@
 /**
  * Plugin upgrade helper functions are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    upgrade
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Helper function used by the upgrade.php file.
  */
-function mod_ltids_helper_function()
+function mod_lticontainer_helper_function()
 {
     global $DB;
 

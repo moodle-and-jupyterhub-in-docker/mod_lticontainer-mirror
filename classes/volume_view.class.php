@@ -36,20 +36,20 @@ class  VolumeView
         $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
 
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/ltids/actions/volume_view.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/lticontainer/actions/volume_view.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/actions/volume_view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:volume_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+        if (!has_capability('mod/lticontainer:volume_view', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
-        if (has_capability('mod/ltids:volume_edit', $this->mcontext)) {
+        if (has_capability('mod/lticontainer:volume_edit', $this->mcontext)) {
             $this->edit_cap = true;
         }
     }
@@ -67,16 +67,16 @@ class  VolumeView
         $len_check = strlen($check_course);
 
         if (!file_exists(LTIDS_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_ltids', $this->error_url);
+            print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
         }
 
         // POST
         if ($formdata = data_submitted()) {
             if (!$this->edit_cap) {
-                print_error('access_forbidden', 'mod_ltids', $this->error_url);
+                print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_ltids',  $this->error_url);
+                print_error('invalid_sesskey', 'mod_lticontainer',  $this->error_url);
             }
             $this->submitted  = true;
 
@@ -96,9 +96,9 @@ class  VolumeView
                                 $cmd = 'volume rm '.$del;
                                 container_exec($cmd, $this->minstance);
                                 //
-                                $event = ltids_get_event($this->cmid, 'volume_delete', $this->url_params, $cmd);
+                                $event = lticontainer_get_event($this->cmid, 'volume_delete', $this->url_params, $cmd);
                                 $event->add_record_snapshot('course', $this->course);
-                                $event->add_record_snapshot('ltids',  $this->minstance);
+                                $event->add_record_snapshot('lticontainer',  $this->minstance);
                                 $event->trigger();
                             }
                         }
@@ -110,7 +110,7 @@ class  VolumeView
         //
         $rslts = container_exec('volume ls', $this->minstance);
         if (isset($rslts['error'])) {
-            print_error($rslts['error'], 'mod_ltids', $this->error_url);
+            print_error($rslts['error'], 'mod_lticontainer', $this->error_url);
         }
 
         $i = 0;

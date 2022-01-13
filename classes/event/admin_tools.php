@@ -1,6 +1,6 @@
 <?php
 
-namespace mod_ltids\event;
+namespace mod_lticontainer\event;
 
 
 defined('MOODLE_INTERNAL') || die();
@@ -21,7 +21,7 @@ class admin_tools extends \core\event\base
         if (!is_array($params)) $params = array();
 
         $params = array_merge(array('id' => $this->contextinstanceid), $params);
-        return new \moodle_url('/mod/ltids/actions/admin_tools.php', $params);
+        return new \moodle_url('/mod/lticontainer/actions/admin_tools.php', $params);
     }
 
 
@@ -38,6 +38,6 @@ class admin_tools extends \core\event\base
     {
         $this->data['crud'] = 'crud';                   // イベントの種類　c(reate), r(ead), u(pdate), d(elete)
         $this->data['edulevel'] = self::LEVEL_OTHER;    // 教育レベル LEVEL_TEACHING, LEVEL_PARTICIPATING or LEVEL_OTHER 
-        $this->data['objecttable'] = 'ltids';
+        $this->data['objecttable'] = 'lticontainer';
     }
 }

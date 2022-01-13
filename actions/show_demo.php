@@ -2,7 +2,7 @@
 /**
  * show_demo.php
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -14,13 +14,13 @@ require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
 require_once(__DIR__.'/../classes/event/show_demo.php');
 
 
-//ltids_init_session();
-//$SESSION->ltids->is_started = false;
+//lticontainer_init_session();
+//$SESSION->lticontainer->is_started = false;
 
 $cmid = required_param('id', PARAM_INT);                                                    // コースモジュール ID
-$cm   = get_coursemodule_from_id('ltids', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
+$cm   = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                     // コースモジュール
 $course    = $DB->get_record('course', array('id'=>$cm->course),   '*', MUST_EXIST);        // コースデータ from DB
-$minstance = $DB->get_record('ltids',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
+$minstance = $DB->get_record('lticontainer',  array('id'=>$cm->instance), '*', MUST_EXIST);        // モジュールインスタンス
 
 $mcontext = context_module::instance($cm->id);                                              // モジュールコンテキスト
 $ccontext = context_course::instance($course->id);                                          // コースコンテキスト
@@ -41,14 +41,14 @@ $current_tab = 'show_demo_tab';
 $this_action = 'show_demo';
 
 // Event
-$event = ltids_get_event($cmid, $this_action, $urlparams);
+$event = lticontainer_get_event($cmid, $this_action, $urlparams);
 $event->add_record_snapshot('course', $course);
-$event->add_record_snapshot('ltids', $minstance);
+$event->add_record_snapshot('lticontainer', $minstance);
 $event->trigger();
 
 ///////////////////////////////////////////////////////////////////////////
 // URL
-$base_url = new moodle_url('/mod/ltids/actions/'.$this_action.'.php');
+$base_url = new moodle_url('/mod/lticontainer/actions/'.$this_action.'.php');
 $base_url->params($urlparams);
 $this_url = new moodle_url($base_url);
 
@@ -59,7 +59,7 @@ $this_url = new moodle_url($base_url);
 
 ///////////////////////////////////////////////////////////////////////////
 // Print the page header
-$PAGE->navbar->add(get_string('ltids:show_demo', 'mod_ltids'));
+$PAGE->navbar->add(get_string('lticontainer:show_demo', 'mod_lticontainer'));
 $PAGE->set_url($this_url, $urlparams);
 $PAGE->set_title(format_string($minstance->name));
 $PAGE->set_heading(format_string($course->fullname));

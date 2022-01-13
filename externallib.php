@@ -3,7 +3,7 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once("$CFG->libdir/externallib.php");
-//require_once(dirname(__FILE__).'/classes/ltids_webservice_handler.php');
+//require_once(dirname(__FILE__).'/classes/lticontainer_webservice_handler.php');
 
 
 //
@@ -11,7 +11,7 @@ require_once("$CFG->libdir/externallib.php");
 //
 
 
-class mod_ltids_external extends external_api 
+class mod_lticontainer_external extends external_api 
 {
     /**
      * Get list of courses with active sessions for today.
@@ -39,18 +39,18 @@ class mod_ltids_external extends external_api
 
         if ($nb_data->host=='server') {
             $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
-            $recs = $DB->get_records('ltids_websock_client_data', $condition);
+            $recs = $DB->get_records('lticontainer_websock_client_data', $condition);
             if ($recs) {
                 if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
-                $DB->insert_record('ltids_websock_server_data', $nb_data);
+                $DB->insert_record('lticontainer_websock_server_data', $nb_data);
             }
         }
         else if ($nb_data->host=='client') {
             if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
-            $DB->insert_record('ltids_websock_client_data', $nb_data);
+            $DB->insert_record('lticontainer_websock_client_data', $nb_data);
             //
             if ($nb_data->tags!='') {
-                $rec = $DB->get_record('ltids_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
+                $rec = $DB->get_record('lticontainer_websock_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
                     /// by 2021 Urano Masanori
                     $properties = 'filename|codenum';
@@ -60,17 +60,17 @@ class mod_ltids_external extends external_api
                     foreach($matches as $match) {
                         $nb_data->{$match[1]} = $match[2];
                     } 
-                    $DB->insert_record('ltids_websock_tags', $nb_data);
+                    $DB->insert_record('lticontainer_websock_tags', $nb_data);
                 }
             }
         }
         else {  // fesvr: cookie
             if ($nb_data->lti_id!='') {
-                $rec = $DB->get_record('ltids_websock_session', array('session'=>$nb_data->session)); 
+                $rec = $DB->get_record('lticontainer_websock_session', array('session'=>$nb_data->session)); 
                 if (!$rec) {
                     $rec = $DB->get_record('lti', array('id'=>$nb_data->lti_id), 'course'); 
                     $nb_data->course = $rec->course;
-                    $DB->insert_record('ltids_websock_session', $nb_data);
+                    $DB->insert_record('lticontainer_websock_session', $nb_data);
                 }
             }
         }
@@ -88,7 +88,7 @@ class mod_ltids_external extends external_api
                 new external_single_structure(
                     array(
                         'host'     => new external_value(PARAM_TEXT, 'server or client'),
-                        'inst_id'  => new external_value(PARAM_TEXT, 'id of mod_ltids instance'),
+                        'inst_id'  => new external_value(PARAM_TEXT, 'id of mod_lticontainer instance'),
                         'lti_id'   => new external_value(PARAM_TEXT, 'id of LTI module instance'),
                         'session'  => new external_value(PARAM_TEXT, 'id of session'),
                         'message'  => new external_value(PARAM_TEXT, 'id of message'),

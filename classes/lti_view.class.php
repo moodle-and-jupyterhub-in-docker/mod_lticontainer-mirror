@@ -33,20 +33,20 @@ class  LTIConnect
 
         //$this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/lti_view.php',    $this->url_params);
-        $this->setup_url  = new moodle_url('/mod/ltids/actions/lti_setting.php', $this->url_params);
-        $this->edit_url   = new moodle_url('/mod/ltids/actions/lti_edit.php',    $this->url_params);
-        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php',        $this->url_params);
+        $this->action_url = new moodle_url('/mod/lticontainer/actions/lti_view.php',    $this->url_params);
+        $this->setup_url  = new moodle_url('/mod/lticontainer/actions/lti_setting.php', $this->url_params);
+        $this->edit_url   = new moodle_url('/mod/lticontainer/actions/lti_edit.php',    $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',        $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:lti_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+        if (!has_capability('mod/lticontainer:lti_view', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
     }
 
@@ -65,11 +65,11 @@ class  LTIConnect
 
         // POST
         if ($formdata = data_submitted()) {
-            if (!has_capability('mod/ltids:lti_setting', $this->mcontext)) {
-                print_error('access_forbidden', 'mod_ltids', $this->error_url);
+            if (!has_capability('mod/lticontainer:lti_setting', $this->mcontext)) {
+                print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
             }
             if (!confirm_sesskey()) {
-                print_error('invalid_sesskey', 'mod_ltids', $this->error_url);
+                print_error('invalid_sesskey', 'mod_lticontainer', $this->error_url);
             }
             $this->submitted  = true;
 
@@ -82,11 +82,11 @@ class  LTIConnect
 
                 $disp_list = implode(',', $disp);
                 $this->minstance->display_lti = $disp_list;
-                $DB->update_record('ltids', $this->minstance);
+                $DB->update_record('lticontainer', $this->minstance);
                 //
-                $event = ltids_get_event($this->cmid, 'lti_setting', $this->url_params, 'display: '.$disp_list);
+                $event = lticontainer_get_event($this->cmid, 'lti_setting', $this->url_params, 'display: '.$disp_list);
                 $event->add_record_snapshot('course', $this->course);
-                $event->add_record_snapshot('ltids',  $this->minstance);
+                $event->add_record_snapshot('lticontainer',  $this->minstance);
                 $event->trigger();
             }
         }

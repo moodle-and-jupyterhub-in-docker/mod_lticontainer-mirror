@@ -2,7 +2,7 @@
 /**
  * Local DB Library for retrieving data stored in the DB.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Urano Masanori <j18081mu@edu.tuis.ac.jp> and Fumi.Iseki
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -12,11 +12,11 @@ defined('MOODLE_INTERNAL') || die;
 require_once(__DIR__.'/local_lib.php');
 
 
-define('DATA_TABLE',        'ltids_websock_data');
-define('SERVER_TABLE',      'ltids_websock_server_data');
-define('CLIENT_TABLE',      'ltids_websock_client_data');
-define('SESSION_TABLE',     'ltids_websock_session');
-define('TAGS_TABLE',        'ltids_websock_tags');
+define('DATA_TABLE',        'lticontainer_websock_data');
+define('SERVER_TABLE',      'lticontainer_websock_server_data');
+define('CLIENT_TABLE',      'lticontainer_websock_client_data');
+define('SESSION_TABLE',     'lticontainer_websock_session');
+define('TAGS_TABLE',        'lticontainer_websock_tags');
 
 
 

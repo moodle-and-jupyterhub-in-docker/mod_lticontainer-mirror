@@ -4,12 +4,12 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
 {
     $table = new html_table();
     //
-    $table->head [] = get_string('custom_command', 'mod_ltids');
+    $table->head [] = get_string('custom_command', 'mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '165px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('users/image', 'mod_ltids'); 
+    $table->head [] = get_string('users/image', 'mod_lticontainer'); 
     $table->align[] = 'left';
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';
@@ -70,7 +70,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
 
     //
     // LTIDS_LTI_USERS_CMD
-    $table->data[$i][] = '<strong>'.get_string('users_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('users_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_USERS_CMD.'" size="50" maxlength="200" value="'.$users_cmd.'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
@@ -86,7 +86,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
 
     //
     // LTIDS_LTI_TEACHERS_CMD
-    $table->data[$i][] = '<strong>'.get_string('teachers_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('teachers_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_TEACHERS_CMD.'" size="50" maxlength="200" value="'.$teachers_cmd.'" />';
     $table->data[$i][] = '';
     $table->data[$i][] = '';
@@ -108,7 +108,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         if ($image==$image_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$image.'" '.$selected.'>'.$image.'</option>';
     }
-    $table->data[$i][] = '<strong>'.get_string('image_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('image_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_IMAGE_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
 
@@ -130,7 +130,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         if ($cpu==$cpulimit_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
     }
-    $table->data[$i][] = '<strong>'.get_string('cpulimit_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('cpulimit_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_CPULIMIT_CMD.'" >'.$select_opt.'</select>';
 
     // LTIDS_CPUGRNT_CMD
@@ -143,7 +143,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
             if ($cpu==$cpugrnt_cmd) $selected = 'selected="selected"';
             $select_opt .= '<option value="'.$cpu.'" '.$selected.'>'.$key.'</option>';
         }
-        $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_ltids').'</strong>';
+        $table->data[$i][] = '<strong>'.get_string('cpugrnt_cmd_ttl', 'mod_lticontainer').'</strong>';
         $table->data[$i][] = '<select name="'.LTIDS_LTI_CPUGRNT_CMD.'" >'.$select_opt.'</select>';
     }*/
     $i++;
@@ -156,7 +156,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         if ($url==$url_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$url.'" '.$selected.'>'.$key.'</option>';
     }
-    $table->data[$i][] = '<strong>'.get_string('lab_url_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('lab_url_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_DEFURL_CMD.'" >'.$select_opt.'</select>';
     $table->data[$i][] = '';
 
@@ -167,7 +167,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
         if ($mem==$memlimit_cmd) $selected = 'selected="selected"';
         $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
     }
-    $table->data[$i][] = '<strong>'.get_string('memlimit_cmd_ttl', 'mod_ltids').'</strong>';
+    $table->data[$i][] = '<strong>'.get_string('memlimit_cmd_ttl', 'mod_lticontainer').'</strong>';
     $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMLIMIT_CMD.'" >'.$select_opt.'</select>';
 
     // LTIDS_MEMGRNT_CMD
@@ -180,7 +180,7 @@ function show_lti_edit_table_cmd($cmds, $params, $minstance)
             if ($mem==$memgrnt_cmd) $selected = 'selected="selected"';
             $select_opt .= '<option value="'.$mem.'" '.$selected.'>'.$key.'</option>';
         }
-        $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_ltids').'</strong>';
+        $table->data[$i][] = '<strong>'.get_string('memgrnt_cmd_ttl', 'mod_lticontainer').'</strong>';
         $table->data[$i][] = '<select name="'.LTIDS_LTI_MEMGRNT_CMD.'" >'.$select_opt.'</select>';
     }*/
     $i++;
@@ -210,22 +210,22 @@ function show_lti_edit_table_vol($cmds)
 {
     $table = new html_table();
     //
-    $table->head [] = get_string('volume_role', 'mod_ltids');
+    $table->head [] = get_string('volume_role', 'mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_name', 'mod_ltids');
+    $table->head [] = get_string('volume_name', 'mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('access_name', 'mod_ltids');
+    $table->head [] = get_string('access_name', 'mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '300px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('access_users', 'mod_ltids');
+    $table->head [] = get_string('access_users', 'mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
@@ -237,7 +237,7 @@ function show_lti_edit_table_vol($cmds)
         foreach($cmds->mount_vol as $key => $value) { 
             if (!isset($cmds->vol_users[$key])) $cmds->vol_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTIDS_LTI_VOLUMES_CMD.'[]" value="'.LTIDS_LTI_VOLUMES_CMD.'" />'. 
-                                 '<strong>'.get_string('vol_cmd_ttl', 'mod_ltids').'</strong>';
+                                 '<strong>'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</strong>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->vol_users[$key].'" />';
@@ -250,7 +250,7 @@ function show_lti_edit_table_vol($cmds)
         foreach($cmds->mount_sub as $key => $value) { 
             if (!isset($cmds->sub_users[$key])) $cmds->sub_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTIDS_LTI_VOLUMES_CMD.'[]" value="'.LTIDS_LTI_SUBMITS_CMD.'" />'. 
-                                 '<strong>'.get_string('sub_cmd_ttl', 'mod_ltids').'</strong>';
+                                 '<strong>'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</strong>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->sub_users[$key].'" />';
@@ -263,7 +263,7 @@ function show_lti_edit_table_vol($cmds)
         foreach($cmds->mount_prs as $key => $value) { 
             if (!isset($cmds->prs_users[$key])) $cmds->prs_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTIDS_LTI_VOLUMES_CMD.'[]" value="'.LTIDS_LTI_PRSNALS_CMD.'" />'. 
-                                 '<strong>'.get_string('prs_cmd_ttl', 'mod_ltids').'</strong>';
+                                 '<strong>'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</strong>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->prs_users[$key].'" />';
@@ -273,9 +273,9 @@ function show_lti_edit_table_vol($cmds)
 
     // New Volumes
     $num = 3;
-    $select_opt  = '<option value="'.LTIDS_LTI_VOLUMES_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_ltids').'</option>';
-    $select_opt .= '<option value="'.LTIDS_LTI_SUBMITS_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_ltids').'</option>';
-    $select_opt .= '<option value="'.LTIDS_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_ltids').'</option>';
+    $select_opt  = '<option value="'.LTIDS_LTI_VOLUMES_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</option>';
+    $select_opt .= '<option value="'.LTIDS_LTI_SUBMITS_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</option>';
+    $select_opt .= '<option value="'.LTIDS_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</option>';
     for ($cnt=0; $cnt<$num; $cnt++) {
         $table->data[$i][] = '<select name="'.LTIDS_LTI_VOLUMES_CMD.'[]" autocomplete="off">'.$select_opt.'</select>'; 
         $table->data[$i][] = '<input type="text" name="'.LTIDS_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="" />';

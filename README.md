@@ -1,10 +1,10 @@
-# mod_ltids 
+# mod_lticontainer 
 
 ## Moodle Module for JupyterHub/LTIContainerSpawner
 
 ### Wiki
-- English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids
-- Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids-(J)
+- English:  https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer/-/wikis/mod_lticontainer
+- Japanese: https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer/-/wikis/mod_lticontainer-(J)
 
 ### Please see also bellow wiki
 * English:  https://gitlab.nsl.tuis.ac.jp/iseki/lticontainerspawner/-/wikis/Moodle---JupyterHub

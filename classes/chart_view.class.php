@@ -2,7 +2,7 @@
 /**
  * chart_view.class.php
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Urano Masanori <j18081mu@edu.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -57,18 +57,18 @@ class  ChartView
         $this->minstance = $minstance;
 
         $this->url_params = array('id'=>$cmid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/chart_view.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php', $this->url_params);
+        $this->action_url = new moodle_url('/mod/lticontainer/actions/chart_view.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php', $this->url_params);
 
         // for Guest
         $this->isGuest = isguestuser();
         if ($this->isGuest) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
         //
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/ltids:chart_view', $this->mcontext)) {
-            print_error('access_forbidden', 'mod_ltids', $this->error_url);
+        if (!has_capability('mod/lticontainer:chart_view', $this->mcontext)) {
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
 
         //

@@ -9,7 +9,7 @@ function show_lti_disp_table($items)
     $table->size [] = '40px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('lti_name','mod_ltids');
+    $table->head [] = get_string('lti_name','mod_lticontainer');
     $table->align[] = 'center';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';

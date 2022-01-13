@@ -17,7 +17,7 @@
 /**
  * Plugin capabilities are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    access
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-    'mod/ltids:lti_view' => array(
+    'mod/lticontainer:lti_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -37,7 +37,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:volume_view' => array(
+    'mod/lticontainer:volume_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -46,7 +46,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:volume_edit' => array(
+    'mod/lticontainer:volume_edit' => array(
         'riskbitmask' => RISK_DATALOSS | RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -55,7 +55,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:lti_edit' => array(
+    'mod/lticontainer:lti_edit' => array(
         'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -64,7 +64,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:lti_setting' => array(
+    'mod/lticontainer:lti_setting' => array(
         'riskbitmask' => RISK_CONFIG,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -73,7 +73,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:dashboard_view' => array(
+    'mod/lticontainer:dashboard_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -82,7 +82,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:chart_view' => array(
+    'mod/lticontainer:chart_view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_COURSE,
         'archetypes' => array(
@@ -91,7 +91,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:db_write' => array(
+    'mod/lticontainer:db_write' => array(
         'riskbitmask' => RISK_DATALOSS | RISK_SPAM,
         'captype' => 'write',
         'contextlevel' => CONTEXT_COURSE,
@@ -100,7 +100,7 @@ $capabilities = array(
         ),
     ),
 
-    'mod/ltids:admin_tools' => array(
+    'mod/lticontainer:admin_tools' => array(
         'riskbitmask' => RISK_PERSONAL | RISK_DATALOSS,
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,

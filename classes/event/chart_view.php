@@ -1,6 +1,6 @@
 <?php
 
-namespace mod_ltids\event;
+namespace mod_lticontainer\event;
 
 
 defined('MOODLE_INTERNAL') || die();
@@ -21,7 +21,7 @@ class chart_view extends \core\event\base
         if (!is_array($params)) $params = array();
 
         $params = array_merge(array('course' => $this->courseid), $params);
-        return new \moodle_url('/mod/ltids/actions/chart_view.php', $params);
+        return new \moodle_url('/mod/lticontainer/actions/chart_view.php', $params);
     }
 
 

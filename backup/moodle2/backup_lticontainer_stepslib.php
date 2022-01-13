@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Backup steps for ltids are defined here.
+ * Backup steps for lticontainer are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Define the complete structure for backup, with file and id annotations.
  */
-class backup_ltids_activity_structure_step extends backup_activity_structure_step
+class backup_lticontainer_activity_structure_step extends backup_activity_structure_step
 {
     /**
      * Defines the structure of the resulting xml file.
@@ -46,26 +46,26 @@ class backup_ltids_activity_structure_step extends backup_activity_structure_ste
         $attributes = array('id');
         $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 
                                                                       'custom_params', 'imgname_fltr', 'make_volumes', 'display_lti', 'use_podman');
-        $ltids = new backup_nested_element('ltids', $attributes, $finalelements);
+        $lticontainer = new backup_nested_element('lticontainer', $attributes, $finalelements);
 
         $finalelements = array('session', 'lti_id', 'updatetm');
-        $session = new backup_nested_element('ltids_websock_session', $attributes, $finalelements);
+        $session = new backup_nested_element('lticontainer_websock_session', $attributes, $finalelements);
 
         $sessions = new backup_nested_element('sessions');
         
         // Build the tree with these elements with $root as the root of the backup tree.
-        $ltids->add_child($sessions);
+        $lticontainer->add_child($sessions);
         $sessions->add_child($session);
 
         // Define the source tables for the elements.
-        $ltids->set_source_table('ltids', array('id' => backup::VAR_ACTIVITYID));
-        $session->set_source_table('ltids_websock_session', array('inst_id' => backup::VAR_PARENTID));
+        $lticontainer->set_source_table('lticontainer', array('id' => backup::VAR_ACTIVITYID));
+        $session->set_source_table('lticontainer_websock_session', array('inst_id' => backup::VAR_PARENTID));
 
         // Define id annotations.
 
         // Define file annotations.
-        $ltids->annotate_files('ltids', 'intro', null); 
+        $lticontainer->annotate_files('lticontainer', 'intro', null); 
 
-        return $this->prepare_activity_structure($ltids);
+        return $this->prepare_activity_structure($lticontainer);
     }
 }

@@ -17,7 +17,7 @@
 /**
  * Plugin strings are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    string
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -31,11 +31,11 @@ $string['modulename'] = 'LTIContainerSpawner';
 $string['modulenameplural'] = 'LTIConrainerSpawners';
 
 // mod_form
-$string['ltidsname']  = 'Name ';
+$string['lticontainername']  = 'Name ';
 $string['description'] = 'Description';
-$string['ltidsname_help'] = 'Name of this instance of module';
-$string['ltids_container_set'] = 'Settings of Container and LTI';
-$string['ltids_chart_set'] = 'Settings of Dashboard and Charts';
+$string['lticontainername_help'] = 'Name of this instance of module';
+$string['lticontainer_container_set'] = 'Settings of Container and LTI';
+$string['lticontainer_chart_set'] = 'Settings of Dashboard and Charts';
 $string['docker_host'] = 'Docker/Podman host';
 $string['docker_host_help'] = 'IP address or FQDN of Docker/Podman host';
 $string['docker_user'] = 'Docker/Podman user';
@@ -46,8 +46,8 @@ $string['show_custom_params'] = 'Show custom parameters';
 $string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
 $string['imagename_filter'] = 'Image name filter words';
 $string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
-$string['make_docker_volumes'] = 'Does mod_ltids create docker volumes ?';
-$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_ltids when LTI Edit Tab is saved';
+$string['make_docker_volumes'] = 'Does mod_lticontainer create docker volumes ?';
+$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_lticontainer when LTI Edit Tab is saved';
 $string['use_podman'] = 'Use Podman instead of Docker';
 $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub.';
 
@@ -79,17 +79,17 @@ $string['no_podman_command'] = 'podman-remote or podman command does not exist (
 
 
 // Capability / パンくずメニュー
-$string['ltids:over_view'] = 'Over View';
-$string['ltids:show_demo'] = 'Demo';
-$string['ltids:volume_view'] = 'Volumes View';
-$string['ltids:volume_edit'] = 'Volumes Edit';
-$string['ltids:lti_view'] = 'LTI Connections';
-$string['ltids:lti_edit'] = 'LTI Edit';
-$string['ltids:lti_setting'] = 'LTI Settings';
-$string['ltids:dashboard_view'] = 'Dashboard View';
-$string['ltids:chart_view'] = 'Charts View';
-$string['ltids:admin_tools'] = 'Admin Tools';
-$string['ltids:db_write'] = 'DB Write';
+$string['lticontainer:over_view'] = 'Over View';
+$string['lticontainer:show_demo'] = 'Demo';
+$string['lticontainer:volume_view'] = 'Volumes View';
+$string['lticontainer:volume_edit'] = 'Volumes Edit';
+$string['lticontainer:lti_view'] = 'LTI Connections';
+$string['lticontainer:lti_edit'] = 'LTI Edit';
+$string['lticontainer:lti_setting'] = 'LTI Settings';
+$string['lticontainer:dashboard_view'] = 'Dashboard View';
+$string['lticontainer:chart_view'] = 'Charts View';
+$string['lticontainer:admin_tools'] = 'Admin Tools';
+$string['lticontainer:db_write'] = 'DB Write';
 
 // Tab
 $string['over_view_tab'] = 'Over View';
@@ -135,8 +135,8 @@ $string['cpulimit_cmd_ttl'] = 'CPU Limit';
 $string['memlimit_cmd_ttl'] = 'Memory Limit';
 
 // view.php
-$string['wiki_url'] = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids/-/wikis/mod_ltids';
-$string['git_url']  = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_ltids';
+$string['wiki_url'] = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer/-/wikis/mod_lticontainer';
+$string['git_url']  = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer';
 $string['Edit'] = 'Edit';
 $string['Edit_settings'] = 'Edit settings';
 $string['Edit_display_settings'] = 'Edit display settings';

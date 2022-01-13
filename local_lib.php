@@ -97,7 +97,7 @@ function  check_include_substr_or($name, $array_str)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function ltids_get_event($cmid, $action, $params='', $info='')
+function lticontainer_get_event($cmid, $action, $params='', $info='')
 {
     global $CFG;
 
@@ -110,31 +110,31 @@ function ltids_get_event($cmid, $action, $params='', $info='')
     );
     //
     if      ($action=='over_view') {
-        $event = \mod_ltids\event\over_view::create($args);
+        $event = \mod_lticontainer\event\over_view::create($args);
     }
     else if ($action=='lti_view') {
-        $event = \mod_ltids\event\lti_view::create($args);
+        $event = \mod_lticontainer\event\lti_view::create($args);
     }
     else if ($action=='lti_edit') {
-        $event = \mod_ltids\event\lti_edit::create($args);
+        $event = \mod_lticontainer\event\lti_edit::create($args);
     }
     else if ($action=='lti_setting') {
-        $event = \mod_ltids\event\lti_setting::create($args);
+        $event = \mod_lticontainer\event\lti_setting::create($args);
     }
     else if ($action=='volume_view') {
-        $event = \mod_ltids\event\volume_view::create($args);
+        $event = \mod_lticontainer\event\volume_view::create($args);
     }
     else if ($action=='volume_delete') {
-        $event = \mod_ltids\event\volume_delete::create($args);
+        $event = \mod_lticontainer\event\volume_delete::create($args);
     }
     else if ($action=='dashboard_view') {
-        $event = \mod_ltids\event\dashboard_view::create($args);
+        $event = \mod_lticontainer\event\dashboard_view::create($args);
     }
     else if ($action=='chart_view') {
-        $event = \mod_ltids\event\chart_view::create($args);
+        $event = \mod_lticontainer\event\chart_view::create($args);
     }
     else if ($action=='admin_tools') {
-        $event = \mod_ltids\event\admin_tools::create($args);
+        $event = \mod_lticontainer\event\admin_tools::create($args);
     }
 
     return $event;
@@ -168,7 +168,7 @@ function container_socket($mi, $socket_file)
 function container_exec($cmd, $mi)
 {
     $rslts = array();
-    $socket_file = '/tmp/ltids_'.$mi->docker_host.'.sock';
+    $socket_file = '/tmp/lticontainer_'.$mi->docker_host.'.sock';
 
     if ($mi->docker_host=='') {
         return $rslts;
@@ -209,7 +209,7 @@ function container_exec($cmd, $mi)
 //
 
 // コマンドの分解
-function ltids_explode_custom_params($custom_params)
+function lticontainer_explode_custom_params($custom_params)
 {
     $cmds = new stdClass();
     $cmds->custom_cmd = array();
@@ -270,7 +270,7 @@ function ltids_explode_custom_params($custom_params)
 
 
 // コマンドを結合してテキストへ
-function ltids_join_custom_params($custom_data)
+function lticontainer_join_custom_params($custom_data)
 {
     $custom_params = '';
     if (!isset($custom_data->lms_users))       $custom_data->lms_users       = '';

@@ -1,6 +1,6 @@
 <?php
 
-namespace mod_ltids\event;
+namespace mod_lticontainer\event;
 
 
 defined('MOODLE_INTERNAL') || die();
@@ -21,7 +21,7 @@ class volume_delete extends \core\event\base
         if (!is_array($params)) $params = array();
 
         $params = array_merge(array('course' => $this->courseid), $params);
-        return new \moodle_url('/mod/ltids/actions/volume_delete.php', $params);
+        return new \moodle_url('/mod/lticontainer/actions/volume_delete.php', $params);
     }
 
 

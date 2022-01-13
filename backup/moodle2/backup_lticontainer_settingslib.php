@@ -17,7 +17,7 @@
 /**
  * Plugin custom settings are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later

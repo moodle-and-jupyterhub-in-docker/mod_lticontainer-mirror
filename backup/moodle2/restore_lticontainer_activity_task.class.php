@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * The task that provides a complete restore of mod_ltids is defined here.
+ * The task that provides a complete restore of mod_lticontainer is defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -28,12 +28,12 @@ defined('MOODLE_INTERNAL') || die();
 // More information about the backup process: {@link https://docs.moodle.org/dev/Backup_API}.
 // More information about the restore process: {@link https://docs.moodle.org/dev/Restore_API}.
 
-require_once($CFG->dirroot.'//mod/ltids/backup/moodle2/restore_ltids_stepslib.php');
+require_once($CFG->dirroot.'//mod/lticontainer/backup/moodle2/restore_lticontainer_stepslib.php');
 
 /**
- * Restore task for mod_ltids.
+ * Restore task for mod_lticontainer.
  */
-class restore_ltids_activity_task extends restore_activity_task
+class restore_lticontainer_activity_task extends restore_activity_task
 {
     /**
      * Defines particular settings that this activity can have.
@@ -48,7 +48,7 @@ class restore_ltids_activity_task extends restore_activity_task
      * @return base_step.
      */
     protected function define_my_steps() {
-        $this->add_step(new restore_ltids_activity_structure_step('ltids_structure', 'ltids.xml'));
+        $this->add_step(new restore_lticontainer_activity_structure_step('lticontainer_structure', 'lticontainer.xml'));
     }
 
     /**
@@ -61,7 +61,7 @@ class restore_ltids_activity_task extends restore_activity_task
 
         // Define the contents.
 
-        $contents[] = new restore_decode_content('ltids', array('intro'), 'ltids');
+        $contents[] = new restore_decode_content('lticontainer', array('intro'), 'lticontainer');
 
         return $contents;
     }
@@ -81,7 +81,7 @@ class restore_ltids_activity_task extends restore_activity_task
 
     /**
      * Defines the restore log rules that will be applied by the
-     * {@see restore_logs_processor} when restoring mod_ltids logs. It
+     * {@see restore_logs_processor} when restoring mod_lticontainer logs. It
      * must return one array of {@see restore_log_rule} objects.
      *
      * @return array.
@@ -90,13 +90,13 @@ class restore_ltids_activity_task extends restore_activity_task
         $rules = array();
 
         // Define the rules.
-        $rules[] = new restore_log_rule('ltids', 'over_view',     'view.php?id={course_module}',                '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'lti_view',      'actions/lti_view.php?id={course_module}',    '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'lti_setting',   'actions/lti_view.php?id={course_module}',    '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'lti_edit',      'actions/lti_edit.php?id={course_module}',    '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'volume_view',   'actions/volume_view.php?id={course_module}', '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'volume_delete', 'actione/volume_view.php?id={course_module}', '{ltids}');
-        $rules[] = new restore_log_rule('ltids', 'dashboard_view','actions/dashboard.php?id={course_module}',   '{ltids}');
+        $rules[] = new restore_log_rule('lticontainer', 'over_view',     'view.php?id={course_module}',                '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_view',      'actions/lti_view.php?id={course_module}',    '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_setting',   'actions/lti_view.php?id={course_module}',    '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_edit',      'actions/lti_edit.php?id={course_module}',    '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'volume_view',   'actions/volume_view.php?id={course_module}', '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'volume_delete', 'actione/volume_view.php?id={course_module}', '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'dashboard_view','actions/dashboard.php?id={course_module}',   '{lticontainer}');
 
         return $rules;
     }

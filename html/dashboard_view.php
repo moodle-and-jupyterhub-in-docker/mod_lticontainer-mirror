@@ -2,7 +2,7 @@
 /**
  * dashboard_view.php
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Urano Masanori and Fumi.Iseki
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -12,7 +12,7 @@ function show_dashboard_view($cmid, $charts_data)
 {
     global $OUTPUT;
 
-    $chart_url = new moodle_url('/mod/ltids/actions/chart_view.php', array('id'=>$cmid));
+    $chart_url = new moodle_url('/mod/lticontainer/actions/chart_view.php', array('id'=>$cmid));
 
 /*
     $table = new html_table();

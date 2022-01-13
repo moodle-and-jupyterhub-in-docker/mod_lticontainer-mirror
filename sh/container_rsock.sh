@@ -6,11 +6,11 @@
 #
 #  ex.1) for Docker
 #        # ./container_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
-#        # docker -H unix:///tmp/ltids_docker.hogebar.jp.sock ps
+#        # docker -H unix:///tmp/lticontainer_docker.hogebar.jp.sock ps
 #
 #  ex.2) for Podman
 #        # ./container_rsock.sh podman.hogebar.jp podman passwd  /tmp/podman.sock /var/run/podman/podman.sock
-#        # podman-remote --url unix:///tmp/ltidsi_podman.hogebar.jp.sock ps
+#        # podman-remote --url unix:///tmp/lticontaineri_podman.hogebar.jp.sock ps
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
@@ -31,7 +31,7 @@ printf -v SSH_PASS '%q' "$3"
 if [ "$4" != "" ]; then
     printf -v LLSOCKET '%q' "$4"
 else
-    LLSOCKET=/tmp/ltids_${SSH_HOST}.sock
+    LLSOCKET=/tmp/lticontainer_${SSH_HOST}.sock
 fi
 #
 if [ "$5" != "" ]; then

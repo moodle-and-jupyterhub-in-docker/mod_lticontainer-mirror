@@ -17,7 +17,7 @@
 /**
  * Display the tab menu.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @copyright   2021 Urano Masanori <j18081mu@edu.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -47,51 +47,51 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
     $url_params = ['id' => $cm_id];
 
     // Overview
-    $row[] = make_tabobj( 'over_view_tab', get_string('over_view_tab', 'mod_ltids'), '/mod/ltids/view.php', $url_params);
+    $row[] = make_tabobj( 'over_view_tab', get_string('over_view_tab', 'mod_lticontainer'), '/mod/lticontainer/view.php', $url_params);
 
     // for Demo
-    //$row[] = make_tabobj('show_demo_tab', get_string('show_demo_tab', 'mod_ltids'), '/mod/ltids/actions/show_demo.php', $url_params);
+    //$row[] = make_tabobj('show_demo_tab', get_string('show_demo_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/show_demo.php', $url_params);
 
     // Dashboard Tab
-    if ($minstance->use_dashboard==1 and has_capability('mod/ltids:dashboard_view', $context)) {
-        $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_ltids'), '/mod/ltids/actions/dashboard_view.php', $url_params);
+    if ($minstance->use_dashboard==1 and has_capability('mod/lticontainer:dashboard_view', $context)) {
+        $row[] = make_tabobj('dashboard_view_tab', get_string('dashboard_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/dashboard_view.php', $url_params);
     }
 
     // View Chart Tab
-    if ($current_tab=='chart_view_tab' and has_capability('mod/ltids:chart_view', $context)) {
-        $row[] = make_tabobj('chart_view_tab', get_string('chart_view_tab', 'mod_ltids'), '/mod/ltids/actions/chart_view.php', $url_params);
+    if ($current_tab=='chart_view_tab' and has_capability('mod/lticontainer:chart_view', $context)) {
+        $row[] = make_tabobj('chart_view_tab', get_string('chart_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/chart_view.php', $url_params);
     }
 
     // View LTI Connections
-    if (has_capability('mod/ltids:lti_view', $context)) {
-        $row[] = make_tabobj('lti_view_tab', get_string('lti_view_tab', 'mod_ltids'), '/mod/ltids/actions/lti_view.php', $url_params);
+    if (has_capability('mod/lticontainer:lti_view', $context)) {
+        $row[] = make_tabobj('lti_view_tab', get_string('lti_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_view.php', $url_params);
     }
 
     // View LTI Edit
-    if ($current_tab=='lti_edit_tab' and has_capability('mod/ltids:lti_view', $context)) {
+    if ($current_tab=='lti_edit_tab' and has_capability('mod/lticontainer:lti_view', $context)) {
         $lti_id = required_param('lti_id', PARAM_INT);
         $url_params = $url_params;
         $edit_params['lti_id'] = $lti_id;
-        $row[] = make_tabobj('lti_edit_tab', get_string('lti_edit_tab', 'mod_ltids'), '/mod/ltids/actions/lti_edit.php', $edit_params);
+        $row[] = make_tabobj('lti_edit_tab', get_string('lti_edit_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_edit.php', $edit_params);
     }
 
     // View Volumes
-    if (has_capability('mod/ltids:volume_view', $context)) {
-        $row[] = make_tabobj('volume_view_tab', get_string('volume_view_tab', 'mod_ltids'), '/mod/ltids/actions/volume_view.php', $url_params);
+    if (has_capability('mod/lticontainer:volume_view', $context)) {
+        $row[] = make_tabobj('volume_view_tab', get_string('volume_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/volume_view.php', $url_params);
     }
 
     // View LTI Setting
-    if ($current_tab=='lti_setting_tab' and has_capability('mod/ltids:lti_setting', $context)) {
-        $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_ltids'), '/mod/ltids/actions/lti_etting.php', $url_params);
+    if ($current_tab=='lti_setting_tab' and has_capability('mod/lticontainer:lti_setting', $context)) {
+        $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_etting.php', $url_params);
     }
 
     // Admin Tools Tab for debug or development
-    if (has_capability('mod/ltids:admin_tools', $context)) {
-    //    $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_ltids'), '/mod/ltids/actions/admin_tools.php', $url_params);
+    if (has_capability('mod/lticontainer:admin_tools', $context)) {
+    //    $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/admin_tools.php', $url_params);
     }
     
     // Return to Course
-    $row[] = make_tabobj('', get_string('returnto_course_tab', 'mod_ltids'), $CFG->wwwroot.'/course/view.php', ['id' => $course_id]);
+    $row[] = make_tabobj('', get_string('returnto_course_tab', 'mod_lticontainer'), $CFG->wwwroot.'/course/view.php', ['id' => $course_id]);
 
     return $row;
 }

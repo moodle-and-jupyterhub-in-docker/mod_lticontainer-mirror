@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * All the steps to restore mod_ltids are defined here.
+ * All the steps to restore mod_lticontainer are defined here.
  *
- * @package     mod_ltids
+ * @package     mod_lticontainer
  * @category    backup
  * @copyright   2021 Fumi.Iseki <iseki@rsch.tuis.ac.jp>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -29,9 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 // More information about the restore process: {@link https://docs.moodle.org/dev/Restore_API}.
 
 /**
- * Defines the structure step to restore one mod_ltids activity.
+ * Defines the structure step to restore one mod_lticontainer activity.
  */
-class restore_ltids_activity_structure_step extends restore_activity_structure_step 
+class restore_lticontainer_activity_structure_step extends restore_activity_structure_step 
 {
     /**
      * Defines the structure to be restored.
@@ -42,14 +42,14 @@ class restore_ltids_activity_structure_step extends restore_activity_structure_s
         $paths = array();
         //$userinfo = $this->get_setting_value('userinfo');
 
-        $paths[] = new restore_path_element('ltids', '/activity/ltids');
-        $paths[] = new restore_path_element('ltids_websock_session', '/activity/ltids/sessions/session');
+        $paths[] = new restore_path_element('lticontainer', '/activity/lticontainer');
+        $paths[] = new restore_path_element('lticontainer_websock_session', '/activity/lticontainer/sessions/session');
 
         return $this->prepare_activity_structure($paths);
     }
 
 
-    protected function process_ltids($data)
+    protected function process_lticontainer($data)
     {
         global $DB;
 
@@ -60,12 +60,12 @@ class restore_ltids_activity_structure_step extends restore_activity_structure_s
         $data->timecreated  = $this->apply_date_offset($data->timecreated);
         $data->timemodified = $this->apply_date_offset($data->timemodified);
 
-        $newitemid = $DB->insert_record('ltids', $data);
+        $newitemid = $DB->insert_record('lticontainer', $data);
         $this->apply_activity_instance($newitemid);
     }
 
 
-    protected function process_ltids_websock_session($data)
+    protected function process_lticontainer_websock_session($data)
     {
         global $DB;
 
@@ -73,10 +73,10 @@ class restore_ltids_activity_structure_step extends restore_activity_structure_s
         $oldid = $data->id;
 
         $data->course   = $this->get_courseid();
-        $data->inst_id  = $this->get_new_parentid('ltids');
+        $data->inst_id  = $this->get_new_parentid('lticontainer');
         $data->updatetm = $this->apply_date_offset($data->updatetm);
 
-        $newitemid = $DB->insert_record('ltids_wedsock_session', $data);
+        $newitemid = $DB->insert_record('lticontainer_wedsock_session', $data);
         $this->apply_activity_instance($newitemid);
     }
 

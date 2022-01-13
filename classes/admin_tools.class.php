@@ -31,8 +31,8 @@ class  AdminTools
         $this->host_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
         #
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
-        $this->action_url = new moodle_url('/mod/ltids/actions/admin_tools.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/ltids/actions/view.php',        $this->url_params);
+        $this->action_url = new moodle_url('/mod/lticontainer/actions/admin_tools.php', $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',        $this->url_params);
     }
 
 
@@ -47,17 +47,17 @@ class  AdminTools
         global $DB, $USER;
 
         /*
-        $recs = $DB->get_records('ltids_websock_data');
+        $recs = $DB->get_records('lticontainer_websock_data');
         foreach ($recs as $rec) {
             print_r($rec);
             echo '<br />';
             //
             $rec->id = null;
             if ($rec->host=='server') {
-                $ret = $DB->insert_record('ltids_websock_server_data', $rec);
+                $ret = $DB->insert_record('lticontainer_websock_server_data', $rec);
             }
             else if ($rec->host=='client') {
-                $ret = $DB->insert_record('ltids_websock_client_data', $rec);
+                $ret = $DB->insert_record('lticontainer_websock_client_data', $rec);
             }
         }
         */
@@ -66,7 +66,7 @@ class  AdminTools
         $properties = 'filename|codenum';
         $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
 
-        $recs = $DB->get_records('ltids_websock_tags');
+        $recs = $DB->get_records('lticontainer_websock_tags');
         foreach ($recs as $rec) {
             print_r($rec);
             echo '<br />';
@@ -77,7 +77,7 @@ class  AdminTools
                 foreach($matches as $match) {
                     $rec->{$match[1]} = $match[2];
                 }
-                $DB->update_record('ltids_websock_tags', $rec);
+                $DB->update_record('lticontainer_websock_tags', $rec);
             }
         }
         */

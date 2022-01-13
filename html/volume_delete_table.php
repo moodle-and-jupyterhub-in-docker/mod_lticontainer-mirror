@@ -10,17 +10,17 @@ function show_volume_delete_table($deletes, $items)
     $table->size [] = '40px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('driver_name','mod_ltids');
+    $table->head [] = get_string('driver_name','mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '50px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_name','mod_ltids');
+    $table->head [] = get_string('volume_name','mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('volume_role','mod_ltids');
+    $table->head [] = get_string('volume_role','mod_lticontainer');
     $table->align[] = 'left';
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
