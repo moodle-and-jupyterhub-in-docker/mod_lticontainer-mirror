@@ -38,10 +38,14 @@ class mod_lticontainer_external extends external_api
         //file_put_contents('/xtmp/ZZ', 'lti_id = '. $nb_data->lti_id."\n", FILE_APPEND);
 
         if ($nb_data->host=='server') {
+            if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
             $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
             $recs = $DB->get_records('lticontainer_client_data', $condition);
             if ($recs) {
-                if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
+                $DB->insert_record('lticontainer_server_data', $nb_data);
+            }
+            else {
+                $nb_data->status .= '/nc';    // no pair client data
                 $DB->insert_record('lticontainer_server_data', $nb_data);
             }
         }
