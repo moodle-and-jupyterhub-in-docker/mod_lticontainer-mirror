@@ -153,11 +153,13 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('chart_line_usernum', PARAM_INT);
         $mform->hideIf('chart_line_usernum', 'use_dashboard', 'eq', 0);
 
+        /*
         $mform->addElement('text', 'chart_line_interval', get_string('chart_line_interval', 'mod_lticontainer'), array('size' => '12'));
         $mform->addHelpButton('chart_line_interval', 'chart_line_interval', 'mod_lticontainer');
         $mform->setType('chart_line_interval', PARAM_INT);
         $mform->setDefault('chart_line_interval', '1800');
         $mform->hideIf('chart_line_interval', 'use_dashboard', 'eq', 0);
+        */
 
         //-------------------------------------------------------------------------------
         // Add standard elements.
