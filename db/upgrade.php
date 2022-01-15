@@ -300,5 +300,15 @@ function xmldb_lticontainer_upgrade($oldversion)
         $field = new xmldb_field('no_disp_lti');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
     }
+
+
+    // 2022011500
+    if ($oldversion < 2022011500) {
+        $table = new xmldb_table('lticontainer_server_data');
+        //
+        $field = new xmldb_field('status', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'message');
+        $dbman->change_field_precision($table, $field);
+    }
+    
     return true;
 }

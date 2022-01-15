@@ -92,8 +92,9 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
         }
         //
         if (!$exclsn) {
-            if ($rec->status == 'ok') $ok++;
-            else                      $er++;
+            if      ($rec->status == 'ok')    $ok++;
+            else if ($rec->status == 'ok/nc') $ok++;    // no client (cell) data
+            else                              $er++;
         }
         $exclsn = false;
     }
@@ -139,8 +140,9 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
             if(!array_key_exists($uname, $user_data)) {
                 $user_data[$uname] = ['ok'=>0, 'er'=>0];
             }
-            if ($rec->status == 'ok') $user_data[$uname]['ok']++;
-            else                      $user_data[$uname]['er']++;
+            if      ($rec->status == 'ok')    $user_data[$uname]['ok']++;
+            else if ($rec->status == 'ok/nc') $user_data[$uname]['ok']++;   // no client (cell) data
+            else                              $user_data[$uname]['er']++;
         }
         $exclsn = false;
     }
@@ -257,8 +259,9 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
             if(!array_key_exists($codenum, $code_data)) {
                 $code_data[$codenum] = ['ok'=>0, 'er'=>0];
             }
-            if ($rec->status == 'ok') $code_data[$codenum]['ok']++;
-            else                      $code_data[$codenum]['er']++;
+            if      ($rec->status == 'ok')    $code_data[$codenum]['ok']++;
+            else if ($rec->status == 'ok/nc') $code_data[$codenum]['ok']++; // no client (cell) data
+            else                              $code_data[$codenum]['er']++;
         }
         $exclsn = false;
     }
