@@ -47,7 +47,7 @@ class mod_lticontainer_external extends external_api
             else {
                 $nb_data->status .= '/nc';    // no pair client data
                 $DB->insert_record('lticontainer_server_data', $nb_data);
-                $DB->insert_record('lticontainer_client_data', $nb_data);
+                //$DB->insert_record('lticontainer_client_data', $nb_data);
             }
         }
         else if ($nb_data->host=='client') {
@@ -69,7 +69,7 @@ class mod_lticontainer_external extends external_api
                 }
             }
         }
-        else {  // fesvr: cookie
+        else {  // ltictr: cookie
             if ($nb_data->lti_id!='') {
                 $rec = $DB->get_record('lticontainer_session', array('session'=>$nb_data->session)); 
                 if (!$rec) {
