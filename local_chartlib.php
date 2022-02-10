@@ -265,7 +265,7 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
         }
         $exclsn = false;
     }
-    ksort($code_data);
+    ksort($code_data, SORT_STRING);
 
     //
     // all data

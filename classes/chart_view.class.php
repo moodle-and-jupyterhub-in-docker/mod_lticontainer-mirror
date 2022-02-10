@@ -89,7 +89,9 @@ class  ChartView
         if ($startdiff_r <= 0) $startdiff_r = CHART_DURING_REALTIME;
         if ($startdiff_a <= 0) $startdiff_a = CHART_DURING_ANYTIME;
 
+        //////////////////////////////////////////////////////////////////
         $obj_datetime = new DateTime();
+        //$obj_datetime = new DateTime('2022-01-29 12:00');
 
         // Real Time
         if ($this->time_period == 'real') {
