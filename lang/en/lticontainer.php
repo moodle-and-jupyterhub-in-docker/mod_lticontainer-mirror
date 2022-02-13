@@ -25,6 +25,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Date Time Format
+$string['datetime_format'] = 'Y/m/d H:i';
+
 // module
 $string['pluginname'] = 'LTIContainer';
 $string['modulename'] = 'LTIContainer';

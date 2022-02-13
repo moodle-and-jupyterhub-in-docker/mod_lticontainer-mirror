@@ -45,6 +45,9 @@ function chart_view_selector($cmid, $args)
     }
     $lti_select_box .= '</select>';
 
+    $sdatetime = (new DateTime($args->start_date))->format(get_string('datetime_format','mod_lticontainer'));
+    $edatetime = (new DateTime($args->end_date))->format(get_string('datetime_format','mod_lticontainer'));
+
     ///////////////////////////////////////
     // フォーム描画
     include('chart_view_selector.html');

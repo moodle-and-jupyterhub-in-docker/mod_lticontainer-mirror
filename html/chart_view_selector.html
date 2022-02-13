@@ -1,7 +1,9 @@
 
 <style type="text/css">
-  <?php include(__DIR__."../html/styles.css"); ?>
+  <?php include(__DIR__."/../html/styles.css"); ?>
 </style>
+
+<?php include(__DIR__."/chart_view_jquery.html"); ?>
 
 <table align="center" style="margin-bottom:0.0em;">
   <tr><td>
@@ -18,10 +20,10 @@
       <?php if ($args->time_period != 'real') { ?>
         &emsp;
         <label for="lti_select_box">Date:</label>
-        <input type="datetime-local" name="start_date_input" value="<?php echo (new DateTime($args->start_date))->format('Y-m-d\TH:i'); ?>">&ensp;-&ensp;
-        <input type="datetime-local" name="end_date_input"   value="<?php echo (new DateTime($args->end_date))->format('Y-m-d\TH:i'); ?>">
+        <input type="text" name="start_date_input" style="width:140px;" id="SDateTime" value="<?php echo $sdatetime; ?>">&nbsp;-&nbsp; 
+        <input type="text" name="end_date_input"   style="width:140px;" id="EDateTime" value="<?php echo $edatetime; ?>">
       <?php } ?>
-      &emsp;&emsp;
+      &emsp;
       <input type="hidden" id="id" name="id" value="<?php echo $cmid; ?>">
       <input type="hidden" id="chart_kind"  name="chart_kind"  value="<?php echo $args->chart_kind; ?>">
       <input type="hidden" id="time_period" name="time_period" value="<?php echo $args->time_period; ?>">
