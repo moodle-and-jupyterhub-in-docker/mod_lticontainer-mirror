@@ -310,5 +310,15 @@ function xmldb_lticontainer_upgrade($oldversion)
         $dbman->change_field_precision($table, $field);
     }
     
+
+    // 2022011500
+    if ($oldversion < 2022030200) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, ltictr', 'custom_params');
+        $dbman->change_field_default($table, $field);
+    }
+    
+
     return true;
 }
