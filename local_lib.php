@@ -191,6 +191,7 @@ function container_exec($cmd, $mi)
     else {
         $container_cmd = LTICONTAINER_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
     }
+    //echo $container_cmd;
     exec($container_cmd, $rslts);
 
     // retry

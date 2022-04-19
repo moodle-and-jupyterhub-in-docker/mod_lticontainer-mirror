@@ -6,11 +6,11 @@
 #
 #  ex.1) for Docker
 #        # ./container_rsock.sh docker.hogebar.jp docker passwd  /tmp/docker.sock
-#        # docker -H unix:///tmp/lticontainer_docker.hogebar.jp.sock ps
+#        # docker -H unix:///tmp/docker.sock ps
 #
 #  ex.2) for Podman
 #        # ./container_rsock.sh podman.hogebar.jp podman passwd  /tmp/podman.sock /var/run/podman/podman.sock
-#        # podman-remote --url unix:///tmp/lticontaineri_podman.hogebar.jp.sock ps
+#        # podman-remote --url unix:///tmp/podman.sock ps
 #
 
 if [ -n "$SSH_PASSWORD" ]; then
