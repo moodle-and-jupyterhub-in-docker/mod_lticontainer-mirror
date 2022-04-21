@@ -272,11 +272,22 @@ function show_lti_edit_table_vol($cmds)
     }
 
     // New Volumes
+    //$select_opt  = '<option value="'.LTICONTAINER_LTI_VOLUMES_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</option>';
+    //$select_opt .= '<option value="'.LTICONTAINER_LTI_SUBMITS_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</option>';
+    //$select_opt .= '<option value="'.LTICONTAINER_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</option>';
+    //
     $num = 3;
-    $select_opt  = '<option value="'.LTICONTAINER_LTI_VOLUMES_CMD.'" />'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</option>';
-    $select_opt .= '<option value="'.LTICONTAINER_LTI_SUBMITS_CMD.'" />'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</option>';
-    $select_opt .= '<option value="'.LTICONTAINER_LTI_PRSNALS_CMD.'" />'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</option>';
     for ($cnt=0; $cnt<$num; $cnt++) {
+        $select_vol = '';
+        $select_sub = '';
+        $select_prs = '';
+        if      ($cnt%3==0) $select_vol = 'selected';
+        else if ($cnt%3==1) $select_sub = 'selected';
+        else                $select_prs = 'selected';
+        $select_opt  = '<option value="'.LTICONTAINER_LTI_VOLUMES_CMD.'" '.$select_vol.' />'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</option>';
+        $select_opt .= '<option value="'.LTICONTAINER_LTI_SUBMITS_CMD.'" '.$select_sub.' />'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</option>';
+        $select_opt .= '<option value="'.LTICONTAINER_LTI_PRSNALS_CMD.'" '.$select_prs.' />'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</option>';
+        //
         $table->data[$i][] = '<select name="'.LTICONTAINER_LTI_VOLUMES_CMD.'[]" autocomplete="off">'.$select_opt.'</select>'; 
         $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="" />';
         $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="" />';
