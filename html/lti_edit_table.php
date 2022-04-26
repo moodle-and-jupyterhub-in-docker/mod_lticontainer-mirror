@@ -238,7 +238,8 @@ function show_lti_edit_table_vol($cmds)
             if (!isset($cmds->vol_users[$key])) $cmds->vol_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'[]" value="'.LTICONTAINER_LTI_VOLUMES_CMD.'" />'. 
                                  '<strong>'.get_string('vol_cmd_ttl', 'mod_lticontainer').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            //$table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="'.$key.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->vol_users[$key].'" />';
             $i++;
@@ -251,7 +252,8 @@ function show_lti_edit_table_vol($cmds)
             if (!isset($cmds->sub_users[$key])) $cmds->sub_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'[]" value="'.LTICONTAINER_LTI_SUBMITS_CMD.'" />'. 
                                  '<strong>'.get_string('sub_cmd_ttl', 'mod_lticontainer').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            //$table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="'.$key.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->sub_users[$key].'" />';
             $i++;
@@ -264,7 +266,8 @@ function show_lti_edit_table_vol($cmds)
             if (!isset($cmds->prs_users[$key])) $cmds->prs_users[$key] = '';
             $table->data[$i][] = '<input type="hidden" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'[]" value="'.LTICONTAINER_LTI_PRSNALS_CMD.'" />'. 
                                  '<strong>'.get_string('prs_cmd_ttl', 'mod_lticontainer').'</strong>';
-            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            //$table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" value="'.$key.'" readonly style="background-color:#eee;"/>';
+            $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'name[]"  size="20" maxlength="30"  value="'.$key.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'link[]"  size="50" maxlength="100" value="'.$value.'" />';
             $table->data[$i][] = '<input type="text" name="'.LTICONTAINER_LTI_VOLUMES_CMD.'users[]" size="50" maxlength="200" value="'.$cmds->prs_users[$key].'" />';
             $i++;

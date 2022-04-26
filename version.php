@@ -30,6 +30,6 @@ $plugin->requires  = 2018051700;
 $plugin->component = 'mod_lticontainer';
 $plugin->maturity  = MATURITY_STABLE;
 
-$plugin->release   = '1.0.4';
-$plugin->version   = 2022042000;
+$plugin->release   = '1.0.6';
+$plugin->version   = 2022042601;
 
