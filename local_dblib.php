@@ -20,12 +20,50 @@ define('TAGS_TABLE',        'lticontainer_tags');
 
 
 
-function  db_get_valid_ltis($courseid, $minstance, $sort = '')
+function  db_get_lti_module_id()
 {
     global $DB;
 
+    $ltimod = $DB->get_record('modules', array('name' => 'lti'));
+    if (!$ltimod) return 0;
+    
+    return $ltimod->id;
+}
+
+
+function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
+{
+    global $DB;
+
+    $ltimod = $DB->get_record('course_modules', array('course' => $courseid, 'module'=>$moduleid, 'instance'=>$instanceid));
+    if (!$ltimod or $ltimod->deletioninprogress==1) return true;
+
+    return false;
+}
+
+
+function  db_get_valid_ltis($courseid, $sort = '', $fields = '*')
+{
+    global $DB;
+
+    $ltis = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
+    $lti_modid = db_get_lti_module_id(); 
+
+    foreach ($ltis as $key => $lti) {
+        if (db_instance_is_delprgs($courseid, $lti_modid, $lti->id)) unset($ltis[$key]);
+    }
+
+    return $ltis;
+}
+
+
+function  db_get_disp_ltis($courseid, $minstance, $sort = '')
+{
+    //global $DB;
+
     $fields = 'id, name, instructorcustomparameters';
-    $ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
+    $ltis   = db_get_valid_ltis($courseid, $sort, $fields);
+    //$ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
 
     $disp = explode(',', $minstance->display_lti);
     foreach ($ltis as $key => $lti) {

@@ -114,7 +114,7 @@ class  LTIEdit
 
     function  set_condition() 
     {
-        $ltis = db_get_valid_ltis($this->courseid, $this->minstance);
+        $ltis = db_get_disp_ltis($this->courseid, $this->minstance);
 
         if (!array_key_exists($this->lti_id, $ltis)) {
             print_error('no_ltiid_found', 'mod_lticontainer', $this->error_url);

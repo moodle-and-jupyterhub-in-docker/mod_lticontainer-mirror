@@ -85,7 +85,7 @@ class  DashboardView
         $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
         $this->start_date_a = $obj_datetime->format('Y-m-d H:i');
 
-        $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
+        $this->lti_info = db_get_disp_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {
             $this->lti_ids[] = $lti->id;
         }

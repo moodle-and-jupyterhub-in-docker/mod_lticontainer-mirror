@@ -121,7 +121,7 @@ class  ChartView
 
         ////////////////////////////////////////////////////////////////////////////
         // LTI
-        $this->lti_info = db_get_valid_ltis($this->courseid, $this->minstance);
+        $this->lti_info = db_get_disp_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {
             $this->lti_ids[] = $lti->id;
         }

@@ -80,7 +80,8 @@ class  LTIConnect
 
             if (property_exists($formdata, 'disp')) {
                 $disp  = array();
-                $ltis = $DB->get_records('lti', array('course' => $this->courseid));
+                //$ltis = $DB->get_records('lti', array('course' => $this->courseid));
+                $ltis = db_get_valid_ltis($this->courseid);
                 foreach ($ltis as $lti) {
                     if (array_key_exists($lti->id, $formdata->disp)) $disp[] = $lti->id;
                 }
@@ -96,7 +97,7 @@ class  LTIConnect
             }
         }
 
-        $this->ltis = db_get_valid_ltis($this->courseid, $this->minstance);
+        $this->ltis = db_get_disp_ltis($this->courseid, $this->minstance);
 
         return true;
     }
