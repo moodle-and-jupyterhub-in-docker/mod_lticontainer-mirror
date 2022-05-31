@@ -180,25 +180,33 @@ function container_exec($cmd, $mi)
         }
     }
 
+    $container_cmd = null;
     if ($mi->use_podman==1) {
         if (file_exists(LTICONTAINER_PODMAN_REMOTE_CMD)) {
             $container_cmd = LTICONTAINER_PODMAN_REMOTE_CMD.' --url unix://'.$socket_file.' '.$cmd;
         }
         else {
-            $container_cmd = LTICONTAINER_PODMAN_CMD.' --remote --url unix://'.$socket_file.' '.$cmd;
+            if (file_exists(LTICONTAINER_PODMAN_CMD)) {
+                $container_cmd = LTICONTAINER_PODMAN_CMD.' --remote --url unix://'.$socket_file.' '.$cmd;
+            }
         }
     }
     else {
-        $container_cmd = LTICONTAINER_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
+        if (file_exists(LTICONTAINER_DOCKER_CMD)) {
+            $container_cmd = LTICONTAINER_DOCKER_CMD.' -H unix://'.$socket_file.' '.$cmd;
+        }
     }
-    //echo $container_cmd;
-    exec($container_cmd, $rslts);
 
-    // retry
-    if (empty($rslts)) {
-        $rslts = container_socket($mi, $socket_file);
-        if (!empty($rslts)) return $rslts;              // error
+    if (!empty($container_cmd)) {
+        //echo $container_cmd;
         exec($container_cmd, $rslts);
+
+        // retry
+        if (empty($rslts)) {
+            $rslts = container_socket($mi, $socket_file);
+            if (!empty($rslts)) return $rslts;              // error
+            exec($container_cmd, $rslts);
+        }
     }
 
     return $rslts;
