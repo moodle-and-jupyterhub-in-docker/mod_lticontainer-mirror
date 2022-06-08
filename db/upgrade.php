@@ -315,7 +315,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022030200) {
         $table = new xmldb_table('lticontainer');
         //
-        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, notebook, ltictr', 'custom_params');
+        $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, ltictr', 'custom_params');
         $dbman->change_field_default($table, $field);
     }
     
