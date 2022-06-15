@@ -29,13 +29,13 @@ function  chart_dashboard($recs_r, $recs_a, $minstance)
     $charts_data[1]->charts = chart_codecell_bar($recs_r, '*', '*', $minstance, true);
     $charts_data[1]->kind   = 'codecell_bar';
     $charts_data[1]->period = 'real';
-    $charts_data[1]->title  = 'Real Time Activities per Code Cell';
+    $charts_data[1]->title  = 'Real Time Activity per Code Cell';
 
     $charts_data[2] = new StdClass();
     $charts_data[2]->charts = chart_users_bar($recs_r, '*', '*', $minstance, true);
     $charts_data[2]->kind   = 'users_bar';
     $charts_data[2]->period = 'real';
-    $charts_data[2]->title  = 'Real Time Activities per User';
+    $charts_data[2]->title  = 'Real Time Activity per User';
 
     $charts_data[3] = new StdClass();
     $charts_data[3]->charts = chart_codecell_line($recs_r, '*', '*', $minstance, true);
@@ -53,13 +53,13 @@ function  chart_dashboard($recs_r, $recs_a, $minstance)
     $charts_data[5]->charts = chart_codecell_bar($recs_a, '*', '*', $minstance, true);
     $charts_data[5]->kind   = 'codecell_bar';
     $charts_data[5]->period = 'any';
-    $charts_data[5]->title  = 'Activities per Code Cell';
+    $charts_data[5]->title  = 'Activity per Code Cell';
 
     $charts_data[6] = new StdClass();
     $charts_data[6]->charts = chart_users_bar($recs_a, '*', '*', $minstance, true);
     $charts_data[6]->kind   = 'users_bar';
     $charts_data[6]->period = 'any';
-    $charts_data[6]->title  = 'Activities per User';
+    $charts_data[6]->title  = 'Activity per User';
 
     $charts_data[7] = new StdClass();
     $charts_data[7]->charts = chart_codecell_line($recs_a, '*', '*', $minstance, true);
