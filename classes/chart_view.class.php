@@ -162,11 +162,11 @@ class  ChartView
         //
         // call chart function
         if ($this->chart_kind === 'users_bar') {
-            $this->chart_title = $add_title.'Activities per User';
+            $this->chart_title = $add_title.'Activity per User';
             $this->charts = chart_users_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_bar') {
-            $this->chart_title = $add_title.'Activities per Code Cell';
+            $this->chart_title = $add_title.'Activity per Code Cell';
             $this->charts = chart_codecell_bar($recs, $this->username, $this->filename, $this->minstance);
         }
         else if ($this->chart_kind === 'codecell_line') {
