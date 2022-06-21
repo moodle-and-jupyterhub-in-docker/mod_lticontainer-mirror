@@ -55,17 +55,22 @@ class mod_lticontainer_external extends external_api
             $DB->insert_record('lticontainer_client_data', $nb_data);
             //
             if ($nb_data->tags!='') {
+                $properties = 'filename|codenum';
+                //$patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
+                $patterns   = "/\"(${properties}):\s*([^\"]+)\"/u";
+                preg_match_all($patterns, $nb_data->tags, $matches, PREG_SET_ORDER);
+                foreach($matches as $match) {
+                    $nb_data->{$match[1]} = $match[2];
+                } 
+                //
                 $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id)); 
                 if (!$rec) {
-                    /// by 2021 Urano Masanori
-                    $properties = 'filename|codenum';
-                    $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
-                    preg_match_all($patterns, $nb_data->tags, $matches, PREG_SET_ORDER);
-                    //
-                    foreach($matches as $match) {
-                        $nb_data->{$match[1]} = $match[2];
-                    } 
                     $DB->insert_record('lticontainer_tags', $nb_data);
+                }
+                else {
+                    if ($nb_data->filename!=$rec->filename || $nb_data->codenum!=$rec->codenum) {
+                        $DB->update_record('lticontainer_tags', $nb_data);
+                    }
                 }
             }
         }
