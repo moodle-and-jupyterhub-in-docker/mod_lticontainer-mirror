@@ -100,6 +100,8 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
     }
 
     // Total(Known + Unknown) activities
+    //$series = new \core\chart_series('Count', [0, $ok, $er]);   // 0 -> 色調整
+    //$labels = ['', 'OK', 'ERROR'];
     $series = new \core\chart_series('Count', [$ok, $er]);
     $labels = ['OK', 'ERROR'];
     $chart  = new \core\chart_pie();
@@ -118,7 +120,7 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
 
 
 //
-// ユーザ毎の正答率
+// ユーザ毎の活動状況
 //
 function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=false)
 {
@@ -237,7 +239,7 @@ function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=fa
 
 
 //
-// 課題毎の正答率
+// 課題毎の活動状況
 //
 function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard=false)
 {
