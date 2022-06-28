@@ -385,9 +385,10 @@ function lticontainer_join_custom_params($custom_data)
         if ($custom_data->lms_vol_name[$i]!='' and $custom_data->lms_vol_link[$i]!='') {
             $users = '';
             if ($custom_data->lms_vol_users[$i]!='') $users = ':'.$custom_data->lms_vol_users[$i];
-            $lowstr  = mb_strtolower($custom_data->lms_vol_name[$i]);
-            $dirname = preg_replace("/[^a-z0-9]/", '', $lowstr);
-            $vol_array[$vol.$dirname] = $custom_data->lms_vol_link[$i].$users;
+            $lowstr   = mb_strtolower($custom_data->lms_vol_name[$i]);
+            $dirname  = preg_replace("/[^a-z0-9]/", '', $lowstr);
+            $linkname = preg_replace("/[*;: $\!\"\'&+=|\\<>?^%~\`\(\)\{\}\[\]\n\r]/", '', $custom_data->lms_vol_link[$i]);
+            $vol_array[$vol.$dirname] = $linkname.$users;
         }
         $i++;
     }
