@@ -22,9 +22,9 @@ define('LTICONTAINER_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTICONTAINER_LTI_VOLUMES_CMD',     'lms_vol_');
 define('LTICONTAINER_LTI_SUBMITS_CMD',     'lms_sub_');
 define('LTICONTAINER_LTI_PRSNALS_CMD',     'lms_prs_');
-define('LTICONTAINER_LTI_USERID_CMD',      'lms_userid');
-define('LTICONTAINER_LTI_GRPID_CMD',       'lms_grpid');
-define('LTICONTAINER_LTI_GRPNAME_CMD',     'lms_grpname');
+define('LTICONTAINER_LTI_USERID_CMD',      'lms_uid');
+define('LTICONTAINER_LTI_GRPID_CMD',       'lms_gid');
+define('LTICONTAINER_LTI_GRPNAME_CMD',     'lms_gname');
 
 
 
