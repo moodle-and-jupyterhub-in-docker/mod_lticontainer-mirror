@@ -11,5 +11,9 @@ define('CHART_VIEW_SIZE',         720);
 
 define('CHART_NULL_FILENAME',     '.none');
 define('CHART_NULL_USERNAME',     '.anyone');
-define('CHART_NULL_CODENUM',      'null');
+define('CHART_NULL_CODENUM',      '999');
+
+//define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
+//define('PHP_DATETIME_FMT',  'Y-m-d\TH:i:s.u\Z');
+define('PHP_DATETIME_FMT',  'Y-m-d H:i:s');
 

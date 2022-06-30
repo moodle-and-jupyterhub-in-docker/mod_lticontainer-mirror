@@ -258,7 +258,6 @@ function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard
         //
         if (!$exclsn) {
             $codenum = $rec->codenum;
-            if ($codenum=='null') $codenum = '999';
             if(!array_key_exists($codenum, $code_data)) {
                 $code_data[$codenum] = ['ok'=>0, 'er'=>0];
             }
