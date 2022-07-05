@@ -86,8 +86,13 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
     }
 
     // Admin Tools
+    if (has_capability('mod/lticontainer:jupyterhub_api', $context)) {
+        $row[] = make_tabobj('jupyterhub_api_tab', get_string('jupyterhub_api_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/jupyterhub_api.php', $url_params);
+    }
+
+    // Admin Tools
     if (has_capability('mod/lticontainer:admin_tools', $context)) {
-        $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/admin_tools.php', $url_params);
+        //$row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/admin_tools.php', $url_params);
     }
 
     // Return to Course

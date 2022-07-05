@@ -53,8 +53,8 @@ $string['make_docker_volumes'] = 'Does mod_lticontainer create docker volumes ?'
 $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_lticontainer when LTI Edit Tab is saved.';
 $string['use_podman'] = 'Use Podman instead of Docker';
 $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub.';
-$string['api_token'] = 'API Token for admin-service';
-$string['api_token_help'] = 'Specify the same value as api_token at JupyterHub.services in the JupyterHub configuration file. At least 8 characters are required.';
+$string['api_token'] = 'JupyterHub API Token for admin-service';
+$string['api_token_help'] = 'Specify the same value as \"api_token\" at \"JupyterHub.services\" in the lticontainer JupyterHub configuration file. At least 8 characters are required.';
 
 $string['use_dashboard'] = 'Use Dashboard function';
 $string['use_dashboard_help'] = 'If Yes, Dashboard tab is shown. But you need to execute the Feserver.';
@@ -93,6 +93,7 @@ $string['lticontainer:lti_edit'] = 'LTI Edit';
 $string['lticontainer:lti_setting'] = 'LTI Settings';
 $string['lticontainer:dashboard_view'] = 'Dashboard View';
 $string['lticontainer:chart_view'] = 'Charts View';
+$string['lticontainer:jupyterhub_api'] = 'JupyterHub API';
 $string['lticontainer:admin_tools'] = 'Admin Tools';
 $string['lticontainer:db_write'] = 'DB Write';
 
@@ -106,6 +107,7 @@ $string['lti_edit_tab'] = 'LTI Edit';
 $string['lti_setting_tab'] = 'LTI Settings';
 $string['dashboard_view_tab'] = 'Dashboard';
 $string['chart_view_tab'] = 'Charts';
+$string['jupyterhub_api_tab'] = 'JupyterHub API';
 $string['admin_tools_tab'] = 'Admin Tools';
 $string['returnto_course_tab'] = 'Return to course';
 

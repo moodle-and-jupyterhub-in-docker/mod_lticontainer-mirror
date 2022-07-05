@@ -112,11 +112,11 @@ function lticontainer_get_event($cmid, $action, $params='', $info='')
     else if ($action=='lti_view') {
         $event = \mod_lticontainer\event\lti_view::create($args);
     }
-    else if ($action=='lti_edit') {
-        $event = \mod_lticontainer\event\lti_edit::create($args);
-    }
     else if ($action=='lti_setting') {
         $event = \mod_lticontainer\event\lti_setting::create($args);
+    }
+    else if ($action=='lti_edit') {
+        $event = \mod_lticontainer\event\lti_edit::create($args);
     }
     else if ($action=='volume_view') {
         $event = \mod_lticontainer\event\volume_view::create($args);
@@ -129,6 +129,9 @@ function lticontainer_get_event($cmid, $action, $params='', $info='')
     }
     else if ($action=='chart_view') {
         $event = \mod_lticontainer\event\chart_view::create($args);
+    }
+    else if ($action=='jupyterhub_api') {
+        $event = \mod_lticontainer\event\jupyterhub_api::create($args);
     }
     else if ($action=='admin_tools') {
         $event = \mod_lticontainer\event\admin_tools::create($args);

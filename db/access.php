@@ -100,6 +100,15 @@ $capabilities = array(
         ),
     ),
 
+    'mod/lticontainer:jupyterhub_api' => array(
+        'riskbitmask' => RISK_PERSONAL | RISK_DATALOSS,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => array(
+            'manager' => CAP_ALLOW
+        ),
+    ),
+
     'mod/lticontainer:admin_tools' => array(
         'riskbitmask' => RISK_PERSONAL | RISK_DATALOSS,
         'captype' => 'write',
