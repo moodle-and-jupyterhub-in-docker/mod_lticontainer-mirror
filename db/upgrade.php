@@ -311,7 +311,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     }
     
 
-    // 2022011500
+    // 2022030200
     if ($oldversion < 2022030200) {
         $table = new xmldb_table('lticontainer');
         //
@@ -320,5 +320,15 @@ function xmldb_lticontainer_upgrade($oldversion)
     }
     
 
+    // 2022070500
+    if ($oldversion < 2022070500) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('api_token', XMLDB_TYPE_CHAR, '64', null, null, null, '', 'use_podman');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+    
     return true;
 }

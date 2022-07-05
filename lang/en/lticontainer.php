@@ -36,31 +36,33 @@ $string['modulenameplural'] = 'LTIContainer';
 // mod_form
 $string['lticontainername']  = 'Name ';
 $string['description'] = 'Description';
-$string['lticontainername_help'] = 'Name of this instance of module';
+$string['lticontainername_help'] = 'Name of this instance of module.';
 $string['lticontainer_container_set'] = 'Settings of Container and LTI';
 $string['lticontainer_chart_set'] = 'Settings of Dashboard and Charts';
 $string['docker_host'] = 'Docker/Podman host';
-$string['docker_host_help'] = 'IP address or FQDN of Docker/Podman host';
+$string['docker_host_help'] = 'IP address or FQDN of Docker/Podman host.';
 $string['docker_user'] = 'Docker/Podman user';
-$string['docker_user_help'] = 'Name of user that belongs Docker/Podman group on docker/Podman host. This user should not have an executable shell';
+$string['docker_user_help'] = 'Name of user that belongs Docker/Podman group on docker/Podman host. This user should not have an executable shell.';
 $string['docker_pass'] = 'Password of Docker/Podman user';
-$string['docker_pass_help'] = 'Password of Docker/Podman user';
+$string['docker_pass_help'] = 'Password of Docker/Podman user.';
 $string['show_custom_params'] = 'Show custom parameters';
-$string['show_custom_params_help'] = 'Show custom parameters at LTI edit';
+$string['show_custom_params_help'] = 'Show custom parameters at LTI edit.';
 $string['imagename_filter'] = 'Image name filter words';
-$string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed';
+$string['imagename_filter_help'] = 'Set filtering keywords when image names are displayed. If a keyword is prefixed with a minus sign, files with that keyword are excluded.';
 $string['make_docker_volumes'] = 'Does mod_lticontainer create docker volumes ?';
-$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_lticontainer when LTI Edit Tab is saved';
+$string['make_docker_volumes_help'] = 'If No, docker volumes are careated by JupyterHub. If Yes, docker volumes are careated by mod_lticontainer when LTI Edit Tab is saved.';
 $string['use_podman'] = 'Use Podman instead of Docker';
 $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub.';
+$string['api_token'] = 'API Token for admin-service';
+$string['api_token_help'] = 'Specify the same value as api_token at JupyterHub.services in the JupyterHub configuration file. At least 8 characters are required.';
 
 $string['use_dashboard'] = 'Use Dashboard function';
 $string['use_dashboard_help'] = 'If Yes, Dashboard tab is shown. But you need to execute the Feserver.';
 
 $string['during_realtime'] = 'Time period of Real Time Charts (s)';
-$string['during_realtime_help'] = 'The time period(second) displayed by real time charts';
+$string['during_realtime_help'] = 'The time period(second) displayed by real time charts.';
 $string['during_anytime'] = 'Time period of Any Time Charts (s)';
-$string['during_anytime_help'] = 'The time period(second) displayed by any time charts';
+$string['during_anytime_help'] = 'The time period(second) displayed by any time charts.';
 $string['chart_bar_usernum'] = 'Max users in Bar chart';
 $string['chart_bar_usernum_help'] = 'Maximum number of users in a Bar chart.';
 $string['chart_bar_codenum'] = 'Max code cells in Bar chart';
@@ -72,13 +74,13 @@ $string['chart_line_interval_help'] = 'Maximum interval time(second) between eac
 
 
 // print_error
-$string['access_forbidden'] = 'Access forbidden';
-$string['invalid_sesskey'] = 'Invalid session key';
+$string['access_forbidden'] = 'Access forbidden.';
+$string['invalid_sesskey'] = 'Invalid session key.';
 $string['no_data_found'] = 'No data found!';
 $string['no_ltiid_found'] = 'lti_id is not displyed or not exist!';
-$string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions';
-$string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker). Please install docker package';
-$string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package';
+$string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions.';
+$string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker). Please install docker package.';
+$string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package.';
 
 
 // Capability / パンくずメニュー

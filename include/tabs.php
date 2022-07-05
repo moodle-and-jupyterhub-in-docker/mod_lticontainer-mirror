@@ -62,6 +62,11 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
         $row[] = make_tabobj('chart_view_tab', get_string('chart_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/chart_view.php', $url_params);
     }
 
+    // View LTI Setting
+    if ($current_tab=='lti_setting_tab' and has_capability('mod/lticontainer:lti_setting', $context)) {
+        $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_etting.php', $url_params);
+    }
+
     // View LTI Connections
     if (has_capability('mod/lticontainer:lti_view', $context)) {
         $row[] = make_tabobj('lti_view_tab', get_string('lti_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_view.php', $url_params);
@@ -80,16 +85,11 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
         $row[] = make_tabobj('volume_view_tab', get_string('volume_view_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/volume_view.php', $url_params);
     }
 
-    // View LTI Setting
-    if ($current_tab=='lti_setting_tab' and has_capability('mod/lticontainer:lti_setting', $context)) {
-        $row[] = make_tabobj('lti_setting_tab', get_string('lti_setting_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/lti_etting.php', $url_params);
+    // Admin Tools
+    if (has_capability('mod/lticontainer:admin_tools', $context)) {
+        $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/admin_tools.php', $url_params);
     }
 
-    // Admin Tools Tab for debug or development
-    if (has_capability('mod/lticontainer:admin_tools', $context)) {
-    //    $row[] = make_tabobj('admin_tools_tab', get_string('admin_tools_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/admin_tools.php', $url_params);
-    }
-    
     // Return to Course
     $row[] = make_tabobj('', get_string('returnto_course_tab', 'mod_lticontainer'), $CFG->wwwroot.'/course/view.php', ['id' => $course_id]);
 

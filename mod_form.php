@@ -91,10 +91,10 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('custom_params', PARAM_INT);
         $mform->setDefault('custom_params', 0);
 
-        $mform->addElement('text', 'imgname_fltr', get_string('imagename_filter', 'mod_lticontainer'), array('size' => '96'));
+        $mform->addElement('text', 'imgname_fltr', get_string('imagename_filter', 'mod_lticontainer'), array('size' => '64'));
         $mform->addHelpButton('imgname_fltr', 'imagename_filter', 'mod_lticontainer');
         $mform->setType('imgname_fltr', PARAM_TEXT);
-        $mform->setDefault('imgname_fltr', 'jupyter, notebook, ltictr');
+        $mform->setDefault('imgname_fltr', 'jupyter');
 
         $mform->addElement('selectyesno', 'make_volumes', get_string('make_docker_volumes', 'mod_lticontainer'));
         $mform->addHelpButton('make_volumes', 'make_docker_volumes', 'mod_lticontainer');
@@ -105,6 +105,11 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
         $mform->setType('use_podman', PARAM_INT);
         $mform->setDefault('use_podman', 0);
+
+        $mform->addElement('text', 'api_token', get_string('api_token', 'mod_lticontainer'), array('size' => '36'));
+        $mform->addHelpButton('api_token', 'api_token', 'mod_lticontainer');
+        $mform->setType('api_token', PARAM_TEXT);
+        $mform->setDefault('api_token', '');
 
 
         //-------------------------------------------------------------------------------

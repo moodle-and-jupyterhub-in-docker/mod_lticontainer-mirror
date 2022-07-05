@@ -33,7 +33,7 @@ $cmid       = optional_param('id', 0, PARAM_INT);           // コースモジ�
 $instanceid = optional_param('m',  0, PARAM_INT);           // インスタンス ID
 $courseid   = optional_param('course', false, PARAM_INT);
 
-$current_tab = 'over_view';
+$current_tab = 'over_view_tab';
 $this_action = 'over_view';
 
 
