@@ -165,17 +165,18 @@ class  LTIEdit
             //
             $custom_data->lms_iframe = '0';
             if ($launch=='2' or $launch=='3') $custom_data->lms_iframe = '1';   // 埋め込み
-            $custom_data->instanceid  = $this->minstance->id;
-            $custom_data->lti_id      = $this->lti_id;
-
-            $custom_data->rpc_token   = $this->minstance->rpc_token;
-            $custom_data->server_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
-            $custom_data->server_port = parse_url($CFG->wwwroot, PHP_URL_PORT);
-            if ($custom_data->server_port=='') {
-                $scheme = parse_url($CFG->wwwroot, PHP_URL_SCHEME);
-                if ($scheme=="https") $custom_data->server_port = 443;
-                else                  $custom_data->server_port = 80;
+            $custom_data->instanceid = $this->minstance->id;
+            $custom_data->lti_id     = $this->lti_id;
+            $custom_data->rpc_token  = $this->minstance->rpc_token;
+            //
+            $server_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
+            $server_port = parse_url($CFG->wwwroot, PHP_URL_PORT);
+            $scheme      = parse_url($CFG->wwwroot, PHP_URL_SCHEME);
+            if ($server_port=='') {
+                if ($scheme=="https") $server_port = 443;
+                else                  $server_port = 80;
             }
+            $custom_data->server_url = $scheme.':'.$server_name.':'.strval($server_port);
             //
             $this->submitted  = true;
             $this->custom_txt = lticontainer_join_custom_params($custom_data);

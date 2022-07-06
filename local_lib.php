@@ -24,8 +24,8 @@ define('LTICONTAINER_LTI_PRSNALS_CMD',     'lms_prs_');
 
 define('LTICONTAINER_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTICONTAINER_LTI_RPCTOKEN_CMD',    'lms_rpctoken');
-define('LTICONTAINER_LTI_SERVERNAME_CMD',  'lms_servername');
-define('LTICONTAINER_LTI_SERVERPORT_CMD',  'lms_serverport');
+define('LTICONTAINER_LTI_SERVERURL_CMD' ,  'lms_serverurl');
+//define('LTICONTAINER_LTI_SERVERPORT_CMD',  'lms_serverport');
 
 
 
@@ -367,15 +367,15 @@ function lticontainer_join_custom_params($custom_data)
     $param   = LTICONTAINER_LTI_RPCTOKEN_CMD.'='.$value;                           // Web services用 RPC Token. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
-    $lowstr  = mb_strtolower($custom_data->server_name);
+    $lowstr  = mb_strtolower($custom_data->server_url);
     $value   = preg_replace("/[_;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SERVERNAME_CMD.'='.$value;                          // Server Name. ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
-    $lowstr  = mb_strtolower($custom_data->server_port);
-    $value   = preg_replace("/[^0-9]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SERVERPORT_CMD.'='.$value;                          // Server Port. ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
+    //$lowstr  = mb_strtolower($custom_data->server_port);
+    //$value   = preg_replace("/[^0-9]/", '', $lowstr);
+    //$param   = LTICONTAINER_LTI_SERVERPORT_CMD.'='.$value;                          // Server Port. ユーザによる操作はなし．
+    //$custom_params .= $param."\r\n";
 
     // Volume
     $vol_array = array();
