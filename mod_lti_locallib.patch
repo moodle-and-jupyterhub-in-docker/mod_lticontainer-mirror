@@ -1,0 +1,20 @@
+--- lti/locallib-.php	2022-07-06 12:39:22.840765645 +0900
++++ lti/locallib.php	2022-07-06 12:51:51.098402530 +0900
+@@ -911,6 +911,17 @@
+         $requestparams['lis_person_name_family'] = $USER->lastname;
+         $requestparams['lis_person_name_full'] = fullname($USER);
+         $requestparams['ext_user_username'] = $USER->username;
++        // add for mod_lticontainer by Fumi.Iseki
++        if (function_exists('posix_getpwnam')) {
++            $userinfo = posix_getpwnam($USER->username);
++            if ($userinfo) {
++                $requestparams['ext_user_userid']    = $userinfo['uid'];
++                $requestparams['ext_user_groupid']   = $userinfo['gid'];
++                if (function_exists('posix_getgrgid')) {
++                    $requestparams['ext_user_groupname'] = posix_getgrgid($userinfo['gid'])['name'];
++                }
++            }
++        }
+     }
+ 
+     if ($islti2 || $typeconfig['sendemailaddr'] == LTI_SETTING_ALWAYS ||

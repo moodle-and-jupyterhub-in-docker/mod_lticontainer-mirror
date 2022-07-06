@@ -126,7 +126,7 @@ class  LTIEdit
 
     function  execute()
     {
-        global $DB, $USER;
+        global $DB, $USER, $CFG;
 
         $fields = 'id, course, name, typeid, instructorcustomparameters, launchcontainer, timemodified';
         $this->lti_rec = $DB->get_record('lti', array('id' => $this->lti_id), $fields);
@@ -162,21 +162,20 @@ class  LTIEdit
                 print_error('invalid_sesskey', 'mod_lticontainer', $this->error_url);
             }
 
-            // Local User
-            $custom_data->lms_userid  = '';
-            $custom_data->lms_grpid   = '';
-            $custom_data->lms_grpname = '';
-            $userinfo = posix_getpwnam($USER->username);
-            if ($userinfo) {
-                $custom_data->lms_userid  = $userinfo['uid'];
-                $custom_data->lms_grpid   = $userinfo['gid'];
-                $custom_data->lms_grpname = posix_getgrgid($custom_data->lms_grpid)['name'];
-            }
             //
             $custom_data->lms_iframe = '0';
             if ($launch=='2' or $launch=='3') $custom_data->lms_iframe = '1';   // 埋め込み
-            $custom_data->instanceid = $this->minstance->id;
-            $custom_data->lti_id = $this->lti_id;
+            $custom_data->instanceid  = $this->minstance->id;
+            $custom_data->lti_id      = $this->lti_id;
+
+            $custom_data->rpc_token   = $this->minstance->rpc_token;
+            $custom_data->server_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
+            $custom_data->server_port = parse_url($CFG->wwwroot, PHP_URL_PORT);
+            if ($custom_data->server_port=='') {
+                $scheme = parse_url($CFG->wwwroot, PHP_URL_SCHEME);
+                if ($scheme=="https") $custom_data->server_port = 443;
+                else                  $custom_data->server_port = 80;
+            }
             //
             $this->submitted  = true;
             $this->custom_txt = lticontainer_join_custom_params($custom_data);

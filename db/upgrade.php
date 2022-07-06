@@ -330,5 +330,16 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
     
+
+    // 2022070600
+    if ($oldversion < 2022070600) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('rpc_token', XMLDB_TYPE_CHAR, '64', null, null, null, '', 'api_token');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+    
     return true;
 }

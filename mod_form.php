@@ -122,6 +122,12 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('use_dashboard', PARAM_INT);
         $mform->setDefault('use_dashboard', 0);
 
+        $mform->addElement('text', 'rpc_token', get_string('rpc_token', 'mod_lticontainer'), array('size' => '36'));
+        $mform->addHelpButton('rpc_token', 'rpc_token', 'mod_lticontainer');
+        $mform->setType('rpc_token', PARAM_TEXT);
+        $mform->setDefault('rpc_token', '');
+        $mform->hideIf('rpc_token', 'use_dashboard', 'eq', 0);
+
         $mform->addElement('text', 'during_realtime', get_string('during_realtime', 'mod_lticontainer'), array('size' => '12'));
         $mform->addHelpButton('during_realtime', 'during_realtime', 'mod_lticontainer');
         $mform->setType('during_realtime', PARAM_INT);

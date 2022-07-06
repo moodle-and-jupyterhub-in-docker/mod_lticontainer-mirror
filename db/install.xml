@@ -22,6 +22,7 @@
         <FIELD NAME="display_lti"   TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="id array of displaied lti"/>
         <FIELD NAME="use_podman"    TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
         <FIELD NAME="api_token"     TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="API token for admin-service"/>
+        <FIELD NAME="rpc_token"     TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="RPC token for charts function"/>
         <FIELD NAME="use_dashboard"       TYPE="int" LENGTH="1"  NOTNULL="true" DEFAULT="0"      SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
         <FIELD NAME="during_realtime"     TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400"   SEQUENCE="false" COMMENT="Time interval(s) displayed by real time"/>
         <FIELD NAME="during_anytime"      TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="604800" SEQUENCE="false" COMMENT="Time interval(s) displayed by any time"/>

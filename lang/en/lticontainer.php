@@ -54,7 +54,9 @@ $string['make_docker_volumes_help'] = 'If No, docker volumes are careated by Jup
 $string['use_podman'] = 'Use Podman instead of Docker';
 $string['use_podman_help'] = 'It supports Podman instead of Docker. LTIPodmanSpawner is needed for Jpyterhub.';
 $string['api_token'] = 'JupyterHub API Token for admin-service';
-$string['api_token_help'] = 'Specify the same value as \"api_token\" at \"JupyterHub.services\" in the lticontainer JupyterHub configuration file. At least 8 characters are required.';
+$string['api_token_help'] = 'Specify the same value as <strong>api_token</strong> at <strong>JupyterHub.services</strong> in the lticontainer JupyterHub configuration file. At least 8 characters are required.';
+$string['rpc_token'] = 'XML-RPC Token for Web services';
+$string['rpc_token_help'] = 'Specify the <strong>Web services</strong> Token of <strong>Jupyter Notebook Data</strong>.';
 
 $string['use_dashboard'] = 'Use Dashboard function';
 $string['use_dashboard_help'] = 'If Yes, Dashboard tab is shown. But you need to execute the Feserver.';
