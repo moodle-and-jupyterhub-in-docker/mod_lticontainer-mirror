@@ -133,7 +133,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
-
     // 2021122701
     if ($oldversion < 2021122701) {
         $table = new xmldb_table('lticontainer_server_data');
@@ -193,7 +192,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
-
     // 2021122817
     if ($oldversion < 2021122817) {
         $table = new xmldb_table('lticontainer_client_data');
@@ -225,7 +223,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         $index = new xmldb_index('cell_id', XMLDB_INDEX_UNIQUE, array('cell_id'));
         $dbman->add_index($table, $index);
     }
-
 
     // 2022010501
     if ($oldversion < 2022010501) {
@@ -261,7 +258,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
-
     // 2022011100
     if ($oldversion < 2022011100) {
         $table = new xmldb_table('lticontainer');
@@ -287,7 +283,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
     }
 
-
     // 2022011200
     if ($oldversion < 2022011200) {
         $table = new xmldb_table('lticontainer');
@@ -301,7 +296,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
     }
 
-
     // 2022011500
     if ($oldversion < 2022011500) {
         $table = new xmldb_table('lticontainer_server_data');
@@ -310,7 +304,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         $dbman->change_field_precision($table, $field);
     }
     
-
     // 2022030200
     if ($oldversion < 2022030200) {
         $table = new xmldb_table('lticontainer');
@@ -319,7 +312,6 @@ function xmldb_lticontainer_upgrade($oldversion)
         $dbman->change_field_default($table, $field);
     }
     
-
     // 2022070500
     if ($oldversion < 2022070500) {
         $table = new xmldb_table('lticontainer');
@@ -329,7 +321,6 @@ function xmldb_lticontainer_upgrade($oldversion)
             $dbman->add_field($table, $field);
         }
     }
-    
 
     // 2022070600
     if ($oldversion < 2022070600) {

@@ -63,12 +63,13 @@ class mod_lticontainer_external extends external_api
                     $nb_data->{$match[1]} = $match[2];
                 } 
                 //
-                $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id)); 
+                $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id));
                 if (!$rec) {
                     $DB->insert_record('lticontainer_tags', $nb_data);
                 }
                 else {
                     if ($nb_data->filename!=$rec->filename || $nb_data->codenum!=$rec->codenum) {
+                        $nb_data->id = $rec->id;
                         $DB->update_record('lticontainer_tags', $nb_data);
                     }
                 }

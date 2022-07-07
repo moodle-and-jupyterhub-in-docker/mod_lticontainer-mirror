@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="mod/lticontainer/db" VERSION="20211228" COMMENT="XMLDB file for Moodle mod_lticontainer"
+<XMLDB PATH="mod/lticontainer/db" VERSION="20220707" COMMENT="XMLDB file for Moodle mod_lticontainer"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
@@ -13,23 +13,23 @@
         <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
         <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Activity description."/>
         <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="The format of the intro field."/>
-        <FIELD NAME="docker_host"   TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT="Docker host name"/>
-        <FIELD NAME="docker_user"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT="docker" SEQUENCE="false" COMMENT="Docker user name"/>
-        <FIELD NAME="docker_pass"   TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="Password of docker user"/>
-        <FIELD NAME="custom_params" TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="show custom parameters"/>
-        <FIELD NAME="imgname_fltr"  TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="jupyter, ltictr" SEQUENCE="false" COMMENT="image name display filter"/>
-        <FIELD NAME="make_volumes"  TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="does mod_lticontainer make volumes of docker?"/>
-        <FIELD NAME="display_lti"   TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="id array of displaied lti"/>
-        <FIELD NAME="use_podman"    TYPE="int"  LENGTH="1"   NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
-        <FIELD NAME="api_token"     TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="API token for admin-service"/>
-        <FIELD NAME="rpc_token"     TYPE="char" LENGTH="64"  NOTNULL="false" DEFAULT=""  SEQUENCE="false" COMMENT="RPC token for charts function"/>
-        <FIELD NAME="use_dashboard"       TYPE="int" LENGTH="1"  NOTNULL="true" DEFAULT="0"      SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
-        <FIELD NAME="during_realtime"     TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400"   SEQUENCE="false" COMMENT="Time interval(s) displayed by real time"/>
-        <FIELD NAME="during_anytime"      TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="604800" SEQUENCE="false" COMMENT="Time interval(s) displayed by any time"/>
-        <FIELD NAME="chart_bar_usernum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
-        <FIELD NAME="chart_bar_codenum"   TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="15"     SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
-        <FIELD NAME="chart_line_usernum"  TYPE="int" LENGTH="5"  NOTNULL="true" DEFAULT="10"     SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
-        <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800"   SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
+        <FIELD NAME="docker_host" TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT="Docker host name"/>
+        <FIELD NAME="docker_user" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="docker" SEQUENCE="false" COMMENT="Docker user name"/>
+        <FIELD NAME="docker_pass" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="Password of docker user"/>
+        <FIELD NAME="custom_params" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="show custom parameters"/>
+        <FIELD NAME="imgname_fltr" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="jupyter, ltictr" SEQUENCE="false" COMMENT="image name display filter"/>
+        <FIELD NAME="make_volumes" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="does mod_lticontainer make volumes of docker?"/>
+        <FIELD NAME="display_lti" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="id array of displaied lti"/>
+        <FIELD NAME="use_podman" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="use Podman instead of Docker"/>
+        <FIELD NAME="api_token" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="API token for admin-service"/>
+        <FIELD NAME="rpc_token" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="RPC token for charts function"/>
+        <FIELD NAME="use_dashboard" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="use Dashboard and Charts"/>
+        <FIELD NAME="during_realtime" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="5400" SEQUENCE="false" COMMENT="Time interval(s) displayed by real time"/>
+        <FIELD NAME="during_anytime" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="604800" SEQUENCE="false" COMMENT="Time interval(s) displayed by any time"/>
+        <FIELD NAME="chart_bar_usernum" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="15" SEQUENCE="false" COMMENT="Maximum user number of Bar chart"/>
+        <FIELD NAME="chart_bar_codenum" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="15" SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
+        <FIELD NAME="chart_line_usernum" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="10" SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
+        <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800" SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -39,12 +39,12 @@
     <TABLE NAME="lticontainer_server_data" COMMENT="Websocket server data">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="session"  TYPE="char"  LENGTH="42" NOTNULL="true"  SEQUENCE="false" COMMENT="sessoin id"/>
-        <FIELD NAME="message"  TYPE="char"  LENGTH="42" NOTNULL="true"  SEQUENCE="false" COMMENT="message id"/>
-        <FIELD NAME="status"   TYPE="char"  LENGTH="32" NOTNULL="false" SEQUENCE="false" COMMENT="status of user operation"/>
-        <FIELD NAME="username" TYPE="char"  LENGTH="32" NOTNULL="false" SEQUENCE="false" COMMENT="user name"/>
-        <FIELD NAME="date"     TYPE="char"  LENGTH="32" NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
-        <FIELD NAME="updatetm" TYPE="int"   LENGTH="12" NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
+        <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="message" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="message id"/>
+        <FIELD NAME="status" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false" COMMENT="status of user operation"/>
+        <FIELD NAME="username" TYPE="char" LENGTH="32" NOTNULL="false" SEQUENCE="false" COMMENT="user name"/>
+        <FIELD NAME="date" TYPE="char" LENGTH="32" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
+        <FIELD NAME="updatetm" TYPE="int" LENGTH="12" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -57,11 +57,11 @@
     <TABLE NAME="lticontainer_client_data" COMMENT="Websocket client data">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="session"  TYPE="char" LENGTH="42" NOTNULL="true"  SEQUENCE="false" COMMENT="sessoin id"/>
-        <FIELD NAME="message"  TYPE="char" LENGTH="42" NOTNULL="true"  SEQUENCE="false" COMMENT="message id"/>
-        <FIELD NAME="cell_id"  TYPE="char" LENGTH="42" NOTNULL="false" SEQUENCE="false" COMMENT="cell id that is operated"/>
-        <FIELD NAME="date"     TYPE="char" LENGTH="32" NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
-        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12" NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
+        <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="message" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="message id"/>
+        <FIELD NAME="cell_id" TYPE="char" LENGTH="42" NOTNULL="false" SEQUENCE="false" COMMENT="cell id that is operated"/>
+        <FIELD NAME="date" TYPE="char" LENGTH="32" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="date that is sent from jupyter"/>
+        <FIELD NAME="updatetm" TYPE="int" LENGTH="12" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -74,11 +74,11 @@
     <TABLE NAME="lticontainer_session" COMMENT="Websocket session with LTI id">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="session"  TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
-        <FIELD NAME="course"   TYPE="int"  LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="id of the course"/>
-        <FIELD NAME="inst_id"  TYPE="int"  LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="id of the module instance"/>
-        <FIELD NAME="lti_id"   TYPE="int"  LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="LTI id"/>
-        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
+        <FIELD NAME="session" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="sessoin id"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="id of the course"/>
+        <FIELD NAME="inst_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="id of the module instance"/>
+        <FIELD NAME="lti_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="LTI id"/>
+        <FIELD NAME="updatetm" TYPE="int" LENGTH="12" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
@@ -90,11 +90,11 @@
     <TABLE NAME="lticontainer_tags" COMMENT="Tags of cells">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
-        <FIELD NAME="cell_id"  TYPE="char" LENGTH="42"  NOTNULL="true"  SEQUENCE="false" COMMENT="cell id that is operated"/>
-        <FIELD NAME="tags"     TYPE="text"              NOTNULL="true"  SEQUENCE="false" COMMENT="tag of cell"/>
+        <FIELD NAME="cell_id" TYPE="char" LENGTH="42" NOTNULL="true" SEQUENCE="false" COMMENT="cell id that is operated"/>
+        <FIELD NAME="tags" TYPE="text" NOTNULL="true" SEQUENCE="false" COMMENT="tag of cell"/>
         <FIELD NAME="filename" TYPE="char" LENGTH="256" NOTNULL="false" SEQUENCE="false" COMMENT="name of ipynb file"/>
-        <FIELD NAME="codenum"  TYPE="char" LENGTH="12"  NOTNULL="false" SEQUENCE="false" COMMENT="id of code cell"/>
-        <FIELD NAME="updatetm" TYPE="int"  LENGTH="12"  NOTNULL="true"  DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
+        <FIELD NAME="codenum" TYPE="char" LENGTH="12" NOTNULL="false" SEQUENCE="false" COMMENT="id of code cell"/>
+        <FIELD NAME="updatetm" TYPE="int" LENGTH="12" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="update time"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
