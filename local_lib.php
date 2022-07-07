@@ -25,6 +25,7 @@ define('LTICONTAINER_LTI_PRSNALS_CMD',     'lms_prs_');
 define('LTICONTAINER_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTICONTAINER_LTI_RPCTOKEN_CMD',    'lms_rpctoken');
 define('LTICONTAINER_LTI_SERVERURL_CMD' ,  'lms_serverurl');
+define('LTICONTAINER_LTI_SERVERPATH_CMD' , 'lms_serverpath');
 
 
 
@@ -398,6 +399,10 @@ function lticontainer_join_custom_params($custom_data)
     $lowstr  = mb_strtolower($custom_data->server_url);
     $value   = preg_replace("/[_;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
     $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+
+    $value   = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $custom_data->server_path);
+    $param   = LTICONTAINER_LTI_SERVERPATH_CMD.'='.$value;                         // Server URL. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $custom_params = trim($custom_params);

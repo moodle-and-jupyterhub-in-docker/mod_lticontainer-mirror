@@ -169,14 +169,14 @@ class  LTIEdit
             $custom_data->lti_id     = $this->lti_id;
             $custom_data->rpc_token  = $this->minstance->rpc_token;
             //
-            $server_name = parse_url($CFG->wwwroot, PHP_URL_HOST);
             $server_port = parse_url($CFG->wwwroot, PHP_URL_PORT);
             $scheme      = parse_url($CFG->wwwroot, PHP_URL_SCHEME);
             if ($server_port=='') {
                 if ($scheme=="https") $server_port = 443;
                 else                  $server_port = 80;
             }
-            $custom_data->server_url = $scheme.':'.$server_name.':'.strval($server_port);
+            $custom_data->server_url  = $scheme.':'.$this->host_name.':'.strval($server_port);
+            $custom_data->server_path = parse_url($CFG->wwwroot, PHP_URL_PATH);
             //
             $this->submitted  = true;
             $this->custom_txt = lticontainer_join_custom_params($custom_data);
