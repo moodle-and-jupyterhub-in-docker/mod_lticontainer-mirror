@@ -25,7 +25,6 @@ define('LTICONTAINER_LTI_PRSNALS_CMD',     'lms_prs_');
 define('LTICONTAINER_LTI_SESSIONINFO_CMD', 'lms_sessioninfo');
 define('LTICONTAINER_LTI_RPCTOKEN_CMD',    'lms_rpctoken');
 define('LTICONTAINER_LTI_SERVERURL_CMD' ,  'lms_serverurl');
-//define('LTICONTAINER_LTI_SERVERPORT_CMD',  'lms_serverport');
 
 
 
@@ -345,36 +344,9 @@ function lticontainer_join_custom_params($custom_data)
     $param  = LTICONTAINER_LTI_DEFURL_CMD.'='.$value;
     $custom_params .= $param."\r\n";
 
-    $lowstr = mb_strtolower($custom_data->lms_iframe);
-    $value = preg_replace("/[^0-9]/", '', $lowstr);
-    $param = LTICONTAINER_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
-
     //$lowstr = mb_strtolower($custom_data->lms_options);
     //$value  = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~\/ ]/", '', $lowstr);
     //$param  = LTICONTAINER_LTI_OPTIONS_CMD.'='.$avlue;
-    //$custom_params .= $param."\r\n";
-
-    $lowstr  = mb_strtolower($custom_data->instanceid);
-    $inst_id = preg_replace("/[^0-9]/", '', $lowstr);
-    $lowstr  = mb_strtolower($custom_data->lti_id);
-    $lti_id  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
-
-    $lowstr  = mb_strtolower($custom_data->rpc_token);
-    $value   = preg_replace("/[^0-9a-f]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_RPCTOKEN_CMD.'='.$value;                           // Web services用 RPC Token. ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
-
-    $lowstr  = mb_strtolower($custom_data->server_url);
-    $value   = preg_replace("/[_;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
-    $custom_params .= $param."\r\n";
-
-    //$lowstr  = mb_strtolower($custom_data->server_port);
-    //$value   = preg_replace("/[^0-9]/", '', $lowstr);
-    //$param   = LTICONTAINER_LTI_SERVERPORT_CMD.'='.$value;                          // Server Port. ユーザによる操作はなし．
     //$custom_params .= $param."\r\n";
 
     // Volume
@@ -405,7 +377,31 @@ function lticontainer_join_custom_params($custom_data)
         }
     }
     
+    // automatically set
+    $lowstr = mb_strtolower($custom_data->lms_iframe);
+    $value = preg_replace("/[^0-9]/", '', $lowstr);
+    $param = LTICONTAINER_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+
+    $lowstr  = mb_strtolower($custom_data->instanceid);
+    $inst_id = preg_replace("/[^0-9]/", '', $lowstr);
+    $lowstr  = mb_strtolower($custom_data->lti_id);
+    $lti_id  = preg_replace("/[^0-9]/", '', $lowstr);
+    $param   = LTICONTAINER_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+
+    $lowstr  = mb_strtolower($custom_data->rpc_token);
+    $value   = preg_replace("/[^0-9a-f]/", '', $lowstr);
+    $param   = LTICONTAINER_LTI_RPCTOKEN_CMD.'='.$value;                           // Web services用 RPC Token. ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+
+    $lowstr  = mb_strtolower($custom_data->server_url);
+    $value   = preg_replace("/[_;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
+    $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
+    $custom_params .= $param."\r\n";
+
     $custom_params = trim($custom_params);
+
     return $custom_params;
 }
 
