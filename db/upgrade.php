@@ -332,5 +332,26 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
     
+    // 2022071000
+    if ($oldversion < 2022071000) {
+        $table = new xmldb_table('lticontainer_client_data');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'cell_id');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
+    // 2022071001
+    if ($oldversion < 2022071001) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $key = new xmldb_key('cell_id', XMLDB_KEY_UNIQUE, array('cell_id'));
+        $dbman->drop_key($table, $key);
+        $key = new xmldb_key('cell_id', XMLDB_KEY_UNIQUE, array('cell_id', 'filename'));
+        $dbman->add_key($table, $key);
+    }
+
     return true;
 }
+

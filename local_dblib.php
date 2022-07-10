@@ -105,7 +105,8 @@ function  get_base_sql($courseid, $start_date, $end_date)
 
     // tags
     $select .= ', TAGS.filename, TAGS.codenum';
-    $join   .= ' LEFT OUTER JOIN '.$tags_table. ' TAGS ON CLIENT.cell_id = TAGS.cell_id';
+    //$join   .= ' LEFT OUTER JOIN '.$tags_table. ' TAGS ON CLIENT.cell_id = TAGS.cell_id';
+    $join   .= ' LEFT OUTER JOIN '.$tags_table. ' TAGS ON CLIENT.cell_id = TAGS.cell_id AND CLIENT.filename = TAGS.filename';
 
     // course
     $where   = ' WHERE course = '.$courseid;

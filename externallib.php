@@ -37,6 +37,7 @@ class mod_lticontainer_external extends external_api
         //file_put_contents('/xtmp/ZZ', "------------------------------\n", FILE_APPEND);
         //file_put_contents('/xtmp/ZZ', 'lti_id = '. $nb_data->lti_id."\n", FILE_APPEND);
 
+        // Server
         if ($nb_data->host=='server') {
             if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
             $condition = array('session'=>$nb_data->session, 'message'=>$nb_data->message);
@@ -50,9 +51,11 @@ class mod_lticontainer_external extends external_api
                 //$DB->insert_record('lticontainer_client_data', $nb_data);
             }
         }
+
+        // Clinent
         else if ($nb_data->host=='client') {
             if (!empty($nb_data->date)) $nb_data->updatetm = strtotime($nb_data->date);
-            $DB->insert_record('lticontainer_client_data', $nb_data);
+            //$DB->insert_record('lticontainer_client_data', $nb_data);
             //
             if ($nb_data->tags!='') {
                 $properties = 'filename|codenum';
@@ -63,17 +66,20 @@ class mod_lticontainer_external extends external_api
                     $nb_data->{$match[1]} = $match[2];
                 } 
                 //
-                $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id));
+                $rec = $DB->get_record('lticontainer_tags', array('cell_id'=>$nb_data->cell_id, 'filename'=>$nb_data->filename));
                 if (!$rec) {
                     $DB->insert_record('lticontainer_tags', $nb_data);
                 }
                 else {
-                    if ($nb_data->filename!=$rec->filename || $nb_data->codenum!=$rec->codenum) {
+                    //if ($nb_data->filename!=$rec->filename || $nb_data->codenum!=$rec->codenum) {
+                    if ($nb_data->codenum!=$rec->codenum) {
                         $nb_data->id = $rec->id;
                         $DB->update_record('lticontainer_tags', $nb_data);
                     }
                 }
             }
+            //
+            $DB->insert_record('lticontainer_client_data', $nb_data);
         }
         else {  // ltictr: cookie
             if ($nb_data->lti_id!='') {

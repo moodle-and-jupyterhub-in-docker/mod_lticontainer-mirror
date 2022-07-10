@@ -381,28 +381,28 @@ function lticontainer_join_custom_params($custom_data)
     // automatically set
     $lowstr = mb_strtolower($custom_data->lms_iframe);
     $value = preg_replace("/[^0-9]/", '', $lowstr);
-    $param = LTICONTAINER_LTI_IFRAME_CMD.'='.$value;                               // iframeサポート．ユーザによる操作はなし．
+    $param = LTICONTAINER_LTI_IFRAME_CMD.'='.$value;                                // iframeサポート．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
-    $lowstr  = mb_strtolower($custom_data->instanceid);
+    $lowstr  = mb_strtolower($custom_data->instanceid);                                 // lticontainer のインスタンスの ID 
     $inst_id = preg_replace("/[^0-9]/", '', $lowstr);
-    $lowstr  = mb_strtolower($custom_data->lti_id);
+    $lowstr  = mb_strtolower($custom_data->lti_id);                                     // lti のインスタンスの ID
     $lti_id  = preg_replace("/[^0-9]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;          // Session情報用．ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_SESSIONINFO_CMD.'='.$inst_id.','.$lti_id;           // Session情報用．ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $lowstr  = mb_strtolower($custom_data->rpc_token);
     $value   = preg_replace("/[^0-9a-f]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_RPCTOKEN_CMD.'='.$value;                           // Web services用 RPC Token. ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_RPCTOKEN_CMD.'='.$value;                            // Web services用 RPC Token. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $lowstr  = mb_strtolower($custom_data->server_url);
     $value   = preg_replace("/[_;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $lowstr);
-    $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_SERVERURL_CMD.'='.$value;                           // Server URL. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $value   = preg_replace("/[;$\!\"\'&|\\<>?^%\(\)\{\}\n\r~]/", '', $custom_data->server_path);
-    $param   = LTICONTAINER_LTI_SERVERPATH_CMD.'='.$value;                         // Server URL. ユーザによる操作はなし．
+    $param   = LTICONTAINER_LTI_SERVERPATH_CMD.'='.$value;                          // Server URL. ユーザによる操作はなし．
     $custom_params .= $param."\r\n";
 
     $custom_params = trim($custom_params);
