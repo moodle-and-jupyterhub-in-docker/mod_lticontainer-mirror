@@ -352,6 +352,45 @@ function xmldb_lticontainer_upgrade($oldversion)
         $dbman->add_key($table, $key);
     }
 
+    // 2022071004
+    if ($oldversion < 2022071004) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $key = new xmldb_key('mdl_ltictags_celfil_uix', XMLDB_KEY_UNIQUE, array('cell_id', 'filename'));
+        $dbman->drop_key($table, $key);
+    }
+
+
+    // 2022071005
+    if ($oldversion < 2022071005) {
+        $table = new xmldb_table('lticontainer_client_data');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'cell_id');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
+
+    // 2022071006
+    if ($oldversion < 2022071006) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'cell_id');
+        if ($dbman->field_exists($table, $field)) {
+            $DB->delete_records('lticontainer_tags', array('filename'=>NULL));
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
+    // 2022071006
+    if ($oldversion < 2022071006) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $key = new xmldb_key('cell_id', XMLDB_KEY_UNIQUE, array('cell_id', 'filename'));
+        $dbman->add_key($table, $key);
+    }
+
     return true;
 }
 
