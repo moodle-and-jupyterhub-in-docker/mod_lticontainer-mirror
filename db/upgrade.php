@@ -174,7 +174,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2021122702) {
         $table = new xmldb_table('lticontainer_tags');
         //
-        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '256', null, null, null, null, 'tags');
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'tags');
         if ($dbman->field_exists($table, $field)) $dbman->drop_field($table, $field);
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
