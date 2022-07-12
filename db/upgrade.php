@@ -380,6 +380,16 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
+    // 2022071200
+    if ($oldversion < 2022071200) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('use_tls', XMLDB_TYPE_INTEGER, '1', null, XMLDB_NOTNULL, null, '1', 'docker_pass');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
 

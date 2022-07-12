@@ -9,7 +9,7 @@
 
 require(__DIR__.'/../../../config.php');
 require_once(__DIR__.'/../lib.php');
-//require_once(__DIR__.'/../local_lib.php');
+//require_once(__DIR__.'/../locallib.php');
 
 require_once(__DIR__.'/../include/tabs.php');    // for echo_tabs()
 

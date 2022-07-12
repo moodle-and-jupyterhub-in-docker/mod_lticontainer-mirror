@@ -9,7 +9,7 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once(__DIR__.'/local_lib.php');
+require_once(__DIR__.'/locallib.php');
 
 
 define('DATA_TABLE',        'lticontainer_data');
@@ -17,6 +17,16 @@ define('SERVER_TABLE',      'lticontainer_server_data');
 define('CLIENT_TABLE',      'lticontainer_client_data');
 define('SESSION_TABLE',     'lticontainer_session');
 define('TAGS_TABLE',        'lticontainer_tags');
+
+
+/*
+function  db_get_lti_module_id()
+function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
+function  db_get_valid_ltis($courseid, $sort = '', $fields = '*')
+function  db_get_disp_ltis($courseid, $minstance, $sort = '')
+function  get_base_sql($courseid, $start_date, $end_date)
+function  get_lti_sql_condition($lti_id = '*')
+*/
 
 
 

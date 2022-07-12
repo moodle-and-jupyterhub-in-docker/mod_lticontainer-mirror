@@ -31,7 +31,7 @@ $plugin->component = 'mod_lticontainer';
 $plugin->maturity  = MATURITY_STABLE;
 
 $plugin->release   = '1.2.0';
-$plugin->version   = 2022071009;
+$plugin->version   = 2022071200;
 //$plugin->version = 2022070501;
 //$plugin->version = 2022063000;
 //$plugin->version = 2022042601;

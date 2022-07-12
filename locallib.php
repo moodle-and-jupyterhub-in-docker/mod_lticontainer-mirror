@@ -2,7 +2,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-
 define('LTICONTAINER_DOCKER_CMD',          '/usr/bin/docker');
 define('LTICONTAINER_PODMAN_CMD',          '/usr/bin/podman');
 define('LTICONTAINER_PODMAN_REMOTE_CMD',   '/usr/bin/podman-remote');
@@ -27,6 +26,26 @@ define('LTICONTAINER_LTI_RPCTOKEN_CMD',    'lms_rpctoken');
 define('LTICONTAINER_LTI_SERVERURL_CMD' ,  'lms_serverurl');
 define('LTICONTAINER_LTI_SERVERPATH_CMD' , 'lms_serverpath');
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+/*
+function  timezone_offset()
+function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
+function  pack_space($str)
+function  check_include_substr_and($name, $array_str)
+function  check_include_substr_or($name, $array_str)
+
+function  jupyterhub_api_get($url, $token)
+//function  jupyterhub_api_post($url, $token)
+//function  jupyterhub_api_put($url, $token)
+//function  jupyterhub_api_delete($url, $token)
+
+function  lticontainer_get_event($cmid, $action, $params='', $info='')
+function  container_socket($mi, $socket_file)
+function  container_exec($cmd, $mi)
+function  lticontainer_explode_custom_params($custom_params)
+function  lticontainer_join_custom_params($custom_data)
+*/
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,8 +113,30 @@ function  check_include_substr_or($name, $array_str)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
+//
 
-function lticontainer_get_event($cmid, $action, $params='', $info='')
+// used cURL
+function  jupyterhub_api_get($url, $token)
+{
+    $headers = array('Authorization: token '.$token,);
+
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    $html = curl_exec($curl);
+    curl_close($curl);
+
+    return $html;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+//
+
+function  lticontainer_get_event($cmid, $action, $params='', $info='')
 {
     global $CFG;
 
@@ -143,7 +184,7 @@ function lticontainer_get_event($cmid, $action, $params='', $info='')
  
 
 
-function container_socket($mi, $socket_file)
+function  container_socket($mi, $socket_file)
 {
     if ($mi->use_podman==1) {
         $socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file.' /var/run/podman/podman.sock';
@@ -166,7 +207,7 @@ function container_socket($mi, $socket_file)
 
 
 
-function container_exec($cmd, $mi)
+function  container_exec($cmd, $mi)
 {
     $rslts = array();
     $socket_file = '/tmp/lticontainer_'.$mi->docker_host.'.sock';
@@ -219,7 +260,7 @@ function container_exec($cmd, $mi)
 //
 
 // コマンドの分解
-function lticontainer_explode_custom_params($custom_params)
+function  lticontainer_explode_custom_params($custom_params)
 {
     $cmds = new stdClass();
     $cmds->custom_cmd = array();
@@ -280,7 +321,7 @@ function lticontainer_explode_custom_params($custom_params)
 
 
 // コマンドを結合してテキストへ
-function lticontainer_join_custom_params($custom_data)
+function  lticontainer_join_custom_params($custom_data)
 {
     $custom_params = '';
     if (!isset($custom_data->lms_users))       $custom_data->lms_users       = '';

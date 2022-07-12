@@ -3,8 +3,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 
-require_once(__DIR__.'/../local_lib.php');
-require_once(__DIR__.'/../local_dblib.php');
+require_once(__DIR__.'/../locallib.php');
+require_once(__DIR__.'/../locallib_db.php');
 
 
 

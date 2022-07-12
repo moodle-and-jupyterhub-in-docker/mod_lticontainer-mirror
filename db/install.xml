@@ -16,6 +16,7 @@
         <FIELD NAME="docker_host" TYPE="char" LENGTH="128" NOTNULL="false" DEFAULT="localhost" SEQUENCE="false" COMMENT="Docker host name"/>
         <FIELD NAME="docker_user" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="docker" SEQUENCE="false" COMMENT="Docker user name"/>
         <FIELD NAME="docker_pass" TYPE="char" LENGTH="64" NOTNULL="false" DEFAULT="" SEQUENCE="false" COMMENT="Password of docker user"/>
+        <FIELD NAME="use_tls" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="use SSL/TLS as JupyterHub HTTP scheme"/>
         <FIELD NAME="custom_params" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="show custom parameters"/>
         <FIELD NAME="imgname_fltr" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="jupyter, ltictr" SEQUENCE="false" COMMENT="image name display filter"/>
         <FIELD NAME="make_volumes" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="does mod_lticontainer make volumes of docker?"/>

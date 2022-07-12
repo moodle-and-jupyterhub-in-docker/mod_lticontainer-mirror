@@ -10,8 +10,17 @@
 defined('MOODLE_INTERNAL') || die;
 
 
-require_once(__DIR__.'/local_lib.php');
+require_once(__DIR__.'/locallib.php');
 require_once(__DIR__.'/local_define.php');
+
+
+/*
+function  chart_dashboard($recs_r, $recs_a, $minstance)
+function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=false)
+function  chart_users_bar($recs, $username, $filename, $minstance, $dashboard=false)
+function  chart_codecell_bar($recs, $username, $filename, $minstance, $dashboard=false)
+function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboard=false)
+*/
 
 
 

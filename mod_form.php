@@ -81,10 +81,20 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('docker_user', PARAM_TEXT);
         $mform->setDefault('docker_user', 'docker');
 
-        $mform->addElement('password', 'docker_pass', get_string('docker_pass', 'mod_lticontainer'), array('size' => '32'));
+        $mform->addElement('passwordunmask', 'docker_pass', get_string('docker_pass', 'mod_lticontainer'), array('size' => '32'));
         $mform->addHelpButton('docker_pass', 'docker_pass', 'mod_lticontainer');
         $mform->setType('docker_pass', PARAM_TEXT);
         $mform->setDefault('docker_pass', 'pass');
+
+        $mform->addElement('selectyesno', 'use_podman', get_string('use_podman', 'mod_lticontainer'));
+        $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
+        $mform->setType('use_podman', PARAM_INT);
+        $mform->setDefault('use_podman', 0);
+
+        $mform->addElement('selectyesno', 'use_tls', get_string('use_tls', 'mod_lticontainer'));
+        $mform->addHelpButton('use_tls', 'use_tls', 'mod_lticontainer');
+        $mform->setType('use_tle', PARAM_INT);
+        $mform->setDefault('use_tls', 1);
 
         $mform->addElement('selectyesno', 'custom_params', get_string('show_custom_params', 'mod_lticontainer'));
         $mform->addHelpButton('custom_params', 'show_custom_params', 'mod_lticontainer');
@@ -101,12 +111,7 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('make_volumes', PARAM_INT);
         $mform->setDefault('make_volumes', 0);
 
-        $mform->addElement('selectyesno', 'use_podman', get_string('use_podman', 'mod_lticontainer'));
-        $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
-        $mform->setType('use_podman', PARAM_INT);
-        $mform->setDefault('use_podman', 0);
-
-        $mform->addElement('text', 'api_token', get_string('api_token', 'mod_lticontainer'), array('size' => '36'));
+        $mform->addElement('passwordunmask', 'api_token', get_string('api_token', 'mod_lticontainer'), array('size' => '36'));
         $mform->addHelpButton('api_token', 'api_token', 'mod_lticontainer');
         $mform->setType('api_token', PARAM_TEXT);
         $mform->setDefault('api_token', '');
@@ -122,7 +127,7 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('use_dashboard', PARAM_INT);
         $mform->setDefault('use_dashboard', 0);
 
-        $mform->addElement('text', 'rpc_token', get_string('rpc_token', 'mod_lticontainer'), array('size' => '36'));
+        $mform->addElement('passwordunmask', 'rpc_token', get_string('rpc_token', 'mod_lticontainer'), array('size' => '36'));
         $mform->addHelpButton('rpc_token', 'rpc_token', 'mod_lticontainer');
         $mform->setType('rpc_token', PARAM_TEXT);
         $mform->setDefault('rpc_token', '');

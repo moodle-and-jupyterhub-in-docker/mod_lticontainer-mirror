@@ -3,10 +3,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 
-require_once(__DIR__.'/../local_lib.php');
+require_once(__DIR__.'/../locallib.php');
 
 
-class  AdminTools
+class  JupyterHubAPI
 {
     var $cmid;
     var $courseid   = 0;
@@ -35,10 +35,10 @@ class  AdminTools
         #
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/lticontainer/actions/jupyterhub_api.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',        $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',           $this->url_params);
 
         $this->mcontext = context_module::instance($cmid);
-        if (!has_capability('mod/lticontainer:jupyterhub_api', $this->mcontext)) {
+        if (!has_capability('mod/lticontainer:jupyterhub_api',  $this->mcontext)) {
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
     }
@@ -53,6 +53,12 @@ class  AdminTools
     function  execute()
     {
         global $DB, $USER;
+
+            $token = $this->minstance->api_token;
+            $url = 'https://jupyterhub00.nsl.tuis.ac.jp/hub/api/users';
+
+            $html = jupyterhub_api_get($url, $token);
+            echo $html;
 
         /*
         $recs = $DB->get_records('lticontainer_data');
