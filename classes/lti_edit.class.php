@@ -175,7 +175,7 @@ class  LTIEdit
                 if ($scheme=="https") $server_port = 443;
                 else                  $server_port = 80;
             }
-            $custom_data->server_url  = $scheme.':'.$this->host_name.':'.strval($server_port);
+            $custom_data->server_url  = $scheme.'://'.$this->host_name.':'.strval($server_port);
             $custom_data->server_path = parse_url($CFG->wwwroot, PHP_URL_PATH);
             //
             $this->submitted  = true;

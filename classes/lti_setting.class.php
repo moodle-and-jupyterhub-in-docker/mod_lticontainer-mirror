@@ -2,7 +2,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__.'/../localllib_db.php');
+require_once(__DIR__.'/../locallib_db.php');
 
 
 class  LTIConnect
