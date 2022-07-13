@@ -21,12 +21,10 @@
           <h3>Hello JupyterHub API</h3>
           <h3>under Constructing!</h3>
 
-<form method="POST" action="https://jupyterhub00.nsl.tuis.ac.jp/hub/api/users">
-'Authorization': 'abcedfgh',
-<input type="submit" value="送信" />
-</form>
-
-
+          <form method='post' action='<?php echo $this->action_url;?>'>
+            <input type="hidden" name="mode" value='dummy' />
+            <input type='submit' value='Users List' />
+          </form>
 
         </td></tr>
       </table>

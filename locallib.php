@@ -35,10 +35,10 @@ function  pack_space($str)
 function  check_include_substr_and($name, $array_str)
 function  check_include_substr_or($name, $array_str)
 
-function  jupyterhub_api_get($url, $token)
-//function  jupyterhub_api_post($url, $token)
-//function  jupyterhub_api_put($url, $token)
-//function  jupyterhub_api_delete($url, $token)
+function  jupyterhub_api_get($url, $com, $token)
+//function  jupyterhub_api_post($url, $com, $token)
+//function  jupyterhub_api_put($url, $com, $token)
+//function  jupyterhub_api_delete($url, $com, $token)
 
 function  lticontainer_get_event($cmid, $action, $params='', $info='')
 function  container_socket($mi, $socket_file)
@@ -116,11 +116,11 @@ function  check_include_substr_or($name, $array_str)
 //
 
 // used cURL
-function  jupyterhub_api_get($url, $token)
+function  jupyterhub_api_get($url, $com, $token)
 {
     $headers = array('Authorization: token '.$token,);
 
-    $curl = curl_init($url);
+    $curl = curl_init($url.$com);
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);

@@ -22,6 +22,9 @@ class  JupyterHubAPI
     var $action_url = '';
     var $error_url  = '';
 
+    var $api_token  = '';
+    var $api_url    = '';
+
 
     function  __construct($cmid, $courseid, $minstance)
     {
@@ -41,6 +44,11 @@ class  JupyterHubAPI
         if (!has_capability('mod/lticontainer:jupyterhub_api',  $this->mcontext)) {
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
+
+        $this->api_token = $this->minstance->api_token;
+        $scheme = 'HTTPS';
+        if ($this->minstance->jupyterhub_ssl==0) $scheme = 'HTTP';
+        $this->api_url = $scheme.'://'.$this->minstance->jupyterhub_host.'/hub/api';
     }
 
 
@@ -53,12 +61,6 @@ class  JupyterHubAPI
     function  execute()
     {
         global $DB, $USER;
-
-            $token = $this->minstance->api_token;
-            $url = 'https://jupyterhub00.nsl.tuis.ac.jp/hub/api/users';
-
-            $html = jupyterhub_api_get($url, $token);
-            echo $html;
 
         /*
         $recs = $DB->get_records('lticontainer_data');
@@ -99,6 +101,8 @@ class  JupyterHubAPI
         //
         // POST
         if ($submit_data = data_submitted()) {
+            $html = jupyterhub_api_get($this->api_url, '/users', $this->api_token);
+            echo $html;
         }
 
         //

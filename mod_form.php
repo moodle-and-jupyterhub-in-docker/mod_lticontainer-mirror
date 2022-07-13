@@ -71,6 +71,11 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         //
         $mform->addElement('header', 'lticontainer_container_set', get_string('lticontainer_container_set', 'mod_lticontainer'));
 
+        $mform->addElement('select', 'use_podman', get_string('use_podman', 'mod_lticontainer'), array(0=>'Docker', 1=>'Podman'));
+        $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
+        $mform->setType('use_podman', PARAM_INT);
+        $mform->setDefault('use_podman', 0);
+
         $mform->addElement('text', 'docker_host', get_string('docker_host', 'mod_lticontainer'), array('size' => '64'));
         $mform->addHelpButton('docker_host', 'docker_host', 'mod_lticontainer');
         $mform->setType('docker_host', PARAM_TEXT);
@@ -86,15 +91,30 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->setType('docker_pass', PARAM_TEXT);
         $mform->setDefault('docker_pass', 'pass');
 
-        $mform->addElement('selectyesno', 'use_podman', get_string('use_podman', 'mod_lticontainer'));
-        $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
-        $mform->setType('use_podman', PARAM_INT);
-        $mform->setDefault('use_podman', 0);
+        //$mform->addElement('selectyesno', 'use_podman', get_string('use_podman', 'mod_lticontainer'));
+        //$mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
+        //$mform->setType('use_podman', PARAM_INT);
+        //$mform->setDefault('use_podman', 0);
 
-        $mform->addElement('selectyesno', 'use_tls', get_string('use_tls', 'mod_lticontainer'));
-        $mform->addHelpButton('use_tls', 'use_tls', 'mod_lticontainer');
+        $mform->addElement('text', 'jupyterhub_host', get_string('jupyterhub_host', 'mod_lticontainer'), array('size' => '64'));
+        $mform->addHelpButton('jupyterhub_host', 'jupyterhub_host', 'mod_lticontainer');
+        $mform->setType('jupyterhub_host', PARAM_TEXT);
+        $mform->setDefault('jupyterhub_host', 'localhost');
+
+        $mform->addElement('select', 'jupyterhub_ssl', get_string('jupyterhub_ssl', 'mod_lticontainer'), array(0=>'HTTP', 1=>'HTTPS'));
+        $mform->addHelpButton('jupyterhub_ssl', 'jupyterhub_ssl', 'mod_lticontainer');
         $mform->setType('use_tle', PARAM_INT);
-        $mform->setDefault('use_tls', 1);
+        $mform->setDefault('jupyterhub_ssl', 1);
+
+        //$mform->addElement('selectyesno', 'jupyterhub_tls', get_string('jupyterhub_tls', 'mod_lticontainer'));
+        //$mform->addHelpButton('jupyterhub_tls', 'jupyterhub_tls', 'mod_lticontainer');
+        //$mform->setType('use_tle', PARAM_INT);
+        //$mform->setDefault('jupyterhub_tls', 1);
+
+        $mform->addElement('passwordunmask', 'api_token', get_string('api_token', 'mod_lticontainer'), array('size' => '36'));
+        $mform->addHelpButton('api_token', 'api_token', 'mod_lticontainer');
+        $mform->setType('api_token', PARAM_TEXT);
+        $mform->setDefault('api_token', '');
 
         $mform->addElement('selectyesno', 'custom_params', get_string('show_custom_params', 'mod_lticontainer'));
         $mform->addHelpButton('custom_params', 'show_custom_params', 'mod_lticontainer');
@@ -110,11 +130,6 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->addHelpButton('make_volumes', 'make_docker_volumes', 'mod_lticontainer');
         $mform->setType('make_volumes', PARAM_INT);
         $mform->setDefault('make_volumes', 0);
-
-        $mform->addElement('passwordunmask', 'api_token', get_string('api_token', 'mod_lticontainer'), array('size' => '36'));
-        $mform->addHelpButton('api_token', 'api_token', 'mod_lticontainer');
-        $mform->setType('api_token', PARAM_TEXT);
-        $mform->setDefault('api_token', '');
 
 
         //-------------------------------------------------------------------------------
