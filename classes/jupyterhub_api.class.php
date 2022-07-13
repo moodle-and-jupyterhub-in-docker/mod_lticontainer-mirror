@@ -46,9 +46,7 @@ class  JupyterHubAPI
         }
 
         $this->api_token = $this->minstance->api_token;
-        $scheme = 'HTTPS';
-        if ($this->minstance->jupyterhub_ssl==0) $scheme = 'HTTP';
-        $this->api_url = $scheme.'://'.$this->minstance->jupyterhub_host.'/hub/api';
+        $this->api_url   = $this->minstance->jupyterhub_url.'/hub/api';
     }
 
 

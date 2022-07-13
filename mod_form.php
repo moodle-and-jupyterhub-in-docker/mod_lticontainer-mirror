@@ -96,15 +96,15 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         //$mform->setType('use_podman', PARAM_INT);
         //$mform->setDefault('use_podman', 0);
 
-        $mform->addElement('text', 'jupyterhub_host', get_string('jupyterhub_host', 'mod_lticontainer'), array('size' => '64'));
-        $mform->addHelpButton('jupyterhub_host', 'jupyterhub_host', 'mod_lticontainer');
-        $mform->setType('jupyterhub_host', PARAM_TEXT);
-        $mform->setDefault('jupyterhub_host', 'localhost');
+        $mform->addElement('text', 'jupyterhub_url', get_string('jupyterhub_url', 'mod_lticontainer'), array('size' => '64'));
+        $mform->addHelpButton('jupyterhub_url', 'jupyterhub_url', 'mod_lticontainer');
+        $mform->setType('jupyterhub_url', PARAM_TEXT);
+        $mform->setDefault('jupyterhub_url', 'http://localhost:8000');
 
-        $mform->addElement('select', 'jupyterhub_ssl', get_string('jupyterhub_ssl', 'mod_lticontainer'), array(0=>'HTTP', 1=>'HTTPS'));
-        $mform->addHelpButton('jupyterhub_ssl', 'jupyterhub_ssl', 'mod_lticontainer');
-        $mform->setType('use_tle', PARAM_INT);
-        $mform->setDefault('jupyterhub_ssl', 1);
+        //$mform->addElement('select', 'jupyterhub_ssl', get_string('jupyterhub_ssl', 'mod_lticontainer'), array(0=>'HTTP', 1=>'HTTPS'));
+        //$mform->addHelpButton('jupyterhub_ssl', 'jupyterhub_ssl', 'mod_lticontainer');
+        //$mform->setType('use_tle', PARAM_INT);
+        //$mform->setDefault('jupyterhub_ssl', 1);
 
         //$mform->addElement('selectyesno', 'jupyterhub_tls', get_string('jupyterhub_tls', 'mod_lticontainer'));
         //$mform->addHelpButton('jupyterhub_tls', 'jupyterhub_tls', 'mod_lticontainer');
