@@ -45,8 +45,13 @@ class  JupyterHubAPI
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
 
+        $api_scheme = parse_url($this->minstance->jupyterhub_url, PHP_URL_SCHEME);
+        $api_host   = parse_url($this->minstance->jupyterhub_url, PHP_URL_HOST);
+        $api_port   = parse_url($this->minstance->jupyterhub_url, PHP_URL_PORT);
+        $api_url    = $api_scheme.'://'.$api_host;
+        if (!empty($api_port)) $api_url .= ':'.$api_port;
+        $this->api_url   = $api_url.'/hub/api';
         $this->api_token = $this->minstance->api_token;
-        $this->api_url   = $this->minstance->jupyterhub_url.'/hub/api';
     }
 
 
