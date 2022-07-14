@@ -18,6 +18,7 @@ class  JupyterHubAPI
 
     var $submitted  = false;
     var $isGuest    = true;
+    var $edit_cap   = false;
 
     var $url_params = array();
     var $action_url = '';
@@ -41,12 +42,20 @@ class  JupyterHubAPI
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/lticontainer/actions/jupyterhub_api.php', $this->url_params);
         $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',           $this->url_params);
+        $this->ccontext   = $ccontext;
 
+        // for Guest
+        $this->isGuest = isguestuser();
+        if ($this->isGuest) {
+            print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
+        }
         $this->mcontext = context_module::instance($cmid);
         if (!has_capability('mod/lticontainer:jupyterhub_api',  $this->mcontext)) {
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
-        $this->ccontext = $ccontext;
+        if (has_capability('mod/lticontainer:jupyterhub_api_edit', $this->mcontext)) {
+            $this->edit_cap = true;
+        }
 
         //
         $api_scheme = parse_url($this->minstance->jupyterhub_url, PHP_URL_SCHEME);
@@ -69,6 +78,12 @@ class  JupyterHubAPI
     {
         global $DB, $USER;
 
+        // POST
+        if ($submit_data = data_submitted()) {
+            //$html = jupyterhub_api_get($this->api_url, '/users', $this->api_token);
+            //echo $html;
+        }
+
         // course users
         $sql = 'SELECT u.* FROM {role_assignments} r, {user} u WHERE r.contextid = ? AND r.userid = u.id ORDER BY u.username';
         $this->users = $DB->get_records_sql($sql, array($this->ccontext->id));
@@ -89,49 +104,6 @@ class  JupyterHubAPI
                     break;
                 }
             }
-        }
-
-        /*
-        $recs = $DB->get_records('lticontainer_data');
-        foreach ($recs as $rec) {
-            print_r($rec);
-            echo '<br />';
-            //
-            $rec->id = null;
-            if ($rec->host=='server') {
-                $ret = $DB->insert_record('lticontainer_server_data', $rec);
-            }
-            else if ($rec->host=='client') {
-                $ret = $DB->insert_record('lticontainer_client_data', $rec);
-            }
-        }
-        */
-
-        /*
-        $properties = 'filename|codenum';
-        $patterns   = "/\"(${properties})\s*:\s*([^\s\"]+)\"/u";
-
-        $recs = $DB->get_records('lticontainer_tags');
-        foreach ($recs as $rec) {
-            print_r($rec);
-            echo '<br />';
-
-            if ($rec->filename==null) {
-                preg_match_all($patterns, $rec->tags, $matches, PREG_SET_ORDER);
-
-                foreach($matches as $match) {
-                    $rec->{$match[1]} = $match[2];
-                }
-                $DB->update_record('lticontainer_tags', $rec);
-            }
-        }
-        */
-
-        //
-        // POST
-        if ($submit_data = data_submitted()) {
-            $html = jupyterhub_api_get($this->api_url, '/users', $this->api_token);
-            echo $html;
         }
 
         //

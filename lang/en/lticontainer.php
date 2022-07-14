@@ -26,7 +26,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Date Time Format
-$string['datetime_format'] = 'Y/m/d H:i';
+//$string['datetime_format'] = 'Y/m/d H:i';
+$string['datetime_format'] = 'd/m/Y H:i';
 
 // module
 $string['pluginname'] = 'LTIContainer';
@@ -76,7 +77,6 @@ $string['chart_line_usernum_help'] = 'Maximum number of users in a Line chart.';
 $string['chart_line_interval'] = 'Max interval time of line data (s)';
 $string['chart_line_interval_help'] = 'Maximum interval time(second) between each line data.';
 
-
 // print_error
 $string['access_forbidden'] = 'Access forbidden.';
 $string['invalid_sesskey'] = 'Invalid session key.';
@@ -85,7 +85,6 @@ $string['no_ltiid_found'] = 'lti_id is not displyed or not exist!';
 $string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions.';
 $string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker). Please install docker package.';
 $string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package.';
-
 
 // Capability / パンくずメニュー
 $string['lticontainer:over_view'] = 'Over View';
@@ -115,7 +114,6 @@ $string['jupyterhub_api_tab'] = 'JupyterHub API';
 $string['admin_tools_tab'] = 'Admin Tools';
 $string['returnto_course_tab'] = 'Return to course';
 
-
 // Table: LTI connect/edit
 $string['lti_name'] = 'LTI Name';
 $string['custom_command'] = 'Command';
@@ -131,6 +129,21 @@ $string['volume_view'] = 'Volumes';
 $string['driver_name'] = 'Driver';
 $string['volume_del'] = 'Delete';
 $string['deletevolconfirm'] = 'Do you really delete these volumes ?';
+
+// Table: JupyterHub API
+$string['user_name'] = 'User';
+$string['user_role'] = 'Role';
+$string['user_state'] = 'State';
+$string['user_server'] = 'Server';
+$string['user_last'] = 'Last Activity';
+$string['user_del'] = 'Delete';
+
+// Passed Time
+$string['never_ago'] = 'Never';
+$string['seconds_ago'] = 'seconds ago';
+$string['minutes_ago'] = 'minutes ago';
+$string['hours_ago'] = 'hours ago';
+$string['days_ago'] = 'days ago';
 
 // Title
 $string['users_cmd_ttl'] = 'Accessible users';
@@ -151,5 +164,4 @@ $string['git_url']  = 'https://gitlab.nsl.tuis.ac.jp/iseki/mod_lticontainer';
 $string['Edit'] = 'Edit';
 $string['Edit_settings'] = 'Edit settings';
 $string['Edit_display_settings'] = 'Edit display settings';
-
 

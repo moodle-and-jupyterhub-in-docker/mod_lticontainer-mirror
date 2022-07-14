@@ -31,6 +31,8 @@ define('LTICONTAINER_LTI_SERVERPATH_CMD' , 'lms_serverpath');
 /*
 function  timezone_offset()
 function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
+function  passed_time($tm)
+
 function  pack_space($str)
 function  check_include_substr_and($name, $array_str)
 function  check_include_substr_or($name, $array_str)
@@ -64,7 +66,6 @@ function  timezone_offset()
 }
 
 
-
 function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
 {
     global $TIME_OFFSET, $CFG;
@@ -76,6 +77,31 @@ function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
     $dt   = date($format, $ut);
 
     return $dt;
+}
+
+
+function  passed_time($tm)
+{
+    $ret = get_string('never_ago', 'mod_lticontainer');
+    //
+    if (!empty($tm)) {
+        $pass = time() - strtotime($tm);
+        if ($pass<60) $ret = strval($pass).' '.get_string('seconds_ago', 'mod_lticontainer');
+        else {
+            $pass = intdiv($pass, 60);
+            if ($pass<60) $ret = strval($pass).' '.get_string('minutes_ago', 'mod_lticontainer');
+            else {
+                $pass = intdiv($pass, 60);
+                if ($pass<24) $ret = strval($pass).' '.get_string('hours_ago', 'mod_lticontainer');
+                else {
+                    $pass = intdiv($pass, 24);
+                    $ret = strval($pass).' '.get_string('days_ago', 'mod_lticontainer');
+                }
+            }
+        }
+    }
+
+    return $ret;
 }
 
 

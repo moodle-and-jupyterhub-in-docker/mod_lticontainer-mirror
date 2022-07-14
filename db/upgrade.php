@@ -384,26 +384,19 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
-    // 2022071301
-    if ($oldversion < 2022071301) {
-        $table = new xmldb_table('lticontainer');
-        //
-        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, 'http://localhost:8000', 'docker_pass');
-        if (!$dbman->field_exists($table, $field)) {
-            $dbman->add_field($table, $field);
-        }
-    }
-
     // 2022071400
     if ($oldversion < 2022071400) {
         $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, '', 'docker_pass');
         if ($dbman->field_exists($table, $field)) {
-            $dbman->change_field_default($table, $field);
+            $dbman->drop_field($table, $field);
+        }
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
         }
     }
-    
+
     return true;
 }
 
