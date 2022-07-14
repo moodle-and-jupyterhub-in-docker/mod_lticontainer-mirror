@@ -81,9 +81,9 @@ echo $OUTPUT->header();
 ///////////////////////////////////////////////////////////////////////////
 echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
-echo '<div align="center">';
-echo $OUTPUT->heading(format_text($minstance->name), 3);
-echo '</div>';
+//echo '<div align="center">';
+//echo $OUTPUT->heading(format_text($minstance->name), 3);
+//echo '</div>';
 //
 
 include('html/overview.html');
