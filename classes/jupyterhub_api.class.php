@@ -13,6 +13,7 @@ class  JupyterHubAPI
     var $course;
     var $minstance;
     var $mcontext;
+    var $ccontext;
     var $host_name  = 'localhost';
 
     var $submitted  = false;
@@ -22,11 +23,12 @@ class  JupyterHubAPI
     var $action_url = '';
     var $error_url  = '';
 
+    var $users      = array();
     var $api_token  = '';
     var $api_url    = '';
 
 
-    function  __construct($cmid, $courseid, $minstance)
+    function  __construct($cmid, $courseid, $minstance, $ccontext)
     {
         global $CFG, $DB;
 
@@ -44,7 +46,9 @@ class  JupyterHubAPI
         if (!has_capability('mod/lticontainer:jupyterhub_api',  $this->mcontext)) {
             print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
         }
+        $this->ccontext = $ccontext;
 
+        //
         $api_scheme = parse_url($this->minstance->jupyterhub_url, PHP_URL_SCHEME);
         $api_host   = parse_url($this->minstance->jupyterhub_url, PHP_URL_HOST);
         $api_port   = parse_url($this->minstance->jupyterhub_url, PHP_URL_PORT);
@@ -65,6 +69,29 @@ class  JupyterHubAPI
     {
         global $DB, $USER;
 
+        // course users
+        $sql = 'SELECT u.* FROM {role_assignments} r, {user} u WHERE r.contextid = ? AND r.userid = u.id ORDER BY u.username';
+        $this->users = $DB->get_records_sql($sql, array($this->ccontext->id));
+
+        // JupyterHub users
+        $jh_users = array();
+        $json = jupyterhub_api_get($this->api_url, '/users', $this->api_token);
+        if (!empty($json)) {
+            $jh_users = json_decode($json, false);
+        }
+
+        // $this->users に JupyterHub のデータを追加
+        foreach ($this->users as $key => $user) {
+            $this->users[$key]->jh = new StdClass();
+            foreach ($jh_users as $jh_user) {
+                if ($user->username == $jh_user->name) {
+                    $this->users[$key]->jh = $jh_user;
+                    break;
+                }
+            }
+        }
+
+print_r($this->users);
         /*
         $recs = $DB->get_records('lticontainer_data');
         foreach ($recs as $rec) {

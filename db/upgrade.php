@@ -336,7 +336,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022071000) {
         $table = new xmldb_table('lticontainer_client_data');
         //
-        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'cell_id');
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, '', 'cell_id');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
@@ -354,7 +354,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022071006) {
         $table = new xmldb_table('lticontainer_tags');
         //
-        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, "", 'tags');
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, XMLDB_NOTNULL, null, '', 'tags');
         if ($dbman->field_exists($table, $field)) {
             $DB->delete_records('lticontainer_tags', array('filename'=>NULL));
             $dbman->change_field_notnull($table, $field);
@@ -373,7 +373,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022071008) {
         $table = new xmldb_table('lticontainer_tags');
         //
-        $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, XMLDB_NOTNULL, null, "", 'filename');
+        $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, XMLDB_NOTNULL, null, '', 'filename');
         if ($dbman->field_exists($table, $field)) {
             $DB->delete_records('lticontainer_tags', array('codenum'=>NULL));
             $dbman->change_field_notnull($table, $field);
@@ -384,11 +384,12 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022071301) {
         $table = new xmldb_table('lticontainer');
         //
-        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, 'http://localhost:8000', 'docker_pass');
+        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, '', 'docker_pass');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
     }
+
     return true;
 }
 

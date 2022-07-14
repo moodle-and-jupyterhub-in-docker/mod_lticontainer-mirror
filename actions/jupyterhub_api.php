@@ -69,7 +69,7 @@ echo_tabs($current_tab, $courseid, $cmid, $mcontext, $minstance);
 
 if ($lticontainer_jupyterhub_api_cap) {
     require_once(__DIR__.'/../classes/jupyterhub_api.class.php');
-    $jupyterhub_api = new JupyterHubAPI($cmid, $courseid, $minstance);
+    $jupyterhub_api = new JupyterHubAPI($cmid, $courseid, $minstance, $ccontext);
     $jupyterhub_api->set_condition();
     $jupyterhub_api->execute();
     $jupyterhub_api->print_page();
