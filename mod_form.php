@@ -71,15 +71,20 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         //
         $mform->addElement('header', 'lticontainer_container_set', get_string('lticontainer_container_set', 'mod_lticontainer'));
 
+        $mform->addElement('text', 'jupyterhub_url', get_string('jupyterhub_url', 'mod_lticontainer'), array('size' => '64'));
+        $mform->addHelpButton('jupyterhub_url', 'jupyterhub_url', 'mod_lticontainer');
+        $mform->setType('jupyterhub_url', PARAM_TEXT);
+        $mform->setDefault('jupyterhub_url', 'http://localhost:8000');
+
         $mform->addElement('select', 'use_podman', get_string('use_podman', 'mod_lticontainer'), array(0=>'Docker', 1=>'Podman'));
         $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
         $mform->setType('use_podman', PARAM_INT);
         $mform->setDefault('use_podman', 0);
 
-        $mform->addElement('text', 'docker_host', get_string('docker_host', 'mod_lticontainer'), array('size' => '64'));
-        $mform->addHelpButton('docker_host', 'docker_host', 'mod_lticontainer');
-        $mform->setType('docker_host', PARAM_TEXT);
-        $mform->setDefault('docker_host', 'localhost');
+        //$mform->addElement('text', 'docker_host', get_string('docker_host', 'mod_lticontainer'), array('size' => '64'));
+        //$mform->addHelpButton('docker_host', 'docker_host', 'mod_lticontainer');
+        //$mform->setType('docker_host', PARAM_TEXT);
+        //$mform->setDefault('docker_host', 'localhost');
 
         $mform->addElement('text', 'docker_user', get_string('docker_user', 'mod_lticontainer'), array('size' => '32'));
         $mform->addHelpButton('docker_user', 'docker_user', 'mod_lticontainer');
@@ -95,11 +100,6 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         //$mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
         //$mform->setType('use_podman', PARAM_INT);
         //$mform->setDefault('use_podman', 0);
-
-        $mform->addElement('text', 'jupyterhub_url', get_string('jupyterhub_url', 'mod_lticontainer'), array('size' => '64'));
-        $mform->addHelpButton('jupyterhub_url', 'jupyterhub_url', 'mod_lticontainer');
-        $mform->setType('jupyterhub_url', PARAM_TEXT);
-        $mform->setDefault('jupyterhub_url', 'http://localhost:8000');
 
         //$mform->addElement('select', 'jupyterhub_ssl', get_string('jupyterhub_ssl', 'mod_lticontainer'), array(0=>'HTTP', 1=>'HTTPS'));
         //$mform->addHelpButton('jupyterhub_ssl', 'jupyterhub_ssl', 'mod_lticontainer');

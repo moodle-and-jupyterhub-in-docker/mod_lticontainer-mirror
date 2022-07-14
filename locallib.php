@@ -186,11 +186,15 @@ function  lticontainer_get_event($cmid, $action, $params='', $info='')
 
 function  container_socket($mi, $socket_file)
 {
+    $container_host = parse_url($mi->jupyterhub_url, PHP_URL_HOST);
+
     if ($mi->use_podman==1) {
-        $socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file.' /var/run/podman/podman.sock';
+        //$socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file.' /var/run/podman/podman.sock';
+        $socket_params = $container_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file.' /var/run/podman/podman.sock';
     }
     else {
-        $socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
+        //$socket_params = $mi->docker_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
+        $socket_params = $container_host.' '.$mi->docker_user.' '.$mi->docker_pass.' '.$socket_file;
     }
     $socket_cmd = __DIR__.'/sh/container_rsock.sh '.$socket_params;
 
@@ -210,9 +214,13 @@ function  container_socket($mi, $socket_file)
 function  container_exec($cmd, $mi)
 {
     $rslts = array();
-    $socket_file = '/tmp/lticontainer_'.$mi->docker_host.'.sock';
+    $container_host = parse_url($mi->jupyterhub_url, PHP_URL_HOST);
+    //
+    //$socket_file = '/tmp/lticontainer_'.$mi->docker_host.'.sock';
+    $socket_file = '/tmp/lticontainer_'.$container_host.'.sock';
 
-    if ($mi->docker_host=='') {
+    //if ($mi->docker_host=='') {
+    if ($container_host=='') {
         return $rslts;
     }
     else {
