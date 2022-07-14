@@ -91,7 +91,6 @@ class  JupyterHubAPI
             }
         }
 
-print_r($this->users);
         /*
         $recs = $DB->get_records('lticontainer_data');
         foreach ($recs as $rec) {

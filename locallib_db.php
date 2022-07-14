@@ -71,7 +71,7 @@ function  db_get_disp_ltis($courseid, $minstance, $sort = '')
 {
     //global $DB;
 
-    $fields = 'id, name, instructorcustomparameters';
+    $fields = 'id, name, typeid, instructorcustomparameters';
     $ltis   = db_get_valid_ltis($courseid, $sort, $fields);
     //$ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
 

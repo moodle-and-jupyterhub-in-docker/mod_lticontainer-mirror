@@ -25,13 +25,13 @@
 require(__DIR__.'/../../config.php');
 require_once(__DIR__.'/lib.php');
 require_once(__DIR__.'/locallib.php');
+require_once(__DIR__.'/locallib_db.php');
 require_once(__DIR__.'/include/tabs.php');    // for echo_tabs()
 require_once(__DIR__.'/classes/event/over_view.php');
 
 // Course module id.
 $cmid       = optional_param('id', 0, PARAM_INT);           // コースモジュール ID
 $instanceid = optional_param('m',  0, PARAM_INT);           // インスタンス ID
-$courseid   = optional_param('course', false, PARAM_INT);
 
 $current_tab = 'over_view_tab';
 $this_action = 'over_view';
@@ -40,14 +40,33 @@ $this_action = 'over_view';
 ////////////////////////////////////////////////////////
 //get the objects
 if ($cmid) {
-    $cm = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                  // コースモジュール
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);      // コースデータ from DB
-    $minstance = $DB->get_record('lticontainer', array('id' => $cm->instance), '*', MUST_EXIST);  // モジュールインスタンス
+    $cm = get_coursemodule_from_id('lticontainer', $cmid, 0, false, MUST_EXIST);                    // コースモジュール
+    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);               // コースデータ from DB
+    $minstance = $DB->get_record('lticontainer', array('id' => $cm->instance), '*', MUST_EXIST);    // モジュールインスタンス
 } 
 else {
     $minstance = $DB->get_record('lticontainer', array('id' => $instanceid), '*', MUST_EXIST);
     $course = $DB->get_record('course', array('id' => $minstance->course), '*', MUST_EXIST);
     $cm = get_coursemodule_from_instance('lticontainer', $minstance->id, $course->id, false, MUST_EXIST);
+}
+$courseid = $course->id;
+
+// update jupyterhub_url using lti_types
+if (empty($minstance->jupyterhub_url)) {
+    $ltis = db_get_disp_ltis($courseid, $minstance);
+    if (is_array($ltis)) {
+        $typeid = current($ltis)->typeid;
+        $lti_type = $DB->get_record('lti_types', array('id' => $typeid), '*', MUST_EXIST);
+        if (is_object($lti_type)) {
+            $scheme = parse_url($lti_type->baseurl, PHP_URL_SCHEME);
+            $host   = parse_url($lti_type->baseurl, PHP_URL_HOST);
+            $port   = parse_url($lti_type->baseurl, PHP_URL_PORT);
+            $url = $scheme.'://'.$host;
+            if (!empty($port)) $url .= ':'.$port;
+            $minstance->jupyterhub_url = $url;
+            $DB->update_record('lticontainer', $minstance);
+        }
+    }
 }
 
 $mcontext = context_module::instance($cm->id);
