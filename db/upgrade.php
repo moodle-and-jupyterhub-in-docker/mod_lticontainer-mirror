@@ -301,7 +301,9 @@ function xmldb_lticontainer_upgrade($oldversion)
         $table = new xmldb_table('lticontainer_server_data');
         //
         $field = new xmldb_field('status', XMLDB_TYPE_CHAR, '32', null, null, null, null, 'message');
-        $dbman->change_field_precision($table, $field);
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_precision($table, $field);
+        }
     }
     
     // 2022030200
@@ -309,7 +311,9 @@ function xmldb_lticontainer_upgrade($oldversion)
         $table = new xmldb_table('lticontainer');
         //
         $field = new xmldb_field('imgname_fltr', XMLDB_TYPE_CHAR, '255', null, null, null, 'jupyter, ltictr', 'custom_params');
-        $dbman->change_field_default($table, $field);
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_default($table, $field);
+        }
     }
     
     // 2022070500
@@ -384,12 +388,22 @@ function xmldb_lticontainer_upgrade($oldversion)
     if ($oldversion < 2022071301) {
         $table = new xmldb_table('lticontainer');
         //
-        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, '', 'docker_pass');
+        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, 'http://localhost:8000', 'docker_pass');
         if (!$dbman->field_exists($table, $field)) {
             $dbman->add_field($table, $field);
         }
     }
 
+    // 2022071400
+    if ($oldversion < 2022071400) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('jupyterhub_url', XMLDB_TYPE_CHAR, '128', null, null, null, '', 'docker_pass');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_default($table, $field);
+        }
+    }
+    
     return true;
 }
 
