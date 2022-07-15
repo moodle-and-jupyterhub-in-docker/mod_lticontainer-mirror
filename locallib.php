@@ -137,6 +137,35 @@ function  check_include_substr_or($name, $array_str)
 }
 
 
+function  get_namehead($name_pattern, $firstname, $lastname, $deli='')
+{
+    global $CFG;
+
+    if ($name_pattern=='fullname') {
+        if ($CFG->fullnamedisplay=='lastname firstname') { // for better view (dlnsk)
+            if ($deli=='') $namehead = "$lastname $firstname";
+            else           $namehead = "$lastname ".$deli." $firstname";
+        }
+        else {
+            if ($deli=='') $namehead = "$firstname $lastname";
+            else           $namehead = "$firstname ".$deli." $lastname";
+        }
+    }
+    else if ($name_pattern=='lastname') {
+        $namehead = "$lastname";
+    }
+    else {
+        $namehead = "$firstname";
+    }
+
+    return $namehead;
+}
+
+
+
+
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //

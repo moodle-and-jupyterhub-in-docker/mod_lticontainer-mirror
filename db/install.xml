@@ -31,6 +31,7 @@
         <FIELD NAME="chart_bar_codenum" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="15" SEQUENCE="false" COMMENT="Maximum code number of Bar chart"/>
         <FIELD NAME="chart_line_usernum" TYPE="int" LENGTH="5" NOTNULL="true" DEFAULT="10" SEQUENCE="false" COMMENT="Maximum user number of Line chart"/>
         <FIELD NAME="chart_line_interval" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="1800" SEQUENCE="false" COMMENT="Maximum interval time(s) between each line data"/>
+        <FIELD NAME="namepattern" TYPE="char" LENGTH="16" NOTNULL="true" DEFAULT="fullname" SEQUENCE="false" COMMENT="Pattern of names displayed"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

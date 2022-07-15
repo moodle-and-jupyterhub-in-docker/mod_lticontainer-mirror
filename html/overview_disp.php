@@ -26,6 +26,7 @@ print('Container User : <strong>'.$minstance->docker_user.'</strong><br />');
 print('Shows LTI parameters : <strong>'.$disp.'</strong><br />');
 print('Image Name Filter : <strong>'.$minstance->imgname_fltr.'</strong><br />');
 print('Creates Volumes  : <strong>'.$make.'</strong><br />');
+print('Displayed Name Pattern : <strong>'.$minstance->namepattern.'</strong><br />');
 
 if (has_capability('mod/lticontainer:db_write', $mcontext)) {
     print('<br />');

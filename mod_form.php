@@ -74,7 +74,7 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->addElement('text', 'jupyterhub_url', get_string('jupyterhub_url', 'mod_lticontainer'), array('size' => '64'));
         $mform->addHelpButton('jupyterhub_url', 'jupyterhub_url', 'mod_lticontainer');
         $mform->setType('jupyterhub_url', PARAM_TEXT);
-        $mform->setDefault('jupyterhub_url', 'http://localhost:8000');
+        $mform->setDefault('jupyterhub_url', '');
 
         $mform->addElement('select', 'use_podman', get_string('use_podman', 'mod_lticontainer'), array(0=>'Docker', 1=>'Podman'));
         $mform->addHelpButton('use_podman', 'use_podman', 'mod_lticontainer');
@@ -130,6 +130,13 @@ class mod_lticontainer_mod_form extends moodleform_mod {
         $mform->addHelpButton('make_volumes', 'make_docker_volumes', 'mod_lticontainer');
         $mform->setType('make_volumes', PARAM_INT);
         $mform->setDefault('make_volumes', 0);
+
+        $choices['fullname']  = get_string('fullnameuser');
+        $choices['firstname'] = get_string('firstname');
+        $choices['lastname']  = get_string('lastname');
+        $mform->addElement('select', 'namepattern', get_string('username_manage', 'mod_lticontainer'), $choices);
+        $mform->addHelpButton('namepattern', 'username_manage', 'mod_lticontainer');
+        $mform->setDefault('namepattern', 'fullname');
 
 
         //-------------------------------------------------------------------------------

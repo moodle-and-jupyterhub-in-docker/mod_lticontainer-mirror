@@ -91,17 +91,20 @@ class  JupyterHubAPI
         // JupyterHub users
         $jh_users = array();
         $json = jupyterhub_api_get($this->api_url, '/users', $this->api_token);
-        if (!empty($json)) {
-            $jh_users = json_decode($json, false);
-        }
 
+        $jh_users = json_decode($json, false);
         // $this->users に JupyterHub のデータを追加
         foreach ($this->users as $key => $user) {
             $this->users[$key]->jh = new StdClass();
-            foreach ($jh_users as $jh_user) {
-                if ($user->username == $jh_user->name) {
-                    $this->users[$key]->jh = $jh_user;
-                    break;
+            $this->users[$key]->jh->status = 'ERR';
+
+            if (is_array($jh_users)) {
+                foreach ($jh_users as $jh_user) {
+                    if ($user->username == $jh_user->name) {
+                        $this->users[$key]->jh = $jh_user;
+                        $this->users[$key]->jh->status = 'OK';
+                        break;
+                    }
                 }
             }
         }

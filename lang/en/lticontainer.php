@@ -131,12 +131,16 @@ $string['volume_del'] = 'Delete';
 $string['deletevolconfirm'] = 'Do you really delete these volumes ?';
 
 // Table: JupyterHub API
-$string['user_name'] = 'User';
+$string['user_name'] = 'UserName';
 $string['user_role'] = 'Role';
-$string['user_state'] = 'State';
+$string['user_status'] = 'Status';
 $string['user_server'] = 'Server';
 $string['user_last'] = 'Last Activity';
 $string['user_del'] = 'Delete';
+
+// User Name
+$string['username_manage'] = 'Pattern of names displayed';
+$string['username_manage_help'] = 'You can select displied name pattern in this module.';
 
 // Passed Time
 $string['never_ago'] = 'Never';

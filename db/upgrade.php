@@ -397,6 +397,16 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
+    // 2022071403
+    if ($oldversion < 2022071403) {
+        $table = new xmldb_table('lticontainer');
+        //
+        $field = new xmldb_field('namepattern', XMLDB_TYPE_CHAR, '16', null, XMLDB_NOTNULL, null, 'fullname', 'chart_line_interval');
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+
     return true;
 }
 
