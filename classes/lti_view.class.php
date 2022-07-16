@@ -98,7 +98,7 @@ class  LTIConnect
             $event->trigger();
         }
 
-        autoset_jupyterhub_url($this->courseid, $this->minstance);
+        if (empty($this->minstance->jupyterhub_url)) autoset_jupyterhub_url($this->courseid, $this->minstance);
         $this->ltis = db_get_disp_ltis($this->courseid, $this->minstance);
 
         return true;

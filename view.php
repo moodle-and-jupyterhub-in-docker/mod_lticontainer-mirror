@@ -50,7 +50,9 @@ else {
     $cm = get_coursemodule_from_instance('lticontainer', $minstance->id, $course->id, false, MUST_EXIST);
 }
 $courseid = $course->id;
-autoset_jupyterhub_url($courseid, $minstance);
+if (empty($minstance->jupyterhub_url)) {
+    autoset_jupyterhub_url($courseid, $minstance);
+}
 
 $mcontext = context_module::instance($cm->id);
 $ccontext = context_course::instance($course->id);

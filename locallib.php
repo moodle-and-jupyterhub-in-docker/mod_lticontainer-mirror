@@ -43,9 +43,10 @@ function  jupyterhub_api_get($url, $com, $token)
 //function  jupyterhub_api_put($url, $com, $token)
 //function  jupyterhub_api_delete($url, $com, $token)
 
-function  lticontainer_get_event($cmid, $action, $params='', $info='')
 function  container_socket($mi, $socket_file)
 function  container_exec($cmd, $mi)
+
+function  lticontainer_get_event($cmid, $action, $params='', $info='')
 function  lticontainer_explode_custom_params($custom_params)
 function  lticontainer_join_custom_params($custom_data)
 */
@@ -167,6 +168,25 @@ function  get_namehead($name_pattern, $firstname, $lastname, $deli='')
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
 
+function  select_jupyterhub_status($url, $url_options, $selected)
+{
+    global $OUTPUT;
+
+    if (is_array($url_options)) $popupurl = new moodle_url($url, $url_options);
+    else                        $popupurl = $url.$url_options;
+    //
+    $options = array();
+    $options['ALL']  = 'ALL';
+    $options['OK']   = 'OK';
+    $options['NONE'] = 'NONE';
+    //
+    echo $OUTPUT->single_select($popupurl, 'status', $options, $selected);
+
+    return;
+}
+
+
+
 // update jupyterhub_url using lti_types
 function  autoset_jupyterhub_url($courseid, $mi)
 {
@@ -193,7 +213,7 @@ function  autoset_jupyterhub_url($courseid, $mi)
 }
 
 
-// used cURL
+// used GET cURL
 function  jupyterhub_api_get($url, $com, $token)
 {
     $headers = array('Authorization: token '.$token,);
@@ -213,54 +233,6 @@ function  jupyterhub_api_get($url, $com, $token)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
-
-function  lticontainer_get_event($cmid, $action, $params='', $info='')
-{
-    global $CFG;
-
-    $event = null;
-    if (!is_array($params)) $params = array();
-
-    $args = array(
-        'context' => context_module::instance($cmid),
-        'other'   => array('params' => $params, 'info'=> $info),
-    );
-    //
-    if      ($action=='over_view') {
-        $event = \mod_lticontainer\event\over_view::create($args);
-    }
-    else if ($action=='lti_view') {
-        $event = \mod_lticontainer\event\lti_view::create($args);
-    }
-    else if ($action=='lti_setting') {
-        $event = \mod_lticontainer\event\lti_setting::create($args);
-    }
-    else if ($action=='lti_edit') {
-        $event = \mod_lticontainer\event\lti_edit::create($args);
-    }
-    else if ($action=='volume_view') {
-        $event = \mod_lticontainer\event\volume_view::create($args);
-    }
-    else if ($action=='volume_delete') {
-        $event = \mod_lticontainer\event\volume_delete::create($args);
-    }
-    else if ($action=='dashboard_view') {
-        $event = \mod_lticontainer\event\dashboard_view::create($args);
-    }
-    else if ($action=='chart_view') {
-        $event = \mod_lticontainer\event\chart_view::create($args);
-    }
-    else if ($action=='jupyterhub_api') {
-        $event = \mod_lticontainer\event\jupyterhub_api::create($args);
-    }
-    else if ($action=='admin_tools') {
-        $event = \mod_lticontainer\event\admin_tools::create($args);
-    }
-
-    return $event;
-}
- 
-
 
 function  container_socket($mi, $socket_file)
 {
@@ -344,6 +316,53 @@ function  container_exec($cmd, $mi)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
+
+function  lticontainer_get_event($cmid, $action, $params='', $info='')
+{
+    global $CFG;
+
+    $event = null;
+    if (!is_array($params)) $params = array();
+
+    $args = array(
+        'context' => context_module::instance($cmid),
+        'other'   => array('params' => $params, 'info'=> $info),
+    );
+    //
+    if      ($action=='over_view') {
+        $event = \mod_lticontainer\event\over_view::create($args);
+    }
+    else if ($action=='lti_view') {
+        $event = \mod_lticontainer\event\lti_view::create($args);
+    }
+    else if ($action=='lti_setting') {
+        $event = \mod_lticontainer\event\lti_setting::create($args);
+    }
+    else if ($action=='lti_edit') {
+        $event = \mod_lticontainer\event\lti_edit::create($args);
+    }
+    else if ($action=='volume_view') {
+        $event = \mod_lticontainer\event\volume_view::create($args);
+    }
+    else if ($action=='volume_delete') {
+        $event = \mod_lticontainer\event\volume_delete::create($args);
+    }
+    else if ($action=='dashboard_view') {
+        $event = \mod_lticontainer\event\dashboard_view::create($args);
+    }
+    else if ($action=='chart_view') {
+        $event = \mod_lticontainer\event\chart_view::create($args);
+    }
+    else if ($action=='jupyterhub_api') {
+        $event = \mod_lticontainer\event\jupyterhub_api::create($args);
+    }
+    else if ($action=='admin_tools') {
+        $event = \mod_lticontainer\event\admin_tools::create($args);
+    }
+
+    return $event;
+}
+ 
 
 // コマンドの分解
 function  lticontainer_explode_custom_params($custom_params)
