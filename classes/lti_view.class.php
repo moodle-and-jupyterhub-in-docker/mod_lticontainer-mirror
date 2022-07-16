@@ -78,6 +78,7 @@ class  LTIConnect
             }
             $this->submitted  = true;
 
+            $disp_list = '';
             if (property_exists($formdata, 'disp')) {
                 $disp  = array();
                 //$ltis = $DB->get_records('lti', array('course' => $this->courseid));
@@ -85,18 +86,19 @@ class  LTIConnect
                 foreach ($ltis as $lti) {
                     if (array_key_exists($lti->id, $formdata->disp)) $disp[] = $lti->id;
                 }
-
                 $disp_list = implode(',', $disp);
-                $this->minstance->display_lti = $disp_list;
-                $DB->update_record('lticontainer', $this->minstance);
-                //
-                $event = lticontainer_get_event($this->cmid, 'lti_setting', $this->url_params, 'display: '.$disp_list);
-                $event->add_record_snapshot('course', $this->course);
-                $event->add_record_snapshot('lticontainer',  $this->minstance);
-                $event->trigger();
             }
+            //
+            $this->minstance->display_lti = $disp_list;
+            $DB->update_record('lticontainer', $this->minstance);
+            //
+            $event = lticontainer_get_event($this->cmid, 'lti_setting', $this->url_params, 'display: '.$disp_list);
+            $event->add_record_snapshot('course', $this->course);
+            $event->add_record_snapshot('lticontainer',  $this->minstance);
+            $event->trigger();
         }
 
+        autoset_jupyterhub_url($this->courseid, $this->minstance);
         $this->ltis = db_get_disp_ltis($this->courseid, $this->minstance);
 
         return true;

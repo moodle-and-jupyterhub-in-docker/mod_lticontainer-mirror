@@ -50,24 +50,7 @@ else {
     $cm = get_coursemodule_from_instance('lticontainer', $minstance->id, $course->id, false, MUST_EXIST);
 }
 $courseid = $course->id;
-
-// update jupyterhub_url using lti_types
-if (empty($minstance->jupyterhub_url)) {
-    $ltis = db_get_disp_ltis($courseid, $minstance);
-    if (is_array($ltis)) {
-        $typeid = current($ltis)->typeid;
-        $lti_type = $DB->get_record('lti_types', array('id' => $typeid), '*', MUST_EXIST);
-        if (is_object($lti_type)) {
-            $scheme = parse_url($lti_type->baseurl, PHP_URL_SCHEME);
-            $host   = parse_url($lti_type->baseurl, PHP_URL_HOST);
-            $port   = parse_url($lti_type->baseurl, PHP_URL_PORT);
-            $url = $scheme.'://'.$host;
-            if (!empty($port)) $url .= ':'.$port;
-            $minstance->jupyterhub_url = $url;
-            $DB->update_record('lticontainer', $minstance);
-        }
-    }
-}
+autoset_jupyterhub_url($courseid, $minstance);
 
 $mcontext = context_module::instance($cm->id);
 $ccontext = context_course::instance($course->id);

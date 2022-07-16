@@ -37,6 +37,7 @@ function  pack_space($str)
 function  check_include_substr_and($name, $array_str)
 function  check_include_substr_or($name, $array_str)
 
+function  autoset_jupyterhub_url($courseid, $mi)
 function  jupyterhub_api_get($url, $com, $token)
 //function  jupyterhub_api_post($url, $com, $token)
 //function  jupyterhub_api_put($url, $com, $token)
@@ -163,12 +164,34 @@ function  get_namehead($name_pattern, $firstname, $lastname, $deli='')
 
 
 
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
+
+// update jupyterhub_url using lti_types
+function  autoset_jupyterhub_url($courseid, $mi)
+{
+    global $DB;
+
+    if (empty($mi->jupyterhub_url)) {
+        $ltis = db_get_disp_ltis($courseid, $mi);
+        if (is_array($ltis) && !empty($ltis)) {
+            $typeid = current($ltis)->typeid;
+            $lti_type = $DB->get_record('lti_types', array('id' => $typeid), 'id,baseurl', MUST_EXIST);
+            if (is_object($lti_type)) {
+                $scheme = parse_url($lti_type->baseurl, PHP_URL_SCHEME);
+                $host   = parse_url($lti_type->baseurl, PHP_URL_HOST);
+                $port   = parse_url($lti_type->baseurl, PHP_URL_PORT);
+                $url = $scheme.'://'.$host;
+                if (!empty($port)) $url .= ':'.$port;
+                $mi->jupyterhub_url = $url;
+                $DB->update_record('lticontainer', $mi);
+            }
+        }
+    }
+
+    return;
+}
+
 
 // used cURL
 function  jupyterhub_api_get($url, $com, $token)

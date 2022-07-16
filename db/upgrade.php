@@ -407,6 +407,52 @@ function xmldb_lticontainer_upgrade($oldversion)
         }
     }
 
+    // 2022071705
+    if ($oldversion < 2022071705) {
+        $table = new xmldb_table('lticontainer_client_data');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, null, null, '', 'cell_id');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
+    // 2022071710
+    if ($oldversion < 2022071710) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $key = new xmldb_key('cell_id', XMLDB_KEY_UNIQUE, array('cell_id', 'filename'));
+        $dbman->drop_key($table, $key);
+    }
+
+    // 2022071710
+    if ($oldversion < 2022071710) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $field = new xmldb_field('filename', XMLDB_TYPE_CHAR, '255', null, null, null, null, 'tags');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
+    // 2022071711
+    if ($oldversion < 2022071711) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $key = new xmldb_key('cell_id', XMLDB_KEY_UNIQUE, array('cell_id', 'filename'));
+        $dbman->add_key($table, $key);
+    }
+
+    // 2022071711
+    if ($oldversion < 2022071711) {
+        $table = new xmldb_table('lticontainer_tags');
+        //
+        $field = new xmldb_field('codenum', XMLDB_TYPE_CHAR, '12', null, null, null, null, 'filename');
+        if ($dbman->field_exists($table, $field)) {
+            $dbman->change_field_notnull($table, $field);
+        }
+    }
+
     return true;
 }
 

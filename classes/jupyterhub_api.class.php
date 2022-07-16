@@ -96,7 +96,7 @@ class  JupyterHubAPI
         // $this->users に JupyterHub のデータを追加
         foreach ($this->users as $key => $user) {
             $this->users[$key]->jh = new StdClass();
-            $this->users[$key]->jh->status = 'ERR';
+            $this->users[$key]->jh->status = 'NONE';
 
             if (is_array($jh_users)) {
                 foreach ($jh_users as $jh_user) {
