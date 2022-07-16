@@ -54,7 +54,7 @@ class  JupyterHubAPI
         $this->nmsort = optional_param('nmsort', 'asc',  PARAM_ALPHA);
         $this->tmsort = optional_param('tmsort', 'none', PARAM_ALPHA);
         $this->sort   = optional_param('sort',   'none', PARAM_ALPHA);
-
+        //
         $this->sort_params = array('nmsort'=>$this->nmsort, 'tmsort'=>$this->tmsort, 'sort'=>$this->sort);
 
         // for Guest
