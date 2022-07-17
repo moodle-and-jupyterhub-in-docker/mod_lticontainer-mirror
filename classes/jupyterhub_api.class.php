@@ -88,10 +88,6 @@ class  JupyterHubAPI
         if ($this->sort=='nmsort') {
             $this->tmsort = 'none';
         }
-        else if ($this->sort=='tmsort') {
-            $this->nmsort = 'desc';
-        }
-        //
         $this->sort_params = array('nmsort'=>$this->nmsort, 'tmsort'=>$this->tmsort, 'sort'=>$this->sort);
 
         return true;
