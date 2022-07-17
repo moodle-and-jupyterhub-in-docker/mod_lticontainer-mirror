@@ -18,6 +18,7 @@ function  make_jupyterhub_tablehead($edit_cap, $name_pattern, $action_url, $sort
     if ($last_url_params['tmsort']=='asc') $last_url_params['tmsort'] = 'desc';
     else                                   $last_url_params['tmsort'] = 'asc';
     $last_url_params['sort']   = 'tmsort';
+    $last_url_params['nmsort'] = 'desc';
     $last_url_params['status'] = $show_status;
     $last_url = new moodle_url($action_url, $last_url_params);
 
