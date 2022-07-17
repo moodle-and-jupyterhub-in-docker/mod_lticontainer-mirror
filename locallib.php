@@ -97,7 +97,15 @@ function  passed_time($tm)
                 if ($pass<24) $ret = strval($pass).' '.get_string('hours_ago', 'mod_lticontainer');
                 else {
                     $pass = intdiv($pass, 24);
-                    $ret = strval($pass).' '.get_string('days_ago', 'mod_lticontainer');
+                    if ($pass<30) $ret = strval($pass).' '.get_string('days_ago', 'mod_lticontainer');
+                    else {
+                        $pass = intdiv($pass, 30);
+                        if ($pass<12) $ret = strval($pass).' '.get_string('months_ago', 'mod_lticontainer');
+                        else {
+                            $pass = intdiv($pass, 12);
+                            $ret = strval($pass).' '.get_string('years_ago', 'mod_lticontainer');
+                        }
+                    }
                 }
             }
         }

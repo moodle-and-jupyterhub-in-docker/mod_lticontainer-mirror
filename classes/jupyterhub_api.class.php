@@ -54,8 +54,6 @@ class  JupyterHubAPI
         $this->nmsort = optional_param('nmsort', 'asc',  PARAM_ALPHA);
         $this->tmsort = optional_param('tmsort', 'none', PARAM_ALPHA);
         $this->sort   = optional_param('sort',   'none', PARAM_ALPHA);
-        //
-        $this->sort_params = array('nmsort'=>$this->nmsort, 'tmsort'=>$this->tmsort, 'sort'=>$this->sort);
 
         // for Guest
         $this->isGuest = isguestuser();
@@ -88,14 +86,13 @@ class  JupyterHubAPI
     function  set_condition() 
     {
         if ($this->sort=='nmsort') {
-            if ($this->nmsort=='none' or $this->nmsort=='asc')  $this->nmsort = 'desc';
-            else                                                $this->nmsort = 'none';
             $this->tmsort = 'none';
         }
         else if ($this->sort=='tmsort') {
-            if ($this->tmsort=='none' or $this->tmsort=='desc') $this->tmsort = 'asc';
-            else                                                $this->tmsort = 'desc';
+            $this->nmsort = 'desc';
         }
+        //
+        $this->sort_params = array('nmsort'=>$this->nmsort, 'tmsort'=>$this->tmsort, 'sort'=>$this->sort);
 
         return true;
     }

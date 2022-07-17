@@ -4,12 +4,24 @@
 define('PAGE_ROW_SIZE', 10);
 
 
-function  make_jupyterhub_tablehead($edit_cap, $name_pattern)
+function  make_jupyterhub_tablehead($edit_cap, $name_pattern, $action_url, $sort_params, $show_status)
 {
-    //$firstname = '<a href="'.$wwwMyURL.$url_options.'&amp;sort=firstname&amp;order='.$order.'">'.get_string('firstname').'</a>';
-    //$lastname  = '<a href="'.$wwwMyURL.$url_options.'&amp;sort=lastname&amp;order='.$order.'">' .get_string('lastname').'</a>';
+    $name_url_params = $sort_params;
+    if ($name_url_params['nmsort']=='none' or $name_url_params['nmsort']=='asc') $name_url_params['nmsort'] = 'desc';
+    else                                                                         $name_url_params['nmsort'] = 'asc';
+    $name_url_params['sort']   = 'nmsort';
+    $name_url_params['tmsort'] = 'none';
+    $name_url_params['status'] = $show_status;
+    $name_url = new moodle_url($action_url, $name_url_params);
 
+    $last_url_params = $sort_params;
+    if ($last_url_params['tmsort']=='asc') $last_url_params['tmsort'] = 'desc';
+    else                                   $last_url_params['tmsort'] = 'asc';
+    $last_url_params['sort']   = 'tmsort';
+    $last_url_params['status'] = $show_status;
+    $last_url = new moodle_url($action_url, $last_url_params);
 
+    //
     $table = new html_table();
     //
     $table->head [] = '#';
@@ -25,7 +37,7 @@ function  make_jupyterhub_tablehead($edit_cap, $name_pattern)
     $table->size [] = '200px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('user_name','mod_lticontainer');
+    $table->head [] = '<a href="'.$name_url.'">'.get_string('user_name','mod_lticontainer').'</a>';
     $table->align[] = 'left';
     $table->size [] = '140px';
     $table->wrap [] = 'nowrap';
@@ -40,9 +52,9 @@ function  make_jupyterhub_tablehead($edit_cap, $name_pattern)
     $table->size [] = '100px';
     $table->wrap [] = 'nowrap';
 
-    $table->head [] = get_string('user_last','mod_lticontainer');
+    $table->head [] = '<a href="'.$last_url.'">'.get_string('user_last','mod_lticontainer').'</a>';
     $table->align[] = 'left';
-    $table->size [] = '120px';
+    $table->size [] = '150px';
     $table->wrap [] = 'nowrap';
 
     if ($edit_cap) $table->head [] = get_string('user_del','mod_lticontainer');
@@ -55,7 +67,7 @@ function  make_jupyterhub_tablehead($edit_cap, $name_pattern)
 }
 
 
-function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $sort_params, $show_status)
+function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $action_url, $sort_params, $show_status)
 {
     global $OUTPUT;
 
@@ -101,11 +113,10 @@ function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $so
             usort($members, function($a, $b) {return $a->lsttm < $b->lsttm ? -1 : 1;});
         }
     }
-
     //
-    $pic_options = array('size'=>20, 'link'=>true, 'alttext'=>true, 'courseid'=>$courseid, 'popup'=>true);
-    $table = make_jupyterhub_tablehead($edit_cap, $name_pattern);
+    $table = make_jupyterhub_tablehead($edit_cap, $name_pattern, $action_url, $sort_params, $show_status);
 
+    $pic_options = array('size'=>20, 'link'=>true, 'alttext'=>true, 'courseid'=>$courseid, 'popup'=>true);
     $i = 0;
     foreach($members as $member) { 
         //

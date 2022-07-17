@@ -96,7 +96,7 @@ $string['lticontainer:lti_edit'] = 'LTI Edit';
 $string['lticontainer:lti_setting'] = 'LTI Settings';
 $string['lticontainer:dashboard_view'] = 'Dashboard View';
 $string['lticontainer:chart_view'] = 'Charts View';
-$string['lticontainer:jupyterhub_api'] = 'JupyterHub API';
+$string['lticontainer:jupyterhub_api'] = 'JupyterHub';
 $string['lticontainer:admin_tools'] = 'Admin Tools';
 $string['lticontainer:db_write'] = 'DB Write';
 
@@ -110,7 +110,7 @@ $string['lti_edit_tab'] = 'LTI Edit';
 $string['lti_setting_tab'] = 'LTI Settings';
 $string['dashboard_view_tab'] = 'Dashboard';
 $string['chart_view_tab'] = 'Charts';
-$string['jupyterhub_api_tab'] = 'JupyterHub API';
+$string['jupyterhub_api_tab'] = 'JupyterHub';
 $string['admin_tools_tab'] = 'Admin Tools';
 $string['returnto_course_tab'] = 'Return to course';
 
@@ -143,11 +143,13 @@ $string['username_manage'] = 'Pattern of names displayed';
 $string['username_manage_help'] = 'You can select displied name pattern in this module.';
 
 // Passed Time
-$string['never_ago'] = 'Never';
+$string['never_ago']   = 'Never';
 $string['seconds_ago'] = 'seconds ago';
 $string['minutes_ago'] = 'minutes ago';
-$string['hours_ago'] = 'hours ago';
-$string['days_ago'] = 'days ago';
+$string['hours_ago']   = 'hours ago';
+$string['days_ago']    = 'days ago';
+$string['months_ago']  = 'months ago';
+$string['years_ago']   = 'years ago';
 
 // Title
 $string['users_cmd_ttl'] = 'Accessible users';
