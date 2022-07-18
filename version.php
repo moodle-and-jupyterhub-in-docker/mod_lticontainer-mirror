@@ -26,13 +26,13 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin = new stdClass();
 
-$plugin->requires  = 2018051700;
-$plugin->component = 'mod_lticontainer';
-$plugin->maturity  = MATURITY_STABLE;
-
 $plugin->release   = '1.2.1';
-$plugin->version   = 2022071711;
+$plugin->version   = 2022071804;
 //$plugin->version = 2022070501;
 //$plugin->version = 2022063000;
 //$plugin->version = 2022042601;
+
+$plugin->requires  = 2018051700;
+$plugin->component = 'mod_lticontainer';
+$plugin->maturity  = MATURITY_STABLE;
 

@@ -139,7 +139,9 @@ class  LTIEdit
             }
         }
         else {
-            if (!file_exists(LTICONTAINER_DOCKER_CMD)) print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
+            if (!file_exists(LTICONTAINER_DOCKER_CMD)) {
+                print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
+            }
         }
         
         // Launcher Container

@@ -97,6 +97,7 @@ $string['lticontainer:lti_setting'] = 'LTI Settings';
 $string['lticontainer:dashboard_view'] = 'Dashboard View';
 $string['lticontainer:chart_view'] = 'Charts View';
 $string['lticontainer:jupyterhub_api'] = 'JupyterHub';
+$string['lticontainer:jupyterhub_user'] = 'JupyterHub User';
 $string['lticontainer:admin_tools'] = 'Admin Tools';
 $string['lticontainer:db_write'] = 'DB Write';
 
@@ -105,12 +106,14 @@ $string['over_view_tab'] = 'Over View';
 $string['show_demo_tab'] = 'Demo';
 $string['volume_view_tab'] = 'Docker Volumes';
 $string['volume_delete_tab'] = 'Delete Volumes';
+$string['jhuser_delete_tab'] = 'Delete JupyterHub User';
 $string['lti_view_tab'] = 'LTI Connections';
 $string['lti_edit_tab'] = 'LTI Edit';
 $string['lti_setting_tab'] = 'LTI Settings';
 $string['dashboard_view_tab'] = 'Dashboard';
 $string['chart_view_tab'] = 'Charts';
 $string['jupyterhub_api_tab'] = 'JupyterHub';
+$string['jupyterhub_user_tab'] = 'JupyterHub User';
 $string['admin_tools_tab'] = 'Admin Tools';
 $string['returnto_course_tab'] = 'Return to course';
 
@@ -128,7 +131,8 @@ $string['access_users'] = 'Accessible Users';
 $string['volume_view'] = 'Volumes';
 $string['driver_name'] = 'Driver';
 $string['volume_del'] = 'Delete';
-$string['deletevolconfirm'] = 'Do you really delete these volumes ?';
+$string['deletevolconfirm']  = 'Do you really delete these volumes ?';
+$string['deleteuserconfirm'] = 'Do you really delete these users ?';
 
 // Table: JupyterHub API
 $string['user_name'] = 'UserName';

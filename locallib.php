@@ -36,6 +36,7 @@ function  passed_time($tm)
 function  pack_space($str)
 function  check_include_substr_and($name, $array_str)
 function  check_include_substr_or($name, $array_str)
+function  get_userinfo($id)
 
 function  autoset_jupyterhub_url($courseid, $mi)
 function  jupyterhub_api_get($url, $com, $token)
@@ -363,6 +364,9 @@ function  lticontainer_get_event($cmid, $action, $params='', $info='')
     }
     else if ($action=='jupyterhub_api') {
         $event = \mod_lticontainer\event\jupyterhub_api::create($args);
+    }
+    else if ($action=='jupyterhub_user') {
+        $event = \mod_lticontainer\event\jupyterhub_user::create($args);
     }
     else if ($action=='admin_tools') {
         $event = \mod_lticontainer\event\admin_tools::create($args);

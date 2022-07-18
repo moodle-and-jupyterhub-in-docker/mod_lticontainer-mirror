@@ -1,0 +1,52 @@
+<?php require_once(__DIR__.'/../html/jupyterhub_delete_table.php'); ?>
+
+<style type="text/css">
+  <?php include(__DIR__."/../html/styles.css"); ?>
+</style>
+
+<table align="center" class="generalbox">
+  <tr>
+    <td align="center">
+      <table border="0" style="margin: 0px 0px 0px 0px;">
+        <tr>
+          <td bgcolor="#ff7777">&nbsp;</td>
+          <td bgcolor="#ff7777">
+            <?php echo $OUTPUT->heading('<strong>'.get_string('jhuser_delete_tab','mod_lticontainer').' :: '.$this->minstance->name.'</strong>'); ?>
+          </td>
+          <td bgcolor="#ff7777">&nbsp;</td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="generalboxcontent" align="center">
+
+      <form name="gsess" method="post" action="<?php echo $this->submit_url;?>">
+        <table border="0" align="center" cellpadding="0" cellspacing="0">
+          <tr>
+            <?php show_jhuser_delete_table($this->deletes, $this->users, $this->minstance->namepattern); ?>
+          </tr>
+          <tr>
+            <td align='center'>
+              <h3><?php echo get_string('deleteuserconfirm', 'mod_lticontainer'); ?></h3>
+              <br />
+            </td>
+          </tr>
+          <tr>
+            <td align='center'>
+              <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
+              <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
+              <input type='hidden' name='sesskey' value='<?php echo sesskey();?>' />
+              <input type='submit' name='submit_volume_delete' value='<?php echo get_string("delete");?>' />
+              &nbsp;&nbsp;
+              <input type='submit' name='cancel_volume_delete' value='<?php echo get_string("cancel");?>' />
+              <br /><br />
+            </td>
+          </tr>
+        </table>
+      </form>
+
+    </td>
+  </tr>
+</table>

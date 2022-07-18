@@ -70,12 +70,19 @@ class  VolumeView
         $check_course = '_'.$this->courseid.'_'.$this->host_name;
         $len_check = strlen($check_course);
 
-        if (!file_exists(LTICONTAINER_DOCKER_CMD)) {
-            print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
+        if ($this->minstance->use_podman==1) {
+            if (!file_exists(LTICONTAINER_PODMAN_CMD) and  !file_exists(LTICONTAINER_PODMAN_REMOTE_CMD)) {
+                print_error('no_podman_command', 'mod_lticontainer', $this->error_url);
+            }
+        }
+        else {
+            if (!file_exists(LTICONTAINER_DOCKER_CMD)) {
+                print_error('no_docker_command', 'mod_lticontainer', $this->error_url);
+            }
         }
 
         // POST
-        if ($formdata = data_submitted()) {
+        if ($submit_data = data_submitted()) {
             if (!$this->edit_cap) {
                 print_error('access_forbidden', 'mod_lticontainer', $this->error_url);
             }
@@ -85,16 +92,16 @@ class  VolumeView
             $this->submitted  = true;
 
             //
-            if (property_exists($formdata, 'delete')) {
-                $this->deletes = $formdata->delete;
+            if (property_exists($submit_data, 'delete')) {
+                $this->deletes = $submit_data->delete;
                 if (!empty($this->deletes)) {
                     //
                     // confirm to delete volumes
-                    if (property_exists($formdata, 'submit_volume_del')) {
+                    if (property_exists($submit_data, 'submit_volume_del')) {
                         $this->confirm = true;
                     }
                     // delete volumes
-                    else if (property_exists($formdata, 'submit_volume_delete')) {
+                    else if (property_exists($submit_data, 'submit_volume_delete')) {
                         foreach ($this->deletes as $del=>$value) {
                             if (substr($del, -$len_check)==$check_course) { 
                                 $cmd = 'volume rm '.$del;
