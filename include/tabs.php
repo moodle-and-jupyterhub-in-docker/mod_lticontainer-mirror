@@ -86,6 +86,7 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
     }
 
     // JupyterHub API
+/*
     $show_jhuser_tab_student = true;
     if (has_capability('mod/lticontainer:jupyterhub_api', $context)) {
         $row[] = make_tabobj('jupyterhub_api_tab', get_string('jupyterhub_api_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/jupyterhub_api.php', $url_params);
@@ -97,11 +98,12 @@ function setup_tabs($current_tab, $course_id, $cm_id, $context, $minstance)
         $row[] = make_tabobj('jupyterhub_user_tab', get_string('jupyterhub_user_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/jupyterhub_user.php', $url_params);
         $show_jhuser_tab_student = false;
     }
+*/
 
     // JupyterHub API for student user
-    if ($show_jhuser_tab_student) {
+    //if ($show_jhuser_tab_student) {
         $row[] = make_tabobj('jupyterhub_user_tab', get_string('jupyterhub_user_tab', 'mod_lticontainer'), '/mod/lticontainer/actions/jupyterhub_user.php', $url_params);
-    }
+    //}
 
     // Admin Tools
     if (has_capability('mod/lticontainer:admin_tools', $context)) {

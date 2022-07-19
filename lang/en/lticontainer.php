@@ -87,19 +87,21 @@ $string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker).
 $string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package.';
 
 // Capability / パンくずメニュー
-$string['lticontainer:over_view'] = 'Over View';
-$string['lticontainer:show_demo'] = 'Demo';
-$string['lticontainer:volume_view'] = 'Volumes View';
-$string['lticontainer:volume_edit'] = 'Volumes Edit';
-$string['lticontainer:lti_view'] = 'LTI Connections';
-$string['lticontainer:lti_edit'] = 'LTI Edit';
-$string['lticontainer:lti_setting'] = 'LTI Settings';
-$string['lticontainer:dashboard_view'] = 'Dashboard View';
-$string['lticontainer:chart_view'] = 'Charts View';
-$string['lticontainer:jupyterhub_api'] = 'JupyterHub';
-$string['lticontainer:jupyterhub_user'] = 'JupyterHub User';
-$string['lticontainer:admin_tools'] = 'Admin Tools';
-$string['lticontainer:db_write'] = 'DB Write';
+$string['lticontainer:admin_tools'] = 'Use admin tools';
+$string['lticontainer:chart_view'] = 'View charts';
+$string['lticontainer:dashboard_view'] = 'View dashboard';
+$string['lticontainer:db_write'] = 'Write db';
+$string['lticontainer:jupyterhub_api'] = 'Operate JupyterHub API';
+$string['lticontainer:jupyterhub_api_edit'] = 'JupyterHub API (POST/PUT/DELETE)';
+$string['lticontainer:jupyterhub_user'] = 'Operate JupyterHub users';
+$string['lticontainer:jupyterhub_user_edit'] = 'Edit JupyterHub users';
+$string['lticontainer:lti_edit'] = 'Edit LTI custom paramaters';
+$string['lticontainer:lti_setting'] = 'Select LTI instances to display';
+$string['lticontainer:lti_view'] = 'View LTI instances';
+$string['lticontainer:volume_edit'] = 'Edit volumes';
+$string['lticontainer:volume_view'] = 'Operate volumes';
+$string['lticontainer:show_demo'] = 'Show demo';
+$string['lticontainer:over_view'] = 'Over view';
 
 // Tab
 $string['over_view_tab'] = 'Over View';

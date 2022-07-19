@@ -1,4 +1,4 @@
-<?php require_once(__DIR__.'/../html/jupyterhub_api_table.php'); ?>
+<?php require_once(__DIR__.'/../html/jupyterhub_user_table.php'); ?>
 
 <style type="text/css">
   <?php include(__DIR__."/../html/styles.css"); ?>
@@ -17,10 +17,22 @@
       </table>
     </td>
   </tr>
+  <?php if ($this->mode!='personal' and empty($this->userid)) { ?>
+  <tr>
+    <td align="center">
+      <table border="0" style="margin: 0px 0px 0px 0px;">
+        <tr>
+          <td>Status : </td> 
+          <td><?php select_jupyterhub_status($this->action_url, $this->sort_params, $this->status); ?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <?php } ?>
   <tr>
     <td class="generalboxcontent" align="center">
 
-      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
+      <form name="gsess" method="post" action="<?php echo $this->submit_url;?>">
         <?php if ($this->edit_cap) { ?>
           <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
           <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
@@ -30,8 +42,8 @@
         <table align="center" class="generalbox">
           <tr>
             <td>
-              <?php show_jupyterhub_table($this->users, $this->courseid, $this->edit_cap, $this->minstance->namepattern,
-                                                        $this->action_url, $this->action_url, $this->sort_params, 'ALL', '1'); ?>
+              <?php show_jupyterhub_table($this->users, $this->courseid, $this->edit_cap, $this->minstance->namepattern, 
+                                                        $this->action_url, $this->sort_params, $this->status, $this->page_size); ?>
             </td>
           </tr>
         </table>
