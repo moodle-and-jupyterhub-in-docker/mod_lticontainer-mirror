@@ -6,11 +6,11 @@ namespace mod_lticontainer\event;
 defined('MOODLE_INTERNAL') || die();
 
 
-class volume_delete extends \core\event\base
+class jupyterhub_user_delete extends \core\event\base
 {
     public static function get_name()        // イベント名
     {
-        return 'volume_delete';
+        return 'jupyterhub_user_delete';
     }
 
 
@@ -21,7 +21,7 @@ class volume_delete extends \core\event\base
         if (!is_array($params)) $params = array();
 
         $params = array_merge(array('course' => $this->courseid), $params);
-        return new \moodle_url('/mod/lticontainer/actions/volume_view.php', $params);
+        return new \moodle_url('/mod/lticontainer/actions/jupyterhub_user.php', $params);
     }
 
 

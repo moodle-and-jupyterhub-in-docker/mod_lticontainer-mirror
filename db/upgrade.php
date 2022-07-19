@@ -355,6 +355,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     }
 
     // 2022071006
+    /*
     if ($oldversion < 2022071006) {
         $table = new xmldb_table('lticontainer_tags');
         //
@@ -363,7 +364,7 @@ function xmldb_lticontainer_upgrade($oldversion)
             $DB->delete_records('lticontainer_tags', array('filename'=>NULL));
             $dbman->change_field_notnull($table, $field);
         }
-    }
+    }*/
 
     // 2022071006
     if ($oldversion < 2022071006) {
@@ -374,6 +375,7 @@ function xmldb_lticontainer_upgrade($oldversion)
     }
 
     // 2022071008
+    /*
     if ($oldversion < 2022071008) {
         $table = new xmldb_table('lticontainer_tags');
         //
@@ -382,7 +384,7 @@ function xmldb_lticontainer_upgrade($oldversion)
             $DB->delete_records('lticontainer_tags', array('codenum'=>NULL));
             $dbman->change_field_notnull($table, $field);
         }
-    }
+    }*/
 
     // 2022071400
     if ($oldversion < 2022071400) {

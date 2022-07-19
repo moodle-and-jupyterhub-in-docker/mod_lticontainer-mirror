@@ -39,9 +39,9 @@ function show_jhuser_delete_table($deletes, $users, $name_pattern)
     $i = 0;
     foreach($deletes as $del_name=>$del) { 
         foreach($users as $user) { 
-            if ($user->username==$del_name) {
+            if ($user->username==$del_name and $del=='1') {
                 $table->data[$i][] = $i + 1;
-                $table->data[$i][] = $user->username;
+                $table->data[$i][] = $user->username. '<input type="hidden" name="delete['.$user->username.']" value="1" />';
                 $table->data[$i][] = get_namehead($name_pattern, $user->firstname, $user->lastname, '');
                 $table->data[$i][] = $user->status;
                 $table->data[$i][] = $user->role;

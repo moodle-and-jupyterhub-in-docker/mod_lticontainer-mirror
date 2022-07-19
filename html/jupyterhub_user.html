@@ -20,7 +20,7 @@
   <tr>
     <td class="generalboxcontent" align="center">
 
-      <form name="gsess" method="post" action="<?php echo $this->submit_url;?>">
+      <form name="gsess" method="post" action="<?php echo $this->action_url;?>">
         <?php if ($this->edit_cap) { ?>
           <input type='hidden' name='id'      value='<?php echo $this->cmid;?>' />
           <input type='hidden' name='course'  value='<?php echo $this->courseid;?>' />
@@ -31,7 +31,7 @@
           <tr>
             <td>
               <?php show_jupyterhub_table($this->users, $this->courseid, $this->edit_cap, $this->minstance->namepattern,
-                                                        $this->action_url, $this->sort_params, 'ALL', '1'); ?>
+                                                        $this->action_url, $this->action_url, $this->sort_params, 'ALL', '1'); ?>
             </td>
           </tr>
         </table>

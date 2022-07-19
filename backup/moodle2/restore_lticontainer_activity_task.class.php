@@ -90,13 +90,14 @@ class restore_lticontainer_activity_task extends restore_activity_task
         $rules = array();
 
         // Define the rules.
-        $rules[] = new restore_log_rule('lticontainer', 'over_view',     'view.php?id={course_module}',                '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'lti_view',      'actions/lti_view.php?id={course_module}',    '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'lti_setting',   'actions/lti_view.php?id={course_module}',    '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'lti_edit',      'actions/lti_edit.php?id={course_module}',    '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'volume_view',   'actions/volume_view.php?id={course_module}', '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'volume_delete', 'actione/volume_view.php?id={course_module}', '{lticontainer}');
-        $rules[] = new restore_log_rule('lticontainer', 'dashboard_view','actions/dashboard.php?id={course_module}',   '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'over_view',              'view.php?id={course_module}',                    '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_view',               'actions/lti_view.php?id={course_module}',        '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_setting',            'actions/lti_view.php?id={course_module}',        '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'lti_edit',               'actions/lti_edit.php?id={course_module}',        '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'volume_view',            'actions/volume_view.php?id={course_module}',     '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'volume_delete',          'actions/volume_view.php?id={course_module}',     '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'jupyterhub_user_delete', 'actione/jupyterhub_user.php?id={course_module}', '{lticontainer}');
+        $rules[] = new restore_log_rule('lticontainer', 'dashboard_view',         'actions/dashboard.php?id={course_module}',       '{lticontainer}');
 
         return $rules;
     }

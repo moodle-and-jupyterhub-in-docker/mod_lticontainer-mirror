@@ -46,7 +46,8 @@ class backup_lticontainer_activity_structure_step extends backup_activity_struct
         $attributes = array('id');
         $finalelements = array('name', 'timecreated', 'timemodified', 'intro', 'introformat', 'docker_host', 'docker_user', 'docker_pass', 
                                'jupyterhub_url', 'custom_params', 'imgname_fltr', 'make_volumes', 'display_lti', 'use_podman', 'api_token', 'rpc_token',
-                               'use_dashboard', 'during_realtime', 'during_anytime', 'chart_bar_usernum', 'chart_bar_codenum', 'chart_line_usernum', 'chart_line_interval');
+                               'use_dashboard', 'during_realtime', 'during_anytime', 'chart_bar_usernum', 'chart_bar_codenum', 'chart_line_usernum', 'chart_line_interval',
+                               'namepattern');
         $lticontainer = new backup_nested_element('lticontainer', $attributes, $finalelements);
 
         $finalelements = array('session', 'lti_id', 'updatetm');

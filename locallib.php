@@ -40,9 +40,9 @@ function  get_userinfo($id)
 
 function  autoset_jupyterhub_url($courseid, $mi)
 function  jupyterhub_api_get($url, $com, $token)
+function  jupyterhub_api_delete($url, $com, $token)
 //function  jupyterhub_api_post($url, $com, $token)
 //function  jupyterhub_api_put($url, $com, $token)
-//function  jupyterhub_api_delete($url, $com, $token)
 
 function  container_socket($mi, $socket_file)
 function  container_exec($cmd, $mi)
@@ -239,6 +239,23 @@ function  jupyterhub_api_get($url, $com, $token)
 }
 
 
+// used DELETE cURL
+function  jupyterhub_api_delete($url, $com, $token)
+{
+    $headers = array('Authorization: token '.$token,);
+
+    $curl = curl_init($url.$com);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    $html = curl_exec($curl);
+    curl_close($curl);
+
+    return $html;
+}
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 //
@@ -367,6 +384,9 @@ function  lticontainer_get_event($cmid, $action, $params='', $info='')
     }
     else if ($action=='jupyterhub_user') {
         $event = \mod_lticontainer\event\jupyterhub_user::create($args);
+    }
+    else if ($action=='jupyterhub_user_delete') {
+        $event = \mod_lticontainer\event\jupyterhub_user_delete::create($args);
     }
     else if ($action=='admin_tools') {
         $event = \mod_lticontainer\event\admin_tools::create($args);

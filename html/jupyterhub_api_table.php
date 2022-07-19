@@ -65,7 +65,7 @@ function  make_jupyterhub_tablehead($edit_cap, $name_pattern, $action_url, $sort
 }
 
 
-function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $action_url, $sort_params, $show_status, $page_size)
+function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $action_url, $user_url, $sort_params, $show_status, $page_size)
 {
     global $OUTPUT;
 
@@ -77,13 +77,12 @@ function  show_jupyterhub_table($users, $courseid, $edit_cap, $name_pattern, $ac
     $pic_options = array('size'=>20, 'link'=>true, 'alttext'=>true, 'courseid'=>$courseid, 'popup'=>true);
     $i = 0;
     foreach($users as $user) { 
-        //$href_url = $user_url.'&userid='. strval($user->id);
+        $href_url = $user_url.'&userid='. strval($user->id);
         $prfl_url = $prfl_base_url.'&id='.strval($user->id);
         //
         $table->data[$i][] = $i + 1;
         $table->data[$i][] = $OUTPUT->user_picture($user, $pic_options);
-        //$table->data[$i][] = '<a href="'.$href_url.'" >'.$user->username.'</a>';
-        $table->data[$i][] = $user->username;
+        $table->data[$i][] = '<a href="'.$href_url.'" >'.$user->username.'</a>';
         $table->data[$i][] = '<a href="'.$prfl_url.'" target=_blank>'.get_namehead($name_pattern, $user->firstname, $user->lastname, '').'</a>';
         $table->data[$i][] = $user->status;
         $table->data[$i][] = $user->role;

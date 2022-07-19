@@ -26,7 +26,7 @@ class  JupyterHubAPI
     var $action_url  = '';
     var $submit_url  = '';
     var $error_url   = '';
-    //var $user_url    = '';
+    var $user_url    = '';
 
     var $api_url     = '';
     var $api_token   = '';
@@ -51,10 +51,9 @@ class  JupyterHubAPI
         #
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/lticontainer/actions/jupyterhub_api.php',  $this->url_params);
-        //$this->user_url   = new moodle_url('/mod/lticontainer/actions/jupyterhub_user.php', $this->url_params);
+        $this->user_url   = new moodle_url('/mod/lticontainer/actions/jupyterhub_user.php', $this->url_params);
         $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',            $this->url_params);
         $this->ccontext   = $ccontext;
-        //
         //$this->page_size  = $minstance->chart_bar_usernum;
 
         $this->status = optional_param('status', 'ALL',  PARAM_ALPHA);
@@ -131,14 +130,17 @@ class  JupyterHubAPI
                     }
                     // delete users
                     else if (property_exists($submit_data, 'submit_jhuser_delete')) {
-                        foreach ($this->deletes as $del=>$value) {
-                            //$cmd = 'volume rm '.$del;
-                            //container_exec($cmd, $this->minstance);
-                            //
-                            $event = lticontainer_get_event($this->cmid, 'jhuser_delete', $this->url_params, $cmd);
-                            $event->add_record_snapshot('course', $this->course);
-                            $event->add_record_snapshot('lticontainer',  $this->minstance);
-                            $event->trigger();
+                        foreach ($this->deletes as $del_user=>$value) {
+                            if ($value=='1') {
+                                jupyterhub_api_delete($this->api_url, '/users/'.$del_user.'/server', $this->api_token);
+                                jupyterhub_api_delete($this->api_url, '/users/'.$del_user, $this->api_token);
+                                //
+                                $cmd = 'delete user '.$del_user;
+                                $event = lticontainer_get_event($this->cmid, 'jupyterhub_user_delete', $this->url_params, $cmd);
+                                $event->add_record_snapshot('course', $this->course);
+                                $event->add_record_snapshot('lticontainer',  $this->minstance);
+                                $event->trigger();
+                             }
                         }
                     }
                 }
