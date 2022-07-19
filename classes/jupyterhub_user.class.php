@@ -231,28 +231,6 @@ class  JupyterHubAPI
                 }
             }
         }
-
-/*
-        // JupyterHub user
-        $json = jupyterhub_api_get($this->api_url, '/users/'.$md_user->username, $this->api_token);
-        $jh_user = json_decode($json, false);
-        if (property_exists($jh_user, 'status')) $jh_user->status = 'NONE';     // ERORR
-        else                                     $jh_user->status = 'OK';
-
-        $role   = 'none';
-        $lstact = '';
-        $status = $jh_user->status;
-        if ($status=='OK') {
-            if ($jh_user->admin=='1') $role = 'admin';
-            else                      $role = 'user';
-            $lstact = $jh_user->last_activity;
-        }
-        //
-        $this->users[0]         = $md_user;
-        $this->users[0]->status = $status;
-        $this->users[0]->role   = $role;
-        $this->users[0]->lstact = $lstact;
-*/
         //
         return true;
     }
