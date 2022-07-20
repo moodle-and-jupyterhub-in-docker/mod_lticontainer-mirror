@@ -22,6 +22,7 @@ define('TAGS_TABLE',        'lticontainer_tags');
 /*
 function  db_get_lti_module_id()
 //function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
+function  lti_sort($a, $b)
 function  db_get_valid_ltis($courseid, $fields = '*')
 function  db_get_disp_ltis($courseid, $minstance)
 function  get_base_sql($courseid, $start_date, $end_date)
@@ -53,6 +54,18 @@ function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
 }*/
 
 
+function  lti_sort($a, $b)
+{
+    if ($a->section < $b->section) return -1;
+    else if ($a->section == $b->section) {
+        if ($a->order < $b->order) return -1;
+        else                       return 1;
+    }
+    return 1;
+}
+
+
+
 function  db_get_valid_ltis($courseid, $fields = '*')
 {
     global $DB;
@@ -67,11 +80,10 @@ function  db_get_valid_ltis($courseid, $fields = '*')
                 unset($ltis[$key]);
             }
             else {
-                $ltis[$key]->order   = 0;
-                $ltis[$key]->section = $rslt->section;
-                //
                 $section = $DB->get_record('course_sections', array('id'=>$rslt->section));
                 $sequences = explode(',', $section->sequence);
+                $ltis[$key]->section = $section->section;
+                $ltis[$key]->order   = 9999;
                 $n = 1;
                 foreach($sequences as $seq) {
                     if ($seq===$rslt->id) {
@@ -83,8 +95,7 @@ function  db_get_valid_ltis($courseid, $fields = '*')
             }
         }
     }
-    //usort($ltis, function($a, $b) {return (($a->order < $b->order) or ($a->section < $b->section)) ? -1 : 1;});
-    //usort($ltis, function($a, $b) {return ($a->name < $b->name) ? -1 : 1;});
+    uasort($ltis, function($a, $b) {return lti_sort($a, $b);});
 
     return $ltis;
 }
