@@ -83,7 +83,7 @@ function  db_get_valid_ltis($courseid, $fields = '*')
             }
         }
     }
-    usort($ltis, function($a, $b) {return (($a->order < $b->order) or ($a->section < $b->section)) ? -1 : 1;});
+    //usort($ltis, function($a, $b) {return (($a->order < $b->order) or ($a->section < $b->section)) ? -1 : 1;});
     //usort($ltis, function($a, $b) {return ($a->name < $b->name) ? -1 : 1;});
 
     return $ltis;
