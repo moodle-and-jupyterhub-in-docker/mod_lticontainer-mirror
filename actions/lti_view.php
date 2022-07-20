@@ -77,8 +77,5 @@ if ($lticontainer_lti_view_cap) {
     $lti_view->print_page();
 }
 
-require_once(__DIR__.'/../classes/dashboard_view.class.php');
-$dashboard_view = new DashboardView($cmid, $courseid, $minstance);
-
 echo $OUTPUT->footer($course);
 

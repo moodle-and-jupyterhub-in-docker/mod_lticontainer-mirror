@@ -74,10 +74,9 @@ class  ShowDemo
         }
 */
 
-        $sort   = '';
         $fields = 'id, name, instructorcustomparameters';
         //$this->items = $DB->get_records('lti', array('course' => $this->courseid), $sort, $fields);
-        $this->items = db_get_valid_ltis($this->courseid, $sort, $fields);
+        $this->items = db_get_valid_ltis($this->courseid, $fields);
 
         return true;
     }

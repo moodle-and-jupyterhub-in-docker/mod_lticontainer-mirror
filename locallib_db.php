@@ -21,9 +21,9 @@ define('TAGS_TABLE',        'lticontainer_tags');
 
 /*
 function  db_get_lti_module_id()
-function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
-function  db_get_valid_ltis($courseid, $sort = '', $fields = '*')
-function  db_get_disp_ltis($courseid, $minstance, $sort = '')
+//function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
+function  db_get_valid_ltis($courseid, $fields = '*')
+function  db_get_disp_ltis($courseid, $minstance)
 function  get_base_sql($courseid, $start_date, $end_date)
 function  get_lti_sql_condition($lti_id = '*')
 */
@@ -41,6 +41,7 @@ function  db_get_lti_module_id()
 }
 
 
+/*
 function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
 {
     global $DB;
@@ -49,35 +50,57 @@ function  db_instance_is_delprgs($courseid, $moduleid, $instanceid)
     if (!$ltimod or $ltimod->deletioninprogress==1) return true;
 
     return false;
-}
+}*/
 
 
-function  db_get_valid_ltis($courseid, $sort = '', $fields = '*')
+function  db_get_valid_ltis($courseid, $fields = '*')
 {
     global $DB;
 
-    $ltis = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
+    $ltis = $DB->get_records('lti', array('course' => $courseid), '', $fields);
     $lti_modid = db_get_lti_module_id(); 
 
     foreach ($ltis as $key => $lti) {
-        if (db_instance_is_delprgs($courseid, $lti_modid, $lti->id)) unset($ltis[$key]);
+        $rslt = $DB->get_record('course_modules', array('course'=>$courseid, 'module'=>$lti_modid, 'instance'=>$lti->id));
+        if ($rslt) {
+            if ($rslt->deletioninprogress==1) {
+                unset($ltis[$key]);
+            }
+            else {
+                $ltis[$key]->order   = 0;
+                $ltis[$key]->section = $rslt->section;
+                //
+                $section = $DB->get_record('course_sections', array('id'=>$rslt->section));
+                $sequences = explode(',', $section->sequence);
+                $n = 1;
+                foreach($sequences as $seq) {
+                    if ($seq===$rslt->id) {
+                        $ltis[$key]->order = $n;
+                        break;
+                    }
+                    $n++;
+                } 
+            }
+        }
     }
+    usort($ltis, function($a, $b) {return (($a->order < $b->order) or ($a->section < $b->section)) ? -1 : 1;});
+    //usort($ltis, function($a, $b) {return ($a->name < $b->name) ? -1 : 1;});
 
     return $ltis;
 }
 
 
-function  db_get_disp_ltis($courseid, $minstance, $sort = '')
+function  db_get_disp_ltis($courseid, $minstance)
 {
     //global $DB;
 
     $fields = 'id, name, typeid, instructorcustomparameters';
-    $ltis   = db_get_valid_ltis($courseid, $sort, $fields);
+    $ltis   = db_get_valid_ltis($courseid, $fields);
     //$ltis   = $DB->get_records('lti', array('course' => $courseid), $sort, $fields);
 
     $disp = explode(',', $minstance->display_lti);
     foreach ($ltis as $key => $lti) {
-        if (!in_array($lti->id, $disp)) unset($ltis[$key]);
+        if (!in_array($lti->id, $disp, true)) unset($ltis[$key]);
     }
 
     return $ltis;
