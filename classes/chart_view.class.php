@@ -103,6 +103,8 @@ class  ChartView
         else {
             $start_date = optional_param('start_date_input', '*', PARAM_TEXT);
             $end_date   = optional_param('end_date_input',   '*', PARAM_TEXT);
+            $start_date = str_replace('/', '-', $start_date);
+            $end_date   = str_replace('/', '-', $end_date);
 
             if ($end_date == '*') {
                 $this->end_date = $obj_datetime->format('Y-m-d H:i');
