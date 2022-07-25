@@ -15,5 +15,6 @@ define('CHART_NULL_CODENUM',      '999');
 
 //define('SQL_DATETIME_FMT',  '%Y-%m-%dT%T.%fZ');
 //define('PHP_DATETIME_FMT',  'Y-m-d\TH:i:s.u\Z');
-define('PHP_DATETIME_FMT',  'Y-m-d H:i:s');
+//define('PHP_DATETIME_FMT',  'Y-m-d H:i:s');
+//define('PHP_DATETIME_FMT',  'Y/m/d H:i:s');
 

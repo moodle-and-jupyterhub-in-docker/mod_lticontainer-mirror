@@ -95,9 +95,11 @@ class  ChartView
 
         // Real Time
         if ($this->time_period == 'real') {
-            $this->end_date   = $obj_datetime->format('Y-m-d H:i');
+            //$this->end_date   = $obj_datetime->format('Y-m-d H:i');
+            $this->end_date   = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
             $obj_datetime->sub(new DateInterval('PT'.$startdiff_r.'S'));
-            $this->start_date = $obj_datetime->format('Y-m-d H:i');
+            //$this->start_date = $obj_datetime->format('Y-m-d H:i');
+            $this->start_date = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
         }
         // Any Period Time
         else {
@@ -107,17 +109,21 @@ class  ChartView
             $end_date   = str_replace('/', '-', $end_date);
 
             if ($end_date == '*') {
-                $this->end_date = $obj_datetime->format('Y-m-d H:i');
+                //$this->end_date = $obj_datetime->format('Y-m-d H:i');
+                $this->end_date = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
             }
             else {
-                $this->end_date = (new DateTime($end_date))->format('Y-m-d H:i');
+                //$this->end_date = (new DateTime($end_date))->format('Y-m-d H:i');
+                $this->end_date = (new DateTime($end_date))->format(get_string('datetime_format','mod_lticontainer'));
             }
             if ($start_date == '*') {
                 $obj_datetime->sub(new DateInterval('PT'.$startdiff_a.'S'));
-                $this->start_date = $obj_datetime->format('Y-m-d H:i');
+                //$this->start_date = $obj_datetime->format('Y-m-d H:i');
+                $this->start_date = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
             }
             else {
-                $this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
+                //$this->start_date = (new DateTime($start_date))->format('Y-m-d H:i');
+                $this->start_date = (new DateTime($start_date))->format(get_string('datetime_format','mod_lticontainer'));
             }
         }
 

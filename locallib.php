@@ -30,7 +30,7 @@ define('LTICONTAINER_LTI_SERVERPATH_CMD' , 'lms_serverpath');
 //////////////////////////////////////////////////////////////////////////////////////////////
 /*
 function  timezone_offset()
-function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
+function  get_tz_date_str($date, $format)
 function  passed_time($tm)
 
 function  pack_space($str)
@@ -69,7 +69,7 @@ function  timezone_offset()
 }
 
 
-function  get_tz_date_str($date, $format=PHP_DATETIME_FMT)
+function  get_tz_date_str($date, $format)
 {
     global $TIME_OFFSET, $CFG;
 

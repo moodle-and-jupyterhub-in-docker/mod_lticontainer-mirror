@@ -75,15 +75,18 @@ class  DashboardView
         $obj_datetime = new DateTime();
         //$obj_datetime = new DateTime('2022-01-29 12:00');
 
-        $this->end_date = $obj_datetime->format('Y-m-d H:i');
+        //$this->end_date = $obj_datetime->format('Y-m-d H:i');
+        $this->end_date = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
 
         $startdiff  = $startdiff_r;
         $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
-        $this->start_date_r = $obj_datetime->format('Y-m-d H:i');
+        //$this->start_date_r = $obj_datetime->format('Y-m-d H:i');
+        $this->start_date_r = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
 
-        $startdiff += $startdiff_a - $startdiff_r;
+        $startdiff = $startdiff_a - $startdiff_r;
         $obj_datetime->sub(new DateInterval('PT'.$startdiff.'S'));
-        $this->start_date_a = $obj_datetime->format('Y-m-d H:i');
+        //$this->start_date_a = $obj_datetime->format('Y-m-d H:i');
+        $this->start_date_a = $obj_datetime->format(get_string('datetime_format','mod_lticontainer'));
 
         $this->lti_info = db_get_disp_ltis($this->courseid, $this->minstance);
         foreach ($this->lti_info as $lti) {

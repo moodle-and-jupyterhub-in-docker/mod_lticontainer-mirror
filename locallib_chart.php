@@ -387,7 +387,8 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
         }
         //
         if (!$exclsn) {
-            $date = get_tz_date_str($rec->date, PHP_DATETIME_FMT);
+            $date = get_tz_date_str($rec->date, get_string('datetime_format_s','mod_lticontainer'));
+            //$date = get_tz_date_str($rec->date, PHP_DATETIME_FMT);
             if(!array_key_exists($date, $date_data)) {
                 $date_data[$date] = array();
             }
