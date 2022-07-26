@@ -127,6 +127,9 @@ function  get_base_sql($courseid, $start_date, $end_date)
 {
     global $CFG;
    
+    $start_date = str_replace('/', '-', $start_date);
+    $end_date   = str_replace('/', '-', $end_date);
+    //
     $server_table  = $CFG->prefix.SERVER_TABLE;
     $client_table  = $CFG->prefix.CLIENT_TABLE;
     $session_table = $CFG->prefix.SESSION_TABLE;

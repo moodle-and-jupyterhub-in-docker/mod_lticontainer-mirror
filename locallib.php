@@ -75,6 +75,7 @@ function  get_tz_date_str($date, $format)
 
     if ($TIME_OFFSET==0) timezone_offset();
 
+    $date = str_replace('/', '-', $date);
     $date = preg_replace('/[TZ]/', ' ', $date);
     $ut   = (new DateTime($date))->format('U') + $TIME_OFFSET;
     $dt   = date($format, $ut);

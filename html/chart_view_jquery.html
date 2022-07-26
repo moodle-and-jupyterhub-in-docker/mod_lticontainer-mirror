@@ -4,11 +4,14 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/build/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/jquery.datetimepicker.css">
 
+<?php echo '"'.$date_format.'"'; ?>
 <script type="text/javascript">
 <!--
 $(function () {
-  $("#SDateTime").datetimepicker();
-  $("#EDateTime").datetimepicker();
+  $("#SDateTime").datetimepicker({ format: <?php echo '"'.$date_format.'"'; ?>, });
+  $("#EDateTime").datetimepicker({ format: <?php echo '"'.$date_format.'"'; ?>, });
+  //$("#SDateTime").datetimepicker();
+  //$("#EDateTime").datetimepicker();
 });
 //-->
 </script>

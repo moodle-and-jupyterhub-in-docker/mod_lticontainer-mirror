@@ -419,8 +419,9 @@ function  chart_codecell_line($recs, $username, $filename, $minstance, $dashboar
 
     $i = 0;
     foreach ($date_data as $dt => $users) {
+        $date = str_replace('/', '-', $dt);
         if ($dashboard) $dt_srs[$i] = '';
-        else            $dt_srs[$i] = (new DateTime($dt))->format('m/d H:i');
+        else            $dt_srs[$i] = (new DateTime($date))->format(get_string('datetime_format_m','mod_lticontainer'));
         $tm_srs[$i] = strtotime($dt);
 
         foreach ($usernames as $uname) {
