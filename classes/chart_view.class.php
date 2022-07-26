@@ -124,7 +124,8 @@ class  ChartView
         ////////////////////////////////////////////////////////////////////////////
         // LTI
         $this->lti_info = db_get_disp_ltis($this->courseid, $this->minstance);
-        foreach ($this->lti_info as $lti) {
+        foreach ($this->lti_info as $key=>$lti) {
+            $this->lti_info[$key]->valid = 0;
             $this->lti_ids[] = $lti->id;
         }
     }
@@ -152,6 +153,10 @@ class  ChartView
             if (empty($rec->filename)) $rec->filename = CHART_NULL_FILENAME;
             $this->usernames[$rec->username] = $rec->username;
             $this->filenames[$rec->filename] = $rec->filename;
+            // valid : 表示制御用
+            if (array_key_exists($rec->lti_id, $this->lti_info)) {
+                $this->lti_info[$rec->lti_id]->valid = 1;
+            }
         }
         if ($this->username!='*') $this->usernames[$this->username] = $this->username;
         if ($this->filename!='*') $this->filenames[$this->filename] = $this->filename;

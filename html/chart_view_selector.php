@@ -40,8 +40,10 @@ function chart_view_selector($cmid, $args)
     if (count($args->lti_info)>1 or count($args->lti_info)==0) $lti_select_box .= '<option value="*">*</option>';    // All LTI symbol charcter '*'
     //
     foreach($args->lti_info as $lti) {
-        if($lti->id === $args->lti_id) $lti_select_box .= '<option value="'.$lti->id.'" selected>'.$lti->name.'</option>';
-        else                           $lti_select_box .= '<option value="'.$lti->id.'">'.$lti->name.'</option>';
+        if ($lti->valid==1) {
+            if($lti->id === $args->lti_id) $lti_select_box .= '<option value="'.$lti->id.'" selected>'.$lti->name.'</option>';
+            else                           $lti_select_box .= '<option value="'.$lti->id.'">'.$lti->name.'</option>';
+        }
     }
     $lti_select_box .= '</select>';
 
