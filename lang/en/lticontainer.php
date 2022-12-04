@@ -86,6 +86,7 @@ $string['no_ltiid_found'] = 'lti_id is not displyed or not exist!';
 $string['web_homedir_forbidden'] = 'The web server process does not have write access to its own home directory. Please check the permissions.';
 $string['no_docker_command'] = 'docker command does not exist (/usr/bin/docker). Please install docker package.';
 $string['no_podman_command'] = 'podman-remote or podman command does not exist (/usr/bin/podman-remote or /usr/bin/podman). Please install podman-remote package.';
+$string['missmatch_jh_api_token'] = 'Missmatch api token for JupyterHub. Please check "JupyterHub API Token" at "Edit settings" page.';
 
 // Capability / パンくずメニュー
 $string['lticontainer:admin_tools'] = 'Use admin tools';

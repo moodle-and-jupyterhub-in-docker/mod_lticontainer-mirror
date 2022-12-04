@@ -109,10 +109,13 @@ function  chart_total_pie($recs, $username, $filename, $minstance, $dashboard=fa
     }
 
     // Total(Known + Unknown) activities
-    //$series = new \core\chart_series('Count', [0, $ok, $er]);   // 0 -> 色調整
-    //$labels = ['', 'OK', 'ERROR'];
-    $series = new \core\chart_series('Count', [$ok, $er]);
-    $labels = ['OK', 'ERROR'];
+    //$series = new \core\chart_series('Count', [$ok, $er]);
+    //$labels = ['OK', 'ERROR'];
+    //$series = new \core\chart_series('Count', [$er, $ok]);
+    //$labels = ['ERROR', 'OK'];
+    $series = new \core\chart_series('Count', [0, $ok, $er]);   // 0 -> 色調整
+    $labels = ['', 'OK', 'ERROR'];
+    //
     $chart  = new \core\chart_pie();
     $chart->add_series($series);
     $chart->set_labels($labels);

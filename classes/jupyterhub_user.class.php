@@ -32,7 +32,7 @@ class  JupyterHubAPI
     var $users       = array();
 
     var $page_size   = 10;
-    var $status      = 'ALL';
+    var $status      = 'OK';
     var $unsort      = 'asc';
     var $tmsort      = 'none';
     var $sort        = 'none';
@@ -52,12 +52,12 @@ class  JupyterHubAPI
         #
         $this->url_params = array('id'=>$cmid, 'course'=>$courseid);
         $this->action_url = new moodle_url('/mod/lticontainer/actions/jupyterhub_user.php', $this->url_params);
-        $this->error_url  = new moodle_url('/mod/lticontainer/actions/view.php',            $this->url_params);
+        $this->error_url  = new moodle_url('/mod/lticontainer/view.php',                    $this->url_params);
         $this->ccontext   = $ccontext;
         //$this->page_size  = $minstance->chart_bar_usernum;
 
         $this->userid = optional_param('userid', '',     PARAM_INT);
-        $this->status = optional_param('status', 'ALL',  PARAM_ALPHA);
+        $this->status = optional_param('status', 'OK',   PARAM_ALPHA);
         $this->nmsort = optional_param('nmsort', 'asc',  PARAM_ALPHA);
         $this->tmsort = optional_param('tmsort', 'none', PARAM_ALPHA);
         $this->sort   = optional_param('sort',   'none', PARAM_ALPHA);
@@ -84,6 +84,9 @@ class  JupyterHubAPI
         //
         if (has_capability('mod/lticontainer:jupyterhub_user_edit', $this->mcontext) or $this->mode=='personal') {
             $this->edit_cap = true;
+        }
+        if ($this->mode=='personal') {
+            $this->status = 'ALL';
         }
 
         //
@@ -177,6 +180,12 @@ class  JupyterHubAPI
 
         // $this->users に JupyterHub のデータを追加
         $jh_users = json_decode($json, false);
+        if (is_object($jh_users) && property_exists($jh_users, 'status')) {
+            if ($jh_users->status=='403') {
+                print_error('missmatch_jh_api_token', 'mod_lticontainer', $this->error_url);
+            }
+        }
+
         foreach ($md_users as $key => $md_user) {
             $md_users[$key]->status = 'NONE';
             if (is_array($jh_users) and !empty($jh_users)) {
